@@ -27,7 +27,7 @@ import java.util.function.Function;
 import javax.validation.ConstraintValidatorContext;
 
 /**
- * The base for all {@link TemporalAccessor} validators.
+ * The base for all {@link TemporalAccessor} validators that validate the entire value.
  *
  * @author Rob Spoor
  * @param <A> The constraint annotation type.
@@ -91,8 +91,21 @@ public abstract class AbstractTemporalAccessorValidator<A extends Annotation, T 
 
     @Override
     public void initialize(A constraintAnnotation) {
-        initializeMoment(constraintAnnotation);
-        initializeDuration(constraintAnnotation);
+        String momentText = momentExtractor.apply(constraintAnnotation);
+        String durationText = durationExtractor != null ? durationExtractor.apply(constraintAnnotation) : null;
+
+        initialize(momentText, durationText);
+    }
+
+    /**
+     * Initializes the validator in preparation for {@link #isValid(TemporalAccessor, ConstraintValidatorContext)} calls.
+     *
+     * @param momentText The required moment in text form.
+     * @param durationText The optional duration in text form.
+     */
+    public void initialize(String momentText, String durationText) {
+        initializeMoment(momentText);
+        initializeDuration(durationText);
 
         if (moment != null && duration != null) {
             // apply the duration at this time, as the result will be the same for every validation
@@ -101,15 +114,13 @@ public abstract class AbstractTemporalAccessorValidator<A extends Annotation, T 
         }
     }
 
-    private void initializeMoment(A constraintAnnotation) {
-        String value = momentExtractor.apply(constraintAnnotation);
-        moment = NOW.equals(value) ? null : momentParser.apply(value);
+    private void initializeMoment(String momentText) {
+        moment = NOW.equals(momentText) ? null : momentParser.apply(momentText);
     }
 
-    private void initializeDuration(A constraintAnnotation) {
-        if (durationExtractor != null) {
-            String value = durationExtractor.apply(constraintAnnotation);
-            duration = ISODuration.parse(value);
+    private void initializeDuration(String durationText) {
+        if (durationText != null) {
+            duration = ISODuration.parse(durationText);
             // apply the duration to validate it
             durationApplier.apply(momentCreator.apply(Clock.systemUTC()), duration);
         } else {

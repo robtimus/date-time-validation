@@ -29,7 +29,6 @@ import java.time.YearMonth;
 import java.time.ZonedDateTime;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.function.BiPredicate;
 import com.github.robtimus.validation.time.NotAfter;
 
 /**
@@ -40,7 +39,6 @@ import com.github.robtimus.validation.time.NotAfter;
 public final class NotAfterValidator {
 
     private NotAfterValidator() {
-        throw new IllegalStateException("cannot create instances of " + getClass().getName()); //$NON-NLS-1$
     }
 
     /**
@@ -221,9 +219,5 @@ public final class NotAfterValidator {
         public ForZonedDateTime() {
             super(NotAfter::moment, ZonedDateTime::parse, ZonedDateTime::now, not(ZonedDateTime::isAfter));
         }
-    }
-
-    private static <T> BiPredicate<T, T> not(BiPredicate<T, T> predicate) {
-        return predicate.negate();
     }
 }

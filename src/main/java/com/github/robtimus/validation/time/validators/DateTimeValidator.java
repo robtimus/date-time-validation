@@ -18,6 +18,12 @@
 package com.github.robtimus.validation.time.validators;
 
 import java.lang.annotation.Annotation;
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.util.function.BiPredicate;
 import javax.validation.ConstraintValidator;
 
 /**
@@ -37,5 +43,21 @@ public abstract class DateTimeValidator<A extends Annotation, T> implements Cons
      */
     protected DateTimeValidator() {
         // no fields
+    }
+
+    static LocalDate toLocalDate(Instant instant) {
+        return toZonedDateTime(instant).toLocalDate();
+    }
+
+    static LocalTime toLocalTime(Instant instant) {
+        return toZonedDateTime(instant).toLocalTime();
+    }
+
+    private static ZonedDateTime toZonedDateTime(Instant instant) {
+        return instant.atZone(ZoneId.systemDefault());
+    }
+
+    static <T> BiPredicate<T, T> not(BiPredicate<T, T> predicate) {
+        return predicate.negate();
     }
 }

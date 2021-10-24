@@ -29,7 +29,6 @@ import java.time.YearMonth;
 import java.time.ZonedDateTime;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.function.BiPredicate;
 import com.github.robtimus.validation.time.NotBefore;
 
 /**
@@ -40,7 +39,6 @@ import com.github.robtimus.validation.time.NotBefore;
 public final class NotBeforeValidator {
 
     private NotBeforeValidator() {
-        throw new IllegalStateException("cannot create instances of " + getClass().getName()); //$NON-NLS-1$
     }
 
     /**
@@ -221,9 +219,5 @@ public final class NotBeforeValidator {
         public ForZonedDateTime() {
             super(NotBefore::moment, ZonedDateTime::parse, ZonedDateTime::now, not(ZonedDateTime::isBefore));
         }
-    }
-
-    private static <T> BiPredicate<T, T> not(BiPredicate<T, T> predicate) {
-        return predicate.negate();
     }
 }

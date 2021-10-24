@@ -28,7 +28,7 @@ import java.util.function.Function;
 import javax.validation.ConstraintValidatorContext;
 
 /**
- * The base for all {@link Calendar} validators.
+ * The base for all {@link Calendar} validators that validate the entire value.
  *
  * @author Rob Spoor
  * @param <A> The constraint annotation type.

@@ -22,6 +22,8 @@ import static java.util.stream.Collectors.toList;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import java.lang.annotation.Annotation;
+import java.time.Instant;
+import java.time.ZoneId;
 import java.util.Comparator;
 import java.util.List;
 import javax.validation.ClockProvider;
@@ -54,5 +56,12 @@ abstract class AbstractConstraintTest {
         assertNotNull(violation.getConstraintDescriptor());
         assertNotNull(violation.getConstraintDescriptor().getAnnotation());
         assertEquals(annotationType, violation.getConstraintDescriptor().getAnnotation().annotationType());
+    }
+
+    static Instant utcInstantAtDefaultZone(String text) {
+        return Instant.parse(text)
+                .atZone(ZoneId.of("UTC")) //$NON-NLS-1$
+                .withZoneSameLocal(ZoneId.systemDefault())
+                .toInstant();
     }
 }

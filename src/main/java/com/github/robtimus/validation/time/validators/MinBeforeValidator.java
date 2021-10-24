@@ -28,7 +28,6 @@ import java.time.YearMonth;
 import java.time.ZonedDateTime;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.function.BiPredicate;
 import com.github.robtimus.validation.time.MinBefore;
 
 /**
@@ -39,7 +38,6 @@ import com.github.robtimus.validation.time.MinBefore;
 public final class MinBeforeValidator {
 
     private MinBeforeValidator() {
-        throw new IllegalStateException("cannot create instances of " + getClass().getName()); //$NON-NLS-1$
     }
 
     /**
@@ -208,9 +206,5 @@ public final class MinBeforeValidator {
             super(MinBefore::moment, ZonedDateTime::parse, ZonedDateTime::now, MinBefore::duration, ZonedDateTime::minus,
                     not(ZonedDateTime::isAfter));
         }
-    }
-
-    private static <T> BiPredicate<T, T> not(BiPredicate<T, T> predicate) {
-        return predicate.negate();
     }
 }

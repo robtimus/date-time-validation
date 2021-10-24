@@ -28,7 +28,6 @@ import java.time.YearMonth;
 import java.time.ZonedDateTime;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.function.BiPredicate;
 import com.github.robtimus.validation.time.MaxAfter;
 
 /**
@@ -39,7 +38,6 @@ import com.github.robtimus.validation.time.MaxAfter;
 public final class MaxAfterValidator {
 
     private MaxAfterValidator() {
-        throw new IllegalStateException("cannot create instances of " + getClass().getName()); //$NON-NLS-1$
     }
 
     /**
@@ -206,9 +204,5 @@ public final class MaxAfterValidator {
         public ForZonedDateTime() {
             super(MaxAfter::moment, ZonedDateTime::parse, ZonedDateTime::now, MaxAfter::duration, ZonedDateTime::plus, not(ZonedDateTime::isAfter));
         }
-    }
-
-    private static <T> BiPredicate<T, T> not(BiPredicate<T, T> predicate) {
-        return predicate.negate();
     }
 }

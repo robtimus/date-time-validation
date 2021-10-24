@@ -39,7 +39,6 @@ import com.github.robtimus.validation.time.After;
 public final class AfterValidator {
 
     private AfterValidator() {
-        throw new IllegalStateException("cannot create instances of " + getClass().getName()); //$NON-NLS-1$
     }
 
     /**
