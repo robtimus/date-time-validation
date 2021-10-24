@@ -100,7 +100,7 @@ public @interface MinBefore {
     Class<? extends Payload>[] payload() default { };
 
     /**
-     * The maximum amount of time, as an <a href="https://en.wikipedia.org/wiki/ISO_8601" target="_blank">ISO 8601 duration</a>, that a date/time
+     * The minimum amount of time, as an <a href="https://en.wikipedia.org/wiki/ISO_8601" target="_blank">ISO 8601 duration</a>, that a date/time
      * object can be before the value specified in {@link #moment()}.
      * <p>
      * The value to validate may impose limitations on the duration. For instance, {@link LocalDate} does not allow a time part, and {@link LocalTime}
