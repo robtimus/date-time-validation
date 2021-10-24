@@ -53,7 +53,7 @@ public final class MaxBeforeValidator {
          * Creates a new validator.
          */
         public ForDate() {
-            super(MaxBefore::moment, MaxBefore::duration, ISODuration::parse, ISODuration::minus, not(Instant::isBefore));
+            super(MaxBefore::moment, MaxBefore::duration, ISODuration::minus, not(Instant::isBefore));
         }
     }
 
@@ -68,7 +68,7 @@ public final class MaxBeforeValidator {
          * Creates a new validator.
          */
         public ForCalendar() {
-            super(MaxBefore::moment, MaxBefore::duration, ISODuration::parse, ZonedDateTime::minus, not(ZonedDateTime::isBefore));
+            super(MaxBefore::moment, MaxBefore::duration, ZonedDateTime::minus, not(ZonedDateTime::isBefore));
         }
     }
 
@@ -83,8 +83,7 @@ public final class MaxBeforeValidator {
          * Creates a new validator.
          */
         public ForInstant() {
-            super(momentExtractor(MaxBefore::moment, Instant::parse), Instant::now, MaxBefore::duration, ISODuration::parse, ISODuration::minus,
-                    not(Instant::isBefore));
+            super(MaxBefore::moment, Instant::parse, Instant::now, MaxBefore::duration, ISODuration::minus, not(Instant::isBefore));
         }
     }
 
@@ -99,8 +98,7 @@ public final class MaxBeforeValidator {
          * Creates a new validator.
          */
         public ForLocalDate() {
-            super(momentExtractor(MaxBefore::moment, LocalDate::parse), LocalDate::now, MaxBefore::duration, ISODuration::parse, LocalDate::minus,
-                    not(LocalDate::isBefore));
+            super(MaxBefore::moment, LocalDate::parse, LocalDate::now, MaxBefore::duration, LocalDate::minus, not(LocalDate::isBefore));
         }
     }
 
@@ -115,8 +113,8 @@ public final class MaxBeforeValidator {
          * Creates a new validator.
          */
         public ForLocalDateTime() {
-            super(momentExtractor(MaxBefore::moment, LocalDateTime::parse), LocalDateTime::now, MaxBefore::duration, ISODuration::parse,
-                    LocalDateTime::minus, not(LocalDateTime::isBefore));
+            super(MaxBefore::moment, LocalDateTime::parse, LocalDateTime::now, MaxBefore::duration, LocalDateTime::minus,
+                    not(LocalDateTime::isBefore));
         }
     }
 
@@ -131,8 +129,7 @@ public final class MaxBeforeValidator {
          * Creates a new validator.
          */
         public ForLocalTime() {
-            super(momentExtractor(MaxBefore::moment, LocalTime::parse), LocalTime::now, MaxBefore::duration, ISODuration::parse, LocalTime::minus,
-                    not(LocalTime::isBefore));
+            super(MaxBefore::moment, LocalTime::parse, LocalTime::now, MaxBefore::duration, LocalTime::minus, not(LocalTime::isBefore));
         }
     }
 
@@ -147,8 +144,8 @@ public final class MaxBeforeValidator {
          * Creates a new validator.
          */
         public ForOffsetDateTime() {
-            super(momentExtractor(MaxBefore::moment, OffsetDateTime::parse), OffsetDateTime::now, MaxBefore::duration, ISODuration::parse,
-                    OffsetDateTime::minus, not(OffsetDateTime::isBefore));
+            super(MaxBefore::moment, OffsetDateTime::parse, OffsetDateTime::now, MaxBefore::duration, OffsetDateTime::minus,
+                    not(OffsetDateTime::isBefore));
         }
     }
 
@@ -163,8 +160,7 @@ public final class MaxBeforeValidator {
          * Creates a new validator.
          */
         public ForOffsetTime() {
-            super(momentExtractor(MaxBefore::moment, OffsetTime::parse), OffsetTime::now, MaxBefore::duration, ISODuration::parse, OffsetTime::minus,
-                    not(OffsetTime::isBefore));
+            super(MaxBefore::moment, OffsetTime::parse, OffsetTime::now, MaxBefore::duration, OffsetTime::minus, not(OffsetTime::isBefore));
         }
     }
 
@@ -179,8 +175,7 @@ public final class MaxBeforeValidator {
          * Creates a new validator.
          */
         public ForYear() {
-            super(momentExtractor(MaxBefore::moment, Year::parse), Year::now, MaxBefore::duration, ISODuration::parse, Year::minus,
-                    not(Year::isBefore));
+            super(MaxBefore::moment, Year::parse, Year::now, MaxBefore::duration, Year::minus, not(Year::isBefore));
         }
     }
 
@@ -195,8 +190,7 @@ public final class MaxBeforeValidator {
          * Creates a new validator.
          */
         public ForYearMonth() {
-            super(momentExtractor(MaxBefore::moment, YearMonth::parse), YearMonth::now, MaxBefore::duration, ISODuration::parse, YearMonth::minus,
-                    not(YearMonth::isBefore));
+            super(MaxBefore::moment, YearMonth::parse, YearMonth::now, MaxBefore::duration, YearMonth::minus, not(YearMonth::isBefore));
         }
     }
 
@@ -211,8 +205,8 @@ public final class MaxBeforeValidator {
          * Creates a new validator.
          */
         public ForZonedDateTime() {
-            super(momentExtractor(MaxBefore::moment, ZonedDateTime::parse), ZonedDateTime::now, MaxBefore::duration, ISODuration::parse,
-                    ZonedDateTime::minus, not(ZonedDateTime::isBefore));
+            super(MaxBefore::moment, ZonedDateTime::parse, ZonedDateTime::now, MaxBefore::duration, ZonedDateTime::minus,
+                    not(ZonedDateTime::isBefore));
         }
     }
 

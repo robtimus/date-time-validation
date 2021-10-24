@@ -35,7 +35,7 @@ import javax.validation.ConstraintValidatorContext;
 public abstract class AbstractDateValidator<A extends Annotation> extends DateTimeValidator<A, Date> {
 
     private final Function<A, String> momentExtractor;
-    private final Function<A, TemporalAmount> durationExtractor;
+    private final Function<A, String> durationExtractor;
     private final BiFunction<Instant, TemporalAmount, Instant> durationApplier;
     private final BiPredicate<Instant, Instant> validPredicate;
 
@@ -61,29 +61,13 @@ public abstract class AbstractDateValidator<A extends Annotation> extends DateTi
      *
      * @param momentExtractor A function that extracts the moment from a constraint annotation.
      * @param durationExtractor A function that extracts the duration from a constraint annotation.
-     * @param durationParser A function that parses text into a duration.
      * @param durationApplier A function that applies a duration to an instant.
      * @param validPredicate A predicate that determines whether or not a value (the first argument) is valid compared to a specific moment
      *                          (the second argument).
      */
-    protected AbstractDateValidator(Function<A, String> momentExtractor, Function<A, String> durationExtractor,
-            Function<String, TemporalAmount> durationParser, BiFunction<Instant, TemporalAmount, Instant> durationApplier,
+    protected AbstractDateValidator(Function<A, String> momentExtractor,
+            Function<A, String> durationExtractor, BiFunction<Instant, TemporalAmount, Instant> durationApplier,
             BiPredicate<Instant, Instant> validPredicate) {
-
-        this(momentExtractor, annotation -> durationParser.apply(durationExtractor.apply(annotation)), durationApplier, validPredicate);
-    }
-
-    /**
-     * Creates a new validator that only validates dates against a specific duration before or after a specific moment in time.
-     *
-     * @param momentExtractor A function that extracts the moment from a constraint annotation.
-     * @param durationExtractor A function that extracts the duration from a constraint annotation.
-     * @param durationApplier A function that applies a duration to an instant.
-     * @param validPredicate A predicate that determines whether or not a value (the first argument) is valid compared to a specific moment
-     *                          (the second argument).
-     */
-    protected AbstractDateValidator(Function<A, String> momentExtractor, Function<A, TemporalAmount> durationExtractor,
-            BiFunction<Instant, TemporalAmount, Instant> durationApplier, BiPredicate<Instant, Instant> validPredicate) {
 
         this.momentExtractor = momentExtractor;
         this.durationExtractor = durationExtractor;
@@ -93,11 +77,8 @@ public abstract class AbstractDateValidator<A extends Annotation> extends DateTi
 
     @Override
     public void initialize(A constraintAnnotation) {
-        String momentValue = momentExtractor.apply(constraintAnnotation);
-        moment = NOW.equals(momentValue) ? null : Instant.parse(momentValue);
-
-        duration = durationExtractor != null ? durationExtractor.apply(constraintAnnotation) : null;
-        validateDuration();
+        initializeMoment(constraintAnnotation);
+        initializeDuration(constraintAnnotation);
 
         if (moment != null && duration != null) {
             // apply the duration at this time, as the result will be the same for every validation
@@ -106,10 +87,19 @@ public abstract class AbstractDateValidator<A extends Annotation> extends DateTi
         }
     }
 
-    private void validateDuration() {
-        if (duration != null) {
+    private void initializeMoment(A constraintAnnotation) {
+        String value = momentExtractor.apply(constraintAnnotation);
+        moment = NOW.equals(value) ? null : Instant.parse(value);
+    }
+
+    private void initializeDuration(A constraintAnnotation) {
+        if (durationExtractor != null) {
+            String value = durationExtractor.apply(constraintAnnotation);
+            duration = ISODuration.parse(value);
             // apply the duration to validate it
             durationApplier.apply(Instant.now(), duration);
+        } else {
+            duration = null;
         }
     }
 

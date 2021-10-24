@@ -36,7 +36,7 @@ import javax.validation.ConstraintValidatorContext;
 public abstract class AbstractCalendarValidator<A extends Annotation> extends DateTimeValidator<A, Calendar> {
 
     private final Function<A, String> momentExtractor;
-    private final Function<A, TemporalAmount> durationExtractor;
+    private final Function<A, String> durationExtractor;
     private final BiFunction<ZonedDateTime, TemporalAmount, ZonedDateTime> durationApplier;
     private final BiPredicate<ZonedDateTime, ZonedDateTime> validPredicate;
 
@@ -62,29 +62,13 @@ public abstract class AbstractCalendarValidator<A extends Annotation> extends Da
      *
      * @param momentExtractor A function that extracts the moment from a constraint annotation.
      * @param durationExtractor A function that extracts the duration from a constraint annotation.
-     * @param durationParser A function that parses text into a duration.
      * @param durationApplier A function that applies a duration to a zoned date/time.
      * @param validPredicate A predicate that determines whether or not a value (the first argument) is valid compared to a specific moment
      *                          (the second argument).
      */
-    protected AbstractCalendarValidator(Function<A, String> momentExtractor, Function<A, String> durationExtractor,
-            Function<String, TemporalAmount> durationParser, BiFunction<ZonedDateTime, TemporalAmount, ZonedDateTime> durationApplier,
+    protected AbstractCalendarValidator(Function<A, String> momentExtractor,
+            Function<A, String> durationExtractor, BiFunction<ZonedDateTime, TemporalAmount, ZonedDateTime> durationApplier,
             BiPredicate<ZonedDateTime, ZonedDateTime> validPredicate) {
-
-        this(momentExtractor, annotation -> durationParser.apply(durationExtractor.apply(annotation)), durationApplier, validPredicate);
-    }
-
-    /**
-     * Creates a new validator that only validates calendars against a specific duration before or after a specific moment in time.
-     *
-     * @param momentExtractor A function that extracts the moment from a constraint annotation.
-     * @param durationExtractor A function that extracts the duration from a constraint annotation.
-     * @param durationApplier A function that applies a duration to a zoned date/time.
-     * @param validPredicate A predicate that determines whether or not a value (the first argument) is valid compared to a specific moment
-     *                          (the second argument).
-     */
-    protected AbstractCalendarValidator(Function<A, String> momentExtractor, Function<A, TemporalAmount> durationExtractor,
-            BiFunction<ZonedDateTime, TemporalAmount, ZonedDateTime> durationApplier, BiPredicate<ZonedDateTime, ZonedDateTime> validPredicate) {
 
         this.momentExtractor = momentExtractor;
         this.durationExtractor = durationExtractor;
@@ -94,11 +78,8 @@ public abstract class AbstractCalendarValidator<A extends Annotation> extends Da
 
     @Override
     public void initialize(A constraintAnnotation) {
-        String momentValue = momentExtractor.apply(constraintAnnotation);
-        moment = NOW.equals(momentValue) ? null : ZonedDateTime.parse(momentValue);
-
-        duration = durationExtractor != null ? durationExtractor.apply(constraintAnnotation) : null;
-        validateDuration();
+        initializeMoment(constraintAnnotation);
+        initializeDuration(constraintAnnotation);
 
         if (moment != null && duration != null) {
             // apply the duration at this time, as the result will be the same for every validation
@@ -107,10 +88,19 @@ public abstract class AbstractCalendarValidator<A extends Annotation> extends Da
         }
     }
 
-    private void validateDuration() {
-        if (duration != null) {
+    private void initializeMoment(A constraintAnnotation) {
+        String value = momentExtractor.apply(constraintAnnotation);
+        moment = NOW.equals(value) ? null : ZonedDateTime.parse(value);
+    }
+
+    private void initializeDuration(A constraintAnnotation) {
+        if (durationExtractor != null) {
+            String value = durationExtractor.apply(constraintAnnotation);
+            duration = ISODuration.parse(value);
             // apply the duration to validate it
             durationApplier.apply(ZonedDateTime.now(), duration);
+        } else {
+            duration = null;
         }
     }
 

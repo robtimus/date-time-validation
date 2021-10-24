@@ -53,7 +53,7 @@ public final class MinAfterValidator {
          * Creates a new validator.
          */
         public ForDate() {
-            super(MinAfter::moment, MinAfter::duration, ISODuration::parse, ISODuration::plus, not(Instant::isBefore));
+            super(MinAfter::moment, MinAfter::duration, ISODuration::plus, not(Instant::isBefore));
         }
     }
 
@@ -68,7 +68,7 @@ public final class MinAfterValidator {
          * Creates a new validator.
          */
         public ForCalendar() {
-            super(MinAfter::moment, MinAfter::duration, ISODuration::parse, ZonedDateTime::plus, not(ZonedDateTime::isBefore));
+            super(MinAfter::moment, MinAfter::duration, ZonedDateTime::plus, not(ZonedDateTime::isBefore));
         }
     }
 
@@ -83,8 +83,7 @@ public final class MinAfterValidator {
          * Creates a new validator.
          */
         public ForInstant() {
-            super(momentExtractor(MinAfter::moment, Instant::parse), Instant::now, MinAfter::duration, ISODuration::parse, ISODuration::plus,
-                    not(Instant::isBefore));
+            super(MinAfter::moment, Instant::parse, Instant::now, MinAfter::duration, ISODuration::plus, not(Instant::isBefore));
         }
     }
 
@@ -99,8 +98,7 @@ public final class MinAfterValidator {
          * Creates a new validator.
          */
         public ForLocalDate() {
-            super(momentExtractor(MinAfter::moment, LocalDate::parse), LocalDate::now, MinAfter::duration, ISODuration::parse, LocalDate::plus,
-                    not(LocalDate::isBefore));
+            super(MinAfter::moment, LocalDate::parse, LocalDate::now, MinAfter::duration, LocalDate::plus, not(LocalDate::isBefore));
         }
     }
 
@@ -115,8 +113,7 @@ public final class MinAfterValidator {
          * Creates a new validator.
          */
         public ForLocalDateTime() {
-            super(momentExtractor(MinAfter::moment, LocalDateTime::parse), LocalDateTime::now, MinAfter::duration, ISODuration::parse,
-                    LocalDateTime::plus, not(LocalDateTime::isBefore));
+            super(MinAfter::moment, LocalDateTime::parse, LocalDateTime::now, MinAfter::duration, LocalDateTime::plus, not(LocalDateTime::isBefore));
         }
     }
 
@@ -131,8 +128,7 @@ public final class MinAfterValidator {
          * Creates a new validator.
          */
         public ForLocalTime() {
-            super(momentExtractor(MinAfter::moment, LocalTime::parse), LocalTime::now, MinAfter::duration, ISODuration::parse, LocalTime::plus,
-                    not(LocalTime::isBefore));
+            super(MinAfter::moment, LocalTime::parse, LocalTime::now, MinAfter::duration, LocalTime::plus, not(LocalTime::isBefore));
         }
     }
 
@@ -147,8 +143,8 @@ public final class MinAfterValidator {
          * Creates a new validator.
          */
         public ForOffsetDateTime() {
-            super(momentExtractor(MinAfter::moment, OffsetDateTime::parse), OffsetDateTime::now, MinAfter::duration, ISODuration::parse,
-                    OffsetDateTime::plus, not(OffsetDateTime::isBefore));
+            super(MinAfter::moment, OffsetDateTime::parse, OffsetDateTime::now, MinAfter::duration, OffsetDateTime::plus,
+                    not(OffsetDateTime::isBefore));
         }
     }
 
@@ -163,8 +159,7 @@ public final class MinAfterValidator {
          * Creates a new validator.
          */
         public ForOffsetTime() {
-            super(momentExtractor(MinAfter::moment, OffsetTime::parse), OffsetTime::now, MinAfter::duration, ISODuration::parse, OffsetTime::plus,
-                    not(OffsetTime::isBefore));
+            super(MinAfter::moment, OffsetTime::parse, OffsetTime::now, MinAfter::duration, OffsetTime::plus, not(OffsetTime::isBefore));
         }
     }
 
@@ -179,7 +174,7 @@ public final class MinAfterValidator {
          * Creates a new validator.
          */
         public ForYear() {
-            super(momentExtractor(MinAfter::moment, Year::parse), Year::now, MinAfter::duration, ISODuration::parse, Year::plus, not(Year::isBefore));
+            super(MinAfter::moment, Year::parse, Year::now, MinAfter::duration, Year::plus, not(Year::isBefore));
         }
     }
 
@@ -194,8 +189,7 @@ public final class MinAfterValidator {
          * Creates a new validator.
          */
         public ForYearMonth() {
-            super(momentExtractor(MinAfter::moment, YearMonth::parse), YearMonth::now, MinAfter::duration, ISODuration::parse, YearMonth::plus,
-                    not(YearMonth::isBefore));
+            super(MinAfter::moment, YearMonth::parse, YearMonth::now, MinAfter::duration, YearMonth::plus, not(YearMonth::isBefore));
         }
     }
 
@@ -210,8 +204,7 @@ public final class MinAfterValidator {
          * Creates a new validator.
          */
         public ForZonedDateTime() {
-            super(momentExtractor(MinAfter::moment, ZonedDateTime::parse), ZonedDateTime::now, MinAfter::duration, ISODuration::parse,
-                    ZonedDateTime::plus, not(ZonedDateTime::isBefore));
+            super(MinAfter::moment, ZonedDateTime::parse, ZonedDateTime::now, MinAfter::duration, ZonedDateTime::plus, not(ZonedDateTime::isBefore));
         }
     }
 

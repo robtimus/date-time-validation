@@ -35,9 +35,10 @@ import javax.validation.ConstraintValidatorContext;
  */
 public abstract class AbstractTemporalAccessorValidator<A extends Annotation, T extends TemporalAccessor> extends DateTimeValidator<A, T> {
 
-    private final Function<A, T> momentExtractor;
+    private final Function<A, String> momentExtractor;
+    private final Function<String, T> momentParser;
     private final Function<Clock, T> momentCreator;
-    private final Function<A, TemporalAmount> durationExtractor;
+    private final Function<A, String> durationExtractor;
     private final BiFunction<T, TemporalAmount, T> durationApplier;
     private final BiPredicate<T, T> validPredicate;
 
@@ -47,13 +48,17 @@ public abstract class AbstractTemporalAccessorValidator<A extends Annotation, T 
     /**
      * Creates a new validator that only validates temporal accessors against a specific moment in time.
      *
-     * @param momentExtractor A function that extracts the moment from a constraint annotation.
+     * @param momentExtractor A function that extracts the moment value from a constraint annotation.
+     * @param momentParser A function that parses a moment value into a {@link TemporalAccessor}.
      * @param momentCreator A function that creates a new moment for a given clock.
      * @param validPredicate A predicate that determines whether or not a value (the first argument) is valid compared to a specific moment
      *                          (the second argument).
      */
-    protected AbstractTemporalAccessorValidator(Function<A, T> momentExtractor, Function<Clock, T> momentCreator, BiPredicate<T, T> validPredicate) {
+    protected AbstractTemporalAccessorValidator(Function<A, String> momentExtractor, Function<String, T> momentParser,
+            Function<Clock, T> momentCreator, BiPredicate<T, T> validPredicate) {
+
         this.momentExtractor = momentExtractor;
+        this.momentParser = momentParser;
         this.momentCreator = momentCreator;
         this.durationExtractor = null;
         this.durationApplier = null;
@@ -63,37 +68,21 @@ public abstract class AbstractTemporalAccessorValidator<A extends Annotation, T 
     /**
      * Creates a new validator that only validates dates against a specific duration before or after a specific moment in time.
      *
-     * @param momentExtractor A function that extracts the moment from a constraint annotation.
+     * @param momentExtractor A function that extracts the moment value from a constraint annotation.
+     * @param momentParser A function that parses a moment value into a {@link TemporalAccessor}.
      * @param momentCreator A function that creates a new moment for a given clock.
-     * @param durationExtractor A function that extracts the duration from a constraint annotation.
-     * @param durationParser A function that parses text into a duration.
+     * @param durationExtractor A function that extracts the duration value from a constraint annotation.
      * @param durationApplier A function that applies a duration to an instant.
      * @param validPredicate A predicate that determines whether or not a value (the first argument) is valid compared to a specific moment
      *                          (the second argument).
      */
-    protected AbstractTemporalAccessorValidator(Function<A, T> momentExtractor, Function<Clock, T> momentCreator,
-            Function<A, String> durationExtractor, Function<String, TemporalAmount> durationParser, BiFunction<T, TemporalAmount, T> durationApplier,
-            BiPredicate<T, T> validPredicate) {
-
-        this(momentExtractor, momentCreator, annotation -> durationParser.apply(durationExtractor.apply(annotation)), durationApplier,
-                validPredicate);
-    }
-
-    /**
-     * Creates a new validator that only validates dates against a specific duration before or after a specific moment in time.
-     *
-     * @param momentExtractor A function that extracts the moment from a constraint annotation.
-     * @param momentCreator A function that creates a new moment for a given clock.
-     * @param durationExtractor A function that extracts the duration from a constraint annotation.
-     * @param durationApplier A function that applies a duration to an instant.
-     * @param validPredicate A predicate that determines whether or not a value (the first argument) is valid compared to a specific moment
-     *                          (the second argument).
-     */
-    protected AbstractTemporalAccessorValidator(Function<A, T> momentExtractor, Function<Clock, T> momentCreator,
-            Function<A, TemporalAmount> durationExtractor, BiFunction<T, TemporalAmount, T> durationApplier,
+    protected AbstractTemporalAccessorValidator(Function<A, String> momentExtractor, Function<String, T> momentParser,
+            Function<Clock, T> momentCreator,
+            Function<A, String> durationExtractor, BiFunction<T, TemporalAmount, T> durationApplier,
             BiPredicate<T, T> validPredicate) {
 
         this.momentExtractor = momentExtractor;
+        this.momentParser = momentParser;
         this.momentCreator = momentCreator;
         this.durationExtractor = durationExtractor;
         this.durationApplier = durationApplier;
@@ -102,10 +91,8 @@ public abstract class AbstractTemporalAccessorValidator<A extends Annotation, T 
 
     @Override
     public void initialize(A constraintAnnotation) {
-        moment = momentExtractor.apply(constraintAnnotation);
-
-        duration = durationExtractor != null ? durationExtractor.apply(constraintAnnotation) : null;
-        validateDuration();
+        initializeMoment(constraintAnnotation);
+        initializeDuration(constraintAnnotation);
 
         if (moment != null && duration != null) {
             // apply the duration at this time, as the result will be the same for every validation
@@ -114,10 +101,19 @@ public abstract class AbstractTemporalAccessorValidator<A extends Annotation, T 
         }
     }
 
-    private void validateDuration() {
-        if (duration != null) {
+    private void initializeMoment(A constraintAnnotation) {
+        String value = momentExtractor.apply(constraintAnnotation);
+        moment = NOW.equals(value) ? null : momentParser.apply(value);
+    }
+
+    private void initializeDuration(A constraintAnnotation) {
+        if (durationExtractor != null) {
+            String value = durationExtractor.apply(constraintAnnotation);
+            duration = ISODuration.parse(value);
             // apply the duration to validate it
             durationApplier.apply(momentCreator.apply(Clock.systemUTC()), duration);
+        } else {
+            duration = null;
         }
     }
 
@@ -132,24 +128,5 @@ public abstract class AbstractTemporalAccessorValidator<A extends Annotation, T 
             temporalAccessor = durationApplier.apply(temporalAccessor, duration);
         }
         return validPredicate.test(value, temporalAccessor);
-    }
-
-    /**
-     * Returns a function that extracts the moment value from a constraint annotation; then if it's {@link DateTimeValidator#NOW}, the function
-     * returns {@code null}, otherwise it returns the result of parsing the value.
-     *
-     * @param <A> The constraint annotation type.
-     * @param <T> The {@link TemporalAccessor} type to validate.
-     * @param momentExtractor A function that extracts the moment value from a constraint annotation.
-     * @param parser A function that parses text into a {@link TemporalAccessor}.
-     * @return A function that works as described.
-     */
-    protected static <A extends Annotation, T extends TemporalAccessor> Function<A, T> momentExtractor(Function<A, String> momentExtractor,
-            Function<String, T> parser) {
-
-        return annotation -> {
-            String momentValue = momentExtractor.apply(annotation);
-            return NOW.equals(momentValue) ? null : parser.apply(momentValue);
-        };
     }
 }

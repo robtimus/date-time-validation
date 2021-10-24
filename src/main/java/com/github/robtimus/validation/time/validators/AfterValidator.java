@@ -83,7 +83,7 @@ public final class AfterValidator {
          * Creates a new validator.
          */
         public ForInstant() {
-            super(momentExtractor(After::moment, Instant::parse), Instant::now, Instant::isAfter);
+            super(After::moment, Instant::parse, Instant::now, Instant::isAfter);
         }
     }
 
@@ -98,7 +98,7 @@ public final class AfterValidator {
          * Creates a new validator.
          */
         public ForLocalDate() {
-            super(momentExtractor(After::moment, LocalDate::parse), LocalDate::now, LocalDate::isAfter);
+            super(After::moment, LocalDate::parse, LocalDate::now, LocalDate::isAfter);
         }
     }
 
@@ -113,7 +113,7 @@ public final class AfterValidator {
          * Creates a new validator.
          */
         public ForLocalDateTime() {
-            super(momentExtractor(After::moment, LocalDateTime::parse), LocalDateTime::now, LocalDateTime::isAfter);
+            super(After::moment, LocalDateTime::parse, LocalDateTime::now, LocalDateTime::isAfter);
         }
     }
 
@@ -128,7 +128,7 @@ public final class AfterValidator {
          * Creates a new validator.
          */
         public ForLocalTime() {
-            super(momentExtractor(After::moment, LocalTime::parse), LocalTime::now, LocalTime::isAfter);
+            super(After::moment, LocalTime::parse, LocalTime::now, LocalTime::isAfter);
         }
     }
 
@@ -143,7 +143,7 @@ public final class AfterValidator {
          * Creates a new validator.
          */
         public ForMonthDay() {
-            super(momentExtractor(After::moment, MonthDay::parse), MonthDay::now, MonthDay::isAfter);
+            super(After::moment, MonthDay::parse, MonthDay::now, MonthDay::isAfter);
         }
     }
 
@@ -158,7 +158,7 @@ public final class AfterValidator {
          * Creates a new validator.
          */
         public ForOffsetDateTime() {
-            super(momentExtractor(After::moment, OffsetDateTime::parse), OffsetDateTime::now, OffsetDateTime::isAfter);
+            super(After::moment, OffsetDateTime::parse, OffsetDateTime::now, OffsetDateTime::isAfter);
         }
     }
 
@@ -173,7 +173,7 @@ public final class AfterValidator {
          * Creates a new validator.
          */
         public ForOffsetTime() {
-            super(momentExtractor(After::moment, OffsetTime::parse), OffsetTime::now, OffsetTime::isAfter);
+            super(After::moment, OffsetTime::parse, OffsetTime::now, OffsetTime::isAfter);
         }
     }
 
@@ -188,7 +188,7 @@ public final class AfterValidator {
          * Creates a new validator.
          */
         public ForYear() {
-            super(momentExtractor(After::moment, Year::parse), Year::now, Year::isAfter);
+            super(After::moment, Year::parse, Year::now, Year::isAfter);
         }
     }
 
@@ -203,7 +203,7 @@ public final class AfterValidator {
          * Creates a new validator.
          */
         public ForYearMonth() {
-            super(momentExtractor(After::moment, YearMonth::parse), YearMonth::now, YearMonth::isAfter);
+            super(After::moment, YearMonth::parse, YearMonth::now, YearMonth::isAfter);
         }
     }
 
@@ -218,7 +218,7 @@ public final class AfterValidator {
          * Creates a new validator.
          */
         public ForZonedDateTime() {
-            super(momentExtractor(After::moment, ZonedDateTime::parse), ZonedDateTime::now, ZonedDateTime::isAfter);
+            super(After::moment, ZonedDateTime::parse, ZonedDateTime::now, ZonedDateTime::isAfter);
         }
     }
 }

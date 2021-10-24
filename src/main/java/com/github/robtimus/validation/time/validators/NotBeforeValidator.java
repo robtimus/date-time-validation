@@ -84,7 +84,7 @@ public final class NotBeforeValidator {
          * Creates a new validator.
          */
         public ForInstant() {
-            super(momentExtractor(NotBefore::moment, Instant::parse), Instant::now, not(Instant::isBefore));
+            super(NotBefore::moment, Instant::parse, Instant::now, not(Instant::isBefore));
         }
     }
 
@@ -99,7 +99,7 @@ public final class NotBeforeValidator {
          * Creates a new validator.
          */
         public ForLocalDate() {
-            super(momentExtractor(NotBefore::moment, LocalDate::parse), LocalDate::now, not(LocalDate::isBefore));
+            super(NotBefore::moment, LocalDate::parse, LocalDate::now, not(LocalDate::isBefore));
         }
     }
 
@@ -114,7 +114,7 @@ public final class NotBeforeValidator {
          * Creates a new validator.
          */
         public ForLocalDateTime() {
-            super(momentExtractor(NotBefore::moment, LocalDateTime::parse), LocalDateTime::now, not(LocalDateTime::isBefore));
+            super(NotBefore::moment, LocalDateTime::parse, LocalDateTime::now, not(LocalDateTime::isBefore));
         }
     }
 
@@ -129,7 +129,7 @@ public final class NotBeforeValidator {
          * Creates a new validator.
          */
         public ForLocalTime() {
-            super(momentExtractor(NotBefore::moment, LocalTime::parse), LocalTime::now, not(LocalTime::isBefore));
+            super(NotBefore::moment, LocalTime::parse, LocalTime::now, not(LocalTime::isBefore));
         }
     }
 
@@ -144,7 +144,7 @@ public final class NotBeforeValidator {
          * Creates a new validator.
          */
         public ForMonthDay() {
-            super(momentExtractor(NotBefore::moment, MonthDay::parse), MonthDay::now, not(MonthDay::isBefore));
+            super(NotBefore::moment, MonthDay::parse, MonthDay::now, not(MonthDay::isBefore));
         }
     }
 
@@ -159,7 +159,7 @@ public final class NotBeforeValidator {
          * Creates a new validator.
          */
         public ForOffsetDateTime() {
-            super(momentExtractor(NotBefore::moment, OffsetDateTime::parse), OffsetDateTime::now, not(OffsetDateTime::isBefore));
+            super(NotBefore::moment, OffsetDateTime::parse, OffsetDateTime::now, not(OffsetDateTime::isBefore));
         }
     }
 
@@ -174,7 +174,7 @@ public final class NotBeforeValidator {
          * Creates a new validator.
          */
         public ForOffsetTime() {
-            super(momentExtractor(NotBefore::moment, OffsetTime::parse), OffsetTime::now, not(OffsetTime::isBefore));
+            super(NotBefore::moment, OffsetTime::parse, OffsetTime::now, not(OffsetTime::isBefore));
         }
     }
 
@@ -189,7 +189,7 @@ public final class NotBeforeValidator {
          * Creates a new validator.
          */
         public ForYear() {
-            super(momentExtractor(NotBefore::moment, Year::parse), Year::now, not(Year::isBefore));
+            super(NotBefore::moment, Year::parse, Year::now, not(Year::isBefore));
         }
     }
 
@@ -204,7 +204,7 @@ public final class NotBeforeValidator {
          * Creates a new validator.
          */
         public ForYearMonth() {
-            super(momentExtractor(NotBefore::moment, YearMonth::parse), YearMonth::now, not(YearMonth::isBefore));
+            super(NotBefore::moment, YearMonth::parse, YearMonth::now, not(YearMonth::isBefore));
         }
     }
 
@@ -219,7 +219,7 @@ public final class NotBeforeValidator {
          * Creates a new validator.
          */
         public ForZonedDateTime() {
-            super(momentExtractor(NotBefore::moment, ZonedDateTime::parse), ZonedDateTime::now, not(ZonedDateTime::isBefore));
+            super(NotBefore::moment, ZonedDateTime::parse, ZonedDateTime::now, not(ZonedDateTime::isBefore));
         }
     }
 

@@ -53,7 +53,7 @@ public final class MaxAfterValidator {
          * Creates a new validator.
          */
         public ForDate() {
-            super(MaxAfter::moment, MaxAfter::duration, ISODuration::parse, ISODuration::plus, not(Instant::isAfter));
+            super(MaxAfter::moment, MaxAfter::duration, ISODuration::plus, not(Instant::isAfter));
         }
     }
 
@@ -68,7 +68,7 @@ public final class MaxAfterValidator {
          * Creates a new validator.
          */
         public ForCalendar() {
-            super(MaxAfter::moment, MaxAfter::duration, ISODuration::parse, ZonedDateTime::plus, not(ZonedDateTime::isAfter));
+            super(MaxAfter::moment, MaxAfter::duration, ZonedDateTime::plus, not(ZonedDateTime::isAfter));
         }
     }
 
@@ -83,8 +83,7 @@ public final class MaxAfterValidator {
          * Creates a new validator.
          */
         public ForInstant() {
-            super(momentExtractor(MaxAfter::moment, Instant::parse), Instant::now, MaxAfter::duration, ISODuration::parse, ISODuration::plus,
-                    not(Instant::isAfter));
+            super(MaxAfter::moment, Instant::parse, Instant::now, MaxAfter::duration, ISODuration::plus, not(Instant::isAfter));
         }
     }
 
@@ -99,8 +98,7 @@ public final class MaxAfterValidator {
          * Creates a new validator.
          */
         public ForLocalDate() {
-            super(momentExtractor(MaxAfter::moment, LocalDate::parse), LocalDate::now, MaxAfter::duration, ISODuration::parse, LocalDate::plus,
-                    not(LocalDate::isAfter));
+            super(MaxAfter::moment, LocalDate::parse, LocalDate::now, MaxAfter::duration, LocalDate::plus, not(LocalDate::isAfter));
         }
     }
 
@@ -115,8 +113,7 @@ public final class MaxAfterValidator {
          * Creates a new validator.
          */
         public ForLocalDateTime() {
-            super(momentExtractor(MaxAfter::moment, LocalDateTime::parse), LocalDateTime::now, MaxAfter::duration, ISODuration::parse,
-                    LocalDateTime::plus, not(LocalDateTime::isAfter));
+            super(MaxAfter::moment, LocalDateTime::parse, LocalDateTime::now, MaxAfter::duration, LocalDateTime::plus, not(LocalDateTime::isAfter));
         }
     }
 
@@ -131,8 +128,7 @@ public final class MaxAfterValidator {
          * Creates a new validator.
          */
         public ForLocalTime() {
-            super(momentExtractor(MaxAfter::moment, LocalTime::parse), LocalTime::now, MaxAfter::duration, ISODuration::parse, LocalTime::plus,
-                    not(LocalTime::isAfter));
+            super(MaxAfter::moment, LocalTime::parse, LocalTime::now, MaxAfter::duration, LocalTime::plus, not(LocalTime::isAfter));
         }
     }
 
@@ -147,8 +143,8 @@ public final class MaxAfterValidator {
          * Creates a new validator.
          */
         public ForOffsetDateTime() {
-            super(momentExtractor(MaxAfter::moment, OffsetDateTime::parse), OffsetDateTime::now, MaxAfter::duration, ISODuration::parse,
-                    OffsetDateTime::plus, not(OffsetDateTime::isAfter));
+            super(MaxAfter::moment, OffsetDateTime::parse, OffsetDateTime::now, MaxAfter::duration, OffsetDateTime::plus,
+                    not(OffsetDateTime::isAfter));
         }
     }
 
@@ -163,8 +159,7 @@ public final class MaxAfterValidator {
          * Creates a new validator.
          */
         public ForOffsetTime() {
-            super(momentExtractor(MaxAfter::moment, OffsetTime::parse), OffsetTime::now, MaxAfter::duration, ISODuration::parse, OffsetTime::plus,
-                    not(OffsetTime::isAfter));
+            super(MaxAfter::moment, OffsetTime::parse, OffsetTime::now, MaxAfter::duration, OffsetTime::plus, not(OffsetTime::isAfter));
         }
     }
 
@@ -179,7 +174,7 @@ public final class MaxAfterValidator {
          * Creates a new validator.
          */
         public ForYear() {
-            super(momentExtractor(MaxAfter::moment, Year::parse), Year::now, MaxAfter::duration, ISODuration::parse, Year::plus, not(Year::isAfter));
+            super(MaxAfter::moment, Year::parse, Year::now, MaxAfter::duration, Year::plus, not(Year::isAfter));
         }
     }
 
@@ -194,8 +189,7 @@ public final class MaxAfterValidator {
          * Creates a new validator.
          */
         public ForYearMonth() {
-            super(momentExtractor(MaxAfter::moment, YearMonth::parse), YearMonth::now, MaxAfter::duration, ISODuration::parse, YearMonth::plus,
-                    not(YearMonth::isAfter));
+            super(MaxAfter::moment, YearMonth::parse, YearMonth::now, MaxAfter::duration, YearMonth::plus, not(YearMonth::isAfter));
         }
     }
 
@@ -210,8 +204,7 @@ public final class MaxAfterValidator {
          * Creates a new validator.
          */
         public ForZonedDateTime() {
-            super(momentExtractor(MaxAfter::moment, ZonedDateTime::parse), ZonedDateTime::now, MaxAfter::duration, ISODuration::parse,
-                    ZonedDateTime::plus, not(ZonedDateTime::isAfter));
+            super(MaxAfter::moment, ZonedDateTime::parse, ZonedDateTime::now, MaxAfter::duration, ZonedDateTime::plus, not(ZonedDateTime::isAfter));
         }
     }
 
