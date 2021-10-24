@@ -506,8 +506,8 @@ class MaxBeforeTest extends AbstractConstraintTest {
             WithNow() {
                 super(TestClassWithNow.class, "zonedDateTime",
                         ZonedDateTime.parse("2006-11-02T09:14:29+01:00[Europe/Paris]"),
-                        ZonedDateTime.parse("2006-11-02T09:14:29+01:00[Europe/Paris]").minus(1, ChronoUnit.MILLIS),
-                        ZonedDateTime.parse("2006-11-02T09:14:29+01:00[Europe/Paris]").plus(1, ChronoUnit.MILLIS),
+                        ZonedDateTime.parse("2006-11-02T09:14:29+01:00[Europe/Paris]").minusNanos(1),
+                        ZonedDateTime.parse("2006-11-02T09:14:29+01:00[Europe/Paris]").plusNanos(1),
                         () -> Clock.fixed(ZonedDateTime.parse("2007-12-03T10:15:30+01:00[Europe/Paris]").toInstant(), ZoneId.of("Europe/Paris")));
             }
         }
@@ -519,8 +519,8 @@ class MaxBeforeTest extends AbstractConstraintTest {
             WithMoment() {
                 super(TestClassWithMoment.class, "zonedDateTime",
                         ZonedDateTime.parse("2006-11-02T09:14:29+01:00[Europe/Paris]"),
-                        ZonedDateTime.parse("2006-11-02T09:14:29+01:00[Europe/Paris]").minus(1, ChronoUnit.MILLIS),
-                        ZonedDateTime.parse("2006-11-02T09:14:29+01:00[Europe/Paris]").plus(1, ChronoUnit.MILLIS),
+                        ZonedDateTime.parse("2006-11-02T09:14:29+01:00[Europe/Paris]").minusNanos(1),
+                        ZonedDateTime.parse("2006-11-02T09:14:29+01:00[Europe/Paris]").plusNanos(1),
                         () -> null);
             }
         }
