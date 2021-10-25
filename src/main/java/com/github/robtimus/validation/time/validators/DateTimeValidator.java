@@ -45,16 +45,19 @@ public abstract class DateTimeValidator<A extends Annotation, T> implements Cons
         // no fields
     }
 
-    static LocalDate toLocalDate(Instant instant) {
-        return toZonedDateTime(instant).toLocalDate();
+    static LocalDate toLocalDate(Instant instant, ZoneId zoneId) {
+        return toZonedDateTime(instant, zoneId).toLocalDate();
     }
 
-    static LocalTime toLocalTime(Instant instant) {
-        return toZonedDateTime(instant).toLocalTime();
+    static LocalTime toLocalTime(Instant instant, ZoneId zoneId) {
+        return toZonedDateTime(instant, zoneId).toLocalTime();
     }
 
-    private static ZonedDateTime toZonedDateTime(Instant instant) {
-        return instant.atZone(ZoneId.systemDefault());
+    private static ZonedDateTime toZonedDateTime(Instant instant, ZoneId zoneId) {
+        if (zoneId == null) {
+            zoneId = ZoneId.systemDefault();
+        }
+        return instant.atZone(zoneId);
     }
 
     static <T> BiPredicate<T, T> not(BiPredicate<T, T> predicate) {

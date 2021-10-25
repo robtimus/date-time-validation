@@ -47,7 +47,8 @@ public final class TimeMinBeforeValidator {
          * Creates a new validator.
          */
         public ForDate() {
-            super(TimeMinBefore::moment, TimeMinBefore::duration, DateTimeValidator::toLocalTime, new MinBeforeValidator.ForLocalTime());
+            super(TimeMinBefore::moment, TimeMinBefore::duration, TimeMinBefore::zoneId, DateTimeValidator::toLocalTime,
+                    new MinBeforeValidator.ForLocalTime());
         }
     }
 
@@ -62,7 +63,8 @@ public final class TimeMinBeforeValidator {
          * Creates a new validator.
          */
         public ForCalendar() {
-            super(TimeMinBefore::moment, TimeMinBefore::duration, ZonedDateTime::toLocalTime, new MinBeforeValidator.ForLocalTime());
+            super(TimeMinBefore::moment, TimeMinBefore::duration, TimeMinBefore::zoneId, ZonedDateTime::toLocalTime,
+                    new MinBeforeValidator.ForLocalTime());
         }
     }
 
@@ -77,7 +79,8 @@ public final class TimeMinBeforeValidator {
          * Creates a new validator.
          */
         public ForInstant() {
-            super(TimeMinBefore::moment, TimeMinBefore::duration, DateTimeValidator::toLocalTime, new MinBeforeValidator.ForLocalTime());
+            super(TimeMinBefore::moment, TimeMinBefore::duration, TimeMinBefore::zoneId, DateTimeValidator::toLocalTime,
+                    new MinBeforeValidator.ForLocalTime());
         }
     }
 
@@ -92,7 +95,8 @@ public final class TimeMinBeforeValidator {
          * Creates a new validator.
          */
         public ForLocalDateTime() {
-            super(TimeMinBefore::moment, TimeMinBefore::duration, LocalDateTime::toLocalTime, new MinBeforeValidator.ForLocalTime());
+            super(TimeMinBefore::moment, TimeMinBefore::duration, TimeMinBefore::zoneId, AbstractTemporalAccessorPartValidator::toLocalTime,
+                    new MinBeforeValidator.ForLocalTime());
         }
     }
 
@@ -107,7 +111,8 @@ public final class TimeMinBeforeValidator {
          * Creates a new validator.
          */
         public ForOffsetDateTime() {
-            super(TimeMinBefore::moment, TimeMinBefore::duration, OffsetDateTime::toLocalTime, new MinBeforeValidator.ForLocalTime());
+            super(TimeMinBefore::moment, TimeMinBefore::duration, TimeMinBefore::zoneId, AbstractTemporalAccessorPartValidator::toLocalTime,
+                    new MinBeforeValidator.ForLocalTime());
         }
     }
 
@@ -122,7 +127,8 @@ public final class TimeMinBeforeValidator {
          * Creates a new validator.
          */
         public ForZonedDateTime() {
-            super(TimeMinBefore::moment, TimeMinBefore::duration, ZonedDateTime::toLocalTime, new MinBeforeValidator.ForLocalTime());
+            super(TimeMinBefore::moment, TimeMinBefore::duration, TimeMinBefore::zoneId, AbstractTemporalAccessorPartValidator::toLocalTime,
+                    new MinBeforeValidator.ForLocalTime());
         }
     }
 }

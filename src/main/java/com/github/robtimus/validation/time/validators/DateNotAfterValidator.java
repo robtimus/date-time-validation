@@ -47,7 +47,7 @@ public final class DateNotAfterValidator {
          * Creates a new validator.
          */
         public ForDate() {
-            super(DateNotAfter::moment, DateTimeValidator::toLocalDate, new NotAfterValidator.ForLocalDate());
+            super(DateNotAfter::moment, DateNotAfter::zoneId, DateTimeValidator::toLocalDate, new NotAfterValidator.ForLocalDate());
         }
     }
 
@@ -62,7 +62,7 @@ public final class DateNotAfterValidator {
          * Creates a new validator.
          */
         public ForCalendar() {
-            super(DateNotAfter::moment, ZonedDateTime::toLocalDate, new NotAfterValidator.ForLocalDate());
+            super(DateNotAfter::moment, DateNotAfter::zoneId, ZonedDateTime::toLocalDate, new NotAfterValidator.ForLocalDate());
         }
     }
 
@@ -77,7 +77,7 @@ public final class DateNotAfterValidator {
          * Creates a new validator.
          */
         public ForInstant() {
-            super(DateNotAfter::moment, DateTimeValidator::toLocalDate, new NotAfterValidator.ForLocalDate());
+            super(DateNotAfter::moment, DateNotAfter::zoneId, DateTimeValidator::toLocalDate, new NotAfterValidator.ForLocalDate());
         }
     }
 
@@ -92,7 +92,8 @@ public final class DateNotAfterValidator {
          * Creates a new validator.
          */
         public ForLocalDateTime() {
-            super(DateNotAfter::moment, LocalDateTime::toLocalDate, new NotAfterValidator.ForLocalDate());
+            super(DateNotAfter::moment, DateNotAfter::zoneId, AbstractTemporalAccessorPartValidator::toLocalDate,
+                    new NotAfterValidator.ForLocalDate());
         }
     }
 
@@ -107,7 +108,8 @@ public final class DateNotAfterValidator {
          * Creates a new validator.
          */
         public ForOffsetDateTime() {
-            super(DateNotAfter::moment, OffsetDateTime::toLocalDate, new NotAfterValidator.ForLocalDate());
+            super(DateNotAfter::moment, DateNotAfter::zoneId, AbstractTemporalAccessorPartValidator::toLocalDate,
+                    new NotAfterValidator.ForLocalDate());
         }
     }
 
@@ -122,7 +124,8 @@ public final class DateNotAfterValidator {
          * Creates a new validator.
          */
         public ForZonedDateTime() {
-            super(DateNotAfter::moment, ZonedDateTime::toLocalDate, new NotAfterValidator.ForLocalDate());
+            super(DateNotAfter::moment, DateNotAfter::zoneId, AbstractTemporalAccessorPartValidator::toLocalDate,
+                    new NotAfterValidator.ForLocalDate());
         }
     }
 }

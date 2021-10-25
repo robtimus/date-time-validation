@@ -19,8 +19,10 @@ package com.github.robtimus.validation.time.validators;
 
 import java.lang.annotation.Annotation;
 import java.time.Instant;
+import java.time.ZoneId;
 import java.time.temporal.TemporalAccessor;
 import java.util.Date;
+import java.util.function.BiFunction;
 import java.util.function.Function;
 import javax.validation.ConstraintValidatorContext;
 
@@ -35,22 +37,28 @@ public abstract class AbstractDatePartValidator<A extends Annotation, P extends 
 
     private final Function<A, String> momentExtractor;
     private final Function<A, String> durationExtractor;
-    private final Function<Instant, P> partExtractor;
+    private final Function<A, String> zoneIdExtractor;
+    private final BiFunction<Instant, ZoneId, P> partExtractor;
     private final AbstractTemporalAccessorValidator<?, P> partValidator;
+
+    private ZoneId zoneId;
 
     /**
      * Creates a new validator that only validates dates against a specific moment in time.
      *
      * @param momentExtractor A function that extracts the moment from a constraint annotation.
+     * @param zoneIdExtractor A function that extracts the zone id from a constraint annotation.
      * @param partExtractor A function that extracts a part from an instant.
      * @param partValidator The validator to use for validating extracted parts.
      */
     protected AbstractDatePartValidator(Function<A, String> momentExtractor,
-            Function<Instant, P> partExtractor,
+            Function<A, String> zoneIdExtractor,
+            BiFunction<Instant, ZoneId, P> partExtractor,
             AbstractTemporalAccessorValidator<?, P> partValidator) {
 
         this.momentExtractor = momentExtractor;
         this.durationExtractor = null;
+        this.zoneIdExtractor = zoneIdExtractor;
         this.partExtractor = partExtractor;
         this.partValidator = partValidator;
     }
@@ -60,16 +68,19 @@ public abstract class AbstractDatePartValidator<A extends Annotation, P extends 
      *
      * @param momentExtractor A function that extracts the moment from a constraint annotation.
      * @param durationExtractor A function that extracts the duration from a constraint annotation.
+     * @param zoneIdExtractor A function that extracts the zone id from a constraint annotation.
      * @param partExtractor A function that extracts a part from a zoned date/time.
      * @param partValidator The validator to use for validating extracted parts.
      */
     protected AbstractDatePartValidator(Function<A, String> momentExtractor,
             Function<A, String> durationExtractor,
-            Function<Instant, P> partExtractor,
+            Function<A, String> zoneIdExtractor,
+            BiFunction<Instant, ZoneId, P> partExtractor,
             AbstractTemporalAccessorValidator<?, P> partValidator) {
 
         this.momentExtractor = momentExtractor;
         this.durationExtractor = durationExtractor;
+        this.zoneIdExtractor = zoneIdExtractor;
         this.partExtractor = partExtractor;
         this.partValidator = partValidator;
     }
@@ -80,6 +91,13 @@ public abstract class AbstractDatePartValidator<A extends Annotation, P extends 
         String durationText = durationExtractor != null ? durationExtractor.apply(constraintAnnotation) : null;
 
         partValidator.initialize(momentText, durationText);
+
+        initializeZoneId(constraintAnnotation);
+    }
+
+    private void initializeZoneId(A constraintAnnotation) {
+        String zoneIdText = zoneIdExtractor.apply(constraintAnnotation);
+        zoneId = zoneIdText.isEmpty() ? ZoneId.systemDefault() : ZoneId.of(zoneIdText);
     }
 
     @Override
@@ -89,7 +107,7 @@ public abstract class AbstractDatePartValidator<A extends Annotation, P extends 
         }
 
         Instant instant = value.toInstant();
-        P part = partExtractor.apply(instant);
+        P part = partExtractor.apply(instant, zoneId);
         return partValidator.isValid(part, context);
     }
 }

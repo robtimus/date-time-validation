@@ -70,6 +70,19 @@ class TimeMaxAfterTest extends AbstractConstraintTest {
                         () -> null);
             }
         }
+
+        @Nested
+        @DisplayName("with zone id")
+        class WithZoneId extends ConstraintTest<Date> {
+
+            WithZoneId() {
+                super(TestClassWithZoneId.class, "date",
+                        Date.from(Instant.parse("2021-10-24T11:16:31.00Z")),
+                        Date.from(Instant.parse("2021-10-24T11:16:31.00Z").minusMillis(1)),
+                        Date.from(Instant.parse("2021-10-24T11:16:31.00Z").plusMillis(1)),
+                        () -> null);
+            }
+        }
     }
 
     @Nested
@@ -82,9 +95,9 @@ class TimeMaxAfterTest extends AbstractConstraintTest {
 
             WithNow() {
                 super(TestClassWithNow.class, "calendar",
-                        GregorianCalendar.from(ZonedDateTime.parse("2021-10-24T11:16:31+01:00[Europe/Paris]")),
-                        GregorianCalendar.from(ZonedDateTime.parse("2021-10-24T11:16:31+01:00[Europe/Paris]").minus(1, ChronoUnit.MILLIS)),
-                        GregorianCalendar.from(ZonedDateTime.parse("2021-10-24T11:16:31+01:00[Europe/Paris]").plus(1, ChronoUnit.MILLIS)),
+                        GregorianCalendar.from(ZonedDateTime.parse("2021-10-24T11:16:31+02:00[Europe/Paris]")),
+                        GregorianCalendar.from(ZonedDateTime.parse("2021-10-24T11:16:31+02:00[Europe/Paris]").minus(1, ChronoUnit.MILLIS)),
+                        GregorianCalendar.from(ZonedDateTime.parse("2021-10-24T11:16:31+02:00[Europe/Paris]").plus(1, ChronoUnit.MILLIS)),
                         () -> Clock.fixed(ZonedDateTime.parse("2007-12-03T10:15:30+01:00[Europe/Paris]").toInstant(), ZoneId.of("Europe/Paris")));
             }
         }
@@ -95,9 +108,22 @@ class TimeMaxAfterTest extends AbstractConstraintTest {
 
             WithMoment() {
                 super(TestClassWithMoment.class, "calendar",
-                        GregorianCalendar.from(ZonedDateTime.parse("2021-10-24T11:16:31+01:00[Europe/Paris]")),
-                        GregorianCalendar.from(ZonedDateTime.parse("2021-10-24T11:16:31+01:00[Europe/Paris]").minus(1, ChronoUnit.MILLIS)),
-                        GregorianCalendar.from(ZonedDateTime.parse("2021-10-24T11:16:31+01:00[Europe/Paris]").plus(1, ChronoUnit.MILLIS)),
+                        GregorianCalendar.from(ZonedDateTime.parse("2021-10-24T11:16:31+02:00[Europe/Paris]")),
+                        GregorianCalendar.from(ZonedDateTime.parse("2021-10-24T11:16:31+02:00[Europe/Paris]").minus(1, ChronoUnit.MILLIS)),
+                        GregorianCalendar.from(ZonedDateTime.parse("2021-10-24T11:16:31+02:00[Europe/Paris]").plus(1, ChronoUnit.MILLIS)),
+                        () -> null);
+            }
+        }
+
+        @Nested
+        @DisplayName("with zone id")
+        class WithZoneId extends ConstraintTest<Calendar> {
+
+            WithZoneId() {
+                super(TestClassWithZoneId.class, "calendar",
+                        GregorianCalendar.from(ZonedDateTime.parse("2021-10-24T13:16:31+02:00[Europe/Paris]")),
+                        GregorianCalendar.from(ZonedDateTime.parse("2021-10-24T13:16:31+02:00[Europe/Paris]").minus(1, ChronoUnit.MILLIS)),
+                        GregorianCalendar.from(ZonedDateTime.parse("2021-10-24T13:16:31+02:00[Europe/Paris]").plus(1, ChronoUnit.MILLIS)),
                         () -> null);
             }
         }
@@ -132,6 +158,19 @@ class TimeMaxAfterTest extends AbstractConstraintTest {
                         () -> null);
             }
         }
+
+        @Nested
+        @DisplayName("with zone id")
+        class WithZoneId extends ConstraintTest<Instant> {
+
+            WithZoneId() {
+                super(TestClassWithZoneId.class, "instant",
+                        Instant.parse("2021-10-24T11:16:31.00Z"),
+                        Instant.parse("2021-10-24T11:16:31.00Z").minusMillis(1),
+                        Instant.parse("2021-10-24T11:16:31.00Z").plusMillis(1),
+                        () -> null);
+            }
+        }
     }
 
     @Nested
@@ -163,6 +202,19 @@ class TimeMaxAfterTest extends AbstractConstraintTest {
                         () -> null);
             }
         }
+
+        @Nested
+        @DisplayName("with zone id")
+        class WithZoneId extends ConstraintTest<LocalDateTime> {
+
+            WithZoneId() {
+                super(TestClassWithZoneId.class, "localDateTime",
+                        LocalDateTime.parse("2021-10-24T11:16:31"),
+                        LocalDateTime.parse("2021-10-24T11:16:31").minusNanos(1),
+                        LocalDateTime.parse("2021-10-24T11:16:31").plusNanos(1),
+                        () -> null);
+            }
+        }
     }
 
     @Nested
@@ -175,9 +227,9 @@ class TimeMaxAfterTest extends AbstractConstraintTest {
 
             WithNow() {
                 super(TestClassWithNow.class, "offsetDateTime",
-                        OffsetDateTime.parse("2021-10-24T11:16:31+01:00"),
-                        OffsetDateTime.parse("2021-10-24T11:16:31+01:00").minusNanos(1),
-                        OffsetDateTime.parse("2021-10-24T11:16:31+01:00").plusNanos(1),
+                        OffsetDateTime.parse("2021-10-24T11:16:31+02:00"),
+                        OffsetDateTime.parse("2021-10-24T11:16:31+02:00").minusNanos(1),
+                        OffsetDateTime.parse("2021-10-24T11:16:31+02:00").plusNanos(1),
                         () -> Clock.fixed(Instant.parse("2007-12-03T09:15:30.00Z"), ZoneOffset.ofHours(1)));
             }
         }
@@ -188,9 +240,22 @@ class TimeMaxAfterTest extends AbstractConstraintTest {
 
             WithMoment() {
                 super(TestClassWithMoment.class, "offsetDateTime",
-                        OffsetDateTime.parse("2021-10-24T11:16:31+01:00"),
-                        OffsetDateTime.parse("2021-10-24T11:16:31+01:00").minusNanos(1),
-                        OffsetDateTime.parse("2021-10-24T11:16:31+01:00").plusNanos(1),
+                        OffsetDateTime.parse("2021-10-24T11:16:31+02:00"),
+                        OffsetDateTime.parse("2021-10-24T11:16:31+02:00").minusNanos(1),
+                        OffsetDateTime.parse("2021-10-24T11:16:31+02:00").plusNanos(1),
+                        () -> null);
+            }
+        }
+
+        @Nested
+        @DisplayName("with zone id")
+        class WithZoneId extends ConstraintTest<OffsetDateTime> {
+
+            WithZoneId() {
+                super(TestClassWithZoneId.class, "offsetDateTime",
+                        OffsetDateTime.parse("2021-10-24T13:16:31+02:00"),
+                        OffsetDateTime.parse("2021-10-24T13:16:31+02:00").minusNanos(1),
+                        OffsetDateTime.parse("2021-10-24T13:16:31+02:00").plusNanos(1),
                         () -> null);
             }
         }
@@ -206,9 +271,9 @@ class TimeMaxAfterTest extends AbstractConstraintTest {
 
             WithNow() {
                 super(TestClassWithNow.class, "zonedDateTime",
-                        ZonedDateTime.parse("2021-10-24T11:16:31+01:00[Europe/Paris]"),
-                        ZonedDateTime.parse("2021-10-24T11:16:31+01:00[Europe/Paris]").minusNanos(1),
-                        ZonedDateTime.parse("2021-10-24T11:16:31+01:00[Europe/Paris]").plusNanos(1),
+                        ZonedDateTime.parse("2021-10-24T11:16:31+02:00[Europe/Paris]"),
+                        ZonedDateTime.parse("2021-10-24T11:16:31+02:00[Europe/Paris]").minusNanos(1),
+                        ZonedDateTime.parse("2021-10-24T11:16:31+02:00[Europe/Paris]").plusNanos(1),
                         () -> Clock.fixed(ZonedDateTime.parse("2007-12-03T10:15:30+01:00[Europe/Paris]").toInstant(), ZoneId.of("Europe/Paris")));
             }
         }
@@ -219,9 +284,22 @@ class TimeMaxAfterTest extends AbstractConstraintTest {
 
             WithMoment() {
                 super(TestClassWithMoment.class, "zonedDateTime",
-                        ZonedDateTime.parse("2021-10-24T11:16:31+01:00[Europe/Paris]"),
-                        ZonedDateTime.parse("2021-10-24T11:16:31+01:00[Europe/Paris]").minusNanos(1),
-                        ZonedDateTime.parse("2021-10-24T11:16:31+01:00[Europe/Paris]").plusNanos(1),
+                        ZonedDateTime.parse("2021-10-24T11:16:31+02:00[Europe/Paris]"),
+                        ZonedDateTime.parse("2021-10-24T11:16:31+02:00[Europe/Paris]").minusNanos(1),
+                        ZonedDateTime.parse("2021-10-24T11:16:31+02:00[Europe/Paris]").plusNanos(1),
+                        () -> null);
+            }
+        }
+
+        @Nested
+        @DisplayName("with zone id")
+        class WithZoneId extends ConstraintTest<ZonedDateTime> {
+
+            WithZoneId() {
+                super(TestClassWithZoneId.class, "zonedDateTime",
+                        ZonedDateTime.parse("2021-10-24T13:16:31+02:00[Europe/Paris]"),
+                        ZonedDateTime.parse("2021-10-24T13:16:31+02:00[Europe/Paris]").minusNanos(1),
+                        ZonedDateTime.parse("2021-10-24T13:16:31+02:00[Europe/Paris]").plusNanos(1),
                         () -> null);
             }
         }
@@ -322,6 +400,26 @@ class TimeMaxAfterTest extends AbstractConstraintTest {
         OffsetDateTime offsetDateTime;
 
         @TimeMaxAfter(duration = "PT1H1M1S", moment = "10:15:30")
+        ZonedDateTime zonedDateTime;
+    }
+
+    private static final class TestClassWithZoneId {
+        @TimeMaxAfter(duration = "PT1H1M1S", moment = "10:15:30", zoneId = "UTC")
+        Date date;
+
+        @TimeMaxAfter(duration = "PT1H1M1S", moment = "10:15:30", zoneId = "UTC")
+        Calendar calendar;
+
+        @TimeMaxAfter(duration = "PT1H1M1S", moment = "10:15:30", zoneId = "UTC")
+        Instant instant;
+
+        @TimeMaxAfter(duration = "PT1H1M1S", moment = "10:15:30", zoneId = "UTC")
+        LocalDateTime localDateTime;
+
+        @TimeMaxAfter(duration = "PT1H1M1S", moment = "10:15:30", zoneId = "UTC")
+        OffsetDateTime offsetDateTime;
+
+        @TimeMaxAfter(duration = "PT1H1M1S", moment = "10:15:30", zoneId = "UTC")
         ZonedDateTime zonedDateTime;
     }
 }

@@ -24,6 +24,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import java.lang.annotation.Annotation;
 import java.time.Instant;
 import java.time.ZoneId;
+import java.time.ZoneOffset;
 import java.util.Comparator;
 import java.util.List;
 import javax.validation.ClockProvider;
@@ -62,6 +63,13 @@ abstract class AbstractConstraintTest {
         return Instant.parse(text)
                 .atZone(ZoneId.of("UTC")) //$NON-NLS-1$
                 .withZoneSameLocal(ZoneId.systemDefault())
+                .toInstant();
+    }
+
+    static Instant utcInstantAtOffset(String text, int hours) {
+        return Instant.parse(text)
+                .atZone(ZoneId.of("UTC")) //$NON-NLS-1$
+                .withZoneSameLocal(ZoneOffset.ofHours(hours))
                 .toInstant();
     }
 }

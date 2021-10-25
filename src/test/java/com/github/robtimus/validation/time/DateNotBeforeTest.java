@@ -70,6 +70,19 @@ class DateNotBeforeTest extends AbstractConstraintTest {
                         () -> null);
             }
         }
+
+        @Nested
+        @DisplayName("with zone id")
+        class WithZoneId extends ConstraintTest<Date> {
+
+            WithZoneId() {
+                super(TestClassWithZoneId.class, "date",
+                        Date.from(utcInstantAtOffset("2007-12-04T00:50:15.00Z", 1)),
+                        Date.from(utcInstantAtOffset("2007-12-04T00:50:15.00Z", 1).minus(24, ChronoUnit.HOURS)),
+                        Date.from(utcInstantAtOffset("2007-12-04T00:50:15.00Z", 1).plus(24, ChronoUnit.HOURS)),
+                        () -> null);
+            }
+        }
     }
 
     @Nested
@@ -98,6 +111,19 @@ class DateNotBeforeTest extends AbstractConstraintTest {
                         GregorianCalendar.from(ZonedDateTime.parse("2007-12-03T13:50:15+01:00[Europe/Paris]")),
                         GregorianCalendar.from(ZonedDateTime.parse("2007-12-03T13:50:15+01:00[Europe/Paris]").minusDays(1)),
                         GregorianCalendar.from(ZonedDateTime.parse("2007-12-03T13:50:15+01:00[Europe/Paris]").plusDays(1)),
+                        () -> null);
+            }
+        }
+
+        @Nested
+        @DisplayName("with zone id")
+        class WithZoneId extends ConstraintTest<Calendar> {
+
+            WithZoneId() {
+                super(TestClassWithZoneId.class, "calendar",
+                        GregorianCalendar.from(ZonedDateTime.parse("2007-12-04T00:50:15+01:00[Europe/Paris]")),
+                        GregorianCalendar.from(ZonedDateTime.parse("2007-12-04T00:50:15+01:00[Europe/Paris]").minusDays(1)),
+                        GregorianCalendar.from(ZonedDateTime.parse("2007-12-04T00:50:15+01:00[Europe/Paris]").plusDays(1)),
                         () -> null);
             }
         }
@@ -132,6 +158,19 @@ class DateNotBeforeTest extends AbstractConstraintTest {
                         () -> null);
             }
         }
+
+        @Nested
+        @DisplayName("with zone id")
+        class WithZoneId extends ConstraintTest<Instant> {
+
+            WithZoneId() {
+                super(TestClassWithZoneId.class, "instant",
+                        utcInstantAtOffset("2007-12-04T00:50:15.00Z", 1),
+                        utcInstantAtOffset("2007-12-04T00:50:15.00Z", 1).minus(24, ChronoUnit.HOURS),
+                        utcInstantAtOffset("2007-12-04T00:50:15.00Z", 1).plus(24, ChronoUnit.HOURS),
+                        () -> null);
+            }
+        }
     }
 
     @Nested
@@ -157,6 +196,19 @@ class DateNotBeforeTest extends AbstractConstraintTest {
 
             WithMoment() {
                 super(TestClassWithMoment.class, "localDateTime",
+                        LocalDateTime.parse("2007-12-03T13:50:15"),
+                        LocalDateTime.parse("2007-12-03T13:50:15").minusDays(1),
+                        LocalDateTime.parse("2007-12-03T13:50:15").plusDays(1),
+                        () -> null);
+            }
+        }
+
+        @Nested
+        @DisplayName("with zone id")
+        class WithZoneId extends ConstraintTest<LocalDateTime> {
+
+            WithZoneId() {
+                super(TestClassWithZoneId.class, "localDateTime",
                         LocalDateTime.parse("2007-12-03T13:50:15"),
                         LocalDateTime.parse("2007-12-03T13:50:15").minusDays(1),
                         LocalDateTime.parse("2007-12-03T13:50:15").plusDays(1),
@@ -194,6 +246,19 @@ class DateNotBeforeTest extends AbstractConstraintTest {
                         () -> null);
             }
         }
+
+        @Nested
+        @DisplayName("with zone id")
+        class WithZoneId extends ConstraintTest<OffsetDateTime> {
+
+            WithZoneId() {
+                super(TestClassWithZoneId.class, "offsetDateTime",
+                        OffsetDateTime.parse("2007-12-04T00:15:30+01:00"),
+                        OffsetDateTime.parse("2007-12-04T00:50:15+01:00").minusDays(1),
+                        OffsetDateTime.parse("2007-12-04T00:50:15+01:00").plusDays(1),
+                        () -> null);
+            }
+        }
     }
 
     @Nested
@@ -222,6 +287,19 @@ class DateNotBeforeTest extends AbstractConstraintTest {
                         ZonedDateTime.parse("2007-12-03T13:50:15+01:00[Europe/Paris]"),
                         ZonedDateTime.parse("2007-12-03T13:50:15+01:00[Europe/Paris]").minusDays(1),
                         ZonedDateTime.parse("2007-12-03T13:50:15+01:00[Europe/Paris]").plusDays(1),
+                        () -> null);
+            }
+        }
+
+        @Nested
+        @DisplayName("with zone id")
+        class WithZoneId extends ConstraintTest<ZonedDateTime> {
+
+            WithZoneId() {
+                super(TestClassWithZoneId.class, "zonedDateTime",
+                        ZonedDateTime.parse("2007-12-04T00:50:15+01:00[Europe/Paris]"),
+                        ZonedDateTime.parse("2007-12-04T00:50:15+01:00[Europe/Paris]").minusDays(1),
+                        ZonedDateTime.parse("2007-12-04T00:50:15+01:00[Europe/Paris]").plusDays(1),
                         () -> null);
             }
         }
@@ -320,6 +398,26 @@ class DateNotBeforeTest extends AbstractConstraintTest {
         OffsetDateTime offsetDateTime;
 
         @DateNotBefore(moment = "2007-12-03")
+        ZonedDateTime zonedDateTime;
+    }
+
+    private static final class TestClassWithZoneId {
+        @DateNotBefore(moment = "2007-12-03", zoneId = "UTC")
+        Date date;
+
+        @DateNotBefore(moment = "2007-12-03", zoneId = "UTC")
+        Calendar calendar;
+
+        @DateNotBefore(moment = "2007-12-03", zoneId = "UTC")
+        Instant instant;
+
+        @DateNotBefore(moment = "2007-12-03", zoneId = "UTC")
+        LocalDateTime localDateTime;
+
+        @DateNotBefore(moment = "2007-12-03", zoneId = "UTC")
+        OffsetDateTime offsetDateTime;
+
+        @DateNotBefore(moment = "2007-12-03", zoneId = "UTC")
         ZonedDateTime zonedDateTime;
     }
 }

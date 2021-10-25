@@ -47,7 +47,7 @@ public final class TimeAfterValidator {
          * Creates a new validator.
          */
         public ForDate() {
-            super(TimeAfter::moment, DateTimeValidator::toLocalTime, new AfterValidator.ForLocalTime());
+            super(TimeAfter::moment, TimeAfter::zoneId, DateTimeValidator::toLocalTime, new AfterValidator.ForLocalTime());
         }
     }
 
@@ -62,7 +62,7 @@ public final class TimeAfterValidator {
          * Creates a new validator.
          */
         public ForCalendar() {
-            super(TimeAfter::moment, ZonedDateTime::toLocalTime, new AfterValidator.ForLocalTime());
+            super(TimeAfter::moment, TimeAfter::zoneId, ZonedDateTime::toLocalTime, new AfterValidator.ForLocalTime());
         }
     }
 
@@ -77,7 +77,7 @@ public final class TimeAfterValidator {
          * Creates a new validator.
          */
         public ForInstant() {
-            super(TimeAfter::moment, DateTimeValidator::toLocalTime, new AfterValidator.ForLocalTime());
+            super(TimeAfter::moment, TimeAfter::zoneId, DateTimeValidator::toLocalTime, new AfterValidator.ForLocalTime());
         }
     }
 
@@ -92,7 +92,7 @@ public final class TimeAfterValidator {
          * Creates a new validator.
          */
         public ForLocalDateTime() {
-            super(TimeAfter::moment, LocalDateTime::toLocalTime, new AfterValidator.ForLocalTime());
+            super(TimeAfter::moment, TimeAfter::zoneId, AbstractTemporalAccessorPartValidator::toLocalTime, new AfterValidator.ForLocalTime());
         }
     }
 
@@ -107,7 +107,7 @@ public final class TimeAfterValidator {
          * Creates a new validator.
          */
         public ForOffsetDateTime() {
-            super(TimeAfter::moment, OffsetDateTime::toLocalTime, new AfterValidator.ForLocalTime());
+            super(TimeAfter::moment, TimeAfter::zoneId, AbstractTemporalAccessorPartValidator::toLocalTime, new AfterValidator.ForLocalTime());
         }
     }
 
@@ -122,7 +122,7 @@ public final class TimeAfterValidator {
          * Creates a new validator.
          */
         public ForZonedDateTime() {
-            super(TimeAfter::moment, ZonedDateTime::toLocalTime, new AfterValidator.ForLocalTime());
+            super(TimeAfter::moment, TimeAfter::zoneId, AbstractTemporalAccessorPartValidator::toLocalTime, new AfterValidator.ForLocalTime());
         }
     }
 }

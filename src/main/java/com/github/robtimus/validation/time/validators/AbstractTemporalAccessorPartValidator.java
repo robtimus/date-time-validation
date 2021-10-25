@@ -18,7 +18,14 @@
 package com.github.robtimus.validation.time.validators;
 
 import java.lang.annotation.Annotation;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.OffsetDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.time.temporal.TemporalAccessor;
+import java.util.function.BiFunction;
 import java.util.function.Function;
 import javax.validation.ConstraintValidatorContext;
 
@@ -35,22 +42,28 @@ public abstract class AbstractTemporalAccessorPartValidator<A extends Annotation
 
     private final Function<A, String> momentExtractor;
     private final Function<A, String> durationExtractor;
-    private final Function<T, P> partExtractor;
+    private final Function<A, String> zoneIdExtractor;
+    private final BiFunction<T, ZoneId, P> partExtractor;
     private final AbstractTemporalAccessorValidator<?, P> partValidator;
+
+    private ZoneId zoneId;
 
     /**
      * Creates a new validator that only validates temporal accessors against a specific moment in time.
      *
      * @param momentExtractor A function that extracts the moment value from a constraint annotation.
+     * @param zoneIdExtractor A function that extracts the zone id from a constraint annotation.
      * @param partExtractor A function that extracts a part from a {@link TemporalAccessor}..
      * @param partValidator The validator to use for validating extracted parts.
      */
     protected AbstractTemporalAccessorPartValidator(Function<A, String> momentExtractor,
-            Function<T, P> partExtractor,
+            Function<A, String> zoneIdExtractor,
+            BiFunction<T, ZoneId, P> partExtractor,
             AbstractTemporalAccessorValidator<?, P> partValidator) {
 
         this.momentExtractor = momentExtractor;
         this.durationExtractor = null;
+        this.zoneIdExtractor = zoneIdExtractor;
         this.partExtractor = partExtractor;
         this.partValidator = partValidator;
     }
@@ -60,16 +73,19 @@ public abstract class AbstractTemporalAccessorPartValidator<A extends Annotation
      *
      * @param momentExtractor A function that extracts the moment value from a constraint annotation.
      * @param durationExtractor A function that extracts the duration value from a constraint annotation.
+     * @param zoneIdExtractor A function that extracts the zone id from a constraint annotation.
      * @param partExtractor A function that extracts a part from a {@link TemporalAccessor}..
      * @param partValidator The validator to use for validating extracted parts.
      */
     protected AbstractTemporalAccessorPartValidator(Function<A, String> momentExtractor,
             Function<A, String> durationExtractor,
-            Function<T, P> partExtractor,
+            Function<A, String> zoneIdExtractor,
+            BiFunction<T, ZoneId, P> partExtractor,
             AbstractTemporalAccessorValidator<?, P> partValidator) {
 
         this.momentExtractor = momentExtractor;
         this.durationExtractor = durationExtractor;
+        this.zoneIdExtractor = zoneIdExtractor;
         this.partExtractor = partExtractor;
         this.partValidator = partValidator;
     }
@@ -80,6 +96,13 @@ public abstract class AbstractTemporalAccessorPartValidator<A extends Annotation
         String durationText = durationExtractor != null ? durationExtractor.apply(constraintAnnotation) : null;
 
         partValidator.initialize(momentText, durationText);
+
+        initializeZoneId(constraintAnnotation);
+    }
+
+    private void initializeZoneId(A constraintAnnotation) {
+        String zoneIdText = zoneIdExtractor.apply(constraintAnnotation);
+        zoneId = zoneIdText.isEmpty() ? null : ZoneId.of(zoneIdText);
     }
 
     @Override
@@ -88,7 +111,31 @@ public abstract class AbstractTemporalAccessorPartValidator<A extends Annotation
             return true;
         }
 
-        P part = partExtractor.apply(value);
+        P part = partExtractor.apply(value, zoneId);
         return partValidator.isValid(part, context);
+    }
+
+    static LocalTime toLocalTime(LocalDateTime localDateTime, @SuppressWarnings("unused") ZoneId zoneId) {
+        return localDateTime.toLocalTime();
+    }
+
+    static LocalTime toLocalTime(OffsetDateTime offsetDateTime, ZoneId zoneId) {
+        return zoneId == null ? offsetDateTime.toLocalTime() : offsetDateTime.atZoneSameInstant(zoneId).toLocalTime();
+    }
+
+    static LocalTime toLocalTime(ZonedDateTime zonedDateTime, ZoneId zoneId) {
+        return zoneId == null ? zonedDateTime.toLocalTime() : zonedDateTime.withZoneSameInstant(zoneId).toLocalTime();
+    }
+
+    static LocalDate toLocalDate(LocalDateTime localDateDate, @SuppressWarnings("unused") ZoneId zoneId) {
+        return localDateDate.toLocalDate();
+    }
+
+    static LocalDate toLocalDate(OffsetDateTime offsetDateTime, ZoneId zoneId) {
+        return zoneId == null ? offsetDateTime.toLocalDate() : offsetDateTime.atZoneSameInstant(zoneId).toLocalDate();
+    }
+
+    static LocalDate toLocalDate(ZonedDateTime zonedDateTime, ZoneId zoneId) {
+        return zoneId == null ? zonedDateTime.toLocalDate() : zonedDateTime.withZoneSameInstant(zoneId).toLocalDate();
     }
 }

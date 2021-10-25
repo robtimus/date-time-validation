@@ -47,7 +47,8 @@ public final class TimeMaxAfterValidator {
          * Creates a new validator.
          */
         public ForDate() {
-            super(TimeMaxAfter::moment, TimeMaxAfter::duration, DateTimeValidator::toLocalTime, new MaxAfterValidator.ForLocalTime());
+            super(TimeMaxAfter::moment, TimeMaxAfter::duration, TimeMaxAfter::zoneId, DateTimeValidator::toLocalTime,
+                    new MaxAfterValidator.ForLocalTime());
         }
     }
 
@@ -62,7 +63,8 @@ public final class TimeMaxAfterValidator {
          * Creates a new validator.
          */
         public ForCalendar() {
-            super(TimeMaxAfter::moment, TimeMaxAfter::duration, ZonedDateTime::toLocalTime, new MaxAfterValidator.ForLocalTime());
+            super(TimeMaxAfter::moment, TimeMaxAfter::duration, TimeMaxAfter::zoneId, ZonedDateTime::toLocalTime,
+                    new MaxAfterValidator.ForLocalTime());
         }
     }
 
@@ -77,7 +79,8 @@ public final class TimeMaxAfterValidator {
          * Creates a new validator.
          */
         public ForInstant() {
-            super(TimeMaxAfter::moment, TimeMaxAfter::duration, DateTimeValidator::toLocalTime, new MaxAfterValidator.ForLocalTime());
+            super(TimeMaxAfter::moment, TimeMaxAfter::duration, TimeMaxAfter::zoneId, DateTimeValidator::toLocalTime,
+                    new MaxAfterValidator.ForLocalTime());
         }
     }
 
@@ -92,7 +95,8 @@ public final class TimeMaxAfterValidator {
          * Creates a new validator.
          */
         public ForLocalDateTime() {
-            super(TimeMaxAfter::moment, TimeMaxAfter::duration, LocalDateTime::toLocalTime, new MaxAfterValidator.ForLocalTime());
+            super(TimeMaxAfter::moment, TimeMaxAfter::duration, TimeMaxAfter::zoneId, AbstractTemporalAccessorPartValidator::toLocalTime,
+                    new MaxAfterValidator.ForLocalTime());
         }
     }
 
@@ -107,7 +111,8 @@ public final class TimeMaxAfterValidator {
          * Creates a new validator.
          */
         public ForOffsetDateTime() {
-            super(TimeMaxAfter::moment, TimeMaxAfter::duration, OffsetDateTime::toLocalTime, new MaxAfterValidator.ForLocalTime());
+            super(TimeMaxAfter::moment, TimeMaxAfter::duration, TimeMaxAfter::zoneId, AbstractTemporalAccessorPartValidator::toLocalTime,
+                    new MaxAfterValidator.ForLocalTime());
         }
     }
 
@@ -122,7 +127,8 @@ public final class TimeMaxAfterValidator {
          * Creates a new validator.
          */
         public ForZonedDateTime() {
-            super(TimeMaxAfter::moment, TimeMaxAfter::duration, ZonedDateTime::toLocalTime, new MaxAfterValidator.ForLocalTime());
+            super(TimeMaxAfter::moment, TimeMaxAfter::duration, TimeMaxAfter::zoneId, AbstractTemporalAccessorPartValidator::toLocalTime,
+                    new MaxAfterValidator.ForLocalTime());
         }
     }
 }

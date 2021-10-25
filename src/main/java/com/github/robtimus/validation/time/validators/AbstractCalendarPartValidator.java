@@ -36,22 +36,28 @@ public abstract class AbstractCalendarPartValidator<A extends Annotation, P exte
 
     private final Function<A, String> momentExtractor;
     private final Function<A, String> durationExtractor;
+    private final Function<A, String> zoneIdExtractor;
     private final Function<ZonedDateTime, P> partExtractor;
     private final AbstractTemporalAccessorValidator<?, P> partValidator;
+
+    private ZoneId zoneId;
 
     /**
      * Creates a new validator that only validates calendars against a specific moment in time.
      *
      * @param momentExtractor A function that extracts the moment from a constraint annotation.
+     * @param zoneIdExtractor A function that extracts the zone id from a constraint annotation.
      * @param partExtractor A function that extracts a part from a zoned date/time.
      * @param partValidator The validator to use for validating extracted parts.
      */
     protected AbstractCalendarPartValidator(Function<A, String> momentExtractor,
+            Function<A, String> zoneIdExtractor,
             Function<ZonedDateTime, P> partExtractor,
             AbstractTemporalAccessorValidator<?, P> partValidator) {
 
         this.momentExtractor = momentExtractor;
         this.durationExtractor = null;
+        this.zoneIdExtractor = zoneIdExtractor;
         this.partExtractor = partExtractor;
         this.partValidator = partValidator;
     }
@@ -61,16 +67,19 @@ public abstract class AbstractCalendarPartValidator<A extends Annotation, P exte
      *
      * @param momentExtractor A function that extracts the moment from a constraint annotation.
      * @param durationExtractor A function that extracts the duration from a constraint annotation.
+     * @param zoneIdExtractor A function that extracts the zone id from a constraint annotation.
      * @param partExtractor A function that extracts a part from a zoned date/time.
      * @param partValidator The validator to use for validating extracted parts.
      */
     protected AbstractCalendarPartValidator(Function<A, String> momentExtractor,
             Function<A, String> durationExtractor,
+            Function<A, String> zoneIdExtractor,
             Function<ZonedDateTime, P> partExtractor,
             AbstractTemporalAccessorValidator<?, P> partValidator) {
 
         this.momentExtractor = momentExtractor;
         this.durationExtractor = durationExtractor;
+        this.zoneIdExtractor = zoneIdExtractor;
         this.partExtractor = partExtractor;
         this.partValidator = partValidator;
     }
@@ -81,6 +90,13 @@ public abstract class AbstractCalendarPartValidator<A extends Annotation, P exte
         String durationText = durationExtractor != null ? durationExtractor.apply(constraintAnnotation) : null;
 
         partValidator.initialize(momentText, durationText);
+
+        initializeZoneId(constraintAnnotation);
+    }
+
+    private void initializeZoneId(A constraintAnnotation) {
+        String zoneIdText = zoneIdExtractor.apply(constraintAnnotation);
+        zoneId = zoneIdText.isEmpty() ? null : ZoneId.of(zoneIdText);
     }
 
     @Override
@@ -89,14 +105,16 @@ public abstract class AbstractCalendarPartValidator<A extends Annotation, P exte
             return true;
         }
 
-        ZonedDateTime zonedDateTime = toZonedDateTime(value);
+        ZonedDateTime zonedDateTime = toZonedDateTime(value, zoneId);
         P part = partExtractor.apply(zonedDateTime);
         return partValidator.isValid(part, context);
     }
 
-    private ZonedDateTime toZonedDateTime(Calendar calendar) {
+    private static ZonedDateTime toZonedDateTime(Calendar calendar, ZoneId zoneId) {
         // This is exactly what GregorianCalendar does
-        ZoneId zoneId = calendar.getTimeZone().toZoneId();
+        if (zoneId == null) {
+            zoneId = calendar.getTimeZone().toZoneId();
+        }
         return ZonedDateTime.ofInstant(calendar.toInstant(), zoneId);
     }
 }

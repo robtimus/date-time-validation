@@ -104,6 +104,17 @@ public @interface TimeMinBefore {
     String moment();
 
     /**
+     * The zone id to use.
+     * <ul>
+     * <li>For {@link java.util.Date} and {@link java.time.Instant}, this is the zone id to apply; the default is {@link ZoneId#systemDefault()}</li>
+     * <li>For {@link java.util.Calendar}, {@link java.time.OffsetDateTime} and {@link java.time.ZonedDateTime}, this is the zone id to convert to
+     *     before extracting the time; the default is to not convert</li>
+     * <li>For {@link java.time.LocalDateTime} this value is ignored</li>
+     * </ul>
+     */
+    String zoneId() default "";
+
+    /**
      * Defines several {@link TimeMinBefore} annotations on the same element.
      */
     @Target({ METHOD, FIELD, ANNOTATION_TYPE, CONSTRUCTOR, PARAMETER, TYPE_USE })

@@ -47,7 +47,8 @@ public final class DateMaxBeforeValidator {
          * Creates a new validator.
          */
         public ForDate() {
-            super(DateMaxBefore::moment, DateMaxBefore::duration, DateTimeValidator::toLocalDate, new MaxBeforeValidator.ForLocalDate());
+            super(DateMaxBefore::moment, DateMaxBefore::duration, DateMaxBefore::zoneId, DateTimeValidator::toLocalDate,
+                    new MaxBeforeValidator.ForLocalDate());
         }
     }
 
@@ -62,7 +63,8 @@ public final class DateMaxBeforeValidator {
          * Creates a new validator.
          */
         public ForCalendar() {
-            super(DateMaxBefore::moment, DateMaxBefore::duration, ZonedDateTime::toLocalDate, new MaxBeforeValidator.ForLocalDate());
+            super(DateMaxBefore::moment, DateMaxBefore::duration, DateMaxBefore::zoneId, ZonedDateTime::toLocalDate,
+                    new MaxBeforeValidator.ForLocalDate());
         }
     }
 
@@ -77,7 +79,8 @@ public final class DateMaxBeforeValidator {
          * Creates a new validator.
          */
         public ForInstant() {
-            super(DateMaxBefore::moment, DateMaxBefore::duration, DateTimeValidator::toLocalDate, new MaxBeforeValidator.ForLocalDate());
+            super(DateMaxBefore::moment, DateMaxBefore::duration, DateMaxBefore::zoneId, DateTimeValidator::toLocalDate,
+                    new MaxBeforeValidator.ForLocalDate());
         }
     }
 
@@ -92,7 +95,8 @@ public final class DateMaxBeforeValidator {
          * Creates a new validator.
          */
         public ForLocalDateTime() {
-            super(DateMaxBefore::moment, DateMaxBefore::duration, LocalDateTime::toLocalDate, new MaxBeforeValidator.ForLocalDate());
+            super(DateMaxBefore::moment, DateMaxBefore::duration, DateMaxBefore::zoneId, AbstractTemporalAccessorPartValidator::toLocalDate,
+                    new MaxBeforeValidator.ForLocalDate());
         }
     }
 
@@ -107,7 +111,8 @@ public final class DateMaxBeforeValidator {
          * Creates a new validator.
          */
         public ForOffsetDateTime() {
-            super(DateMaxBefore::moment, DateMaxBefore::duration, OffsetDateTime::toLocalDate, new MaxBeforeValidator.ForLocalDate());
+            super(DateMaxBefore::moment, DateMaxBefore::duration, DateMaxBefore::zoneId, AbstractTemporalAccessorPartValidator::toLocalDate,
+                    new MaxBeforeValidator.ForLocalDate());
         }
     }
 
@@ -122,7 +127,8 @@ public final class DateMaxBeforeValidator {
          * Creates a new validator.
          */
         public ForZonedDateTime() {
-            super(DateMaxBefore::moment, DateMaxBefore::duration, ZonedDateTime::toLocalDate, new MaxBeforeValidator.ForLocalDate());
+            super(DateMaxBefore::moment, DateMaxBefore::duration, DateMaxBefore::zoneId, AbstractTemporalAccessorPartValidator::toLocalDate,
+                    new MaxBeforeValidator.ForLocalDate());
         }
     }
 }
