@@ -149,6 +149,19 @@ class MinBeforeTest extends AbstractConstraintTest {
                         () -> null);
             }
         }
+
+        @Nested
+        @DisplayName("with different time zone")
+        class WithDifferentTimeZone extends ConstraintTest<Calendar> {
+
+            WithDifferentTimeZone() {
+                super(TestClassWithMoment.class, "calendar",
+                        GregorianCalendar.from(ZonedDateTime.parse("2006-11-02T08:14:29+01:00[UTC]")),
+                        GregorianCalendar.from(ZonedDateTime.parse("2006-11-02T08:14:29+01:00[UTC]").minus(1, ChronoUnit.MILLIS)),
+                        GregorianCalendar.from(ZonedDateTime.parse("2006-11-02T08:14:29+01:00[UTC]").plus(1, ChronoUnit.MILLIS)),
+                        () -> null);
+            }
+        }
     }
 
     @Nested
@@ -364,6 +377,19 @@ class MinBeforeTest extends AbstractConstraintTest {
                         () -> null);
             }
         }
+
+        @Nested
+        @DisplayName("with different offset")
+        class WithDifferentOffset extends ConstraintTest<OffsetDateTime> {
+
+            WithDifferentOffset() {
+                super(TestClassWithMoment.class, "offsetDateTime",
+                        OffsetDateTime.parse("2006-11-02T07:14:29-01:00"),
+                        OffsetDateTime.parse("2006-11-02T07:14:29-01:00").minusNanos(1),
+                        OffsetDateTime.parse("2006-11-02T07:14:29-01:00").plusNanos(1),
+                        () -> null);
+            }
+        }
     }
 
     @Nested
@@ -392,6 +418,19 @@ class MinBeforeTest extends AbstractConstraintTest {
                         OffsetTime.parse("09:14:29+01:00"),
                         OffsetTime.parse("09:14:29+01:00").minusNanos(1),
                         OffsetTime.parse("09:14:29+01:00").plusNanos(1),
+                        () -> null);
+            }
+        }
+
+        @Nested
+        @DisplayName("with different offset")
+        class WithDifferentOffset extends ConstraintTest<OffsetTime> {
+
+            WithDifferentOffset() {
+                super(TestClassWithMoment.class, "offsetTime",
+                        OffsetTime.parse("07:14:29-01:00"),
+                        OffsetTime.parse("07:14:29-01:00").minusNanos(1),
+                        OffsetTime.parse("07:14:29-01:00").plusNanos(1),
                         () -> null);
             }
         }
@@ -521,6 +560,19 @@ class MinBeforeTest extends AbstractConstraintTest {
                         ZonedDateTime.parse("2006-11-02T09:14:29+01:00[Europe/Paris]"),
                         ZonedDateTime.parse("2006-11-02T09:14:29+01:00[Europe/Paris]").minusNanos(1),
                         ZonedDateTime.parse("2006-11-02T09:14:29+01:00[Europe/Paris]").plusNanos(1),
+                        () -> null);
+            }
+        }
+
+        @Nested
+        @DisplayName("with different time zone")
+        class WithDifferentTimeZone extends ConstraintTest<ZonedDateTime> {
+
+            WithDifferentTimeZone() {
+                super(TestClassWithMoment.class, "zonedDateTime",
+                        ZonedDateTime.parse("2006-11-02T08:14:29+01:00[UTC]"),
+                        ZonedDateTime.parse("2006-11-02T08:14:29+01:00[UTC]").minusNanos(1),
+                        ZonedDateTime.parse("2006-11-02T08:14:29+01:00[UTC]").plusNanos(1),
                         () -> null);
             }
         }
