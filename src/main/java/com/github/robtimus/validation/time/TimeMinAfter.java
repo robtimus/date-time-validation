@@ -53,9 +53,6 @@ import com.github.robtimus.validation.time.validators.TimeMinAfterValidator;
  * </ul>
  * <p>
  * {@code null} elements are considered valid.
- * <p>
- * Note that for {@link java.util.Date} and {@link java.time.Instant}, that don't have any time zone information, {@link ZoneId#systemDefault()} is
- * used to determine the time.
  *
  * @author Rob Spoor
  */
@@ -107,7 +104,8 @@ public @interface TimeMinAfter {
      * The zone id to use. This should be {@code system} for the value returned by {@link ZoneId#systemDefault()}, {@code provided} for the zone id
      * from the actual value, or otherwise a value that is accepted by {@link java.time.ZoneId#of(String)} for a specific zone id.
      * <ul>
-     * <li>For {@link java.util.Date} and {@link java.time.Instant}, no zone id is available, so {@code provided} is not allowed.</li>
+     * <li>For {@link java.util.Date} and {@link java.time.Instant}, no zone id is available, and {@code provided} behaves the same as {@code system}.
+     *     </li>
      * <li>For {@link java.util.Calendar}, {@link java.time.OffsetDateTime} and {@link java.time.ZonedDateTime}, if the zone id is not
      *     {@code provided}, the value is converted to the given zone id before extracting the time.</li>
      * <li>For {@link java.time.LocalDateTime}, no zone id is applicable, so this value is ignored.</li>
