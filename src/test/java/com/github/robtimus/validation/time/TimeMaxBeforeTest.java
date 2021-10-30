@@ -433,6 +433,7 @@ class TimeMaxBeforeTest extends AbstractConstraintTest {
             ConstraintViolation<?> violation = violations.get(0);
             assertAnnotation(violation, TimeMaxBefore.class);
             assertEquals("must have a time that is at most " + duration + " before " + moment, violation.getMessage());
+            assertEquals(propertyName, violation.getPropertyPath().toString());
         }
 
         @Test

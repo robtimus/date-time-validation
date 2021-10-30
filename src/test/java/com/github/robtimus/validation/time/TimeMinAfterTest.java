@@ -433,6 +433,7 @@ class TimeMinAfterTest extends AbstractConstraintTest {
             ConstraintViolation<?> violation = violations.get(0);
             assertAnnotation(violation, TimeMinAfter.class);
             assertEquals("must have a time that is at least " + duration + " after " + moment, violation.getMessage());
+            assertEquals(propertyName, violation.getPropertyPath().toString());
         }
 
         @Test

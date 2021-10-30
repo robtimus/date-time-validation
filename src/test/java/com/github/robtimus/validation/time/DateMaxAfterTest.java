@@ -438,6 +438,7 @@ class DateMaxAfterTest extends AbstractConstraintTest {
             ConstraintViolation<?> violation = violations.get(0);
             assertAnnotation(violation, DateMaxAfter.class);
             assertEquals("must have a date that is at most " + duration + " after " + moment, violation.getMessage());
+            assertEquals(propertyName, violation.getPropertyPath().toString());
         }
     }
 

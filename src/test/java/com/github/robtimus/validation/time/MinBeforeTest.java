@@ -633,6 +633,7 @@ class MinBeforeTest extends AbstractConstraintTest {
             ConstraintViolation<?> violation = violations.get(0);
             assertAnnotation(violation, MinBefore.class);
             assertEquals("must be at least " + duration + " before " + moment, violation.getMessage());
+            assertEquals(propertyName, violation.getPropertyPath().toString());
         }
     }
 

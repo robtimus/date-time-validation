@@ -510,6 +510,7 @@ class AfterTest extends AbstractConstraintTest {
             ConstraintViolation<?> violation = violations.get(0);
             assertAnnotation(violation, After.class);
             assertEquals("must be after " + moment, violation.getMessage());
+            assertEquals(propertyName, violation.getPropertyPath().toString());
         }
 
         @Test
@@ -521,6 +522,7 @@ class AfterTest extends AbstractConstraintTest {
             ConstraintViolation<?> violation = violations.get(0);
             assertAnnotation(violation, After.class);
             assertEquals("must be after " + moment, violation.getMessage());
+            assertEquals(propertyName, violation.getPropertyPath().toString());
         }
 
         @Test

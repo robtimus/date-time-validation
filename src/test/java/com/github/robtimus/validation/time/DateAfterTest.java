@@ -422,6 +422,7 @@ class DateAfterTest extends AbstractConstraintTest {
             ConstraintViolation<?> violation = violations.get(0);
             assertAnnotation(violation, DateAfter.class);
             assertEquals("must have a date that is after " + moment, violation.getMessage());
+            assertEquals(propertyName, violation.getPropertyPath().toString());
         }
 
         @Test
@@ -433,6 +434,7 @@ class DateAfterTest extends AbstractConstraintTest {
             ConstraintViolation<?> violation = violations.get(0);
             assertAnnotation(violation, DateAfter.class);
             assertEquals("must have a date that is after " + moment, violation.getMessage());
+            assertEquals(propertyName, violation.getPropertyPath().toString());
         }
 
         @Test

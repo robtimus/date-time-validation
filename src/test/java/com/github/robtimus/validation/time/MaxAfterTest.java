@@ -633,6 +633,7 @@ class MaxAfterTest extends AbstractConstraintTest {
             ConstraintViolation<?> violation = violations.get(0);
             assertAnnotation(violation, MaxAfter.class);
             assertEquals("must be at most " + duration + " after " + moment, violation.getMessage());
+            assertEquals(propertyName, violation.getPropertyPath().toString());
         }
     }
 

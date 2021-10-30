@@ -626,6 +626,7 @@ class MinAfterTest extends AbstractConstraintTest {
             ConstraintViolation<?> violation = violations.get(0);
             assertAnnotation(violation, MinAfter.class);
             assertEquals("must be at least " + duration + " after " + moment, violation.getMessage());
+            assertEquals(propertyName, violation.getPropertyPath().toString());
         }
 
         @Test

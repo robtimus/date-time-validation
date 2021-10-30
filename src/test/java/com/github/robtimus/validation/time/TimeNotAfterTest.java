@@ -438,6 +438,7 @@ class TimeNotAfterTest extends AbstractConstraintTest {
             ConstraintViolation<?> violation = violations.get(0);
             assertAnnotation(violation, TimeNotAfter.class);
             assertEquals("must have a time that is not after " + moment, violation.getMessage());
+            assertEquals(propertyName, violation.getPropertyPath().toString());
         }
     }
 

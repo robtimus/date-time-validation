@@ -524,6 +524,7 @@ class NotAfterTest extends AbstractConstraintTest {
             ConstraintViolation<?> violation = violations.get(0);
             assertAnnotation(violation, NotAfter.class);
             assertEquals("must not be after " + moment, violation.getMessage());
+            assertEquals(propertyName, violation.getPropertyPath().toString());
         }
     }
 

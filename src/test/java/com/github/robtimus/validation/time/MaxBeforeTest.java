@@ -626,6 +626,7 @@ class MaxBeforeTest extends AbstractConstraintTest {
             ConstraintViolation<?> violation = violations.get(0);
             assertAnnotation(violation, MaxBefore.class);
             assertEquals("must be at most " + duration + " before " + moment, violation.getMessage());
+            assertEquals(propertyName, violation.getPropertyPath().toString());
         }
 
         @Test

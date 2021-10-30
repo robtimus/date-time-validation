@@ -440,6 +440,7 @@ class TimeMinBeforeTest extends AbstractConstraintTest {
             ConstraintViolation<?> violation = violations.get(0);
             assertAnnotation(violation, TimeMinBefore.class);
             assertEquals("must have a time that is at least " + duration + " before " + moment, violation.getMessage());
+            assertEquals(propertyName, violation.getPropertyPath().toString());
         }
     }
 

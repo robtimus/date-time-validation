@@ -440,6 +440,7 @@ class TimeMaxAfterTest extends AbstractConstraintTest {
             ConstraintViolation<?> violation = violations.get(0);
             assertAnnotation(violation, TimeMaxAfter.class);
             assertEquals("must have a time that is at most " + duration + " after " + moment, violation.getMessage());
+            assertEquals(propertyName, violation.getPropertyPath().toString());
         }
     }
 
