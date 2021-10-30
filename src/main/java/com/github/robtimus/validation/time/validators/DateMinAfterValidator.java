@@ -95,7 +95,7 @@ public final class DateMinAfterValidator {
          * Creates a new validator.
          */
         public ForLocalDateTime() {
-            super(DateMinAfter::moment, DateMinAfter::duration, DateMinAfter::zoneId, AbstractTemporalAccessorPartValidator::toLocalDate,
+            super(DateMinAfter::moment, DateMinAfter::duration, DateMinAfter::zoneId, LocalDateTime::toLocalDate,
                     new MinAfterValidator.ForLocalDate());
         }
     }
@@ -111,7 +111,7 @@ public final class DateMinAfterValidator {
          * Creates a new validator.
          */
         public ForOffsetDateTime() {
-            super(DateMinAfter::moment, DateMinAfter::duration, DateMinAfter::zoneId, AbstractTemporalAccessorPartValidator::toLocalDate,
+            super(DateMinAfter::moment, DateMinAfter::duration, DateMinAfter::zoneId, DateTimeValidator::toLocalDate,
                     new MinAfterValidator.ForLocalDate());
         }
     }
@@ -127,7 +127,7 @@ public final class DateMinAfterValidator {
          * Creates a new validator.
          */
         public ForZonedDateTime() {
-            super(DateMinAfter::moment, DateMinAfter::duration, DateMinAfter::zoneId, AbstractTemporalAccessorPartValidator::toLocalDate,
+            super(DateMinAfter::moment, DateMinAfter::duration, DateMinAfter::zoneId, DateTimeValidator::toLocalDate,
                     new MinAfterValidator.ForLocalDate());
         }
     }

@@ -21,8 +21,11 @@ import java.lang.annotation.Annotation;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.time.Month;
+import java.time.OffsetDateTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
+import java.util.Calendar;
 import java.util.function.BiPredicate;
 import javax.validation.ConstraintValidator;
 import com.github.robtimus.validation.time.DateAfter;
@@ -105,19 +108,72 @@ public abstract class DateTimeValidator<A extends Annotation, T> implements Cons
         // no fields
     }
 
+    static ZoneId toZoneId(String zoneIdText) {
+        switch (zoneIdText) {
+        case SYSTEM_ZONE_ID:
+            return ZoneId.systemDefault();
+        case PROVIDED_ZONE_ID:
+            return null;
+        default:
+            return ZoneId.of(zoneIdText);
+        }
+    }
+
     static LocalDate toLocalDate(Instant instant, ZoneId zoneId) {
         return toZonedDateTime(instant, zoneId).toLocalDate();
+    }
+
+    static LocalDate toLocalDate(OffsetDateTime offsetDateTime, ZoneId zoneId) {
+        // zoneId == null means use provided zoneId
+        return zoneId == null ? offsetDateTime.toLocalDate() : offsetDateTime.atZoneSameInstant(zoneId).toLocalDate();
+    }
+
+    static LocalDate toLocalDate(ZonedDateTime zonedDateTime, ZoneId zoneId) {
+        // zoneId == null means use provided zoneId
+        return zoneId == null ? zonedDateTime.toLocalDate() : zonedDateTime.withZoneSameInstant(zoneId).toLocalDate();
     }
 
     static LocalTime toLocalTime(Instant instant, ZoneId zoneId) {
         return toZonedDateTime(instant, zoneId).toLocalTime();
     }
 
-    private static ZonedDateTime toZonedDateTime(Instant instant, ZoneId zoneId) {
+    static LocalTime toLocalTime(OffsetDateTime offsetDateTime, ZoneId zoneId) {
+        // zoneId == null means use provided zoneId
+        return zoneId == null ? offsetDateTime.toLocalTime() : offsetDateTime.atZoneSameInstant(zoneId).toLocalTime();
+    }
+
+    static LocalTime toLocalTime(ZonedDateTime zonedDateTime, ZoneId zoneId) {
+        // zoneId == null means use provided zoneId
+        return zoneId == null ? zonedDateTime.toLocalTime() : zonedDateTime.withZoneSameInstant(zoneId).toLocalTime();
+    }
+
+    static Month toMonth(Instant instant, ZoneId zoneId) {
+        return toZonedDateTime(instant, zoneId).getMonth();
+    }
+
+    static Month toMonth(OffsetDateTime offsetDateTime, ZoneId zoneId) {
+        // zoneId == null means use provided zoneId
+        return zoneId == null ? offsetDateTime.getMonth() : offsetDateTime.atZoneSameInstant(zoneId).getMonth();
+    }
+
+    static Month toMonth(ZonedDateTime zonedDateTime, ZoneId zoneId) {
+        // zoneId == null means use provided zoneId
+        return zoneId == null ? zonedDateTime.getMonth() : zonedDateTime.withZoneSameInstant(zoneId).getMonth();
+    }
+
+    static ZonedDateTime toZonedDateTime(Instant instant, ZoneId zoneId) {
         if (zoneId == null) {
             zoneId = ZoneId.systemDefault();
         }
         return instant.atZone(zoneId);
+    }
+
+    static ZonedDateTime toZonedDateTime(Calendar calendar, ZoneId zoneId) {
+        // This is exactly what GregorianCalendar.toZonedDateTime() does
+        if (zoneId == null) {
+            zoneId = calendar.getTimeZone().toZoneId();
+        }
+        return ZonedDateTime.ofInstant(calendar.toInstant(), zoneId);
     }
 
     static <T> BiPredicate<T, T> not(BiPredicate<T, T> predicate) {

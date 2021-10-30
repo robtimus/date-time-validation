@@ -92,7 +92,7 @@ public final class DateAfterValidator {
          * Creates a new validator.
          */
         public ForLocalDateTime() {
-            super(DateAfter::moment, DateAfter::zoneId, AbstractTemporalAccessorPartValidator::toLocalDate, new AfterValidator.ForLocalDate());
+            super(DateAfter::moment, DateAfter::zoneId, LocalDateTime::toLocalDate, new AfterValidator.ForLocalDate());
         }
     }
 
@@ -107,7 +107,7 @@ public final class DateAfterValidator {
          * Creates a new validator.
          */
         public ForOffsetDateTime() {
-            super(DateAfter::moment, DateAfter::zoneId, AbstractTemporalAccessorPartValidator::toLocalDate, new AfterValidator.ForLocalDate());
+            super(DateAfter::moment, DateAfter::zoneId, DateTimeValidator::toLocalDate, new AfterValidator.ForLocalDate());
         }
     }
 
@@ -122,7 +122,7 @@ public final class DateAfterValidator {
          * Creates a new validator.
          */
         public ForZonedDateTime() {
-            super(DateAfter::moment, DateAfter::zoneId, AbstractTemporalAccessorPartValidator::toLocalDate, new AfterValidator.ForLocalDate());
+            super(DateAfter::moment, DateAfter::zoneId, DateTimeValidator::toLocalDate, new AfterValidator.ForLocalDate());
         }
     }
 }

@@ -97,17 +97,7 @@ public abstract class AbstractDatePartValidator<A extends Annotation, P extends 
 
     private void initializeZoneId(A constraintAnnotation) {
         String zoneIdText = zoneIdExtractor.apply(constraintAnnotation);
-        switch (zoneIdText) {
-        case SYSTEM_ZONE_ID:
-            zoneId = ZoneId.systemDefault();
-            break;
-        case PROVIDED_ZONE_ID:
-            zoneId = null;
-            break;
-        default:
-            zoneId = ZoneId.of(zoneIdText);
-            break;
-        }
+        zoneId = toZoneId(zoneIdText);
     }
 
     @Override

@@ -92,8 +92,7 @@ public final class DateNotBeforeValidator {
          * Creates a new validator.
          */
         public ForLocalDateTime() {
-            super(DateNotBefore::moment, DateNotBefore::zoneId, AbstractTemporalAccessorPartValidator::toLocalDate,
-                    new NotBeforeValidator.ForLocalDate());
+            super(DateNotBefore::moment, DateNotBefore::zoneId, LocalDateTime::toLocalDate, new NotBeforeValidator.ForLocalDate());
         }
     }
 
@@ -108,8 +107,7 @@ public final class DateNotBeforeValidator {
          * Creates a new validator.
          */
         public ForOffsetDateTime() {
-            super(DateNotBefore::moment, DateNotBefore::zoneId, AbstractTemporalAccessorPartValidator::toLocalDate,
-                    new NotBeforeValidator.ForLocalDate());
+            super(DateNotBefore::moment, DateNotBefore::zoneId, DateTimeValidator::toLocalDate, new NotBeforeValidator.ForLocalDate());
         }
     }
 
@@ -124,8 +122,7 @@ public final class DateNotBeforeValidator {
          * Creates a new validator.
          */
         public ForZonedDateTime() {
-            super(DateNotBefore::moment, DateNotBefore::zoneId, AbstractTemporalAccessorPartValidator::toLocalDate,
-                    new NotBeforeValidator.ForLocalDate());
+            super(DateNotBefore::moment, DateNotBefore::zoneId, DateTimeValidator::toLocalDate, new NotBeforeValidator.ForLocalDate());
         }
     }
 }
