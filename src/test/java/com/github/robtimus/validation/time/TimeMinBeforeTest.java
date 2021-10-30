@@ -505,22 +505,22 @@ class TimeMinBeforeTest extends AbstractConstraintTest {
     }
 
     private static final class TestClassWithSystemZoneId {
-        @TimeMinBefore(duration = "PT1H1M1S", moment = "10:15:30", zoneId = "system")
+        @TimeMinBefore(duration = "PT1H1M1S", moment = "10:15:30")
         Date date;
 
-        @TimeMinBefore(duration = "PT1H1M1S", moment = "10:15:30", zoneId = "system")
+        @TimeMinBefore(duration = "PT1H1M1S", moment = "10:15:30")
         Calendar calendar;
 
-        @TimeMinBefore(duration = "PT1H1M1S", moment = "10:15:30", zoneId = "system")
+        @TimeMinBefore(duration = "PT1H1M1S", moment = "10:15:30")
         Instant instant;
 
-        @TimeMinBefore(duration = "PT1H1M1S", moment = "10:15:30", zoneId = "system")
+        @TimeMinBefore(duration = "PT1H1M1S", moment = "10:15:30")
         LocalDateTime localDateTime;
 
-        @TimeMinBefore(duration = "PT1H1M1S", moment = "10:15:30", zoneId = "system")
+        @TimeMinBefore(duration = "PT1H1M1S", moment = "10:15:30")
         OffsetDateTime offsetDateTime;
 
-        @TimeMinBefore(duration = "PT1H1M1S", moment = "10:15:30", zoneId = "system")
+        @TimeMinBefore(duration = "PT1H1M1S", moment = "10:15:30")
         ZonedDateTime zonedDateTime;
     }
 }

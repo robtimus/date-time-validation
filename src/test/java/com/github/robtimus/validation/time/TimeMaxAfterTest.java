@@ -505,22 +505,22 @@ class TimeMaxAfterTest extends AbstractConstraintTest {
     }
 
     private static final class TestClassWithSystemZoneId {
-        @TimeMaxAfter(duration = "PT1H1M1S", moment = "10:15:30", zoneId = "system")
+        @TimeMaxAfter(duration = "PT1H1M1S", moment = "10:15:30")
         Date date;
 
-        @TimeMaxAfter(duration = "PT1H1M1S", moment = "10:15:30", zoneId = "system")
+        @TimeMaxAfter(duration = "PT1H1M1S", moment = "10:15:30")
         Calendar calendar;
 
-        @TimeMaxAfter(duration = "PT1H1M1S", moment = "10:15:30", zoneId = "system")
+        @TimeMaxAfter(duration = "PT1H1M1S", moment = "10:15:30")
         Instant instant;
 
-        @TimeMaxAfter(duration = "PT1H1M1S", moment = "10:15:30", zoneId = "system")
+        @TimeMaxAfter(duration = "PT1H1M1S", moment = "10:15:30")
         LocalDateTime localDateTime;
 
-        @TimeMaxAfter(duration = "PT1H1M1S", moment = "10:15:30", zoneId = "system")
+        @TimeMaxAfter(duration = "PT1H1M1S", moment = "10:15:30")
         OffsetDateTime offsetDateTime;
 
-        @TimeMaxAfter(duration = "PT1H1M1S", moment = "10:15:30", zoneId = "system")
+        @TimeMaxAfter(duration = "PT1H1M1S", moment = "10:15:30")
         ZonedDateTime zonedDateTime;
     }
 }

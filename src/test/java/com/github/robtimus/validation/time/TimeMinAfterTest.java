@@ -505,22 +505,22 @@ class TimeMinAfterTest extends AbstractConstraintTest {
     }
 
     private static final class TestClassWithSystemZoneId {
-        @TimeMinAfter(duration = "PT1H1M1S", moment = "10:15:30", zoneId = "system")
+        @TimeMinAfter(duration = "PT1H1M1S", moment = "10:15:30")
         Date date;
 
-        @TimeMinAfter(duration = "PT1H1M1S", moment = "10:15:30", zoneId = "system")
+        @TimeMinAfter(duration = "PT1H1M1S", moment = "10:15:30")
         Calendar calendar;
 
-        @TimeMinAfter(duration = "PT1H1M1S", moment = "10:15:30", zoneId = "system")
+        @TimeMinAfter(duration = "PT1H1M1S", moment = "10:15:30")
         Instant instant;
 
-        @TimeMinAfter(duration = "PT1H1M1S", moment = "10:15:30", zoneId = "system")
+        @TimeMinAfter(duration = "PT1H1M1S", moment = "10:15:30")
         LocalDateTime localDateTime;
 
-        @TimeMinAfter(duration = "PT1H1M1S", moment = "10:15:30", zoneId = "system")
+        @TimeMinAfter(duration = "PT1H1M1S", moment = "10:15:30")
         OffsetDateTime offsetDateTime;
 
-        @TimeMinAfter(duration = "PT1H1M1S", moment = "10:15:30", zoneId = "system")
+        @TimeMinAfter(duration = "PT1H1M1S", moment = "10:15:30")
         ZonedDateTime zonedDateTime;
     }
 }

@@ -503,22 +503,22 @@ class TimeNotBeforeTest extends AbstractConstraintTest {
     }
 
     private static final class TestClassWithSystemZoneId {
-        @TimeNotBefore(moment = "10:15:30", zoneId = "system")
+        @TimeNotBefore(moment = "10:15:30")
         Date date;
 
-        @TimeNotBefore(moment = "10:15:30", zoneId = "system")
+        @TimeNotBefore(moment = "10:15:30")
         Calendar calendar;
 
-        @TimeNotBefore(moment = "10:15:30", zoneId = "system")
+        @TimeNotBefore(moment = "10:15:30")
         Instant instant;
 
-        @TimeNotBefore(moment = "10:15:30", zoneId = "system")
+        @TimeNotBefore(moment = "10:15:30")
         LocalDateTime localDateTime;
 
-        @TimeNotBefore(moment = "10:15:30", zoneId = "system")
+        @TimeNotBefore(moment = "10:15:30")
         OffsetDateTime offsetDateTime;
 
-        @TimeNotBefore(moment = "10:15:30", zoneId = "system")
+        @TimeNotBefore(moment = "10:15:30")
         ZonedDateTime zonedDateTime;
     }
 }

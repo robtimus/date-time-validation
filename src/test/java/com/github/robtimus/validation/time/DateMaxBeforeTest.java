@@ -503,22 +503,22 @@ class DateMaxBeforeTest extends AbstractConstraintTest {
     }
 
     private static final class TestClassWithSystemZoneId {
-        @DateMaxBefore(duration = "P1Y1M1D", moment = "2007-12-03", zoneId = "system")
+        @DateMaxBefore(duration = "P1Y1M1D", moment = "2007-12-03")
         Date date;
 
-        @DateMaxBefore(duration = "P1Y1M1D", moment = "2007-12-03", zoneId = "system")
+        @DateMaxBefore(duration = "P1Y1M1D", moment = "2007-12-03")
         Calendar calendar;
 
-        @DateMaxBefore(duration = "P1Y1M1D", moment = "2007-12-03", zoneId = "system")
+        @DateMaxBefore(duration = "P1Y1M1D", moment = "2007-12-03")
         Instant instant;
 
-        @DateMaxBefore(duration = "P1Y1M1D", moment = "2007-12-03", zoneId = "system")
+        @DateMaxBefore(duration = "P1Y1M1D", moment = "2007-12-03")
         LocalDateTime localDateTime;
 
-        @DateMaxBefore(duration = "P1Y1M1D", moment = "2007-12-03", zoneId = "system")
+        @DateMaxBefore(duration = "P1Y1M1D", moment = "2007-12-03")
         OffsetDateTime offsetDateTime;
 
-        @DateMaxBefore(duration = "P1Y1M1D", moment = "2007-12-03", zoneId = "system")
+        @DateMaxBefore(duration = "P1Y1M1D", moment = "2007-12-03")
         ZonedDateTime zonedDateTime;
     }
 }

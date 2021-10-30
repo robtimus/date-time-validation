@@ -503,22 +503,22 @@ class DateMinBeforeTest extends AbstractConstraintTest {
     }
 
     private static final class TestClassWithSystemZoneId {
-        @DateMinBefore(duration = "P1Y1M1D", moment = "2007-12-03", zoneId = "system")
+        @DateMinBefore(duration = "P1Y1M1D", moment = "2007-12-03")
         Date date;
 
-        @DateMinBefore(duration = "P1Y1M1D", moment = "2007-12-03", zoneId = "system")
+        @DateMinBefore(duration = "P1Y1M1D", moment = "2007-12-03")
         Calendar calendar;
 
-        @DateMinBefore(duration = "P1Y1M1D", moment = "2007-12-03", zoneId = "system")
+        @DateMinBefore(duration = "P1Y1M1D", moment = "2007-12-03")
         Instant instant;
 
-        @DateMinBefore(duration = "P1Y1M1D", moment = "2007-12-03", zoneId = "system")
+        @DateMinBefore(duration = "P1Y1M1D", moment = "2007-12-03")
         LocalDateTime localDateTime;
 
-        @DateMinBefore(duration = "P1Y1M1D", moment = "2007-12-03", zoneId = "system")
+        @DateMinBefore(duration = "P1Y1M1D", moment = "2007-12-03")
         OffsetDateTime offsetDateTime;
 
-        @DateMinBefore(duration = "P1Y1M1D", moment = "2007-12-03", zoneId = "system")
+        @DateMinBefore(duration = "P1Y1M1D", moment = "2007-12-03")
         ZonedDateTime zonedDateTime;
     }
 }

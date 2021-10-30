@@ -506,22 +506,22 @@ class DateAfterTest extends AbstractConstraintTest {
     }
 
     private static final class TestClassWithSystemZoneId {
-        @DateAfter(moment = "2007-12-03", zoneId = "system")
+        @DateAfter(moment = "2007-12-03")
         Date date;
 
-        @DateAfter(moment = "2007-12-03", zoneId = "system")
+        @DateAfter(moment = "2007-12-03")
         Calendar calendar;
 
-        @DateAfter(moment = "2007-12-03", zoneId = "system")
+        @DateAfter(moment = "2007-12-03")
         Instant instant;
 
-        @DateAfter(moment = "2007-12-03", zoneId = "system")
+        @DateAfter(moment = "2007-12-03")
         LocalDateTime localDateTime;
 
-        @DateAfter(moment = "2007-12-03", zoneId = "system")
+        @DateAfter(moment = "2007-12-03")
         OffsetDateTime offsetDateTime;
 
-        @DateAfter(moment = "2007-12-03", zoneId = "system")
+        @DateAfter(moment = "2007-12-03")
         ZonedDateTime zonedDateTime;
     }
 }

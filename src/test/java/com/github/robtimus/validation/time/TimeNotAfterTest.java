@@ -503,22 +503,22 @@ class TimeNotAfterTest extends AbstractConstraintTest {
     }
 
     private static final class TestClassWithSystemZoneId {
-        @TimeNotAfter(moment = "10:15:30", zoneId = "system")
+        @TimeNotAfter(moment = "10:15:30")
         Date date;
 
-        @TimeNotAfter(moment = "10:15:30", zoneId = "system")
+        @TimeNotAfter(moment = "10:15:30")
         Calendar calendar;
 
-        @TimeNotAfter(moment = "10:15:30", zoneId = "system")
+        @TimeNotAfter(moment = "10:15:30")
         Instant instant;
 
-        @TimeNotAfter(moment = "10:15:30", zoneId = "system")
+        @TimeNotAfter(moment = "10:15:30")
         LocalDateTime localDateTime;
 
-        @TimeNotAfter(moment = "10:15:30", zoneId = "system")
+        @TimeNotAfter(moment = "10:15:30")
         OffsetDateTime offsetDateTime;
 
-        @TimeNotAfter(moment = "10:15:30", zoneId = "system")
+        @TimeNotAfter(moment = "10:15:30")
         ZonedDateTime zonedDateTime;
     }
 }

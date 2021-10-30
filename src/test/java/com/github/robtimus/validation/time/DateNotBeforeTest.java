@@ -501,22 +501,22 @@ class DateNotBeforeTest extends AbstractConstraintTest {
     }
 
     private static final class TestClassWithSystemZoneId {
-        @DateNotBefore(moment = "2007-12-03", zoneId = "system")
+        @DateNotBefore(moment = "2007-12-03")
         Date date;
 
-        @DateNotBefore(moment = "2007-12-03", zoneId = "system")
+        @DateNotBefore(moment = "2007-12-03")
         Calendar calendar;
 
-        @DateNotBefore(moment = "2007-12-03", zoneId = "system")
+        @DateNotBefore(moment = "2007-12-03")
         Instant instant;
 
-        @DateNotBefore(moment = "2007-12-03", zoneId = "system")
+        @DateNotBefore(moment = "2007-12-03")
         LocalDateTime localDateTime;
 
-        @DateNotBefore(moment = "2007-12-03", zoneId = "system")
+        @DateNotBefore(moment = "2007-12-03")
         OffsetDateTime offsetDateTime;
 
-        @DateNotBefore(moment = "2007-12-03", zoneId = "system")
+        @DateNotBefore(moment = "2007-12-03")
         ZonedDateTime zonedDateTime;
     }
 }
