@@ -83,6 +83,19 @@ class TimeNotBeforeTest extends AbstractConstraintTest {
                         () -> null);
             }
         }
+
+        @Nested
+        @DisplayName("with system zone id")
+        class WithSystemZoneId extends ConstraintTest<Date> {
+
+            WithSystemZoneId() {
+                super(TestClassWithSystemZoneId.class, "date",
+                        Date.from(utcInstantAtOffsetAfterSystem("2021-10-24T11:15:30.00Z", 1)),
+                        Date.from(utcInstantAtOffsetAfterSystem("2021-10-24T11:15:30.00Z", 1).minusMillis(1)),
+                        Date.from(utcInstantAtOffsetAfterSystem("2021-10-24T11:15:30.00Z", 1).plusMillis(1)),
+                        () -> null);
+            }
+        }
     }
 
     @Nested
@@ -124,6 +137,21 @@ class TimeNotBeforeTest extends AbstractConstraintTest {
                         GregorianCalendar.from(ZonedDateTime.parse("2021-10-24T12:15:30+02:00[Europe/Paris]")),
                         GregorianCalendar.from(ZonedDateTime.parse("2021-10-24T12:15:30+02:00[Europe/Paris]").minus(1, ChronoUnit.MILLIS)),
                         GregorianCalendar.from(ZonedDateTime.parse("2021-10-24T12:15:30+02:00[Europe/Paris]").plus(1, ChronoUnit.MILLIS)),
+                        () -> null);
+            }
+        }
+
+        @Nested
+        @DisplayName("with system zone id")
+        class WithSystemZoneId extends ConstraintTest<Calendar> {
+
+            WithSystemZoneId() {
+                super(TestClassWithSystemZoneId.class, "calendar",
+                        GregorianCalendar.from(zonedDateTimeAtOffsetAfterSystem("2021-10-24T11:15:30+02:00[Europe/Paris]", 1)),
+                        GregorianCalendar.from(zonedDateTimeAtOffsetAfterSystem("2021-10-24T11:15:30+02:00[Europe/Paris]", 1)
+                                .minus(1, ChronoUnit.MILLIS)),
+                        GregorianCalendar.from(zonedDateTimeAtOffsetAfterSystem("2021-10-24T11:15:30+02:00[Europe/Paris]", 1)
+                                .plus(1, ChronoUnit.MILLIS)),
                         () -> null);
             }
         }
@@ -171,6 +199,19 @@ class TimeNotBeforeTest extends AbstractConstraintTest {
                         () -> null);
             }
         }
+
+        @Nested
+        @DisplayName("with system zone id")
+        class WithSystemZoneId extends ConstraintTest<Instant> {
+
+            WithSystemZoneId() {
+                super(TestClassWithSystemZoneId.class, "instant",
+                        utcInstantAtOffsetAfterSystem("2021-10-24T11:15:30.00Z", 1),
+                        utcInstantAtOffsetAfterSystem("2021-10-24T11:15:30.00Z", 1).minusNanos(1),
+                        utcInstantAtOffsetAfterSystem("2021-10-24T11:15:30.00Z", 1).plusNanos(1),
+                        () -> null);
+            }
+        }
     }
 
     @Nested
@@ -209,6 +250,19 @@ class TimeNotBeforeTest extends AbstractConstraintTest {
 
             WithZoneId() {
                 super(TestClassWithZoneId.class, "localDateTime",
+                        LocalDateTime.parse("2021-10-24T10:15:30"),
+                        LocalDateTime.parse("2021-10-24T10:15:30").minusNanos(1),
+                        LocalDateTime.parse("2021-10-24T10:15:30").plusNanos(1),
+                        () -> null);
+            }
+        }
+
+        @Nested
+        @DisplayName("with system zone id")
+        class WithSystemZoneId extends ConstraintTest<LocalDateTime> {
+
+            WithSystemZoneId() {
+                super(TestClassWithSystemZoneId.class, "localDateTime",
                         LocalDateTime.parse("2021-10-24T10:15:30"),
                         LocalDateTime.parse("2021-10-24T10:15:30").minusNanos(1),
                         LocalDateTime.parse("2021-10-24T10:15:30").plusNanos(1),
@@ -259,6 +313,19 @@ class TimeNotBeforeTest extends AbstractConstraintTest {
                         () -> null);
             }
         }
+
+        @Nested
+        @DisplayName("with system zone id")
+        class WithSystemZoneId extends ConstraintTest<OffsetDateTime> {
+
+            WithSystemZoneId() {
+                super(TestClassWithSystemZoneId.class, "offsetDateTime",
+                        offsetDateTimeAtOffsetAfterSystem("2021-10-24T11:15:30+02:00", 1),
+                        offsetDateTimeAtOffsetAfterSystem("2021-10-24T11:15:30+02:00", 1).minusNanos(1),
+                        offsetDateTimeAtOffsetAfterSystem("2021-10-24T11:15:30+02:00", 1).plusNanos(1),
+                        () -> null);
+            }
+        }
     }
 
     @Nested
@@ -300,6 +367,19 @@ class TimeNotBeforeTest extends AbstractConstraintTest {
                         ZonedDateTime.parse("2021-10-24T12:15:30+02:00[Europe/Paris]"),
                         ZonedDateTime.parse("2021-10-24T12:15:30+02:00[Europe/Paris]").minusNanos(1),
                         ZonedDateTime.parse("2021-10-24T12:15:30+02:00[Europe/Paris]").plusNanos(1),
+                        () -> null);
+            }
+        }
+
+        @Nested
+        @DisplayName("with system zone id")
+        class WithSystemZoneId extends ConstraintTest<ZonedDateTime> {
+
+            WithSystemZoneId() {
+                super(TestClassWithSystemZoneId.class, "zonedDateTime",
+                        zonedDateTimeAtOffsetAfterSystem("2021-10-24T11:15:30+02:00[Europe/Paris]", 1),
+                        zonedDateTimeAtOffsetAfterSystem("2021-10-24T11:15:30+02:00[Europe/Paris]", 1).minusNanos(1),
+                        zonedDateTimeAtOffsetAfterSystem("2021-10-24T11:15:30+02:00[Europe/Paris]", 1).plusNanos(1),
                         () -> null);
             }
         }
@@ -362,42 +442,42 @@ class TimeNotBeforeTest extends AbstractConstraintTest {
     }
 
     private static final class TestClassWithNow {
-        @TimeNotBefore(moment = "now")
+        @TimeNotBefore(moment = "now", zoneId = "provided")
         Date date;
 
-        @TimeNotBefore(moment = "now")
+        @TimeNotBefore(moment = "now", zoneId = "provided")
         Calendar calendar;
 
-        @TimeNotBefore(moment = "now")
+        @TimeNotBefore(moment = "now", zoneId = "provided")
         Instant instant;
 
-        @TimeNotBefore(moment = "now")
+        @TimeNotBefore(moment = "now", zoneId = "provided")
         LocalDateTime localDateTime;
 
-        @TimeNotBefore(moment = "now")
+        @TimeNotBefore(moment = "now", zoneId = "provided")
         OffsetDateTime offsetDateTime;
 
-        @TimeNotBefore(moment = "now")
+        @TimeNotBefore(moment = "now", zoneId = "provided")
         ZonedDateTime zonedDateTime;
     }
 
     private static final class TestClassWithMoment {
-        @TimeNotBefore(moment = "10:15:30")
+        @TimeNotBefore(moment = "10:15:30", zoneId = "provided")
         Date date;
 
-        @TimeNotBefore(moment = "10:15:30")
+        @TimeNotBefore(moment = "10:15:30", zoneId = "provided")
         Calendar calendar;
 
-        @TimeNotBefore(moment = "10:15:30")
+        @TimeNotBefore(moment = "10:15:30", zoneId = "provided")
         Instant instant;
 
-        @TimeNotBefore(moment = "10:15:30")
+        @TimeNotBefore(moment = "10:15:30", zoneId = "provided")
         LocalDateTime localDateTime;
 
-        @TimeNotBefore(moment = "10:15:30")
+        @TimeNotBefore(moment = "10:15:30", zoneId = "provided")
         OffsetDateTime offsetDateTime;
 
-        @TimeNotBefore(moment = "10:15:30")
+        @TimeNotBefore(moment = "10:15:30", zoneId = "provided")
         ZonedDateTime zonedDateTime;
     }
 
@@ -418,6 +498,26 @@ class TimeNotBeforeTest extends AbstractConstraintTest {
         OffsetDateTime offsetDateTime;
 
         @TimeNotBefore(moment = "10:15:30", zoneId = "UTC")
+        ZonedDateTime zonedDateTime;
+    }
+
+    private static final class TestClassWithSystemZoneId {
+        @TimeNotBefore(moment = "10:15:30", zoneId = "system")
+        Date date;
+
+        @TimeNotBefore(moment = "10:15:30", zoneId = "system")
+        Calendar calendar;
+
+        @TimeNotBefore(moment = "10:15:30", zoneId = "system")
+        Instant instant;
+
+        @TimeNotBefore(moment = "10:15:30", zoneId = "system")
+        LocalDateTime localDateTime;
+
+        @TimeNotBefore(moment = "10:15:30", zoneId = "system")
+        OffsetDateTime offsetDateTime;
+
+        @TimeNotBefore(moment = "10:15:30", zoneId = "system")
         ZonedDateTime zonedDateTime;
     }
 }

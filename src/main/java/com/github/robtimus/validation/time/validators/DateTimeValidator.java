@@ -25,6 +25,22 @@ import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.function.BiPredicate;
 import javax.validation.ConstraintValidator;
+import com.github.robtimus.validation.time.DateAfter;
+import com.github.robtimus.validation.time.DateBefore;
+import com.github.robtimus.validation.time.DateMaxAfter;
+import com.github.robtimus.validation.time.DateMaxBefore;
+import com.github.robtimus.validation.time.DateMinAfter;
+import com.github.robtimus.validation.time.DateMinBefore;
+import com.github.robtimus.validation.time.DateNotAfter;
+import com.github.robtimus.validation.time.DateNotBefore;
+import com.github.robtimus.validation.time.TimeAfter;
+import com.github.robtimus.validation.time.TimeBefore;
+import com.github.robtimus.validation.time.TimeMaxAfter;
+import com.github.robtimus.validation.time.TimeMaxBefore;
+import com.github.robtimus.validation.time.TimeMinAfter;
+import com.github.robtimus.validation.time.TimeMinBefore;
+import com.github.robtimus.validation.time.TimeNotAfter;
+import com.github.robtimus.validation.time.TimeNotBefore;
 
 /**
  * The base for all date/time object validators.
@@ -37,6 +53,50 @@ public abstract class DateTimeValidator<A extends Annotation, T> implements Cons
 
     /** A string representing the current date/time. */
     public static final String NOW = "now"; //$NON-NLS-1$
+
+    /**
+     * A string representing the system zone id.
+     *
+     * @see DateAfter#zoneId()
+     * @see DateNotAfter#zoneId()
+     * @see DateBefore#zoneId()
+     * @see DateNotBefore#zoneId()
+     * @see DateMinAfter#zoneId()
+     * @see DateMaxAfter#zoneId()
+     * @see DateMinBefore#zoneId()
+     * @see DateMaxBefore#zoneId()
+     * @see TimeAfter#zoneId()
+     * @see TimeNotAfter#zoneId()
+     * @see TimeBefore#zoneId()
+     * @see TimeNotBefore#zoneId()
+     * @see TimeMinAfter#zoneId()
+     * @see TimeMaxAfter#zoneId()
+     * @see TimeMinBefore#zoneId()
+     * @see TimeMaxBefore#zoneId()
+     */
+    public static final String SYSTEM_ZONE_ID = "system"; //$NON-NLS-1$
+
+    /**
+     * A string representing the provided zone id.
+     *
+     * @see DateAfter#zoneId()
+     * @see DateNotAfter#zoneId()
+     * @see DateBefore#zoneId()
+     * @see DateNotBefore#zoneId()
+     * @see DateMinAfter#zoneId()
+     * @see DateMaxAfter#zoneId()
+     * @see DateMinBefore#zoneId()
+     * @see DateMaxBefore#zoneId()
+     * @see TimeAfter#zoneId()
+     * @see TimeNotAfter#zoneId()
+     * @see TimeBefore#zoneId()
+     * @see TimeNotBefore#zoneId()
+     * @see TimeMinAfter#zoneId()
+     * @see TimeMaxAfter#zoneId()
+     * @see TimeMinBefore#zoneId()
+     * @see TimeMaxBefore#zoneId()
+     */
+    public static final String PROVIDED_ZONE_ID = "provided"; //$NON-NLS-1$
 
     /**
      * Creates a new validator.

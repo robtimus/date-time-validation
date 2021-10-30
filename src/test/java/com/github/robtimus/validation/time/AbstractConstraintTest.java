@@ -23,8 +23,10 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import java.lang.annotation.Annotation;
 import java.time.Instant;
+import java.time.OffsetDateTime;
 import java.time.ZoneId;
 import java.time.ZoneOffset;
+import java.time.ZonedDateTime;
 import java.util.Comparator;
 import java.util.List;
 import javax.validation.ClockProvider;
@@ -71,5 +73,37 @@ abstract class AbstractConstraintTest {
                 .atZone(ZoneId.of("UTC")) //$NON-NLS-1$
                 .withZoneSameLocal(ZoneOffset.ofHours(hours))
                 .toInstant();
+    }
+
+    static Instant utcInstantAtOffsetAfterSystem(String text, int hours) {
+        ZonedDateTime zonedDateTime = Instant.parse(text)
+                .atZone(ZoneId.of("UTC")) //$NON-NLS-1$
+                .withZoneSameLocal(ZoneId.systemDefault());
+
+        return addOffset(zonedDateTime, hours)
+                .toInstant();
+    }
+
+    static OffsetDateTime offsetDateTimeAtOffsetAfterSystem(String text, int hours) {
+        ZonedDateTime zonedDateTime = OffsetDateTime.parse(text)
+                .atZoneSimilarLocal(ZoneId.systemDefault());
+
+        return addOffset(zonedDateTime, hours)
+                .toOffsetDateTime();
+    }
+
+    static ZonedDateTime zonedDateTimeAtOffsetAfterSystem(String text, int hours) {
+        ZonedDateTime zonedDateTime = ZonedDateTime.parse(text)
+                .withZoneSameLocal(ZoneId.systemDefault());
+
+        int offset = zonedDateTime.getOffset().getTotalSeconds();
+        offset += hours * 3600;
+        return zonedDateTime.withZoneSameLocal(ZoneOffset.ofTotalSeconds(offset));
+    }
+
+    static ZonedDateTime addOffset(ZonedDateTime zonedDateTime, int hours) {
+        int offset = zonedDateTime.getOffset().getTotalSeconds();
+        offset += hours * 3600;
+        return zonedDateTime.withZoneSameLocal(ZoneOffset.ofTotalSeconds(offset));
     }
 }

@@ -83,6 +83,19 @@ class TimeMinAfterTest extends AbstractConstraintTest {
                         () -> null);
             }
         }
+
+        @Nested
+        @DisplayName("with system zone id")
+        class WithSystemZoneId extends ConstraintTest<Date> {
+
+            WithSystemZoneId() {
+                super(TestClassWithSystemZoneId.class, "date",
+                        Date.from(utcInstantAtOffsetAfterSystem("2021-10-24T12:16:31.00Z", 1)),
+                        Date.from(utcInstantAtOffsetAfterSystem("2021-10-24T12:16:31.00Z", 1).minusMillis(1)),
+                        Date.from(utcInstantAtOffsetAfterSystem("2021-10-24T12:16:31.00Z", 1).plusMillis(1)),
+                        () -> null);
+            }
+        }
     }
 
     @Nested
@@ -124,6 +137,21 @@ class TimeMinAfterTest extends AbstractConstraintTest {
                         GregorianCalendar.from(ZonedDateTime.parse("2021-10-24T13:16:31+02:00[Europe/Paris]")),
                         GregorianCalendar.from(ZonedDateTime.parse("2021-10-24T13:16:31+02:00[Europe/Paris]").minus(1, ChronoUnit.MILLIS)),
                         GregorianCalendar.from(ZonedDateTime.parse("2021-10-24T13:16:31+02:00[Europe/Paris]").plus(1, ChronoUnit.MILLIS)),
+                        () -> null);
+            }
+        }
+
+        @Nested
+        @DisplayName("with system zone id")
+        class WithSystemZoneId extends ConstraintTest<Calendar> {
+
+            WithSystemZoneId() {
+                super(TestClassWithSystemZoneId.class, "calendar",
+                        GregorianCalendar.from(zonedDateTimeAtOffsetAfterSystem("2021-10-24T12:16:31+02:00[Europe/Paris]", 1)),
+                        GregorianCalendar.from(zonedDateTimeAtOffsetAfterSystem("2021-10-24T12:16:31+02:00[Europe/Paris]", 1)
+                                .minus(1, ChronoUnit.MILLIS)),
+                        GregorianCalendar.from(zonedDateTimeAtOffsetAfterSystem("2021-10-24T12:16:31+02:00[Europe/Paris]", 1)
+                                .plus(1, ChronoUnit.MILLIS)),
                         () -> null);
             }
         }
@@ -171,6 +199,19 @@ class TimeMinAfterTest extends AbstractConstraintTest {
                         () -> null);
             }
         }
+
+        @Nested
+        @DisplayName("with system zone id")
+        class WithSystemZoneId extends ConstraintTest<Instant> {
+
+            WithSystemZoneId() {
+                super(TestClassWithSystemZoneId.class, "instant",
+                        utcInstantAtOffsetAfterSystem("2021-10-24T12:16:31.00Z", 1),
+                        utcInstantAtOffsetAfterSystem("2021-10-24T12:16:31.00Z", 1).minusMillis(1),
+                        utcInstantAtOffsetAfterSystem("2021-10-24T12:16:31.00Z", 1).plusMillis(1),
+                        () -> null);
+            }
+        }
     }
 
     @Nested
@@ -209,6 +250,19 @@ class TimeMinAfterTest extends AbstractConstraintTest {
 
             WithZoneId() {
                 super(TestClassWithZoneId.class, "localDateTime",
+                        LocalDateTime.parse("2021-10-24T11:16:31"),
+                        LocalDateTime.parse("2021-10-24T11:16:31").minusNanos(1),
+                        LocalDateTime.parse("2021-10-24T11:16:31").plusNanos(1),
+                        () -> null);
+            }
+        }
+
+        @Nested
+        @DisplayName("with system zone id")
+        class WithSystemZoneId extends ConstraintTest<LocalDateTime> {
+
+            WithSystemZoneId() {
+                super(TestClassWithSystemZoneId.class, "localDateTime",
                         LocalDateTime.parse("2021-10-24T11:16:31"),
                         LocalDateTime.parse("2021-10-24T11:16:31").minusNanos(1),
                         LocalDateTime.parse("2021-10-24T11:16:31").plusNanos(1),
@@ -259,6 +313,19 @@ class TimeMinAfterTest extends AbstractConstraintTest {
                         () -> null);
             }
         }
+
+        @Nested
+        @DisplayName("with system zone id")
+        class WithSystemZoneId extends ConstraintTest<OffsetDateTime> {
+
+            WithSystemZoneId() {
+                super(TestClassWithSystemZoneId.class, "offsetDateTime",
+                        offsetDateTimeAtOffsetAfterSystem("2021-10-24T12:16:31+02:00", 1),
+                        offsetDateTimeAtOffsetAfterSystem("2021-10-24T12:16:31+02:00", 1).minusNanos(1),
+                        offsetDateTimeAtOffsetAfterSystem("2021-10-24T12:16:31+02:00", 1).plusNanos(1),
+                        () -> null);
+            }
+        }
     }
 
     @Nested
@@ -300,6 +367,19 @@ class TimeMinAfterTest extends AbstractConstraintTest {
                         ZonedDateTime.parse("2021-10-24T13:16:31+02:00[Europe/Paris]"),
                         ZonedDateTime.parse("2021-10-24T13:16:31+02:00[Europe/Paris]").minusNanos(1),
                         ZonedDateTime.parse("2021-10-24T13:16:31+02:00[Europe/Paris]").plusNanos(1),
+                        () -> null);
+            }
+        }
+
+        @Nested
+        @DisplayName("with system zone id")
+        class WithSystemZoneId extends ConstraintTest<ZonedDateTime> {
+
+            WithSystemZoneId() {
+                super(TestClassWithSystemZoneId.class, "zonedDateTime",
+                        zonedDateTimeAtOffsetAfterSystem("2021-10-24T12:16:31+02:00[Europe/Paris]", 1),
+                        zonedDateTimeAtOffsetAfterSystem("2021-10-24T12:16:31+02:00[Europe/Paris]", 1).minusNanos(1),
+                        zonedDateTimeAtOffsetAfterSystem("2021-10-24T12:16:31+02:00[Europe/Paris]", 1).plusNanos(1),
                         () -> null);
             }
         }
@@ -364,42 +444,42 @@ class TimeMinAfterTest extends AbstractConstraintTest {
     }
 
     private static final class TestClassWithNow {
-        @TimeMinAfter(duration = "PT1H1M1S", moment = "now")
+        @TimeMinAfter(duration = "PT1H1M1S", moment = "now", zoneId = "provided")
         Date date;
 
-        @TimeMinAfter(duration = "PT1H1M1S", moment = "now")
+        @TimeMinAfter(duration = "PT1H1M1S", moment = "now", zoneId = "provided")
         Calendar calendar;
 
-        @TimeMinAfter(duration = "PT1H1M1S", moment = "now")
+        @TimeMinAfter(duration = "PT1H1M1S", moment = "now", zoneId = "provided")
         Instant instant;
 
-        @TimeMinAfter(duration = "PT1H1M1S", moment = "now")
+        @TimeMinAfter(duration = "PT1H1M1S", moment = "now", zoneId = "provided")
         LocalDateTime localDateTime;
 
-        @TimeMinAfter(duration = "PT1H1M1S", moment = "now")
+        @TimeMinAfter(duration = "PT1H1M1S", moment = "now", zoneId = "provided")
         OffsetDateTime offsetDateTime;
 
-        @TimeMinAfter(duration = "PT1H1M1S", moment = "now")
+        @TimeMinAfter(duration = "PT1H1M1S", moment = "now", zoneId = "provided")
         ZonedDateTime zonedDateTime;
     }
 
     private static final class TestClassWithMoment {
-        @TimeMinAfter(duration = "PT1H1M1S", moment = "10:15:30")
+        @TimeMinAfter(duration = "PT1H1M1S", moment = "10:15:30", zoneId = "provided")
         Date date;
 
-        @TimeMinAfter(duration = "PT1H1M1S", moment = "10:15:30")
+        @TimeMinAfter(duration = "PT1H1M1S", moment = "10:15:30", zoneId = "provided")
         Calendar calendar;
 
-        @TimeMinAfter(duration = "PT1H1M1S", moment = "10:15:30")
+        @TimeMinAfter(duration = "PT1H1M1S", moment = "10:15:30", zoneId = "provided")
         Instant instant;
 
-        @TimeMinAfter(duration = "PT1H1M1S", moment = "10:15:30")
+        @TimeMinAfter(duration = "PT1H1M1S", moment = "10:15:30", zoneId = "provided")
         LocalDateTime localDateTime;
 
-        @TimeMinAfter(duration = "PT1H1M1S", moment = "10:15:30")
+        @TimeMinAfter(duration = "PT1H1M1S", moment = "10:15:30", zoneId = "provided")
         OffsetDateTime offsetDateTime;
 
-        @TimeMinAfter(duration = "PT1H1M1S", moment = "10:15:30")
+        @TimeMinAfter(duration = "PT1H1M1S", moment = "10:15:30", zoneId = "provided")
         ZonedDateTime zonedDateTime;
     }
 
@@ -420,6 +500,26 @@ class TimeMinAfterTest extends AbstractConstraintTest {
         OffsetDateTime offsetDateTime;
 
         @TimeMinAfter(duration = "PT1H1M1S", moment = "10:15:30", zoneId = "UTC")
+        ZonedDateTime zonedDateTime;
+    }
+
+    private static final class TestClassWithSystemZoneId {
+        @TimeMinAfter(duration = "PT1H1M1S", moment = "10:15:30", zoneId = "system")
+        Date date;
+
+        @TimeMinAfter(duration = "PT1H1M1S", moment = "10:15:30", zoneId = "system")
+        Calendar calendar;
+
+        @TimeMinAfter(duration = "PT1H1M1S", moment = "10:15:30", zoneId = "system")
+        Instant instant;
+
+        @TimeMinAfter(duration = "PT1H1M1S", moment = "10:15:30", zoneId = "system")
+        LocalDateTime localDateTime;
+
+        @TimeMinAfter(duration = "PT1H1M1S", moment = "10:15:30", zoneId = "system")
+        OffsetDateTime offsetDateTime;
+
+        @TimeMinAfter(duration = "PT1H1M1S", moment = "10:15:30", zoneId = "system")
         ZonedDateTime zonedDateTime;
     }
 }

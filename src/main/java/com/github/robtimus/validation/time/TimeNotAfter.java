@@ -96,15 +96,16 @@ public @interface TimeNotAfter {
     String moment();
 
     /**
-     * The zone id to use.
+     * The zone id to use. This should be {@code system} for the value returned by {@link ZoneId#systemDefault()}, {@code provided} for the zone id
+     * from the actual value, or otherwise a value that is accepted by {@link java.time.ZoneId#of(String)} for a specific zone id.
      * <ul>
-     * <li>For {@link java.util.Date} and {@link java.time.Instant}, this is the zone id to apply; the default is {@link ZoneId#systemDefault()}</li>
-     * <li>For {@link java.util.Calendar}, {@link java.time.OffsetDateTime} and {@link java.time.ZonedDateTime}, this is the zone id to convert to
-     *     before extracting the time; the default is to not convert</li>
-     * <li>For {@link java.time.LocalDateTime} this value is ignored</li>
+     * <li>For {@link java.util.Date} and {@link java.time.Instant}, no zone id is available, so {@code provided} is not allowed.</li>
+     * <li>For {@link java.util.Calendar}, {@link java.time.OffsetDateTime} and {@link java.time.ZonedDateTime}, if the zone id is not
+     *     {@code provided}, the value is converted to the given zone id before extracting the time.</li>
+     * <li>For {@link java.time.LocalDateTime}, no zone id is applicable, so this value is ignored.</li>
      * </ul>
      */
-    String zoneId() default "";
+    String zoneId() default "system";
 
     /**
      * Defines several {@link TimeNotAfter} annotations on the same element.

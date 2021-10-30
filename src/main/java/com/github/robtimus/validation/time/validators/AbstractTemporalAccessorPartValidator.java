@@ -102,7 +102,17 @@ public abstract class AbstractTemporalAccessorPartValidator<A extends Annotation
 
     private void initializeZoneId(A constraintAnnotation) {
         String zoneIdText = zoneIdExtractor.apply(constraintAnnotation);
-        zoneId = zoneIdText.isEmpty() ? null : ZoneId.of(zoneIdText);
+        switch (zoneIdText) {
+        case SYSTEM_ZONE_ID:
+            zoneId = ZoneId.systemDefault();
+            break;
+        case PROVIDED_ZONE_ID:
+            zoneId = null;
+            break;
+        default:
+            zoneId = ZoneId.of(zoneIdText);
+            break;
+        }
     }
 
     @Override
@@ -116,26 +126,32 @@ public abstract class AbstractTemporalAccessorPartValidator<A extends Annotation
     }
 
     static LocalTime toLocalTime(LocalDateTime localDateTime, @SuppressWarnings("unused") ZoneId zoneId) {
+        // zoneId is ignored
         return localDateTime.toLocalTime();
     }
 
     static LocalTime toLocalTime(OffsetDateTime offsetDateTime, ZoneId zoneId) {
+        // zoneId == null means use provided zoneId
         return zoneId == null ? offsetDateTime.toLocalTime() : offsetDateTime.atZoneSameInstant(zoneId).toLocalTime();
     }
 
     static LocalTime toLocalTime(ZonedDateTime zonedDateTime, ZoneId zoneId) {
+        // zoneId == null means use provided zoneId
         return zoneId == null ? zonedDateTime.toLocalTime() : zonedDateTime.withZoneSameInstant(zoneId).toLocalTime();
     }
 
     static LocalDate toLocalDate(LocalDateTime localDateDate, @SuppressWarnings("unused") ZoneId zoneId) {
+        // zoneId is ignored
         return localDateDate.toLocalDate();
     }
 
     static LocalDate toLocalDate(OffsetDateTime offsetDateTime, ZoneId zoneId) {
+        // zoneId == null means use provided zoneId
         return zoneId == null ? offsetDateTime.toLocalDate() : offsetDateTime.atZoneSameInstant(zoneId).toLocalDate();
     }
 
     static LocalDate toLocalDate(ZonedDateTime zonedDateTime, ZoneId zoneId) {
+        // zoneId == null means use provided zoneId
         return zoneId == null ? zonedDateTime.toLocalDate() : zonedDateTime.withZoneSameInstant(zoneId).toLocalDate();
     }
 }

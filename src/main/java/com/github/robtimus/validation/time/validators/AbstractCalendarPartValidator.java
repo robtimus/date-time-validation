@@ -96,7 +96,17 @@ public abstract class AbstractCalendarPartValidator<A extends Annotation, P exte
 
     private void initializeZoneId(A constraintAnnotation) {
         String zoneIdText = zoneIdExtractor.apply(constraintAnnotation);
-        zoneId = zoneIdText.isEmpty() ? null : ZoneId.of(zoneIdText);
+        switch (zoneIdText) {
+        case SYSTEM_ZONE_ID:
+            zoneId = ZoneId.systemDefault();
+            break;
+        case PROVIDED_ZONE_ID:
+            zoneId = null;
+            break;
+        default:
+            zoneId = ZoneId.of(zoneIdText);
+            break;
+        }
     }
 
     @Override
@@ -111,7 +121,7 @@ public abstract class AbstractCalendarPartValidator<A extends Annotation, P exte
     }
 
     private static ZonedDateTime toZonedDateTime(Calendar calendar, ZoneId zoneId) {
-        // This is exactly what GregorianCalendar does
+        // This is exactly what GregorianCalendar.toZonedDateTime() does
         if (zoneId == null) {
             zoneId = calendar.getTimeZone().toZoneId();
         }
