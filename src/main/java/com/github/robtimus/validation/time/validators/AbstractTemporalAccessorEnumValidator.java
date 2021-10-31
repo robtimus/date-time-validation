@@ -1,5 +1,5 @@
 /*
- * AbstractTemporalAccessorMonthValidator.java
+ * AbstractTemporalAccessorEnumValidator.java
  * Copyright 2021 Rob Spoor
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -18,7 +18,6 @@
 package com.github.robtimus.validation.time.validators;
 
 import java.lang.annotation.Annotation;
-import java.time.Month;
 import java.time.ZoneId;
 import java.time.temporal.TemporalAccessor;
 import java.util.Set;
@@ -27,19 +26,21 @@ import java.util.function.Function;
 import javax.validation.ConstraintValidatorContext;
 
 /**
- * The base for all {@link TemporalAccessor} validators that validate only the month.
+ * The base for all {@link TemporalAccessor} validators that validate only an enumerated part like the month.
  *
  * @author Rob Spoor
  * @param <A> The constraint annotation type.
  * @param <T> The {@link TemporalAccessor} type to validate.
+ * @param <E> The enumerated value type.
  */
-public abstract class AbstractTemporalAccessorMonthValidator<A extends Annotation, T extends TemporalAccessor> extends DateTimeValidator<A, T> {
+public abstract class AbstractTemporalAccessorEnumValidator<A extends Annotation, T extends TemporalAccessor, E extends Enum<E>>
+        extends DateTimeValidator<A, T> {
 
-    private final Function<A, Set<Month>> allowedMonthsExtractor;
+    private final Function<A, Set<E>> allowedValuesExtractor;
     private final Function<A, String> zoneIdExtractor;
-    private final BiFunction<T, ZoneId, Month> monthExtractor;
+    private final BiFunction<T, ZoneId, E> valueExtractor;
 
-    private Set<Month> allowedMonths;
+    private Set<E> allowedValues;
     private ZoneId zoneId;
 
     private String defaultMessage;
@@ -48,35 +49,35 @@ public abstract class AbstractTemporalAccessorMonthValidator<A extends Annotatio
     private String replacementMessage;
 
     /**
-     * Creates a new validator that validates dates against a set of allowed months.
+     * Creates a new validator that validates dates against a set of allowed values.
      *
-     * @param allowedMonthsExtractor A function that extracts the allowed months from a constraint annotation.
+     * @param allowedValuesExtractor A function that extracts the allowed values from a constraint annotation.
      * @param zoneIdExtractor A function that extracts the zone id from a constraint annotation.
-     * @param monthExtractor A function that extracts the month from a {@link TemporalAccessor}..
+     * @param valueExtractor A function that extracts the value from a {@link TemporalAccessor}..
      */
-    protected AbstractTemporalAccessorMonthValidator(Function<A, Set<Month>> allowedMonthsExtractor,
+    protected AbstractTemporalAccessorEnumValidator(Function<A, Set<E>> allowedValuesExtractor,
             Function<A, String> zoneIdExtractor,
-            Function<T, Month> monthExtractor) {
+            Function<T, E> valueExtractor) {
 
-        this.allowedMonthsExtractor = allowedMonthsExtractor;
+        this.allowedValuesExtractor = allowedValuesExtractor;
         this.zoneIdExtractor = zoneIdExtractor;
-        this.monthExtractor = (t, z) -> monthExtractor.apply(t);
+        this.valueExtractor = (t, z) -> valueExtractor.apply(t);
     }
 
     /**
-     * Creates a new validator that validates dates against a set of allowed months.
+     * Creates a new validator that validates dates against a set of allowed values.
      *
-     * @param allowedMonthsExtractor A function that extracts the allowed months from a constraint annotation.
+     * @param allowedValuesExtractor A function that extracts the allowed values from a constraint annotation.
      * @param zoneIdExtractor A function that extracts the zone id from a constraint annotation.
-     * @param monthExtractor A function that extracts the month from a {@link TemporalAccessor}..
+     * @param valueExtractor A function that extracts the value from a {@link TemporalAccessor}..
      */
-    protected AbstractTemporalAccessorMonthValidator(Function<A, Set<Month>> allowedMonthsExtractor,
+    protected AbstractTemporalAccessorEnumValidator(Function<A, Set<E>> allowedValuesExtractor,
             Function<A, String> zoneIdExtractor,
-            BiFunction<T, ZoneId, Month> monthExtractor) {
+            BiFunction<T, ZoneId, E> valueExtractor) {
 
-        this.allowedMonthsExtractor = allowedMonthsExtractor;
+        this.allowedValuesExtractor = allowedValuesExtractor;
         this.zoneIdExtractor = zoneIdExtractor;
-        this.monthExtractor = monthExtractor;
+        this.valueExtractor = valueExtractor;
     }
 
     /**
@@ -94,13 +95,13 @@ public abstract class AbstractTemporalAccessorMonthValidator<A extends Annotatio
 
     @Override
     public void initialize(A constraintAnnotation) {
-        initializeAllowedMonths(constraintAnnotation);
+        initializeAllowedValues(constraintAnnotation);
         initializeZoneId(constraintAnnotation);
         initializeMessage(constraintAnnotation);
     }
 
-    private void initializeAllowedMonths(A constraintAnnotation) {
-        allowedMonths = allowedMonthsExtractor.apply(constraintAnnotation);
+    private void initializeAllowedValues(A constraintAnnotation) {
+        allowedValues = allowedValuesExtractor.apply(constraintAnnotation);
     }
 
     private void initializeZoneId(A constraintAnnotation) {
@@ -123,8 +124,8 @@ public abstract class AbstractTemporalAccessorMonthValidator<A extends Annotatio
             return true;
         }
 
-        Month month = monthExtractor.apply(value, zoneId);
-        boolean valid = allowedMonths.contains(month);
+        E enumValue = valueExtractor.apply(value, zoneId);
+        boolean valid = allowedValues.contains(enumValue);
         if (!valid && message != null) {
             context.disableDefaultConstraintViolation();
             context.buildConstraintViolationWithTemplate(message).addConstraintViolation();

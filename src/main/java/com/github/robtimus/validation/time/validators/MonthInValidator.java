@@ -49,13 +49,13 @@ public final class MonthInValidator {
      *
      * @author Rob Spoor
      */
-    public static class ForDate extends AbstractDateMonthValidator<MonthIn> {
+    public static class ForDate extends AbstractDateEnumValidator<MonthIn, Month> {
 
         /**
          * Creates a new validator.
          */
         public ForDate() {
-            super(allowedMonths(MonthIn::value), MonthIn::zoneId);
+            super(allowedMonths(MonthIn::value), MonthIn::zoneId, ZonedDateTime::getMonth);
         }
     }
 
@@ -64,13 +64,13 @@ public final class MonthInValidator {
      *
      * @author Rob Spoor
      */
-    public static class ForCalendar extends AbstractCalendarMonthValidator<MonthIn> {
+    public static class ForCalendar extends AbstractCalendarEnumValidator<MonthIn, Month> {
 
         /**
          * Creates a new validator.
          */
         public ForCalendar() {
-            super(allowedMonths(MonthIn::value), MonthIn::zoneId);
+            super(allowedMonths(MonthIn::value), MonthIn::zoneId, ZonedDateTime::getMonth);
         }
     }
 
@@ -79,7 +79,7 @@ public final class MonthInValidator {
      *
      * @author Rob Spoor
      */
-    public static class ForInstant extends AbstractTemporalAccessorMonthValidator<MonthIn, Instant> {
+    public static class ForInstant extends AbstractTemporalAccessorEnumValidator<MonthIn, Instant, Month> {
 
         /**
          * Creates a new validator.
@@ -94,7 +94,7 @@ public final class MonthInValidator {
      *
      * @author Rob Spoor
      */
-    public static class ForLocalDate extends AbstractTemporalAccessorMonthValidator<MonthIn, LocalDate> {
+    public static class ForLocalDate extends AbstractTemporalAccessorEnumValidator<MonthIn, LocalDate, Month> {
 
         /**
          * Creates a new validator.
@@ -109,7 +109,7 @@ public final class MonthInValidator {
      *
      * @author Rob Spoor
      */
-    public static class ForLocalDateTime extends AbstractTemporalAccessorMonthValidator<MonthIn, LocalDateTime> {
+    public static class ForLocalDateTime extends AbstractTemporalAccessorEnumValidator<MonthIn, LocalDateTime, Month> {
 
         /**
          * Creates a new validator.
@@ -124,7 +124,7 @@ public final class MonthInValidator {
      *
      * @author Rob Spoor
      */
-    public static class ForMonth extends AbstractTemporalAccessorMonthValidator<MonthIn, Month> {
+    public static class ForMonth extends AbstractTemporalAccessorEnumValidator<MonthIn, Month, Month> {
 
         /**
          * Creates a new validator.
@@ -142,7 +142,7 @@ public final class MonthInValidator {
      *
      * @author Rob Spoor
      */
-    public static class ForMonthDay extends AbstractTemporalAccessorMonthValidator<MonthIn, MonthDay> {
+    public static class ForMonthDay extends AbstractTemporalAccessorEnumValidator<MonthIn, MonthDay, Month> {
 
         /**
          * Creates a new validator.
@@ -157,7 +157,7 @@ public final class MonthInValidator {
      *
      * @author Rob Spoor
      */
-    public static class ForOffsetDateTime extends AbstractTemporalAccessorMonthValidator<MonthIn, OffsetDateTime> {
+    public static class ForOffsetDateTime extends AbstractTemporalAccessorEnumValidator<MonthIn, OffsetDateTime, Month> {
 
         /**
          * Creates a new validator.
@@ -172,7 +172,7 @@ public final class MonthInValidator {
      *
      * @author Rob Spoor
      */
-    public static class ForYearMonth extends AbstractTemporalAccessorMonthValidator<MonthIn, YearMonth> {
+    public static class ForYearMonth extends AbstractTemporalAccessorEnumValidator<MonthIn, YearMonth, Month> {
 
         /**
          * Creates a new validator.
@@ -187,7 +187,7 @@ public final class MonthInValidator {
      *
      * @author Rob Spoor
      */
-    public static class ForZonedDateTime extends AbstractTemporalAccessorMonthValidator<MonthIn, ZonedDateTime> {
+    public static class ForZonedDateTime extends AbstractTemporalAccessorEnumValidator<MonthIn, ZonedDateTime, Month> {
 
         /**
          * Creates a new validator.

@@ -1,5 +1,5 @@
 /*
- * AbstractDateMonthValidator.java
+ * AbstractDateEnumValidator.java
  * Copyright 2021 Rob Spoor
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -19,7 +19,6 @@ package com.github.robtimus.validation.time.validators;
 
 import java.lang.annotation.Annotation;
 import java.time.Instant;
-import java.time.Month;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.Date;
@@ -28,40 +27,45 @@ import java.util.function.Function;
 import javax.validation.ConstraintValidatorContext;
 
 /**
- * The base for all {@link Date} validators that validate only the month.
+ * The base for all {@link Date} validators that validate only an enumerated part like the month.
  *
  * @author Rob Spoor
  * @param <A> The constraint annotation type.
+ * @param <E> The enumerated value type.
  */
-public abstract class AbstractDateMonthValidator<A extends Annotation> extends DateTimeValidator<A, Date> {
+public abstract class AbstractDateEnumValidator<A extends Annotation, E extends Enum<E>> extends DateTimeValidator<A, Date> {
 
-    private final Function<A, Set<Month>> allowedMonthsExtractor;
+    private final Function<A, Set<E>> allowedValuesExtractor;
     private final Function<A, String> zoneIdExtractor;
+    private final Function<ZonedDateTime, E> valueExtractor;
 
-    private Set<Month> allowedMonths;
+    private Set<E> allowedValues;
     private ZoneId zoneId;
 
     /**
-     * Creates a new validator that validates dates against a set of allowed months.
+     * Creates a new validator that validates dates against a set of allowed values.
      *
-     * @param allowedMonthsExtractor A function that extracts the allowed months from a constraint annotation.
+     * @param allowedValuesExtractor A function that extracts the allowed values from a constraint annotation.
      * @param zoneIdExtractor A function that extracts the zone id from a constraint annotation.
+     * @param valueExtractor A function that extracts the value from a {@link ZonedDateTime}..
      */
-    protected AbstractDateMonthValidator(Function<A, Set<Month>> allowedMonthsExtractor,
-            Function<A, String> zoneIdExtractor) {
+    protected AbstractDateEnumValidator(Function<A, Set<E>> allowedValuesExtractor,
+            Function<A, String> zoneIdExtractor,
+            Function<ZonedDateTime, E> valueExtractor) {
 
-        this.allowedMonthsExtractor = allowedMonthsExtractor;
+        this.allowedValuesExtractor = allowedValuesExtractor;
         this.zoneIdExtractor = zoneIdExtractor;
+        this.valueExtractor = valueExtractor;
     }
 
     @Override
     public void initialize(A constraintAnnotation) {
-        initializeAllowedMonths(constraintAnnotation);
+        initializeAllowedValues(constraintAnnotation);
         initializeZoneId(constraintAnnotation);
     }
 
-    private void initializeAllowedMonths(A constraintAnnotation) {
-        allowedMonths = allowedMonthsExtractor.apply(constraintAnnotation);
+    private void initializeAllowedValues(A constraintAnnotation) {
+        allowedValues = allowedValuesExtractor.apply(constraintAnnotation);
     }
 
     private void initializeZoneId(A constraintAnnotation) {
@@ -77,7 +81,7 @@ public abstract class AbstractDateMonthValidator<A extends Annotation> extends D
 
         Instant instant = value.toInstant();
         ZonedDateTime zonedDateTime = toZonedDateTime(instant, zoneId);
-        Month month = zonedDateTime.getMonth();
-        return allowedMonths.contains(month);
+        E enumValue = valueExtractor.apply(zonedDateTime);
+        return allowedValues.contains(enumValue);
     }
 }

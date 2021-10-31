@@ -1,5 +1,5 @@
 /*
- * AbstractCalendarMonthValidator.java
+ * AbstractCalendarEnumValidator.java
  * Copyright 2021 Rob Spoor
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -18,49 +18,54 @@
 package com.github.robtimus.validation.time.validators;
 
 import java.lang.annotation.Annotation;
-import java.time.Month;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
+import java.time.temporal.TemporalAccessor;
 import java.util.Calendar;
 import java.util.Set;
 import java.util.function.Function;
 import javax.validation.ConstraintValidatorContext;
 
 /**
- * The base for all {@link Calendar} validators that validate only the month.
+ * The base for all {@link Calendar} validators that validate only an enumerated part like the month.
  *
  * @author Rob Spoor
  * @param <A> The constraint annotation type.
+ * @param <E> The enumerated value type.
  */
-public abstract class AbstractCalendarMonthValidator<A extends Annotation> extends DateTimeValidator<A, Calendar> {
+public abstract class AbstractCalendarEnumValidator<A extends Annotation, E extends Enum<E>> extends DateTimeValidator<A, Calendar> {
 
-    private final Function<A, Set<Month>> allowedMonthsExtractor;
+    private final Function<A, Set<E>> allowedValuesExtractor;
     private final Function<A, String> zoneIdExtractor;
+    private final Function<ZonedDateTime, E> valueExtractor;
 
-    private Set<Month> allowedMonths;
+    private Set<E> allowedValues;
     private ZoneId zoneId;
 
     /**
-     * Creates a new validator that validates dates against a set of allowed months.
+     * Creates a new validator that validates dates against a set of allowed values.
      *
-     * @param allowedMonthsExtractor A function that extracts the allowed months from a constraint annotation.
+     * @param allowedValuesExtractor A function that extracts the allowed values from a constraint annotation.
      * @param zoneIdExtractor A function that extracts the zone id from a constraint annotation.
+     * @param valueExtractor A function that extracts the value from a {@link TemporalAccessor}..
      */
-    protected AbstractCalendarMonthValidator(Function<A, Set<Month>> allowedMonthsExtractor,
-            Function<A, String> zoneIdExtractor) {
+    protected AbstractCalendarEnumValidator(Function<A, Set<E>> allowedValuesExtractor,
+            Function<A, String> zoneIdExtractor,
+            Function<ZonedDateTime, E> valueExtractor) {
 
-        this.allowedMonthsExtractor = allowedMonthsExtractor;
+        this.allowedValuesExtractor = allowedValuesExtractor;
         this.zoneIdExtractor = zoneIdExtractor;
+        this.valueExtractor = valueExtractor;
     }
 
     @Override
     public void initialize(A constraintAnnotation) {
-        initializeAllowedMonths(constraintAnnotation);
+        initializeAllowedValues(constraintAnnotation);
         initializeZoneId(constraintAnnotation);
     }
 
-    private void initializeAllowedMonths(A constraintAnnotation) {
-        allowedMonths = allowedMonthsExtractor.apply(constraintAnnotation);
+    private void initializeAllowedValues(A constraintAnnotation) {
+        allowedValues = allowedValuesExtractor.apply(constraintAnnotation);
     }
 
     private void initializeZoneId(A constraintAnnotation) {
@@ -75,7 +80,7 @@ public abstract class AbstractCalendarMonthValidator<A extends Annotation> exten
         }
 
         ZonedDateTime zonedDateTime = toZonedDateTime(value, zoneId);
-        Month month = zonedDateTime.getMonth();
-        return allowedMonths.contains(month);
+        E enumValue = valueExtractor.apply(zonedDateTime);
+        return allowedValues.contains(enumValue);
     }
 }

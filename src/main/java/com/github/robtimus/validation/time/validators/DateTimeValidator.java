@@ -18,6 +18,7 @@
 package com.github.robtimus.validation.time.validators;
 
 import java.lang.annotation.Annotation;
+import java.time.DayOfWeek;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -159,6 +160,20 @@ public abstract class DateTimeValidator<A extends Annotation, T> implements Cons
     static Month toMonth(ZonedDateTime zonedDateTime, ZoneId zoneId) {
         // zoneId == null means use provided zoneId
         return zoneId == null ? zonedDateTime.getMonth() : zonedDateTime.withZoneSameInstant(zoneId).getMonth();
+    }
+
+    static DayOfWeek toDayOfWeek(Instant instant, ZoneId zoneId) {
+        return toZonedDateTime(instant, zoneId).getDayOfWeek();
+    }
+
+    static DayOfWeek toDayOfWeek(OffsetDateTime offsetDateTime, ZoneId zoneId) {
+        // zoneId == null means use provided zoneId
+        return zoneId == null ? offsetDateTime.getDayOfWeek() : offsetDateTime.atZoneSameInstant(zoneId).getDayOfWeek();
+    }
+
+    static DayOfWeek toDayOfWeek(ZonedDateTime zonedDateTime, ZoneId zoneId) {
+        // zoneId == null means use provided zoneId
+        return zoneId == null ? zonedDateTime.getDayOfWeek() : zonedDateTime.withZoneSameInstant(zoneId).getDayOfWeek();
     }
 
     static ZonedDateTime toZonedDateTime(Instant instant, ZoneId zoneId) {
