@@ -47,7 +47,8 @@ public final class DateNotAfterValidator {
          * Creates a new validator.
          */
         public ForDate() {
-            super(DateNotAfter::moment, DateNotAfter::zoneId, DateTimeValidator::toLocalDate, new NotAfterValidator.ForLocalDate());
+            super(DateNotAfter::moment, nonProvidedZoneId(DateNotAfter::zoneId), DateTimeValidator::toLocalDate,
+                    new NotAfterValidator.ForLocalDate());
         }
     }
 
@@ -77,7 +78,8 @@ public final class DateNotAfterValidator {
          * Creates a new validator.
          */
         public ForInstant() {
-            super(DateNotAfter::moment, DateNotAfter::zoneId, DateTimeValidator::toLocalDate, new NotAfterValidator.ForLocalDate());
+            super(DateNotAfter::moment, nonProvidedZoneId(DateNotAfter::zoneId), DateTimeValidator::toLocalDate,
+                    new NotAfterValidator.ForLocalDate());
         }
     }
 
@@ -92,7 +94,7 @@ public final class DateNotAfterValidator {
          * Creates a new validator.
          */
         public ForLocalDateTime() {
-            super(DateNotAfter::moment, DateNotAfter::zoneId, LocalDateTime::toLocalDate, new NotAfterValidator.ForLocalDate());
+            super(DateNotAfter::moment, systemOnlyZoneId(DateNotAfter::zoneId), LocalDateTime::toLocalDate, new NotAfterValidator.ForLocalDate());
         }
     }
 

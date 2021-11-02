@@ -28,6 +28,7 @@ import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.Calendar;
 import java.util.function.BiPredicate;
+import java.util.function.Function;
 import javax.validation.ConstraintValidator;
 import com.github.robtimus.validation.time.DateAfter;
 import com.github.robtimus.validation.time.DateBefore;
@@ -120,6 +121,26 @@ public abstract class DateTimeValidator<A extends Annotation, T> implements Cons
         }
     }
 
+    static <A extends Annotation> Function<A, String> systemOnlyZoneId(Function<A, String> zoneIdExtractor) {
+        return constraint -> {
+            String zoneId = zoneIdExtractor.apply(constraint);
+            if (!SYSTEM_ZONE_ID.equals(zoneId)) {
+                throw new IllegalStateException(String.format("zoneId should be '%s', is '%s'", SYSTEM_ZONE_ID, zoneId)); //$NON-NLS-1$
+            }
+            return zoneId;
+        };
+    }
+
+    static <A extends Annotation> Function<A, String> nonProvidedZoneId(Function<A, String> zoneIdExtractor) {
+        return constraint -> {
+            String zoneId = zoneIdExtractor.apply(constraint);
+            if (PROVIDED_ZONE_ID.equals(zoneId)) {
+                throw new IllegalStateException(String.format("zoneId should not be '%s'", PROVIDED_ZONE_ID)); //$NON-NLS-1$
+            }
+            return zoneId;
+        };
+    }
+
     static LocalDate toLocalDate(Instant instant, ZoneId zoneId) {
         return toZonedDateTime(instant, zoneId).toLocalDate();
     }
@@ -177,9 +198,6 @@ public abstract class DateTimeValidator<A extends Annotation, T> implements Cons
     }
 
     static ZonedDateTime toZonedDateTime(Instant instant, ZoneId zoneId) {
-        if (zoneId == null) {
-            zoneId = ZoneId.systemDefault();
-        }
         return instant.atZone(zoneId);
     }
 

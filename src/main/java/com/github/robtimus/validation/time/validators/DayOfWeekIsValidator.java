@@ -52,7 +52,7 @@ public final class DayOfWeekIsValidator {
          * Creates a new validator.
          */
         public ForDate() {
-            super(allowedDayOfWeeks(DayOfWeekIs::value), DayOfWeekIs::zoneId, ZonedDateTime::getDayOfWeek);
+            super(allowedDayOfWeeks(DayOfWeekIs::value), nonProvidedZoneId(DayOfWeekIs::zoneId), ZonedDateTime::getDayOfWeek);
         }
     }
 
@@ -83,7 +83,7 @@ public final class DayOfWeekIsValidator {
          */
         @SuppressWarnings("nls")
         public ForDayOfWeek() {
-            super(allowedDayOfWeeks(DayOfWeekIs::value), DayOfWeekIs::zoneId, Function.identity());
+            super(allowedDayOfWeeks(DayOfWeekIs::value), systemOnlyZoneId(DayOfWeekIs::zoneId), Function.identity());
             useReplacementMessage("{com.github.robtimus.validation.time.DayOfWeekIs.message}", DayOfWeekIs::message,
                     "{com.github.robtimus.validation.time.DayOfWeekIs.message.forDayOfWeek}");
         }
@@ -100,7 +100,7 @@ public final class DayOfWeekIsValidator {
          * Creates a new validator.
          */
         public ForInstant() {
-            super(allowedDayOfWeeks(DayOfWeekIs::value), DayOfWeekIs::zoneId, DateTimeValidator::toDayOfWeek);
+            super(allowedDayOfWeeks(DayOfWeekIs::value), nonProvidedZoneId(DayOfWeekIs::zoneId), DateTimeValidator::toDayOfWeek);
         }
     }
 
@@ -115,7 +115,7 @@ public final class DayOfWeekIsValidator {
          * Creates a new validator.
          */
         public ForLocalDate() {
-            super(allowedDayOfWeeks(DayOfWeekIs::value), DayOfWeekIs::zoneId, LocalDate::getDayOfWeek);
+            super(allowedDayOfWeeks(DayOfWeekIs::value), systemOnlyZoneId(DayOfWeekIs::zoneId), LocalDate::getDayOfWeek);
         }
     }
 
@@ -130,7 +130,7 @@ public final class DayOfWeekIsValidator {
          * Creates a new validator.
          */
         public ForLocalDateTime() {
-            super(allowedDayOfWeeks(DayOfWeekIs::value), DayOfWeekIs::zoneId, LocalDateTime::getDayOfWeek);
+            super(allowedDayOfWeeks(DayOfWeekIs::value), systemOnlyZoneId(DayOfWeekIs::zoneId), LocalDateTime::getDayOfWeek);
         }
     }
 

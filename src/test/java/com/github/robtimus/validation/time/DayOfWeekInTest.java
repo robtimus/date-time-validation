@@ -46,25 +46,10 @@ class DayOfWeekInTest extends AbstractConstraintTest {
 
     @Nested
     @DisplayName("Date")
-    class ForDate {
+    class ForDate extends AbstractNonProvidedZoneIdTest<Date> {
 
-        @Nested
-        @DisplayName("with provided zone id")
-        class WithProvidedZoneId extends ConstraintTest<Date> {
-
-            WithProvidedZoneId() {
-                super(TestClassWithProvidedZoneId.class, "date",
-                        Arrays.asList(
-                                Date.from(utcInstantAtDefaultZone("2007-05-17T00:50:15.00Z")),
-                                Date.from(utcInstantAtDefaultZone("2007-05-19T00:50:15.00Z"))
-                        ),
-                        Arrays.asList(
-                                Date.from(utcInstantAtDefaultZone("2007-05-16T23:50:15.00Z")),
-                                Date.from(utcInstantAtDefaultZone("2007-05-18T00:50:15.00Z")),
-                                Date.from(utcInstantAtDefaultZone("2007-05-18T23:50:15.00Z")),
-                                Date.from(utcInstantAtDefaultZone("2007-05-20T00:50:15.00Z"))
-                        ));
-            }
+        ForDate() {
+            super(TestClassWithProvidedZoneId.class, "date", new Date());
         }
 
         @Nested
@@ -216,44 +201,10 @@ class DayOfWeekInTest extends AbstractConstraintTest {
 
     @Nested
     @DisplayName("DayOfWeek")
-    class ForDayOfWeek {
+    class ForDayOfWeek extends AbstractSystemOnlyZoneIdTest<DayOfWeek> {
 
-        @Nested
-        @DisplayName("with provided zone id")
-        class WithProvidedZoneId extends ConstraintTest<DayOfWeek> {
-
-            WithProvidedZoneId() {
-                super(TestClassWithProvidedZoneId.class, "dayOfWeek",
-                        Arrays.asList(
-                                DayOfWeek.THURSDAY,
-                                DayOfWeek.SATURDAY
-                        ),
-                        Arrays.asList(
-                                DayOfWeek.WEDNESDAY,
-                                DayOfWeek.FRIDAY,
-                                DayOfWeek.SUNDAY
-                        ),
-                        "must be one of %s");
-            }
-        }
-
-        @Nested
-        @DisplayName("with zone id")
-        class WithZoneId extends ConstraintTest<DayOfWeek> {
-
-            WithZoneId() {
-                super(TestClassWithZoneId.class, "dayOfWeek",
-                        Arrays.asList(
-                                DayOfWeek.THURSDAY,
-                                DayOfWeek.SATURDAY
-                        ),
-                        Arrays.asList(
-                                DayOfWeek.WEDNESDAY,
-                                DayOfWeek.FRIDAY,
-                                DayOfWeek.SUNDAY
-                        ),
-                        "must be one of %s");
-            }
+        ForDayOfWeek() {
+            super(TestClassWithProvidedZoneId.class, TestClassWithZoneId.class, "dayOfWeek", DayOfWeek.MONDAY);
         }
 
         @Nested
@@ -301,25 +252,10 @@ class DayOfWeekInTest extends AbstractConstraintTest {
 
     @Nested
     @DisplayName("Instant")
-    class ForInstant {
+    class ForInstant extends AbstractNonProvidedZoneIdTest<Instant> {
 
-        @Nested
-        @DisplayName("with provided zone id")
-        class WithProvidedZoneId extends ConstraintTest<Instant> {
-
-            WithProvidedZoneId() {
-                super(TestClassWithProvidedZoneId.class, "instant",
-                        Arrays.asList(
-                                utcInstantAtDefaultZone("2007-05-17T00:50:15.00Z"),
-                                utcInstantAtDefaultZone("2007-05-19T00:50:15.00Z")
-                        ),
-                        Arrays.asList(
-                                utcInstantAtDefaultZone("2007-05-16T23:50:15.00Z"),
-                                utcInstantAtDefaultZone("2007-05-18T00:50:15.00Z"),
-                                utcInstantAtDefaultZone("2007-05-18T23:50:15.00Z"),
-                                utcInstantAtDefaultZone("2007-05-20T00:50:15.00Z")
-                        ));
-            }
+        ForInstant() {
+            super(TestClassWithProvidedZoneId.class, "instant", Instant.now());
         }
 
         @Nested
@@ -386,42 +322,10 @@ class DayOfWeekInTest extends AbstractConstraintTest {
 
     @Nested
     @DisplayName("LocalDate")
-    class ForLocalDate {
+    class ForLocalDate extends AbstractSystemOnlyZoneIdTest<LocalDate> {
 
-        @Nested
-        @DisplayName("with provided zone id")
-        class WithProvidedZoneId extends ConstraintTest<LocalDate> {
-
-            WithProvidedZoneId() {
-                super(TestClassWithProvidedZoneId.class, "localDate",
-                        Arrays.asList(
-                                LocalDate.parse("2007-05-17"),
-                                LocalDate.parse("2007-05-19")
-                        ),
-                        Arrays.asList(
-                                LocalDate.parse("2007-05-16"),
-                                LocalDate.parse("2007-05-18"),
-                                LocalDate.parse("2007-05-20")
-                        ));
-            }
-        }
-
-        @Nested
-        @DisplayName("with zone id")
-        class WithZoneId extends ConstraintTest<LocalDate> {
-
-            WithZoneId() {
-                super(TestClassWithZoneId.class, "localDate",
-                        Arrays.asList(
-                                LocalDate.parse("2007-05-17"),
-                                LocalDate.parse("2007-05-19")
-                        ),
-                        Arrays.asList(
-                                LocalDate.parse("2007-05-16"),
-                                LocalDate.parse("2007-05-18"),
-                                LocalDate.parse("2007-05-20")
-                        ));
-            }
+        ForLocalDate() {
+            super(TestClassWithProvidedZoneId.class, TestClassWithZoneId.class, "localDate", LocalDate.now());
         }
 
         @Nested
@@ -467,44 +371,10 @@ class DayOfWeekInTest extends AbstractConstraintTest {
 
     @Nested
     @DisplayName("LocalDateTime")
-    class ForLocalDateTime {
+    class ForLocalDateTime extends AbstractSystemOnlyZoneIdTest<LocalDateTime> {
 
-        @Nested
-        @DisplayName("with provided zone id")
-        class WithProvidedZoneId extends ConstraintTest<LocalDateTime> {
-
-            WithProvidedZoneId() {
-                super(TestClassWithProvidedZoneId.class, "localDateTime",
-                        Arrays.asList(
-                                LocalDateTime.parse("2007-05-17T00:50:15"),
-                                LocalDateTime.parse("2007-05-19T00:50:15")
-                        ),
-                        Arrays.asList(
-                                LocalDateTime.parse("2007-05-16T23:50:15"),
-                                LocalDateTime.parse("2007-05-18T00:50:15"),
-                                LocalDateTime.parse("2007-05-18T23:50:15"),
-                                LocalDateTime.parse("2007-05-20T00:50:15")
-                        ));
-            }
-        }
-
-        @Nested
-        @DisplayName("with zone id")
-        class WithZoneId extends ConstraintTest<LocalDateTime> {
-
-            WithZoneId() {
-                super(TestClassWithZoneId.class, "localDateTime",
-                        Arrays.asList(
-                                LocalDateTime.parse("2007-05-17T00:50:15"),
-                                LocalDateTime.parse("2007-05-19T00:50:15")
-                        ),
-                        Arrays.asList(
-                                LocalDateTime.parse("2007-05-16T23:50:15"),
-                                LocalDateTime.parse("2007-05-18T00:50:15"),
-                                LocalDateTime.parse("2007-05-18T23:50:15"),
-                                LocalDateTime.parse("2007-05-20T00:50:15")
-                        ));
-            }
+        ForLocalDateTime() {
+            super(TestClassWithProvidedZoneId.class, TestClassWithZoneId.class, "localDateTime", LocalDateTime.now());
         }
 
         @Nested

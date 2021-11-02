@@ -54,7 +54,7 @@ public final class MonthBeforeValidator {
          * Creates a new validator.
          */
         public ForDate() {
-            super(allowedMonths(MonthBefore::value), MonthBefore::zoneId, ZonedDateTime::getMonth);
+            super(allowedMonths(MonthBefore::value), nonProvidedZoneId(MonthBefore::zoneId), ZonedDateTime::getMonth);
         }
     }
 
@@ -84,7 +84,7 @@ public final class MonthBeforeValidator {
          * Creates a new validator.
          */
         public ForInstant() {
-            super(allowedMonths(MonthBefore::value), MonthBefore::zoneId, DateTimeValidator::toMonth);
+            super(allowedMonths(MonthBefore::value), nonProvidedZoneId(MonthBefore::zoneId), DateTimeValidator::toMonth);
         }
     }
 
@@ -99,7 +99,7 @@ public final class MonthBeforeValidator {
          * Creates a new validator.
          */
         public ForLocalDate() {
-            super(allowedMonths(MonthBefore::value), MonthBefore::zoneId, LocalDate::getMonth);
+            super(allowedMonths(MonthBefore::value), systemOnlyZoneId(MonthBefore::zoneId), LocalDate::getMonth);
         }
     }
 
@@ -114,7 +114,7 @@ public final class MonthBeforeValidator {
          * Creates a new validator.
          */
         public ForLocalDateTime() {
-            super(allowedMonths(MonthBefore::value), MonthBefore::zoneId, LocalDateTime::getMonth);
+            super(allowedMonths(MonthBefore::value), systemOnlyZoneId(MonthBefore::zoneId), LocalDateTime::getMonth);
         }
     }
 
@@ -130,7 +130,7 @@ public final class MonthBeforeValidator {
          */
         @SuppressWarnings("nls")
         public ForMonth() {
-            super(allowedMonths(MonthBefore::value), MonthBefore::zoneId, Function.identity());
+            super(allowedMonths(MonthBefore::value), systemOnlyZoneId(MonthBefore::zoneId), Function.identity());
             useReplacementMessage("{com.github.robtimus.validation.time.MonthBefore.message}", MonthBefore::message,
                     "{com.github.robtimus.validation.time.MonthBefore.message.forMonth}");
         }
@@ -147,7 +147,7 @@ public final class MonthBeforeValidator {
          * Creates a new validator.
          */
         public ForMonthDay() {
-            super(allowedMonths(MonthBefore::value), MonthBefore::zoneId, MonthDay::getMonth);
+            super(allowedMonths(MonthBefore::value), systemOnlyZoneId(MonthBefore::zoneId), MonthDay::getMonth);
         }
     }
 
@@ -177,7 +177,7 @@ public final class MonthBeforeValidator {
          * Creates a new validator.
          */
         public ForYearMonth() {
-            super(allowedMonths(MonthBefore::value), MonthBefore::zoneId, YearMonth::getMonth);
+            super(allowedMonths(MonthBefore::value), systemOnlyZoneId(MonthBefore::zoneId), YearMonth::getMonth);
         }
     }
 

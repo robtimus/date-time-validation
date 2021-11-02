@@ -54,7 +54,7 @@ public final class MonthNotAfterValidator {
          * Creates a new validator.
          */
         public ForDate() {
-            super(allowedMonths(MonthNotAfter::value), MonthNotAfter::zoneId, ZonedDateTime::getMonth);
+            super(allowedMonths(MonthNotAfter::value), nonProvidedZoneId(MonthNotAfter::zoneId), ZonedDateTime::getMonth);
         }
     }
 
@@ -84,7 +84,7 @@ public final class MonthNotAfterValidator {
          * Creates a new validator.
          */
         public ForInstant() {
-            super(allowedMonths(MonthNotAfter::value), MonthNotAfter::zoneId, DateTimeValidator::toMonth);
+            super(allowedMonths(MonthNotAfter::value), nonProvidedZoneId(MonthNotAfter::zoneId), DateTimeValidator::toMonth);
         }
     }
 
@@ -99,7 +99,7 @@ public final class MonthNotAfterValidator {
          * Creates a new validator.
          */
         public ForLocalDate() {
-            super(allowedMonths(MonthNotAfter::value), MonthNotAfter::zoneId, LocalDate::getMonth);
+            super(allowedMonths(MonthNotAfter::value), systemOnlyZoneId(MonthNotAfter::zoneId), LocalDate::getMonth);
         }
     }
 
@@ -114,7 +114,7 @@ public final class MonthNotAfterValidator {
          * Creates a new validator.
          */
         public ForLocalDateTime() {
-            super(allowedMonths(MonthNotAfter::value), MonthNotAfter::zoneId, LocalDateTime::getMonth);
+            super(allowedMonths(MonthNotAfter::value), systemOnlyZoneId(MonthNotAfter::zoneId), LocalDateTime::getMonth);
         }
     }
 
@@ -130,7 +130,7 @@ public final class MonthNotAfterValidator {
          */
         @SuppressWarnings("nls")
         public ForMonth() {
-            super(allowedMonths(MonthNotAfter::value), MonthNotAfter::zoneId, Function.identity());
+            super(allowedMonths(MonthNotAfter::value), systemOnlyZoneId(MonthNotAfter::zoneId), Function.identity());
             useReplacementMessage("{com.github.robtimus.validation.time.MonthNotAfter.message}", MonthNotAfter::message,
                     "{com.github.robtimus.validation.time.MonthNotAfter.message.forMonth}");
         }
@@ -147,7 +147,7 @@ public final class MonthNotAfterValidator {
          * Creates a new validator.
          */
         public ForMonthDay() {
-            super(allowedMonths(MonthNotAfter::value), MonthNotAfter::zoneId, MonthDay::getMonth);
+            super(allowedMonths(MonthNotAfter::value), systemOnlyZoneId(MonthNotAfter::zoneId), MonthDay::getMonth);
         }
     }
 
@@ -177,7 +177,7 @@ public final class MonthNotAfterValidator {
          * Creates a new validator.
          */
         public ForYearMonth() {
-            super(allowedMonths(MonthNotAfter::value), MonthNotAfter::zoneId, YearMonth::getMonth);
+            super(allowedMonths(MonthNotAfter::value), systemOnlyZoneId(MonthNotAfter::zoneId), YearMonth::getMonth);
         }
     }
 

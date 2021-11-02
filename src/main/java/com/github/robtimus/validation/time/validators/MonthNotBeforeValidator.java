@@ -54,7 +54,7 @@ public final class MonthNotBeforeValidator {
          * Creates a new validator.
          */
         public ForDate() {
-            super(allowedMonths(MonthNotBefore::value), MonthNotBefore::zoneId, ZonedDateTime::getMonth);
+            super(allowedMonths(MonthNotBefore::value), nonProvidedZoneId(MonthNotBefore::zoneId), ZonedDateTime::getMonth);
         }
     }
 
@@ -84,7 +84,7 @@ public final class MonthNotBeforeValidator {
          * Creates a new validator.
          */
         public ForInstant() {
-            super(allowedMonths(MonthNotBefore::value), MonthNotBefore::zoneId, DateTimeValidator::toMonth);
+            super(allowedMonths(MonthNotBefore::value), nonProvidedZoneId(MonthNotBefore::zoneId), DateTimeValidator::toMonth);
         }
     }
 
@@ -99,7 +99,7 @@ public final class MonthNotBeforeValidator {
          * Creates a new validator.
          */
         public ForLocalDate() {
-            super(allowedMonths(MonthNotBefore::value), MonthNotBefore::zoneId, LocalDate::getMonth);
+            super(allowedMonths(MonthNotBefore::value), systemOnlyZoneId(MonthNotBefore::zoneId), LocalDate::getMonth);
         }
     }
 
@@ -114,7 +114,7 @@ public final class MonthNotBeforeValidator {
          * Creates a new validator.
          */
         public ForLocalDateTime() {
-            super(allowedMonths(MonthNotBefore::value), MonthNotBefore::zoneId, LocalDateTime::getMonth);
+            super(allowedMonths(MonthNotBefore::value), systemOnlyZoneId(MonthNotBefore::zoneId), LocalDateTime::getMonth);
         }
     }
 
@@ -130,7 +130,7 @@ public final class MonthNotBeforeValidator {
          */
         @SuppressWarnings("nls")
         public ForMonth() {
-            super(allowedMonths(MonthNotBefore::value), MonthNotBefore::zoneId, Function.identity());
+            super(allowedMonths(MonthNotBefore::value), systemOnlyZoneId(MonthNotBefore::zoneId), Function.identity());
             useReplacementMessage("{com.github.robtimus.validation.time.MonthNotBefore.message}", MonthNotBefore::message,
                     "{com.github.robtimus.validation.time.MonthNotBefore.message.forMonth}");
         }
@@ -147,7 +147,7 @@ public final class MonthNotBeforeValidator {
          * Creates a new validator.
          */
         public ForMonthDay() {
-            super(allowedMonths(MonthNotBefore::value), MonthNotBefore::zoneId, MonthDay::getMonth);
+            super(allowedMonths(MonthNotBefore::value), systemOnlyZoneId(MonthNotBefore::zoneId), MonthDay::getMonth);
         }
     }
 
@@ -177,7 +177,7 @@ public final class MonthNotBeforeValidator {
          * Creates a new validator.
          */
         public ForYearMonth() {
-            super(allowedMonths(MonthNotBefore::value), MonthNotBefore::zoneId, YearMonth::getMonth);
+            super(allowedMonths(MonthNotBefore::value), systemOnlyZoneId(MonthNotBefore::zoneId), YearMonth::getMonth);
         }
     }
 

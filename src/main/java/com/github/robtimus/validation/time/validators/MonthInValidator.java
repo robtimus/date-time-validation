@@ -55,7 +55,7 @@ public final class MonthInValidator {
          * Creates a new validator.
          */
         public ForDate() {
-            super(allowedMonths(MonthIn::value), MonthIn::zoneId, ZonedDateTime::getMonth);
+            super(allowedMonths(MonthIn::value), nonProvidedZoneId(MonthIn::zoneId), ZonedDateTime::getMonth);
         }
     }
 
@@ -85,7 +85,7 @@ public final class MonthInValidator {
          * Creates a new validator.
          */
         public ForInstant() {
-            super(allowedMonths(MonthIn::value), MonthIn::zoneId, DateTimeValidator::toMonth);
+            super(allowedMonths(MonthIn::value), nonProvidedZoneId(MonthIn::zoneId), DateTimeValidator::toMonth);
         }
     }
 
@@ -100,7 +100,7 @@ public final class MonthInValidator {
          * Creates a new validator.
          */
         public ForLocalDate() {
-            super(allowedMonths(MonthIn::value), MonthIn::zoneId, LocalDate::getMonth);
+            super(allowedMonths(MonthIn::value), systemOnlyZoneId(MonthIn::zoneId), LocalDate::getMonth);
         }
     }
 
@@ -115,7 +115,7 @@ public final class MonthInValidator {
          * Creates a new validator.
          */
         public ForLocalDateTime() {
-            super(allowedMonths(MonthIn::value), MonthIn::zoneId, LocalDateTime::getMonth);
+            super(allowedMonths(MonthIn::value), systemOnlyZoneId(MonthIn::zoneId), LocalDateTime::getMonth);
         }
     }
 
@@ -131,7 +131,7 @@ public final class MonthInValidator {
          */
         @SuppressWarnings("nls")
         public ForMonth() {
-            super(allowedMonths(MonthIn::value), MonthIn::zoneId, Function.identity());
+            super(allowedMonths(MonthIn::value), systemOnlyZoneId(MonthIn::zoneId), Function.identity());
             useReplacementMessage("{com.github.robtimus.validation.time.MonthIn.message}", MonthIn::message,
                     "{com.github.robtimus.validation.time.MonthIn.message.forMonth}");
         }
@@ -148,7 +148,7 @@ public final class MonthInValidator {
          * Creates a new validator.
          */
         public ForMonthDay() {
-            super(allowedMonths(MonthIn::value), MonthIn::zoneId, MonthDay::getMonth);
+            super(allowedMonths(MonthIn::value), systemOnlyZoneId(MonthIn::zoneId), MonthDay::getMonth);
         }
     }
 
@@ -178,7 +178,7 @@ public final class MonthInValidator {
          * Creates a new validator.
          */
         public ForYearMonth() {
-            super(allowedMonths(MonthIn::value), MonthIn::zoneId, YearMonth::getMonth);
+            super(allowedMonths(MonthIn::value), systemOnlyZoneId(MonthIn::zoneId), YearMonth::getMonth);
         }
     }
 

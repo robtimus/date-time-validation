@@ -47,7 +47,8 @@ public final class TimeNotBeforeValidator {
          * Creates a new validator.
          */
         public ForDate() {
-            super(TimeNotBefore::moment, TimeNotBefore::zoneId, DateTimeValidator::toLocalTime, new NotBeforeValidator.ForLocalTime());
+            super(TimeNotBefore::moment, nonProvidedZoneId(TimeNotBefore::zoneId), DateTimeValidator::toLocalTime,
+                    new NotBeforeValidator.ForLocalTime());
         }
     }
 
@@ -77,7 +78,8 @@ public final class TimeNotBeforeValidator {
          * Creates a new validator.
          */
         public ForInstant() {
-            super(TimeNotBefore::moment, TimeNotBefore::zoneId, DateTimeValidator::toLocalTime, new NotBeforeValidator.ForLocalTime());
+            super(TimeNotBefore::moment, nonProvidedZoneId(TimeNotBefore::zoneId), DateTimeValidator::toLocalTime,
+                    new NotBeforeValidator.ForLocalTime());
         }
     }
 
@@ -92,7 +94,7 @@ public final class TimeNotBeforeValidator {
          * Creates a new validator.
          */
         public ForLocalDateTime() {
-            super(TimeNotBefore::moment, TimeNotBefore::zoneId, LocalDateTime::toLocalTime, new NotBeforeValidator.ForLocalTime());
+            super(TimeNotBefore::moment, systemOnlyZoneId(TimeNotBefore::zoneId), LocalDateTime::toLocalTime, new NotBeforeValidator.ForLocalTime());
         }
     }
 

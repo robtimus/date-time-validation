@@ -26,7 +26,6 @@ import java.time.OffsetDateTime;
 import java.time.ZoneId;
 import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
-import java.time.temporal.ChronoUnit;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
@@ -43,7 +42,11 @@ class DateMaxBeforeTest extends AbstractConstraintTest {
 
     @Nested
     @DisplayName("Date")
-    class ForDate {
+    class ForDate extends AbstractNonProvidedZoneIdTest<Date> {
+
+        ForDate() {
+            super(TestClassWithProvidedZoneId.class, "date", new Date());
+        }
 
         @Nested
         @DisplayName("with 'now'")
@@ -52,22 +55,9 @@ class DateMaxBeforeTest extends AbstractConstraintTest {
             WithNow() {
                 super(TestClassWithNow.class, "date",
                         Date.from(Instant.parse("2006-11-02T13:50:15.00Z")),
-                        Date.from(Instant.parse("2006-11-02T13:50:15.00Z").minus(24, ChronoUnit.HOURS)),
-                        Date.from(Instant.parse("2006-11-02T13:50:15.00Z").plus(24, ChronoUnit.HOURS)),
+                        Date.from(Instant.parse("2006-11-01T13:50:15.00Z")),
+                        Date.from(Instant.parse("2006-11-03T13:50:15.00Z")),
                         () -> Clock.fixed(Instant.parse("2007-12-03T10:15:30.00Z"), ZoneId.of("UTC")));
-            }
-        }
-
-        @Nested
-        @DisplayName("with moment")
-        class WithMoment extends ConstraintTest<Date> {
-
-            WithMoment() {
-                super(TestClassWithMoment.class, "date",
-                        Date.from(Instant.parse("2006-11-02T13:50:15.00Z")),
-                        Date.from(Instant.parse("2006-11-02T13:50:15.00Z").minus(24, ChronoUnit.HOURS)),
-                        Date.from(Instant.parse("2006-11-02T13:50:15.00Z").plus(24, ChronoUnit.HOURS)),
-                        () -> null);
             }
         }
 
@@ -78,8 +68,8 @@ class DateMaxBeforeTest extends AbstractConstraintTest {
             WithZoneId() {
                 super(TestClassWithZoneId.class, "date",
                         Date.from(utcInstantAtOffset("2006-11-03T00:50:15.00Z", 1)),
-                        Date.from(utcInstantAtOffset("2006-11-03T00:50:15.00Z", 1).minus(24, ChronoUnit.HOURS)),
-                        Date.from(utcInstantAtOffset("2006-11-03T00:50:15.00Z", 1).plus(24, ChronoUnit.HOURS)),
+                        Date.from(utcInstantAtOffset("2006-11-02T00:50:15.00Z", 1)),
+                        Date.from(utcInstantAtOffset("2006-11-04T00:50:15.00Z", 1)),
                         () -> null);
             }
         }
@@ -91,8 +81,8 @@ class DateMaxBeforeTest extends AbstractConstraintTest {
             WithSystemZoneId() {
                 super(TestClassWithSystemZoneId.class, "date",
                         Date.from(utcInstantAtOffsetAfterSystem("2006-11-03T00:50:15.00Z", 1)),
-                        Date.from(utcInstantAtOffsetAfterSystem("2006-11-03T00:50:15.00Z", 1).minus(24, ChronoUnit.HOURS)),
-                        Date.from(utcInstantAtOffsetAfterSystem("2006-11-03T00:50:15.00Z", 1).plus(24, ChronoUnit.HOURS)),
+                        Date.from(utcInstantAtOffsetAfterSystem("2006-11-02T00:50:15.00Z", 1)),
+                        Date.from(utcInstantAtOffsetAfterSystem("2006-11-04T00:50:15.00Z", 1)),
                         () -> null);
             }
         }
@@ -109,8 +99,8 @@ class DateMaxBeforeTest extends AbstractConstraintTest {
             WithNow() {
                 super(TestClassWithNow.class, "calendar",
                         GregorianCalendar.from(ZonedDateTime.parse("2006-11-02T13:50:15+01:00[Europe/Paris]")),
-                        GregorianCalendar.from(ZonedDateTime.parse("2006-11-02T13:50:15+01:00[Europe/Paris]").minusDays(1)),
-                        GregorianCalendar.from(ZonedDateTime.parse("2006-11-02T13:50:15+01:00[Europe/Paris]").plusDays(1)),
+                        GregorianCalendar.from(ZonedDateTime.parse("2006-11-01T13:50:15+01:00[Europe/Paris]")),
+                        GregorianCalendar.from(ZonedDateTime.parse("2006-11-03T13:50:15+01:00[Europe/Paris]")),
                         () -> Clock.fixed(ZonedDateTime.parse("2007-12-03T10:15:30+01:00[Europe/Paris]").toInstant(), ZoneId.of("Europe/Paris")));
             }
         }
@@ -120,10 +110,10 @@ class DateMaxBeforeTest extends AbstractConstraintTest {
         class WithMoment extends ConstraintTest<Calendar> {
 
             WithMoment() {
-                super(TestClassWithMoment.class, "calendar",
+                super(TestClassWithProvidedZoneId.class, "calendar",
                         GregorianCalendar.from(ZonedDateTime.parse("2006-11-02T13:50:15+01:00[Europe/Paris]")),
-                        GregorianCalendar.from(ZonedDateTime.parse("2006-11-02T13:50:15+01:00[Europe/Paris]").minusDays(1)),
-                        GregorianCalendar.from(ZonedDateTime.parse("2006-11-02T13:50:15+01:00[Europe/Paris]").plusDays(1)),
+                        GregorianCalendar.from(ZonedDateTime.parse("2006-11-01T13:50:15+01:00[Europe/Paris]")),
+                        GregorianCalendar.from(ZonedDateTime.parse("2006-11-03T13:50:15+01:00[Europe/Paris]")),
                         () -> null);
             }
         }
@@ -135,8 +125,8 @@ class DateMaxBeforeTest extends AbstractConstraintTest {
             WithZoneId() {
                 super(TestClassWithZoneId.class, "calendar",
                         GregorianCalendar.from(ZonedDateTime.parse("2006-11-03T00:50:15+01:00[Europe/Paris]")),
-                        GregorianCalendar.from(ZonedDateTime.parse("2006-11-03T00:50:15+01:00[Europe/Paris]").minusDays(1)),
-                        GregorianCalendar.from(ZonedDateTime.parse("2006-11-03T00:50:15+01:00[Europe/Paris]").plusDays(1)),
+                        GregorianCalendar.from(ZonedDateTime.parse("2006-11-02T00:50:15+01:00[Europe/Paris]")),
+                        GregorianCalendar.from(ZonedDateTime.parse("2006-11-04T00:50:15+01:00[Europe/Paris]")),
                         () -> null);
             }
         }
@@ -148,8 +138,8 @@ class DateMaxBeforeTest extends AbstractConstraintTest {
             WithSystemZoneId() {
                 super(TestClassWithSystemZoneId.class, "calendar",
                         GregorianCalendar.from(zonedDateTimeAtOffsetAfterSystem("2006-11-03T00:50:15+01:00[Europe/Paris]", 1)),
-                        GregorianCalendar.from(zonedDateTimeAtOffsetAfterSystem("2006-11-03T00:50:15+01:00[Europe/Paris]", 1).minusDays(1)),
-                        GregorianCalendar.from(zonedDateTimeAtOffsetAfterSystem("2006-11-03T00:50:15+01:00[Europe/Paris]", 1).plusDays(1)),
+                        GregorianCalendar.from(zonedDateTimeAtOffsetAfterSystem("2006-11-02T00:50:15+01:00[Europe/Paris]", 1)),
+                        GregorianCalendar.from(zonedDateTimeAtOffsetAfterSystem("2006-11-04T00:50:15+01:00[Europe/Paris]", 1)),
                         () -> null);
             }
         }
@@ -157,7 +147,11 @@ class DateMaxBeforeTest extends AbstractConstraintTest {
 
     @Nested
     @DisplayName("Instant")
-    class ForInstant {
+    class ForInstant extends AbstractNonProvidedZoneIdTest<Instant> {
+
+        ForInstant() {
+            super(TestClassWithProvidedZoneId.class, "instant", Instant.now());
+        }
 
         @Nested
         @DisplayName("with 'now'")
@@ -166,22 +160,9 @@ class DateMaxBeforeTest extends AbstractConstraintTest {
             WithNow() {
                 super(TestClassWithNow.class, "instant",
                         Instant.parse("2006-11-02T13:50:15.00Z"),
-                        Instant.parse("2006-11-02T13:50:15.00Z").minus(24, ChronoUnit.HOURS),
-                        Instant.parse("2006-11-02T13:50:15.00Z").plus(24, ChronoUnit.HOURS),
+                        Instant.parse("2006-11-01T13:50:15.00Z"),
+                        Instant.parse("2006-11-03T13:50:15.00Z"),
                         () -> Clock.fixed(Instant.parse("2007-12-03T10:15:30.00Z"), ZoneId.of("UTC")));
-            }
-        }
-
-        @Nested
-        @DisplayName("with moment")
-        class WithMoment extends ConstraintTest<Instant> {
-
-            WithMoment() {
-                super(TestClassWithMoment.class, "instant",
-                        Instant.parse("2006-11-02T13:50:15.00Z"),
-                        Instant.parse("2006-11-02T13:50:15.00Z").minus(24, ChronoUnit.HOURS),
-                        Instant.parse("2006-11-02T13:50:15.00Z").plus(24, ChronoUnit.HOURS),
-                        () -> null);
             }
         }
 
@@ -192,8 +173,8 @@ class DateMaxBeforeTest extends AbstractConstraintTest {
             WithZoneId() {
                 super(TestClassWithZoneId.class, "instant",
                         utcInstantAtOffset("2006-11-03T00:50:15.00Z", 1),
-                        utcInstantAtOffset("2006-11-03T00:50:15.00Z", 1).minus(24, ChronoUnit.HOURS),
-                        utcInstantAtOffset("2006-11-03T00:50:15.00Z", 1).plus(24, ChronoUnit.HOURS),
+                        utcInstantAtOffset("2006-11-02T00:50:15.00Z", 1),
+                        utcInstantAtOffset("2006-11-04T00:50:15.00Z", 1),
                         () -> null);
             }
         }
@@ -205,8 +186,8 @@ class DateMaxBeforeTest extends AbstractConstraintTest {
             WithSystemZoneId() {
                 super(TestClassWithSystemZoneId.class, "instant",
                         utcInstantAtOffsetAfterSystem("2006-11-03T00:50:15.00Z", 1),
-                        utcInstantAtOffsetAfterSystem("2006-11-03T00:50:15.00Z", 1).minus(24, ChronoUnit.HOURS),
-                        utcInstantAtOffsetAfterSystem("2006-11-03T00:50:15.00Z", 1).plus(24, ChronoUnit.HOURS),
+                        utcInstantAtOffsetAfterSystem("2006-11-02T00:50:15.00Z", 1),
+                        utcInstantAtOffsetAfterSystem("2006-11-04T00:50:15.00Z", 1),
                         () -> null);
             }
         }
@@ -214,7 +195,11 @@ class DateMaxBeforeTest extends AbstractConstraintTest {
 
     @Nested
     @DisplayName("LocalDateTime")
-    class ForLocalDateTime {
+    class ForLocalDateTime extends AbstractSystemOnlyZoneIdTest<LocalDateTime> {
+
+        ForLocalDateTime() {
+            super(TestClassWithProvidedZoneId.class, TestClassWithZoneId.class, "localDateTime", LocalDateTime.now());
+        }
 
         @Nested
         @DisplayName("with 'now'")
@@ -223,35 +208,9 @@ class DateMaxBeforeTest extends AbstractConstraintTest {
             WithNow() {
                 super(TestClassWithNow.class, "localDateTime",
                         LocalDateTime.parse("2006-11-02T13:50:15"),
-                        LocalDateTime.parse("2006-11-02T13:50:15").minusDays(1),
-                        LocalDateTime.parse("2006-11-02T13:50:15").plusDays(1),
+                        LocalDateTime.parse("2006-11-01T13:50:15"),
+                        LocalDateTime.parse("2006-11-03T13:50:15"),
                         () -> Clock.fixed(Instant.parse("2007-12-03T10:15:30.00Z"), ZoneId.of("UTC")));
-            }
-        }
-
-        @Nested
-        @DisplayName("with moment")
-        class WithMoment extends ConstraintTest<LocalDateTime> {
-
-            WithMoment() {
-                super(TestClassWithMoment.class, "localDateTime",
-                        LocalDateTime.parse("2006-11-02T13:50:15"),
-                        LocalDateTime.parse("2006-11-02T13:50:15").minusDays(1),
-                        LocalDateTime.parse("2006-11-02T13:50:15").plusDays(1),
-                        () -> null);
-            }
-        }
-
-        @Nested
-        @DisplayName("with zone id")
-        class WithZoneId extends ConstraintTest<LocalDateTime> {
-
-            WithZoneId() {
-                super(TestClassWithZoneId.class, "localDateTime",
-                        LocalDateTime.parse("2006-11-02T13:50:15"),
-                        LocalDateTime.parse("2006-11-02T13:50:15").minusDays(1),
-                        LocalDateTime.parse("2006-11-02T13:50:15").plusDays(1),
-                        () -> null);
             }
         }
 
@@ -262,8 +221,8 @@ class DateMaxBeforeTest extends AbstractConstraintTest {
             WithSystemZoneId() {
                 super(TestClassWithSystemZoneId.class, "localDateTime",
                         LocalDateTime.parse("2006-11-02T13:50:15"),
-                        LocalDateTime.parse("2006-11-02T13:50:15").minusDays(1),
-                        LocalDateTime.parse("2006-11-02T13:50:15").plusDays(1),
+                        LocalDateTime.parse("2006-11-01T13:50:15"),
+                        LocalDateTime.parse("2006-11-03T13:50:15"),
                         () -> null);
             }
         }
@@ -280,8 +239,8 @@ class DateMaxBeforeTest extends AbstractConstraintTest {
             WithNow() {
                 super(TestClassWithNow.class, "offsetDateTime",
                         OffsetDateTime.parse("2006-11-02T13:50:15+01:00"),
-                        OffsetDateTime.parse("2006-11-02T13:50:15+01:00").minusDays(1),
-                        OffsetDateTime.parse("2006-11-02T13:50:15+01:00").plusDays(1),
+                        OffsetDateTime.parse("2006-11-01T13:50:15+01:00"),
+                        OffsetDateTime.parse("2006-11-03T13:50:15+01:00"),
                         () -> Clock.fixed(Instant.parse("2007-12-03T09:15:30.00Z"), ZoneOffset.ofHours(1)));
             }
         }
@@ -291,10 +250,10 @@ class DateMaxBeforeTest extends AbstractConstraintTest {
         class WithMoment extends ConstraintTest<OffsetDateTime> {
 
             WithMoment() {
-                super(TestClassWithMoment.class, "offsetDateTime",
+                super(TestClassWithProvidedZoneId.class, "offsetDateTime",
                         OffsetDateTime.parse("2006-11-02T13:50:15+01:00"),
-                        OffsetDateTime.parse("2006-11-02T13:50:15+01:00").minusDays(1),
-                        OffsetDateTime.parse("2006-11-02T13:50:15+01:00").plusDays(1),
+                        OffsetDateTime.parse("2006-11-01T13:50:15+01:00"),
+                        OffsetDateTime.parse("2006-11-03T13:50:15+01:00"),
                         () -> null);
             }
         }
@@ -306,8 +265,8 @@ class DateMaxBeforeTest extends AbstractConstraintTest {
             WithZoneId() {
                 super(TestClassWithZoneId.class, "offsetDateTime",
                         OffsetDateTime.parse("2006-11-03T00:50:15+01:00"),
-                        OffsetDateTime.parse("2006-11-03T00:50:15+01:00").minusDays(1),
-                        OffsetDateTime.parse("2006-11-03T00:50:15+01:00").plusDays(1),
+                        OffsetDateTime.parse("2006-11-02T00:50:15+01:00"),
+                        OffsetDateTime.parse("2006-11-04T00:50:15+01:00"),
                         () -> null);
             }
         }
@@ -319,8 +278,8 @@ class DateMaxBeforeTest extends AbstractConstraintTest {
             WithSystemZoneId() {
                 super(TestClassWithSystemZoneId.class, "offsetDateTime",
                         offsetDateTimeAtOffsetAfterSystem("2006-11-03T00:50:15+01:00", 1),
-                        offsetDateTimeAtOffsetAfterSystem("2006-11-03T00:50:15+01:00", 1).minusDays(1),
-                        offsetDateTimeAtOffsetAfterSystem("2006-11-03T00:50:15+01:00", 1).plusDays(1),
+                        offsetDateTimeAtOffsetAfterSystem("2006-11-02T00:50:15+01:00", 1),
+                        offsetDateTimeAtOffsetAfterSystem("2006-11-04T00:50:15+01:00", 1),
                         () -> null);
             }
         }
@@ -337,8 +296,8 @@ class DateMaxBeforeTest extends AbstractConstraintTest {
             WithNow() {
                 super(TestClassWithNow.class, "zonedDateTime",
                         ZonedDateTime.parse("2006-11-02T13:50:15+01:00[Europe/Paris]"),
-                        ZonedDateTime.parse("2006-11-02T13:50:15+01:00[Europe/Paris]").minusDays(1),
-                        ZonedDateTime.parse("2006-11-02T13:50:15+01:00[Europe/Paris]").plusDays(1),
+                        ZonedDateTime.parse("2006-11-01T13:50:15+01:00[Europe/Paris]"),
+                        ZonedDateTime.parse("2006-11-03T13:50:15+01:00[Europe/Paris]"),
                         () -> Clock.fixed(ZonedDateTime.parse("2007-12-03T10:15:30+01:00[Europe/Paris]").toInstant(), ZoneId.of("Europe/Paris")));
             }
         }
@@ -348,10 +307,10 @@ class DateMaxBeforeTest extends AbstractConstraintTest {
         class WithMoment extends ConstraintTest<ZonedDateTime> {
 
             WithMoment() {
-                super(TestClassWithMoment.class, "zonedDateTime",
+                super(TestClassWithProvidedZoneId.class, "zonedDateTime",
                         ZonedDateTime.parse("2006-11-02T13:50:15+01:00[Europe/Paris]"),
-                        ZonedDateTime.parse("2006-11-02T13:50:15+01:00[Europe/Paris]").minusDays(1),
-                        ZonedDateTime.parse("2006-11-02T13:50:15+01:00[Europe/Paris]").plusDays(1),
+                        ZonedDateTime.parse("2006-11-01T13:50:15+01:00[Europe/Paris]"),
+                        ZonedDateTime.parse("2006-11-03T13:50:15+01:00[Europe/Paris]"),
                         () -> null);
             }
         }
@@ -363,8 +322,8 @@ class DateMaxBeforeTest extends AbstractConstraintTest {
             WithZoneId() {
                 super(TestClassWithZoneId.class, "zonedDateTime",
                         ZonedDateTime.parse("2006-11-03T00:50:15+01:00[Europe/Paris]"),
-                        ZonedDateTime.parse("2006-11-03T00:50:15+01:00[Europe/Paris]").minusDays(1),
-                        ZonedDateTime.parse("2006-11-03T00:50:15+01:00[Europe/Paris]").plusDays(1),
+                        ZonedDateTime.parse("2006-11-02T00:50:15+01:00[Europe/Paris]"),
+                        ZonedDateTime.parse("2006-11-04T00:50:15+01:00[Europe/Paris]"),
                         () -> null);
             }
         }
@@ -376,8 +335,8 @@ class DateMaxBeforeTest extends AbstractConstraintTest {
             WithSystemZoneId() {
                 super(TestClassWithSystemZoneId.class, "zonedDateTime",
                         zonedDateTimeAtOffsetAfterSystem("2006-11-03T00:50:15+01:00[Europe/Paris]", 1),
-                        zonedDateTimeAtOffsetAfterSystem("2006-11-03T00:50:15+01:00[Europe/Paris]", 1).minusDays(1),
-                        zonedDateTimeAtOffsetAfterSystem("2006-11-03T00:50:15+01:00[Europe/Paris]", 1).plusDays(1),
+                        zonedDateTimeAtOffsetAfterSystem("2006-11-02T00:50:15+01:00[Europe/Paris]", 1),
+                        zonedDateTimeAtOffsetAfterSystem("2006-11-04T00:50:15+01:00[Europe/Paris]", 1),
                         () -> null);
             }
         }
@@ -443,26 +402,26 @@ class DateMaxBeforeTest extends AbstractConstraintTest {
     }
 
     private static final class TestClassWithNow {
-        @DateMaxBefore(duration = "P1Y1M1D", moment = "now", zoneId = "provided")
+        @DateMaxBefore(duration = "P1Y1M1D", moment = "now", zoneId = "system")
         Date date;
 
-        @DateMaxBefore(duration = "P1Y1M1D", moment = "now", zoneId = "provided")
+        @DateMaxBefore(duration = "P1Y1M1D", moment = "now", zoneId = "system")
         Calendar calendar;
 
-        @DateMaxBefore(duration = "P1Y1M1D", moment = "now", zoneId = "provided")
+        @DateMaxBefore(duration = "P1Y1M1D", moment = "now", zoneId = "system")
         Instant instant;
 
-        @DateMaxBefore(duration = "P1Y1M1D", moment = "now", zoneId = "provided")
+        @DateMaxBefore(duration = "P1Y1M1D", moment = "now", zoneId = "system")
         LocalDateTime localDateTime;
 
-        @DateMaxBefore(duration = "P1Y1M1D", moment = "now", zoneId = "provided")
+        @DateMaxBefore(duration = "P1Y1M1D", moment = "now", zoneId = "system")
         OffsetDateTime offsetDateTime;
 
-        @DateMaxBefore(duration = "P1Y1M1D", moment = "now", zoneId = "provided")
+        @DateMaxBefore(duration = "P1Y1M1D", moment = "now", zoneId = "system")
         ZonedDateTime zonedDateTime;
     }
 
-    private static final class TestClassWithMoment {
+    private static final class TestClassWithProvidedZoneId {
         @DateMaxBefore(duration = "P1Y1M1D", moment = "2007-12-03", zoneId = "provided")
         Date date;
 

@@ -48,25 +48,10 @@ class MonthInTest extends AbstractConstraintTest {
 
     @Nested
     @DisplayName("Date")
-    class ForDate {
+    class ForDate extends AbstractNonProvidedZoneIdTest<Date> {
 
-        @Nested
-        @DisplayName("with provided zone id")
-        class WithProvidedZoneId extends ConstraintTest<Date> {
-
-            WithProvidedZoneId() {
-                super(TestClassWithProvidedZoneId.class, "date",
-                        Arrays.asList(
-                                Date.from(utcInstantAtDefaultZone("2007-05-01T00:50:15.00Z")),
-                                Date.from(utcInstantAtDefaultZone("2007-10-01T00:50:15.00Z"))
-                        ),
-                        Arrays.asList(
-                                Date.from(utcInstantAtDefaultZone("2007-04-30T23:50:15.00Z")),
-                                Date.from(utcInstantAtDefaultZone("2007-06-01T00:50:15.00Z")),
-                                Date.from(utcInstantAtDefaultZone("2007-09-30T23:50:15.00Z")),
-                                Date.from(utcInstantAtDefaultZone("2007-11-01T00:50:15.00Z"))
-                        ));
-            }
+        ForDate() {
+            super(TestClassWithProvidedZoneId.class, "date", new Date());
         }
 
         @Nested
@@ -218,25 +203,10 @@ class MonthInTest extends AbstractConstraintTest {
 
     @Nested
     @DisplayName("Instant")
-    class ForInstant {
+    class ForInstant extends AbstractNonProvidedZoneIdTest<Instant> {
 
-        @Nested
-        @DisplayName("with provided zone id")
-        class WithProvidedZoneId extends ConstraintTest<Instant> {
-
-            WithProvidedZoneId() {
-                super(TestClassWithProvidedZoneId.class, "instant",
-                        Arrays.asList(
-                                utcInstantAtDefaultZone("2007-05-01T00:50:15.00Z"),
-                                utcInstantAtDefaultZone("2007-10-01T00:50:15.00Z")
-                        ),
-                        Arrays.asList(
-                                utcInstantAtDefaultZone("2007-04-30T23:50:15.00Z"),
-                                utcInstantAtDefaultZone("2007-06-01T00:50:15.00Z"),
-                                utcInstantAtDefaultZone("2007-09-30T23:50:15.00Z"),
-                                utcInstantAtDefaultZone("2007-11-01T00:50:15.00Z")
-                        ));
-            }
+        ForInstant() {
+            super(TestClassWithProvidedZoneId.class, "instant", Instant.now());
         }
 
         @Nested
@@ -303,44 +273,10 @@ class MonthInTest extends AbstractConstraintTest {
 
     @Nested
     @DisplayName("LocalDate")
-    class ForLocalDate {
+    class ForLocalDate extends AbstractSystemOnlyZoneIdTest<LocalDate> {
 
-        @Nested
-        @DisplayName("with provided zone id")
-        class WithProvidedZoneId extends ConstraintTest<LocalDate> {
-
-            WithProvidedZoneId() {
-                super(TestClassWithProvidedZoneId.class, "localDate",
-                        Arrays.asList(
-                                LocalDate.parse("2007-05-31"),
-                                LocalDate.parse("2007-10-31")
-                        ),
-                        Arrays.asList(
-                                LocalDate.parse("2007-04-30"),
-                                LocalDate.parse("2007-06-01"),
-                                LocalDate.parse("2007-09-30"),
-                                LocalDate.parse("2007-11-01")
-                        ));
-            }
-        }
-
-        @Nested
-        @DisplayName("with zone id")
-        class WithZoneId extends ConstraintTest<LocalDate> {
-
-            WithZoneId() {
-                super(TestClassWithZoneId.class, "localDate",
-                        Arrays.asList(
-                                LocalDate.parse("2007-05-31"),
-                                LocalDate.parse("2007-10-31")
-                        ),
-                        Arrays.asList(
-                                LocalDate.parse("2007-04-30"),
-                                LocalDate.parse("2007-06-01"),
-                                LocalDate.parse("2007-09-30"),
-                                LocalDate.parse("2007-11-01")
-                        ));
-            }
+        ForLocalDate() {
+            super(TestClassWithProvidedZoneId.class, TestClassWithZoneId.class, "localDate", LocalDate.now());
         }
 
         @Nested
@@ -388,44 +324,10 @@ class MonthInTest extends AbstractConstraintTest {
 
     @Nested
     @DisplayName("LocalDateTime")
-    class ForLocalDateTime {
+    class ForLocalDateTime extends AbstractSystemOnlyZoneIdTest<LocalDateTime> {
 
-        @Nested
-        @DisplayName("with provided zone id")
-        class WithProvidedZoneId extends ConstraintTest<LocalDateTime> {
-
-            WithProvidedZoneId() {
-                super(TestClassWithProvidedZoneId.class, "localDateTime",
-                        Arrays.asList(
-                                LocalDateTime.parse("2007-05-01T00:50:15"),
-                                LocalDateTime.parse("2007-10-01T00:50:15")
-                        ),
-                        Arrays.asList(
-                                LocalDateTime.parse("2007-04-30T23:50:15"),
-                                LocalDateTime.parse("2007-06-01T00:50:15"),
-                                LocalDateTime.parse("2007-09-30T23:50:15"),
-                                LocalDateTime.parse("2007-11-01T00:50:15")
-                        ));
-            }
-        }
-
-        @Nested
-        @DisplayName("with zone id")
-        class WithZoneId extends ConstraintTest<LocalDateTime> {
-
-            WithZoneId() {
-                super(TestClassWithZoneId.class, "localDateTime",
-                        Arrays.asList(
-                                LocalDateTime.parse("2007-05-01T00:50:15"),
-                                LocalDateTime.parse("2007-10-01T00:50:15")
-                        ),
-                        Arrays.asList(
-                                LocalDateTime.parse("2007-04-30T23:50:15"),
-                                LocalDateTime.parse("2007-06-01T00:50:15"),
-                                LocalDateTime.parse("2007-09-30T23:50:15"),
-                                LocalDateTime.parse("2007-11-01T00:50:15")
-                        ));
-            }
+        ForLocalDateTime() {
+            super(TestClassWithProvidedZoneId.class, TestClassWithZoneId.class, "localDateTime", LocalDateTime.now());
         }
 
         @Nested
@@ -473,46 +375,10 @@ class MonthInTest extends AbstractConstraintTest {
 
     @Nested
     @DisplayName("Month")
-    class ForMonth {
+    class ForMonth extends AbstractSystemOnlyZoneIdTest<Month> {
 
-        @Nested
-        @DisplayName("with provided zone id")
-        class WithProvidedZoneId extends ConstraintTest<Month> {
-
-            WithProvidedZoneId() {
-                super(TestClassWithProvidedZoneId.class, "month",
-                        Arrays.asList(
-                                Month.MAY,
-                                Month.OCTOBER
-                        ),
-                        Arrays.asList(
-                                Month.APRIL,
-                                Month.JUNE,
-                                Month.SEPTEMBER,
-                                Month.NOVEMBER
-                        ),
-                        "must be one of %s");
-            }
-        }
-
-        @Nested
-        @DisplayName("with zone id")
-        class WithZoneId extends ConstraintTest<Month> {
-
-            WithZoneId() {
-                super(TestClassWithZoneId.class, "month",
-                        Arrays.asList(
-                                Month.MAY,
-                                Month.OCTOBER
-                        ),
-                        Arrays.asList(
-                                Month.APRIL,
-                                Month.JUNE,
-                                Month.SEPTEMBER,
-                                Month.NOVEMBER
-                        ),
-                        "must be one of %s");
-            }
+        ForMonth() {
+            super(TestClassWithProvidedZoneId.class, TestClassWithZoneId.class, "month", Month.OCTOBER);
         }
 
         @Nested
@@ -562,44 +428,10 @@ class MonthInTest extends AbstractConstraintTest {
 
     @Nested
     @DisplayName("MonthDay")
-    class ForMonthDay {
+    class ForMonthDay extends AbstractSystemOnlyZoneIdTest<MonthDay> {
 
-        @Nested
-        @DisplayName("with provided zone id")
-        class WithProvidedZoneId extends ConstraintTest<MonthDay> {
-
-            WithProvidedZoneId() {
-                super(TestClassWithProvidedZoneId.class, "monthDay",
-                        Arrays.asList(
-                                MonthDay.parse("--05-31"),
-                                MonthDay.parse("--10-31")
-                        ),
-                        Arrays.asList(
-                                MonthDay.parse("--04-30"),
-                                MonthDay.parse("--06-01"),
-                                MonthDay.parse("--09-30"),
-                                MonthDay.parse("--11-01")
-                        ));
-            }
-        }
-
-        @Nested
-        @DisplayName("with zone id")
-        class WithZoneId extends ConstraintTest<MonthDay> {
-
-            WithZoneId() {
-                super(TestClassWithZoneId.class, "monthDay",
-                        Arrays.asList(
-                                MonthDay.parse("--05-31"),
-                                MonthDay.parse("--10-31")
-                        ),
-                        Arrays.asList(
-                                MonthDay.parse("--04-30"),
-                                MonthDay.parse("--06-01"),
-                                MonthDay.parse("--09-30"),
-                                MonthDay.parse("--11-01")
-                        ));
-            }
+        ForMonthDay() {
+            super(TestClassWithProvidedZoneId.class, TestClassWithZoneId.class, "monthDay", MonthDay.now());
         }
 
         @Nested
@@ -732,44 +564,10 @@ class MonthInTest extends AbstractConstraintTest {
 
     @Nested
     @DisplayName("YearMonth")
-    class ForYearMonth {
+    class ForYearMonth extends AbstractSystemOnlyZoneIdTest<YearMonth> {
 
-        @Nested
-        @DisplayName("with provided zone id")
-        class WithProvidedZoneId extends ConstraintTest<YearMonth> {
-
-            WithProvidedZoneId() {
-                super(TestClassWithProvidedZoneId.class, "yearMonth",
-                        Arrays.asList(
-                                YearMonth.parse("2007-05"),
-                                YearMonth.parse("2007-10")
-                        ),
-                        Arrays.asList(
-                                YearMonth.parse("2007-04"),
-                                YearMonth.parse("2007-06"),
-                                YearMonth.parse("2007-09"),
-                                YearMonth.parse("2007-11")
-                        ));
-            }
-        }
-
-        @Nested
-        @DisplayName("with zone id")
-        class WithZoneId extends ConstraintTest<YearMonth> {
-
-            WithZoneId() {
-                super(TestClassWithZoneId.class, "yearMonth",
-                        Arrays.asList(
-                                YearMonth.parse("2007-05"),
-                                YearMonth.parse("2007-10")
-                        ),
-                        Arrays.asList(
-                                YearMonth.parse("2007-04"),
-                                YearMonth.parse("2007-06"),
-                                YearMonth.parse("2007-09"),
-                                YearMonth.parse("2007-11")
-                        ));
-            }
+        ForYearMonth() {
+            super(TestClassWithProvidedZoneId.class, TestClassWithZoneId.class, "yearMonth", YearMonth.now());
         }
 
         @Nested

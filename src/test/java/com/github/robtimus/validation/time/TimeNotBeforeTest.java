@@ -43,7 +43,11 @@ class TimeNotBeforeTest extends AbstractConstraintTest {
 
     @Nested
     @DisplayName("Date")
-    class ForDate {
+    class ForDate extends AbstractNonProvidedZoneIdTest<Date> {
+
+        ForDate() {
+            super(TestClassWithProvidedZoneId.class, "date", new Date());
+        }
 
         @Nested
         @DisplayName("with 'now'")
@@ -55,19 +59,6 @@ class TimeNotBeforeTest extends AbstractConstraintTest {
                         Date.from(utcInstantAtDefaultZone("2021-10-24T10:15:30.00Z").minusMillis(1)),
                         Date.from(utcInstantAtDefaultZone("2021-10-24T10:15:30.00Z").plusMillis(1)),
                         () -> Clock.fixed(Instant.parse("2007-12-03T10:15:30.00Z"), ZoneId.of("UTC")));
-            }
-        }
-
-        @Nested
-        @DisplayName("with moment")
-        class WithMoment extends ConstraintTest<Date> {
-
-            WithMoment() {
-                super(TestClassWithMoment.class, "date",
-                        Date.from(utcInstantAtDefaultZone("2021-10-24T10:15:30.00Z")),
-                        Date.from(utcInstantAtDefaultZone("2021-10-24T10:15:30.00Z").minusMillis(1)),
-                        Date.from(utcInstantAtDefaultZone("2021-10-24T10:15:30.00Z").plusMillis(1)),
-                        () -> null);
             }
         }
 
@@ -120,7 +111,7 @@ class TimeNotBeforeTest extends AbstractConstraintTest {
         class WithMoment extends ConstraintTest<Calendar> {
 
             WithMoment() {
-                super(TestClassWithMoment.class, "calendar",
+                super(TestClassWithProvidedZoneId.class, "calendar",
                         GregorianCalendar.from(ZonedDateTime.parse("2021-10-24T10:15:30+02:00[Europe/Paris]")),
                         GregorianCalendar.from(ZonedDateTime.parse("2021-10-24T10:15:30+02:00[Europe/Paris]").minus(1, ChronoUnit.MILLIS)),
                         GregorianCalendar.from(ZonedDateTime.parse("2021-10-24T10:15:30+02:00[Europe/Paris]").plus(1, ChronoUnit.MILLIS)),
@@ -159,7 +150,11 @@ class TimeNotBeforeTest extends AbstractConstraintTest {
 
     @Nested
     @DisplayName("Instant")
-    class ForInstant {
+    class ForInstant extends AbstractNonProvidedZoneIdTest<Instant> {
+
+        ForInstant() {
+            super(TestClassWithProvidedZoneId.class, "instant", Instant.now());
+        }
 
         @Nested
         @DisplayName("with 'now'")
@@ -171,19 +166,6 @@ class TimeNotBeforeTest extends AbstractConstraintTest {
                         utcInstantAtDefaultZone("2021-10-24T10:15:30.00Z").minusNanos(1),
                         utcInstantAtDefaultZone("2021-10-24T10:15:30.00Z").plusNanos(1),
                         () -> Clock.fixed(Instant.parse("2007-12-03T10:15:30.00Z"), ZoneId.of("UTC")));
-            }
-        }
-
-        @Nested
-        @DisplayName("with moment")
-        class WithMoment extends ConstraintTest<Instant> {
-
-            WithMoment() {
-                super(TestClassWithMoment.class, "instant",
-                        utcInstantAtDefaultZone("2021-10-24T10:15:30.00Z"),
-                        utcInstantAtDefaultZone("2021-10-24T10:15:30.00Z").minusNanos(1),
-                        utcInstantAtDefaultZone("2021-10-24T10:15:30.00Z").plusNanos(1),
-                        () -> null);
             }
         }
 
@@ -216,7 +198,11 @@ class TimeNotBeforeTest extends AbstractConstraintTest {
 
     @Nested
     @DisplayName("LocalDateTime")
-    class ForLocalDateTime {
+    class ForLocalDateTime extends AbstractSystemOnlyZoneIdTest<LocalDateTime> {
+
+        ForLocalDateTime() {
+            super(TestClassWithProvidedZoneId.class, TestClassWithZoneId.class, "localDateTime", LocalDateTime.now());
+        }
 
         @Nested
         @DisplayName("with 'now'")
@@ -228,32 +214,6 @@ class TimeNotBeforeTest extends AbstractConstraintTest {
                         LocalDateTime.parse("2021-10-24T10:15:30").minusNanos(1),
                         LocalDateTime.parse("2021-10-24T10:15:30").plusNanos(1),
                         () -> Clock.fixed(Instant.parse("2007-12-03T10:15:30.00Z"), ZoneId.of("UTC")));
-            }
-        }
-
-        @Nested
-        @DisplayName("with moment")
-        class WithMoment extends ConstraintTest<LocalDateTime> {
-
-            WithMoment() {
-                super(TestClassWithMoment.class, "localDateTime",
-                        LocalDateTime.parse("2021-10-24T10:15:30"),
-                        LocalDateTime.parse("2021-10-24T10:15:30").minusNanos(1),
-                        LocalDateTime.parse("2021-10-24T10:15:30").plusNanos(1),
-                        () -> null);
-            }
-        }
-
-        @Nested
-        @DisplayName("with zone id")
-        class WithZoneId extends ConstraintTest<LocalDateTime> {
-
-            WithZoneId() {
-                super(TestClassWithZoneId.class, "localDateTime",
-                        LocalDateTime.parse("2021-10-24T10:15:30"),
-                        LocalDateTime.parse("2021-10-24T10:15:30").minusNanos(1),
-                        LocalDateTime.parse("2021-10-24T10:15:30").plusNanos(1),
-                        () -> null);
             }
         }
 
@@ -293,7 +253,7 @@ class TimeNotBeforeTest extends AbstractConstraintTest {
         class WithMoment extends ConstraintTest<OffsetDateTime> {
 
             WithMoment() {
-                super(TestClassWithMoment.class, "offsetDateTime",
+                super(TestClassWithProvidedZoneId.class, "offsetDateTime",
                         OffsetDateTime.parse("2021-10-24T10:15:30+02:00"),
                         OffsetDateTime.parse("2021-10-24T10:15:30+02:00").minusNanos(1),
                         OffsetDateTime.parse("2021-10-24T10:15:30+02:00").plusNanos(1),
@@ -350,7 +310,7 @@ class TimeNotBeforeTest extends AbstractConstraintTest {
         class WithMoment extends ConstraintTest<ZonedDateTime> {
 
             WithMoment() {
-                super(TestClassWithMoment.class, "zonedDateTime",
+                super(TestClassWithProvidedZoneId.class, "zonedDateTime",
                         ZonedDateTime.parse("2021-10-24T10:15:30+02:00[Europe/Paris]"),
                         ZonedDateTime.parse("2021-10-24T10:15:30+02:00[Europe/Paris]").minusNanos(1),
                         ZonedDateTime.parse("2021-10-24T10:15:30+02:00[Europe/Paris]").plusNanos(1),
@@ -443,26 +403,26 @@ class TimeNotBeforeTest extends AbstractConstraintTest {
     }
 
     private static final class TestClassWithNow {
-        @TimeNotBefore(moment = "now", zoneId = "provided")
+        @TimeNotBefore(moment = "now", zoneId = "system")
         Date date;
 
-        @TimeNotBefore(moment = "now", zoneId = "provided")
+        @TimeNotBefore(moment = "now", zoneId = "system")
         Calendar calendar;
 
-        @TimeNotBefore(moment = "now", zoneId = "provided")
+        @TimeNotBefore(moment = "now", zoneId = "system")
         Instant instant;
 
-        @TimeNotBefore(moment = "now", zoneId = "provided")
+        @TimeNotBefore(moment = "now", zoneId = "system")
         LocalDateTime localDateTime;
 
-        @TimeNotBefore(moment = "now", zoneId = "provided")
+        @TimeNotBefore(moment = "now", zoneId = "system")
         OffsetDateTime offsetDateTime;
 
-        @TimeNotBefore(moment = "now", zoneId = "provided")
+        @TimeNotBefore(moment = "now", zoneId = "system")
         ZonedDateTime zonedDateTime;
     }
 
-    private static final class TestClassWithMoment {
+    private static final class TestClassWithProvidedZoneId {
         @TimeNotBefore(moment = "10:15:30", zoneId = "provided")
         Date date;
 
