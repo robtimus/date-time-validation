@@ -18,34 +18,15 @@
 package com.github.robtimus.validation.time.validators;
 
 import java.lang.annotation.Annotation;
-import java.time.DayOfWeek;
 import java.time.Instant;
 import java.time.LocalDate;
-import java.time.LocalTime;
-import java.time.Month;
-import java.time.OffsetDateTime;
 import java.time.ZoneId;
-import java.time.ZonedDateTime;
-import java.util.Calendar;
+import java.util.Date;
+import java.util.Objects;
 import java.util.function.BiPredicate;
 import java.util.function.Function;
+import java.util.function.Predicate;
 import javax.validation.ConstraintValidator;
-import com.github.robtimus.validation.time.DateAfter;
-import com.github.robtimus.validation.time.DateBefore;
-import com.github.robtimus.validation.time.DateMaxAfter;
-import com.github.robtimus.validation.time.DateMaxBefore;
-import com.github.robtimus.validation.time.DateMinAfter;
-import com.github.robtimus.validation.time.DateMinBefore;
-import com.github.robtimus.validation.time.DateNotAfter;
-import com.github.robtimus.validation.time.DateNotBefore;
-import com.github.robtimus.validation.time.TimeAfter;
-import com.github.robtimus.validation.time.TimeBefore;
-import com.github.robtimus.validation.time.TimeMaxAfter;
-import com.github.robtimus.validation.time.TimeMaxBefore;
-import com.github.robtimus.validation.time.TimeMinAfter;
-import com.github.robtimus.validation.time.TimeMinBefore;
-import com.github.robtimus.validation.time.TimeNotAfter;
-import com.github.robtimus.validation.time.TimeNotBefore;
 
 /**
  * The base for all date/time object validators.
@@ -62,44 +43,12 @@ public abstract class DateTimeValidator<A extends Annotation, T> implements Cons
     /**
      * A string representing the system zone id.
      *
-     * @see DateAfter#zoneId()
-     * @see DateNotAfter#zoneId()
-     * @see DateBefore#zoneId()
-     * @see DateNotBefore#zoneId()
-     * @see DateMinAfter#zoneId()
-     * @see DateMaxAfter#zoneId()
-     * @see DateMinBefore#zoneId()
-     * @see DateMaxBefore#zoneId()
-     * @see TimeAfter#zoneId()
-     * @see TimeNotAfter#zoneId()
-     * @see TimeBefore#zoneId()
-     * @see TimeNotBefore#zoneId()
-     * @see TimeMinAfter#zoneId()
-     * @see TimeMaxAfter#zoneId()
-     * @see TimeMinBefore#zoneId()
-     * @see TimeMaxBefore#zoneId()
+     * @see ZoneId#systemDefault()
      */
     public static final String SYSTEM_ZONE_ID = "system"; //$NON-NLS-1$
 
     /**
      * A string representing the provided zone id.
-     *
-     * @see DateAfter#zoneId()
-     * @see DateNotAfter#zoneId()
-     * @see DateBefore#zoneId()
-     * @see DateNotBefore#zoneId()
-     * @see DateMinAfter#zoneId()
-     * @see DateMaxAfter#zoneId()
-     * @see DateMinBefore#zoneId()
-     * @see DateMaxBefore#zoneId()
-     * @see TimeAfter#zoneId()
-     * @see TimeNotAfter#zoneId()
-     * @see TimeBefore#zoneId()
-     * @see TimeNotBefore#zoneId()
-     * @see TimeMinAfter#zoneId()
-     * @see TimeMaxAfter#zoneId()
-     * @see TimeMinBefore#zoneId()
-     * @see TimeMaxBefore#zoneId()
      */
     public static final String PROVIDED_ZONE_ID = "provided"; //$NON-NLS-1$
 
@@ -110,18 +59,39 @@ public abstract class DateTimeValidator<A extends Annotation, T> implements Cons
         // no fields
     }
 
-    static ZoneId toZoneId(String zoneIdText) {
-        switch (zoneIdText) {
+    /**
+     * Returns a {@link ZoneId} for a specific text value.
+     *
+     * @param text The text value for which to return a {@link ZoneId}.
+     * @return {@link ZoneId#systemDefault()} if the given text equals {@link DateTimeValidator#SYSTEM_ZONE_ID},
+     *         {@code null} if the given text equals {@link DateTimeValidator#PROVIDED_ZONE_ID},
+     *         or the result of calling {@link ZoneId#of(String)} otherwise.
+     * @throws NullPointerException If the given text value is {@code null}.
+     */
+    protected static ZoneId toZoneId(String text) {
+        Objects.requireNonNull(text);
+        switch (text) {
         case SYSTEM_ZONE_ID:
             return ZoneId.systemDefault();
         case PROVIDED_ZONE_ID:
             return null;
         default:
-            return ZoneId.of(zoneIdText);
+            return ZoneId.of(text);
         }
     }
 
-    static <A extends Annotation> Function<A, String> systemOnlyZoneId(Function<A, String> zoneIdExtractor) {
+    /**
+     * Wraps a zone id extraction function so it will throw an {@link IllegalStateException} if the extracted zone id (as a text value) does not equal
+     * {@link DateTimeValidator#SYSTEM_ZONE_ID}. This can be used for validators of types that don't support zone information like {@link LocalDate}.
+     *
+     * @param <A> The constraint annotation type from which to extract the zone id.
+     * @param zoneIdExtractor A function that extracts the zone id from a constraint annotation.
+     * @return A function that extracts the zone id from a constraint annotation, but throws an {@link IllegalStateException} if the extracted zone id
+     *         does not equal {@link DateTimeValidator#SYSTEM_ZONE_ID}.
+     * @throws NullPointerException If the given function is {@code null}.
+     */
+    protected static <A extends Annotation> Function<A, String> systemOnlyZoneId(Function<A, String> zoneIdExtractor) {
+        Objects.requireNonNull(zoneIdExtractor);
         return constraint -> {
             String zoneId = zoneIdExtractor.apply(constraint);
             if (!SYSTEM_ZONE_ID.equals(zoneId)) {
@@ -131,7 +101,19 @@ public abstract class DateTimeValidator<A extends Annotation, T> implements Cons
         };
     }
 
-    static <A extends Annotation> Function<A, String> nonProvidedZoneId(Function<A, String> zoneIdExtractor) {
+    /**
+     * Wraps a zone id extraction function so it will throw an {@link IllegalStateException} if the extracted zone id (as a text value) equals
+     * {@link DateTimeValidator#PROVIDED_ZONE_ID}. This can be used for validators of types that don't contain any zone information like {@link Date}
+     * or {@link Instant}.
+     *
+     * @param <A> The constraint annotation type from which to extract the zone id.
+     * @param zoneIdExtractor A function that extracts the zone id from a constraint annotation.
+     * @return A function that extracts the zone id from a constraint annotation, but throws an {@link IllegalStateException} if the extracted zone id
+     *         equals {@link DateTimeValidator#PROVIDED_ZONE_ID}.
+     * @throws NullPointerException If the given function is {@code null}.
+     */
+    protected static <A extends Annotation> Function<A, String> nonProvidedZoneId(Function<A, String> zoneIdExtractor) {
+        Objects.requireNonNull(zoneIdExtractor);
         return constraint -> {
             String zoneId = zoneIdExtractor.apply(constraint);
             if (PROVIDED_ZONE_ID.equals(zoneId)) {
@@ -141,75 +123,18 @@ public abstract class DateTimeValidator<A extends Annotation, T> implements Cons
         };
     }
 
-    static LocalDate toLocalDate(Instant instant, ZoneId zoneId) {
-        return toZonedDateTime(instant, zoneId).toLocalDate();
-    }
-
-    static LocalDate toLocalDate(OffsetDateTime offsetDateTime, ZoneId zoneId) {
-        // zoneId == null means use provided zoneId
-        return zoneId == null ? offsetDateTime.toLocalDate() : offsetDateTime.atZoneSameInstant(zoneId).toLocalDate();
-    }
-
-    static LocalDate toLocalDate(ZonedDateTime zonedDateTime, ZoneId zoneId) {
-        // zoneId == null means use provided zoneId
-        return zoneId == null ? zonedDateTime.toLocalDate() : zonedDateTime.withZoneSameInstant(zoneId).toLocalDate();
-    }
-
-    static LocalTime toLocalTime(Instant instant, ZoneId zoneId) {
-        return toZonedDateTime(instant, zoneId).toLocalTime();
-    }
-
-    static LocalTime toLocalTime(OffsetDateTime offsetDateTime, ZoneId zoneId) {
-        // zoneId == null means use provided zoneId
-        return zoneId == null ? offsetDateTime.toLocalTime() : offsetDateTime.atZoneSameInstant(zoneId).toLocalTime();
-    }
-
-    static LocalTime toLocalTime(ZonedDateTime zonedDateTime, ZoneId zoneId) {
-        // zoneId == null means use provided zoneId
-        return zoneId == null ? zonedDateTime.toLocalTime() : zonedDateTime.withZoneSameInstant(zoneId).toLocalTime();
-    }
-
-    static Month toMonth(Instant instant, ZoneId zoneId) {
-        return toZonedDateTime(instant, zoneId).getMonth();
-    }
-
-    static Month toMonth(OffsetDateTime offsetDateTime, ZoneId zoneId) {
-        // zoneId == null means use provided zoneId
-        return zoneId == null ? offsetDateTime.getMonth() : offsetDateTime.atZoneSameInstant(zoneId).getMonth();
-    }
-
-    static Month toMonth(ZonedDateTime zonedDateTime, ZoneId zoneId) {
-        // zoneId == null means use provided zoneId
-        return zoneId == null ? zonedDateTime.getMonth() : zonedDateTime.withZoneSameInstant(zoneId).getMonth();
-    }
-
-    static DayOfWeek toDayOfWeek(Instant instant, ZoneId zoneId) {
-        return toZonedDateTime(instant, zoneId).getDayOfWeek();
-    }
-
-    static DayOfWeek toDayOfWeek(OffsetDateTime offsetDateTime, ZoneId zoneId) {
-        // zoneId == null means use provided zoneId
-        return zoneId == null ? offsetDateTime.getDayOfWeek() : offsetDateTime.atZoneSameInstant(zoneId).getDayOfWeek();
-    }
-
-    static DayOfWeek toDayOfWeek(ZonedDateTime zonedDateTime, ZoneId zoneId) {
-        // zoneId == null means use provided zoneId
-        return zoneId == null ? zonedDateTime.getDayOfWeek() : zonedDateTime.withZoneSameInstant(zoneId).getDayOfWeek();
-    }
-
-    static ZonedDateTime toZonedDateTime(Instant instant, ZoneId zoneId) {
-        return instant.atZone(zoneId);
-    }
-
-    static ZonedDateTime toZonedDateTime(Calendar calendar, ZoneId zoneId) {
-        // This is exactly what GregorianCalendar.toZonedDateTime() does
-        if (zoneId == null) {
-            zoneId = calendar.getTimeZone().toZoneId();
-        }
-        return ZonedDateTime.ofInstant(calendar.toInstant(), zoneId);
-    }
-
-    static <T> BiPredicate<T, T> not(BiPredicate<T, T> predicate) {
+    /**
+     * Negates a predicate. This is a utility method that simply returns {@code predicate.negate()}, and is equivalent to the static method that was
+     * added to {@link Predicate} in Java 11.
+     * <p>
+     * This method can be used with method references. Example: {@code not(LocalDate::isAfter)}.
+     *
+     * @param <T> The type to test.
+     * @param predicate The predicate to negate.
+     * @return The negated predicate.
+     * @throws NullPointerException If the given predicate is {@code null}.
+     */
+    protected static <T> BiPredicate<T, T> not(BiPredicate<T, T> predicate) {
         return predicate.negate();
     }
 }

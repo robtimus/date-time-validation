@@ -1,5 +1,5 @@
 /*
- * AbstractCalendarValidator.java
+ * CalendarValidator.java
  * Copyright 2021 Rob Spoor
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -33,7 +33,7 @@ import javax.validation.ConstraintValidatorContext;
  * @author Rob Spoor
  * @param <A> The constraint annotation type.
  */
-public abstract class AbstractCalendarValidator<A extends Annotation> extends DateTimeValidator<A, Calendar> {
+public abstract class CalendarValidator<A extends Annotation> extends DateTimeValidator<A, Calendar> {
 
     private final Function<A, String> momentExtractor;
     private final Function<A, String> durationExtractor;
@@ -50,7 +50,7 @@ public abstract class AbstractCalendarValidator<A extends Annotation> extends Da
      * @param validPredicate A predicate that determines whether or not a value (the first argument) is valid compared to a specific moment
      *                          (the second argument).
      */
-    protected AbstractCalendarValidator(Function<A, String> momentExtractor, BiPredicate<ZonedDateTime, ZonedDateTime> validPredicate) {
+    protected CalendarValidator(Function<A, String> momentExtractor, BiPredicate<ZonedDateTime, ZonedDateTime> validPredicate) {
         this.momentExtractor = momentExtractor;
         this.durationExtractor = null;
         this.durationApplier = null;
@@ -66,7 +66,7 @@ public abstract class AbstractCalendarValidator<A extends Annotation> extends Da
      * @param validPredicate A predicate that determines whether or not a value (the first argument) is valid compared to a specific moment
      *                          (the second argument).
      */
-    protected AbstractCalendarValidator(Function<A, String> momentExtractor,
+    protected CalendarValidator(Function<A, String> momentExtractor,
             Function<A, String> durationExtractor, BiFunction<ZonedDateTime, TemporalAmount, ZonedDateTime> durationApplier,
             BiPredicate<ZonedDateTime, ZonedDateTime> validPredicate) {
 

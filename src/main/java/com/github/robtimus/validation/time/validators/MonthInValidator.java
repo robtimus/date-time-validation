@@ -49,7 +49,7 @@ public final class MonthInValidator {
      *
      * @author Rob Spoor
      */
-    public static class ForDate extends AbstractDateEnumValidator<MonthIn, Month> {
+    public static class ForDate extends DateEnumValidator<MonthIn, Month> {
 
         /**
          * Creates a new validator.
@@ -64,7 +64,7 @@ public final class MonthInValidator {
      *
      * @author Rob Spoor
      */
-    public static class ForCalendar extends AbstractCalendarEnumValidator<MonthIn, Month> {
+    public static class ForCalendar extends CalendarEnumValidator<MonthIn, Month> {
 
         /**
          * Creates a new validator.
@@ -79,13 +79,13 @@ public final class MonthInValidator {
      *
      * @author Rob Spoor
      */
-    public static class ForInstant extends AbstractTemporalAccessorEnumValidator<MonthIn, Instant, Month> {
+    public static class ForInstant extends InstantEnumValidator<MonthIn, Month> {
 
         /**
          * Creates a new validator.
          */
         public ForInstant() {
-            super(allowedMonths(MonthIn::value), nonProvidedZoneId(MonthIn::zoneId), DateTimeValidator::toMonth);
+            super(allowedMonths(MonthIn::value), nonProvidedZoneId(MonthIn::zoneId), ZonedDateTime::getMonth);
         }
     }
 
@@ -94,7 +94,7 @@ public final class MonthInValidator {
      *
      * @author Rob Spoor
      */
-    public static class ForLocalDate extends AbstractTemporalAccessorEnumValidator<MonthIn, LocalDate, Month> {
+    public static class ForLocalDate extends TemporalAccessorEnumValidator<MonthIn, LocalDate, Month> {
 
         /**
          * Creates a new validator.
@@ -109,7 +109,7 @@ public final class MonthInValidator {
      *
      * @author Rob Spoor
      */
-    public static class ForLocalDateTime extends AbstractTemporalAccessorEnumValidator<MonthIn, LocalDateTime, Month> {
+    public static class ForLocalDateTime extends TemporalAccessorEnumValidator<MonthIn, LocalDateTime, Month> {
 
         /**
          * Creates a new validator.
@@ -124,7 +124,7 @@ public final class MonthInValidator {
      *
      * @author Rob Spoor
      */
-    public static class ForMonth extends AbstractTemporalAccessorEnumValidator<MonthIn, Month, Month> {
+    public static class ForMonth extends TemporalAccessorEnumValidator<MonthIn, Month, Month> {
 
         /**
          * Creates a new validator.
@@ -142,7 +142,7 @@ public final class MonthInValidator {
      *
      * @author Rob Spoor
      */
-    public static class ForMonthDay extends AbstractTemporalAccessorEnumValidator<MonthIn, MonthDay, Month> {
+    public static class ForMonthDay extends TemporalAccessorEnumValidator<MonthIn, MonthDay, Month> {
 
         /**
          * Creates a new validator.
@@ -157,13 +157,14 @@ public final class MonthInValidator {
      *
      * @author Rob Spoor
      */
-    public static class ForOffsetDateTime extends AbstractTemporalAccessorEnumValidator<MonthIn, OffsetDateTime, Month> {
+    public static class ForOffsetDateTime extends TemporalAccessorEnumValidator<MonthIn, OffsetDateTime, Month> {
 
         /**
          * Creates a new validator.
          */
         public ForOffsetDateTime() {
-            super(allowedMonths(MonthIn::value), MonthIn::zoneId, DateTimeValidator::toMonth);
+            super(allowedMonths(MonthIn::value), MonthIn::zoneId,
+                    OffsetDateTime::getMonth, OffsetDateTime::atZoneSameInstant, ZonedDateTime::getMonth);
         }
     }
 
@@ -172,7 +173,7 @@ public final class MonthInValidator {
      *
      * @author Rob Spoor
      */
-    public static class ForYearMonth extends AbstractTemporalAccessorEnumValidator<MonthIn, YearMonth, Month> {
+    public static class ForYearMonth extends TemporalAccessorEnumValidator<MonthIn, YearMonth, Month> {
 
         /**
          * Creates a new validator.
@@ -187,13 +188,13 @@ public final class MonthInValidator {
      *
      * @author Rob Spoor
      */
-    public static class ForZonedDateTime extends AbstractTemporalAccessorEnumValidator<MonthIn, ZonedDateTime, Month> {
+    public static class ForZonedDateTime extends ZonedDateTimeEnumValidator<MonthIn, Month> {
 
         /**
          * Creates a new validator.
          */
         public ForZonedDateTime() {
-            super(allowedMonths(MonthIn::value), MonthIn::zoneId, DateTimeValidator::toMonth);
+            super(allowedMonths(MonthIn::value), MonthIn::zoneId, ZonedDateTime::getMonth);
         }
     }
 

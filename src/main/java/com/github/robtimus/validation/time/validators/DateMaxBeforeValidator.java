@@ -41,13 +41,13 @@ public final class DateMaxBeforeValidator {
      *
      * @author Rob Spoor
      */
-    public static class ForDate extends AbstractDatePartValidator<DateMaxBefore, LocalDate> {
+    public static class ForDate extends DatePartValidator<DateMaxBefore, LocalDate> {
 
         /**
          * Creates a new validator.
          */
         public ForDate() {
-            super(DateMaxBefore::moment, DateMaxBefore::duration, nonProvidedZoneId(DateMaxBefore::zoneId), DateTimeValidator::toLocalDate,
+            super(DateMaxBefore::moment, DateMaxBefore::duration, nonProvidedZoneId(DateMaxBefore::zoneId), ZonedDateTime::toLocalDate,
                     new MaxBeforeValidator.ForLocalDate());
         }
     }
@@ -57,7 +57,7 @@ public final class DateMaxBeforeValidator {
      *
      * @author Rob Spoor
      */
-    public static class ForCalendar extends AbstractCalendarPartValidator<DateMaxBefore, LocalDate> {
+    public static class ForCalendar extends CalendarPartValidator<DateMaxBefore, LocalDate> {
 
         /**
          * Creates a new validator.
@@ -73,13 +73,13 @@ public final class DateMaxBeforeValidator {
      *
      * @author Rob Spoor
      */
-    public static class ForInstant extends AbstractTemporalAccessorPartValidator<DateMaxBefore, Instant, LocalDate> {
+    public static class ForInstant extends InstantPartValidator<DateMaxBefore, LocalDate> {
 
         /**
          * Creates a new validator.
          */
         public ForInstant() {
-            super(DateMaxBefore::moment, DateMaxBefore::duration, nonProvidedZoneId(DateMaxBefore::zoneId), DateTimeValidator::toLocalDate,
+            super(DateMaxBefore::moment, DateMaxBefore::duration, nonProvidedZoneId(DateMaxBefore::zoneId), ZonedDateTime::toLocalDate,
                     new MaxBeforeValidator.ForLocalDate());
         }
     }
@@ -89,7 +89,7 @@ public final class DateMaxBeforeValidator {
      *
      * @author Rob Spoor
      */
-    public static class ForLocalDateTime extends AbstractTemporalAccessorPartValidator<DateMaxBefore, LocalDateTime, LocalDate> {
+    public static class ForLocalDateTime extends TemporalAccessorPartValidator<DateMaxBefore, LocalDateTime, LocalDate> {
 
         /**
          * Creates a new validator.
@@ -105,13 +105,14 @@ public final class DateMaxBeforeValidator {
      *
      * @author Rob Spoor
      */
-    public static class ForOffsetDateTime extends AbstractTemporalAccessorPartValidator<DateMaxBefore, OffsetDateTime, LocalDate> {
+    public static class ForOffsetDateTime extends TemporalAccessorPartValidator<DateMaxBefore, OffsetDateTime, LocalDate> {
 
         /**
          * Creates a new validator.
          */
         public ForOffsetDateTime() {
-            super(DateMaxBefore::moment, DateMaxBefore::duration, DateMaxBefore::zoneId, DateTimeValidator::toLocalDate,
+            super(DateMaxBefore::moment, DateMaxBefore::duration, DateMaxBefore::zoneId,
+                    OffsetDateTime::toLocalDate, OffsetDateTime::atZoneSameInstant, ZonedDateTime::toLocalDate,
                     new MaxBeforeValidator.ForLocalDate());
         }
     }
@@ -121,13 +122,13 @@ public final class DateMaxBeforeValidator {
      *
      * @author Rob Spoor
      */
-    public static class ForZonedDateTime extends AbstractTemporalAccessorPartValidator<DateMaxBefore, ZonedDateTime, LocalDate> {
+    public static class ForZonedDateTime extends ZonedDateTimePartValidator<DateMaxBefore, LocalDate> {
 
         /**
          * Creates a new validator.
          */
         public ForZonedDateTime() {
-            super(DateMaxBefore::moment, DateMaxBefore::duration, DateMaxBefore::zoneId, DateTimeValidator::toLocalDate,
+            super(DateMaxBefore::moment, DateMaxBefore::duration, DateMaxBefore::zoneId, ZonedDateTime::toLocalDate,
                     new MaxBeforeValidator.ForLocalDate());
         }
     }

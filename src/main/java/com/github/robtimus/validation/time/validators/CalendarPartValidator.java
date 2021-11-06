@@ -1,5 +1,5 @@
 /*
- * AbstractDatePartValidator.java
+ * CalendarPartValidator.java
  * Copyright 2021 Rob Spoor
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -18,43 +18,43 @@
 package com.github.robtimus.validation.time.validators;
 
 import java.lang.annotation.Annotation;
-import java.time.Instant;
 import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.time.temporal.TemporalAccessor;
-import java.util.Date;
-import java.util.function.BiFunction;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.function.Function;
 import javax.validation.ConstraintValidatorContext;
 
 /**
- * The base for all {@link Date} validators that validate only part of the value.
+ * The base for all {@link Calendar} validators that validate only part of the value.
  *
  * @author Rob Spoor
  * @param <A> The constraint annotation type.
  * @param <P> The {@link TemporalAccessor} type that describes the part to validate.
  */
-public abstract class AbstractDatePartValidator<A extends Annotation, P extends TemporalAccessor> extends DateTimeValidator<A, Date> {
+public abstract class CalendarPartValidator<A extends Annotation, P extends TemporalAccessor> extends DateTimeValidator<A, Calendar> {
 
     private final Function<A, String> momentExtractor;
     private final Function<A, String> durationExtractor;
     private final Function<A, String> zoneIdExtractor;
-    private final BiFunction<Instant, ZoneId, P> partExtractor;
-    private final AbstractTemporalAccessorValidator<?, P> partValidator;
+    private final Function<ZonedDateTime, P> partExtractor;
+    private final TemporalAccessorValidator<?, P> partValidator;
 
     private ZoneId zoneId;
 
     /**
-     * Creates a new validator that only validates dates against a specific moment in time.
+     * Creates a new validator that only validates calendar parts against a specific moment in time.
      *
      * @param momentExtractor A function that extracts the moment from a constraint annotation.
      * @param zoneIdExtractor A function that extracts the zone id from a constraint annotation.
-     * @param partExtractor A function that extracts a part from an instant.
+     * @param partExtractor A function that extracts a part from a zoned date/time.
      * @param partValidator The validator to use for validating extracted parts.
      */
-    protected AbstractDatePartValidator(Function<A, String> momentExtractor,
+    protected CalendarPartValidator(Function<A, String> momentExtractor,
             Function<A, String> zoneIdExtractor,
-            BiFunction<Instant, ZoneId, P> partExtractor,
-            AbstractTemporalAccessorValidator<?, P> partValidator) {
+            Function<ZonedDateTime, P> partExtractor,
+            TemporalAccessorValidator<?, P> partValidator) {
 
         this.momentExtractor = momentExtractor;
         this.durationExtractor = null;
@@ -64,7 +64,7 @@ public abstract class AbstractDatePartValidator<A extends Annotation, P extends 
     }
 
     /**
-     * Creates a new validator that only validates dates against a specific duration before or after a specific moment in time.
+     * Creates a new validator that only validates calendar parts against a specific duration before or after a specific moment in time.
      *
      * @param momentExtractor A function that extracts the moment from a constraint annotation.
      * @param durationExtractor A function that extracts the duration from a constraint annotation.
@@ -72,11 +72,11 @@ public abstract class AbstractDatePartValidator<A extends Annotation, P extends 
      * @param partExtractor A function that extracts a part from a zoned date/time.
      * @param partValidator The validator to use for validating extracted parts.
      */
-    protected AbstractDatePartValidator(Function<A, String> momentExtractor,
+    protected CalendarPartValidator(Function<A, String> momentExtractor,
             Function<A, String> durationExtractor,
             Function<A, String> zoneIdExtractor,
-            BiFunction<Instant, ZoneId, P> partExtractor,
-            AbstractTemporalAccessorValidator<?, P> partValidator) {
+            Function<ZonedDateTime, P> partExtractor,
+            TemporalAccessorValidator<?, P> partValidator) {
 
         this.momentExtractor = momentExtractor;
         this.durationExtractor = durationExtractor;
@@ -101,13 +101,29 @@ public abstract class AbstractDatePartValidator<A extends Annotation, P extends 
     }
 
     @Override
-    public boolean isValid(Date value, ConstraintValidatorContext context) {
+    public boolean isValid(Calendar value, ConstraintValidatorContext context) {
         if (value == null) {
             return true;
         }
 
-        Instant instant = value.toInstant();
-        P part = partExtractor.apply(instant, zoneId);
+        ZonedDateTime zonedDateTime = toZonedDateTime(value, zoneId);
+        P part = partExtractor.apply(zonedDateTime);
         return partValidator.isValid(part, context);
+    }
+
+    /**
+     * Returns a {@link ZonedDateTime} that represents the same instant as a {@link Calendar} at a specific {@link ZoneId}.
+     * This method is a more generalized version of {@link GregorianCalendar#toZonedDateTime()}.
+     *
+     * @param calendar The {@link Calendar} for which to return a {@link ZonedDateTime}.
+     * @param zoneId The optional {@link ZoneId} to use. If {@code null}, the {@link Calendar}'s own time zone will be used.
+     * @return A {@link ZonedDateTime} that represents the same instant as the given {@link Calendar} at the given {@link ZoneId}.
+     */
+    public static ZonedDateTime toZonedDateTime(Calendar calendar, ZoneId zoneId) {
+        // This is exactly what GregorianCalendar.toZonedDateTime() does
+        if (zoneId == null) {
+            zoneId = calendar.getTimeZone().toZoneId();
+        }
+        return ZonedDateTime.ofInstant(calendar.toInstant(), zoneId);
     }
 }

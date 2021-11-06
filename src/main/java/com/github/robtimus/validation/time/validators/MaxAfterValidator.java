@@ -45,7 +45,7 @@ public final class MaxAfterValidator {
      *
      * @author Rob Spoor
      */
-    public static class ForDate extends AbstractDateValidator<MaxAfter> {
+    public static class ForDate extends DateValidator<MaxAfter> {
 
         /**
          * Creates a new validator.
@@ -60,7 +60,7 @@ public final class MaxAfterValidator {
      *
      * @author Rob Spoor
      */
-    public static class ForCalendar extends AbstractCalendarValidator<MaxAfter> {
+    public static class ForCalendar extends CalendarValidator<MaxAfter> {
 
         /**
          * Creates a new validator.
@@ -75,7 +75,7 @@ public final class MaxAfterValidator {
      *
      * @author Rob Spoor
      */
-    public static class ForInstant extends AbstractTemporalAccessorValidator<MaxAfter, Instant> {
+    public static class ForInstant extends TemporalAccessorValidator<MaxAfter, Instant> {
 
         /**
          * Creates a new validator.
@@ -90,7 +90,7 @@ public final class MaxAfterValidator {
      *
      * @author Rob Spoor
      */
-    public static class ForLocalDate extends AbstractTemporalAccessorValidator<MaxAfter, LocalDate> {
+    public static class ForLocalDate extends TemporalAccessorValidator<MaxAfter, LocalDate> {
 
         /**
          * Creates a new validator.
@@ -105,7 +105,7 @@ public final class MaxAfterValidator {
      *
      * @author Rob Spoor
      */
-    public static class ForLocalDateTime extends AbstractTemporalAccessorValidator<MaxAfter, LocalDateTime> {
+    public static class ForLocalDateTime extends TemporalAccessorValidator<MaxAfter, LocalDateTime> {
 
         /**
          * Creates a new validator.
@@ -120,7 +120,7 @@ public final class MaxAfterValidator {
      *
      * @author Rob Spoor
      */
-    public static class ForLocalTime extends AbstractTemporalAccessorValidator<MaxAfter, LocalTime> {
+    public static class ForLocalTime extends TemporalAccessorValidator<MaxAfter, LocalTime> {
 
         /**
          * Creates a new validator.
@@ -135,7 +135,7 @@ public final class MaxAfterValidator {
      *
      * @author Rob Spoor
      */
-    public static class ForOffsetDateTime extends AbstractTemporalAccessorValidator<MaxAfter, OffsetDateTime> {
+    public static class ForOffsetDateTime extends TemporalAccessorValidator<MaxAfter, OffsetDateTime> {
 
         /**
          * Creates a new validator.
@@ -151,7 +151,7 @@ public final class MaxAfterValidator {
      *
      * @author Rob Spoor
      */
-    public static class ForOffsetTime extends AbstractTemporalAccessorValidator<MaxAfter, OffsetTime> {
+    public static class ForOffsetTime extends TemporalAccessorValidator<MaxAfter, OffsetTime> {
 
         /**
          * Creates a new validator.
@@ -166,7 +166,7 @@ public final class MaxAfterValidator {
      *
      * @author Rob Spoor
      */
-    public static class ForYear extends AbstractTemporalAccessorValidator<MaxAfter, Year> {
+    public static class ForYear extends TemporalAccessorValidator<MaxAfter, Year> {
 
         /**
          * Creates a new validator.
@@ -181,7 +181,7 @@ public final class MaxAfterValidator {
      *
      * @author Rob Spoor
      */
-    public static class ForYearMonth extends AbstractTemporalAccessorValidator<MaxAfter, YearMonth> {
+    public static class ForYearMonth extends TemporalAccessorValidator<MaxAfter, YearMonth> {
 
         /**
          * Creates a new validator.
@@ -196,7 +196,7 @@ public final class MaxAfterValidator {
      *
      * @author Rob Spoor
      */
-    public static class ForZonedDateTime extends AbstractTemporalAccessorValidator<MaxAfter, ZonedDateTime> {
+    public static class ForZonedDateTime extends TemporalAccessorValidator<MaxAfter, ZonedDateTime> {
 
         /**
          * Creates a new validator.

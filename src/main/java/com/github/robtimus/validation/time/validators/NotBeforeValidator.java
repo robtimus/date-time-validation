@@ -46,7 +46,7 @@ public final class NotBeforeValidator {
      *
      * @author Rob Spoor
      */
-    public static class ForDate extends AbstractDateValidator<NotBefore> {
+    public static class ForDate extends DateValidator<NotBefore> {
 
         /**
          * Creates a new validator.
@@ -61,7 +61,7 @@ public final class NotBeforeValidator {
      *
      * @author Rob Spoor
      */
-    public static class ForCalendar extends AbstractCalendarValidator<NotBefore> {
+    public static class ForCalendar extends CalendarValidator<NotBefore> {
 
         /**
          * Creates a new validator.
@@ -76,7 +76,7 @@ public final class NotBeforeValidator {
      *
      * @author Rob Spoor
      */
-    public static class ForInstant extends AbstractTemporalAccessorValidator<NotBefore, Instant> {
+    public static class ForInstant extends TemporalAccessorValidator<NotBefore, Instant> {
 
         /**
          * Creates a new validator.
@@ -91,7 +91,7 @@ public final class NotBeforeValidator {
      *
      * @author Rob Spoor
      */
-    public static class ForLocalDate extends AbstractTemporalAccessorValidator<NotBefore, LocalDate> {
+    public static class ForLocalDate extends TemporalAccessorValidator<NotBefore, LocalDate> {
 
         /**
          * Creates a new validator.
@@ -106,7 +106,7 @@ public final class NotBeforeValidator {
      *
      * @author Rob Spoor
      */
-    public static class ForLocalDateTime extends AbstractTemporalAccessorValidator<NotBefore, LocalDateTime> {
+    public static class ForLocalDateTime extends TemporalAccessorValidator<NotBefore, LocalDateTime> {
 
         /**
          * Creates a new validator.
@@ -121,7 +121,7 @@ public final class NotBeforeValidator {
      *
      * @author Rob Spoor
      */
-    public static class ForLocalTime extends AbstractTemporalAccessorValidator<NotBefore, LocalTime> {
+    public static class ForLocalTime extends TemporalAccessorValidator<NotBefore, LocalTime> {
 
         /**
          * Creates a new validator.
@@ -136,7 +136,7 @@ public final class NotBeforeValidator {
      *
      * @author Rob Spoor
      */
-    public static class ForMonthDay extends AbstractTemporalAccessorValidator<NotBefore, MonthDay> {
+    public static class ForMonthDay extends TemporalAccessorValidator<NotBefore, MonthDay> {
 
         /**
          * Creates a new validator.
@@ -151,7 +151,7 @@ public final class NotBeforeValidator {
      *
      * @author Rob Spoor
      */
-    public static class ForOffsetDateTime extends AbstractTemporalAccessorValidator<NotBefore, OffsetDateTime> {
+    public static class ForOffsetDateTime extends TemporalAccessorValidator<NotBefore, OffsetDateTime> {
 
         /**
          * Creates a new validator.
@@ -166,7 +166,7 @@ public final class NotBeforeValidator {
      *
      * @author Rob Spoor
      */
-    public static class ForOffsetTime extends AbstractTemporalAccessorValidator<NotBefore, OffsetTime> {
+    public static class ForOffsetTime extends TemporalAccessorValidator<NotBefore, OffsetTime> {
 
         /**
          * Creates a new validator.
@@ -181,7 +181,7 @@ public final class NotBeforeValidator {
      *
      * @author Rob Spoor
      */
-    public static class ForYear extends AbstractTemporalAccessorValidator<NotBefore, Year> {
+    public static class ForYear extends TemporalAccessorValidator<NotBefore, Year> {
 
         /**
          * Creates a new validator.
@@ -196,7 +196,7 @@ public final class NotBeforeValidator {
      *
      * @author Rob Spoor
      */
-    public static class ForYearMonth extends AbstractTemporalAccessorValidator<NotBefore, YearMonth> {
+    public static class ForYearMonth extends TemporalAccessorValidator<NotBefore, YearMonth> {
 
         /**
          * Creates a new validator.
@@ -211,7 +211,7 @@ public final class NotBeforeValidator {
      *
      * @author Rob Spoor
      */
-    public static class ForZonedDateTime extends AbstractTemporalAccessorValidator<NotBefore, ZonedDateTime> {
+    public static class ForZonedDateTime extends TemporalAccessorValidator<NotBefore, ZonedDateTime> {
 
         /**
          * Creates a new validator.

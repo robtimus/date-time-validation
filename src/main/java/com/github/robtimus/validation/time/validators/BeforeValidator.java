@@ -46,7 +46,7 @@ public final class BeforeValidator {
      *
      * @author Rob Spoor
      */
-    public static class ForDate extends AbstractDateValidator<Before> {
+    public static class ForDate extends DateValidator<Before> {
 
         /**
          * Creates a new validator.
@@ -61,7 +61,7 @@ public final class BeforeValidator {
      *
      * @author Rob Spoor
      */
-    public static class ForCalendar extends AbstractCalendarValidator<Before> {
+    public static class ForCalendar extends CalendarValidator<Before> {
 
         /**
          * Creates a new validator.
@@ -76,7 +76,7 @@ public final class BeforeValidator {
      *
      * @author Rob Spoor
      */
-    public static class ForInstant extends AbstractTemporalAccessorValidator<Before, Instant> {
+    public static class ForInstant extends TemporalAccessorValidator<Before, Instant> {
 
         /**
          * Creates a new validator.
@@ -91,7 +91,7 @@ public final class BeforeValidator {
      *
      * @author Rob Spoor
      */
-    public static class ForLocalDate extends AbstractTemporalAccessorValidator<Before, LocalDate> {
+    public static class ForLocalDate extends TemporalAccessorValidator<Before, LocalDate> {
 
         /**
          * Creates a new validator.
@@ -106,7 +106,7 @@ public final class BeforeValidator {
      *
      * @author Rob Spoor
      */
-    public static class ForLocalDateTime extends AbstractTemporalAccessorValidator<Before, LocalDateTime> {
+    public static class ForLocalDateTime extends TemporalAccessorValidator<Before, LocalDateTime> {
 
         /**
          * Creates a new validator.
@@ -121,7 +121,7 @@ public final class BeforeValidator {
      *
      * @author Rob Spoor
      */
-    public static class ForLocalTime extends AbstractTemporalAccessorValidator<Before, LocalTime> {
+    public static class ForLocalTime extends TemporalAccessorValidator<Before, LocalTime> {
 
         /**
          * Creates a new validator.
@@ -136,7 +136,7 @@ public final class BeforeValidator {
      *
      * @author Rob Spoor
      */
-    public static class ForMonthDay extends AbstractTemporalAccessorValidator<Before, MonthDay> {
+    public static class ForMonthDay extends TemporalAccessorValidator<Before, MonthDay> {
 
         /**
          * Creates a new validator.
@@ -151,7 +151,7 @@ public final class BeforeValidator {
      *
      * @author Rob Spoor
      */
-    public static class ForOffsetDateTime extends AbstractTemporalAccessorValidator<Before, OffsetDateTime> {
+    public static class ForOffsetDateTime extends TemporalAccessorValidator<Before, OffsetDateTime> {
 
         /**
          * Creates a new validator.
@@ -166,7 +166,7 @@ public final class BeforeValidator {
      *
      * @author Rob Spoor
      */
-    public static class ForOffsetTime extends AbstractTemporalAccessorValidator<Before, OffsetTime> {
+    public static class ForOffsetTime extends TemporalAccessorValidator<Before, OffsetTime> {
 
         /**
          * Creates a new validator.
@@ -181,7 +181,7 @@ public final class BeforeValidator {
      *
      * @author Rob Spoor
      */
-    public static class ForYear extends AbstractTemporalAccessorValidator<Before, Year> {
+    public static class ForYear extends TemporalAccessorValidator<Before, Year> {
 
         /**
          * Creates a new validator.
@@ -196,7 +196,7 @@ public final class BeforeValidator {
      *
      * @author Rob Spoor
      */
-    public static class ForYearMonth extends AbstractTemporalAccessorValidator<Before, YearMonth> {
+    public static class ForYearMonth extends TemporalAccessorValidator<Before, YearMonth> {
 
         /**
          * Creates a new validator.
@@ -211,7 +211,7 @@ public final class BeforeValidator {
      *
      * @author Rob Spoor
      */
-    public static class ForZonedDateTime extends AbstractTemporalAccessorValidator<Before, ZonedDateTime> {
+    public static class ForZonedDateTime extends TemporalAccessorValidator<Before, ZonedDateTime> {
 
         /**
          * Creates a new validator.

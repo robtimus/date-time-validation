@@ -45,7 +45,7 @@ public final class MinBeforeValidator {
      *
      * @author Rob Spoor
      */
-    public static class ForDate extends AbstractDateValidator<MinBefore> {
+    public static class ForDate extends DateValidator<MinBefore> {
 
         /**
          * Creates a new validator.
@@ -60,7 +60,7 @@ public final class MinBeforeValidator {
      *
      * @author Rob Spoor
      */
-    public static class ForCalendar extends AbstractCalendarValidator<MinBefore> {
+    public static class ForCalendar extends CalendarValidator<MinBefore> {
 
         /**
          * Creates a new validator.
@@ -75,7 +75,7 @@ public final class MinBeforeValidator {
      *
      * @author Rob Spoor
      */
-    public static class ForInstant extends AbstractTemporalAccessorValidator<MinBefore, Instant> {
+    public static class ForInstant extends TemporalAccessorValidator<MinBefore, Instant> {
 
         /**
          * Creates a new validator.
@@ -90,7 +90,7 @@ public final class MinBeforeValidator {
      *
      * @author Rob Spoor
      */
-    public static class ForLocalDate extends AbstractTemporalAccessorValidator<MinBefore, LocalDate> {
+    public static class ForLocalDate extends TemporalAccessorValidator<MinBefore, LocalDate> {
 
         /**
          * Creates a new validator.
@@ -105,7 +105,7 @@ public final class MinBeforeValidator {
      *
      * @author Rob Spoor
      */
-    public static class ForLocalDateTime extends AbstractTemporalAccessorValidator<MinBefore, LocalDateTime> {
+    public static class ForLocalDateTime extends TemporalAccessorValidator<MinBefore, LocalDateTime> {
 
         /**
          * Creates a new validator.
@@ -121,7 +121,7 @@ public final class MinBeforeValidator {
      *
      * @author Rob Spoor
      */
-    public static class ForLocalTime extends AbstractTemporalAccessorValidator<MinBefore, LocalTime> {
+    public static class ForLocalTime extends TemporalAccessorValidator<MinBefore, LocalTime> {
 
         /**
          * Creates a new validator.
@@ -136,7 +136,7 @@ public final class MinBeforeValidator {
      *
      * @author Rob Spoor
      */
-    public static class ForOffsetDateTime extends AbstractTemporalAccessorValidator<MinBefore, OffsetDateTime> {
+    public static class ForOffsetDateTime extends TemporalAccessorValidator<MinBefore, OffsetDateTime> {
 
         /**
          * Creates a new validator.
@@ -152,7 +152,7 @@ public final class MinBeforeValidator {
      *
      * @author Rob Spoor
      */
-    public static class ForOffsetTime extends AbstractTemporalAccessorValidator<MinBefore, OffsetTime> {
+    public static class ForOffsetTime extends TemporalAccessorValidator<MinBefore, OffsetTime> {
 
         /**
          * Creates a new validator.
@@ -167,7 +167,7 @@ public final class MinBeforeValidator {
      *
      * @author Rob Spoor
      */
-    public static class ForYear extends AbstractTemporalAccessorValidator<MinBefore, Year> {
+    public static class ForYear extends TemporalAccessorValidator<MinBefore, Year> {
 
         /**
          * Creates a new validator.
@@ -182,7 +182,7 @@ public final class MinBeforeValidator {
      *
      * @author Rob Spoor
      */
-    public static class ForYearMonth extends AbstractTemporalAccessorValidator<MinBefore, YearMonth> {
+    public static class ForYearMonth extends TemporalAccessorValidator<MinBefore, YearMonth> {
 
         /**
          * Creates a new validator.
@@ -197,7 +197,7 @@ public final class MinBeforeValidator {
      *
      * @author Rob Spoor
      */
-    public static class ForZonedDateTime extends AbstractTemporalAccessorValidator<MinBefore, ZonedDateTime> {
+    public static class ForZonedDateTime extends TemporalAccessorValidator<MinBefore, ZonedDateTime> {
 
         /**
          * Creates a new validator.

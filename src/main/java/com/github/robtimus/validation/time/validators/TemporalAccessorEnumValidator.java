@@ -1,5 +1,5 @@
 /*
- * AbstractTemporalAccessorEnumValidator.java
+ * TemporalAccessorEnumValidator.java
  * Copyright 2021 Rob Spoor
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -18,7 +18,10 @@
 package com.github.robtimus.validation.time.validators;
 
 import java.lang.annotation.Annotation;
+import java.time.LocalDate;
+import java.time.OffsetDateTime;
 import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.time.temporal.TemporalAccessor;
 import java.util.Set;
 import java.util.function.BiFunction;
@@ -31,14 +34,14 @@ import javax.validation.ConstraintValidatorContext;
  * @author Rob Spoor
  * @param <A> The constraint annotation type.
  * @param <T> The {@link TemporalAccessor} type to validate.
- * @param <E> The enumerated value type.
+ * @param <E> The enumerated part type.
  */
-public abstract class AbstractTemporalAccessorEnumValidator<A extends Annotation, T extends TemporalAccessor, E extends Enum<E>>
+public abstract class TemporalAccessorEnumValidator<A extends Annotation, T extends TemporalAccessor, E extends Enum<E>>
         extends DateTimeValidator<A, T> {
 
     private final Function<A, Set<E>> allowedValuesExtractor;
     private final Function<A, String> zoneIdExtractor;
-    private final BiFunction<T, ZoneId, E> valueExtractor;
+    private final BiFunction<T, ZoneId, E> partExtractor;
 
     private Set<E> allowedValues;
     private ZoneId zoneId;
@@ -49,19 +52,54 @@ public abstract class AbstractTemporalAccessorEnumValidator<A extends Annotation
     private String replacementMessage;
 
     /**
-     * Creates a new validator that validates dates against a set of allowed values.
+     * Creates a new validator that validates enumerated {@link TemporalAccessor} parts against a set of allowed values.
+     * <p>
+     * This constructor is a specialization of {@link #TemporalAccessorEnumValidator(Function, Function, BiFunction)} that uses a part extractor that
+     * ignores the zone id. This can be used for types that don't use zones like {@link LocalDate}.
      *
      * @param allowedValuesExtractor A function that extracts the allowed values from a constraint annotation.
      * @param zoneIdExtractor A function that extracts the zone id from a constraint annotation.
-     * @param valueExtractor A function that extracts the value from a {@link TemporalAccessor}..
+     * @param partExtractor A function that extracts the enumerated part from a {@link TemporalAccessor}.
      */
-    protected AbstractTemporalAccessorEnumValidator(Function<A, Set<E>> allowedValuesExtractor,
+    protected TemporalAccessorEnumValidator(Function<A, Set<E>> allowedValuesExtractor,
             Function<A, String> zoneIdExtractor,
-            Function<T, E> valueExtractor) {
+            Function<T, E> partExtractor) {
 
-        this.allowedValuesExtractor = allowedValuesExtractor;
-        this.zoneIdExtractor = zoneIdExtractor;
-        this.valueExtractor = (t, z) -> valueExtractor.apply(t);
+        this(allowedValuesExtractor,
+                zoneIdExtractor,
+                (t, z) -> partExtractor.apply(t));
+    }
+
+    /**
+     * Creates a new validator that validates enumerated {@link TemporalAccessor} parts against a set of allowed values.
+     * <p>
+     * This constructor is a specialization of {@link #TemporalAccessorEnumValidator(Function, Function, BiFunction)} that uses a part extractor that
+     * does the following:
+     * <pre><code>
+     * return zoneId == null
+     *         ? partExtractor.apply(value)
+     *         : zonedDateTimePartExtractor.apply(zoneIdApplier.apply(value, zoneId))
+     * </code></pre>
+     * This can be used for types that use zones like {@link OffsetDateTime}.
+     * <p>
+     * Note: to prevent duplicating arguments, use {@link ZonedDateTimeEnumValidator} for {@link ZonedDateTime},
+     *
+     * @param allowedValuesExtractor A function that extracts the allowed values from a constraint annotation.
+     * @param zoneIdExtractor A function that extracts the zone id from a constraint annotation.
+     * @param partExtractor A function that extracts the enumerated part from a {@link TemporalAccessor}.
+     * @param zoneIdApplier A function that applies a zone id  to a {@link TemporalAccessor}, resulting in a zoned date/time.
+     *                          The result should represent the same instant.
+     * @param zonedDateTimePartExtractor A function that extracts the enumerated part from a zoned date/time.
+     */
+    protected TemporalAccessorEnumValidator(Function<A, Set<E>> allowedValuesExtractor,
+            Function<A, String> zoneIdExtractor,
+            Function<T, E> partExtractor,
+            BiFunction<T, ZoneId, ZonedDateTime> zoneIdApplier,
+            Function<ZonedDateTime, E> zonedDateTimePartExtractor) {
+
+        this(allowedValuesExtractor,
+                zoneIdExtractor,
+                (t, z) -> z == null ? partExtractor.apply(t) : zonedDateTimePartExtractor.apply(zoneIdApplier.apply(t, z)));
     }
 
     /**
@@ -69,15 +107,15 @@ public abstract class AbstractTemporalAccessorEnumValidator<A extends Annotation
      *
      * @param allowedValuesExtractor A function that extracts the allowed values from a constraint annotation.
      * @param zoneIdExtractor A function that extracts the zone id from a constraint annotation.
-     * @param valueExtractor A function that extracts the value from a {@link TemporalAccessor}..
+     * @param partExtractor A function that extracts the enumerated part from a {@link TemporalAccessor}.
      */
-    protected AbstractTemporalAccessorEnumValidator(Function<A, Set<E>> allowedValuesExtractor,
+    protected TemporalAccessorEnumValidator(Function<A, Set<E>> allowedValuesExtractor,
             Function<A, String> zoneIdExtractor,
-            BiFunction<T, ZoneId, E> valueExtractor) {
+            BiFunction<T, ZoneId, E> partExtractor) {
 
         this.allowedValuesExtractor = allowedValuesExtractor;
         this.zoneIdExtractor = zoneIdExtractor;
-        this.valueExtractor = valueExtractor;
+        this.partExtractor = partExtractor;
     }
 
     /**
@@ -124,8 +162,8 @@ public abstract class AbstractTemporalAccessorEnumValidator<A extends Annotation
             return true;
         }
 
-        E enumValue = valueExtractor.apply(value, zoneId);
-        boolean valid = allowedValues.contains(enumValue);
+        E part = partExtractor.apply(value, zoneId);
+        boolean valid = allowedValues.contains(part);
         if (!valid && message != null) {
             context.disableDefaultConstraintViolation();
             context.buildConstraintViolationWithTemplate(message).addConstraintViolation();

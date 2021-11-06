@@ -1,5 +1,5 @@
 /*
- * AbstractDateValidator.java
+ * DateValidator.java
  * Copyright 2021 Rob Spoor
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -32,7 +32,7 @@ import javax.validation.ConstraintValidatorContext;
  * @author Rob Spoor
  * @param <A> The constraint annotation type.
  */
-public abstract class AbstractDateValidator<A extends Annotation> extends DateTimeValidator<A, Date> {
+public abstract class DateValidator<A extends Annotation> extends DateTimeValidator<A, Date> {
 
     private final Function<A, String> momentExtractor;
     private final Function<A, String> durationExtractor;
@@ -49,7 +49,7 @@ public abstract class AbstractDateValidator<A extends Annotation> extends DateTi
      * @param validPredicate A predicate that determines whether or not a value (the first argument) is valid compared to a specific moment
      *                          (the second argument).
      */
-    protected AbstractDateValidator(Function<A, String> momentExtractor, BiPredicate<Instant, Instant> validPredicate) {
+    protected DateValidator(Function<A, String> momentExtractor, BiPredicate<Instant, Instant> validPredicate) {
         this.momentExtractor = momentExtractor;
         this.durationExtractor = null;
         this.durationApplier = null;
@@ -65,7 +65,7 @@ public abstract class AbstractDateValidator<A extends Annotation> extends DateTi
      * @param validPredicate A predicate that determines whether or not a value (the first argument) is valid compared to a specific moment
      *                          (the second argument).
      */
-    protected AbstractDateValidator(Function<A, String> momentExtractor,
+    protected DateValidator(Function<A, String> momentExtractor,
             Function<A, String> durationExtractor, BiFunction<Instant, TemporalAmount, Instant> durationApplier,
             BiPredicate<Instant, Instant> validPredicate) {
 

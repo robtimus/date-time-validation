@@ -46,7 +46,7 @@ public final class DayOfWeekBeforeValidator {
      *
      * @author Rob Spoor
      */
-    public static class ForDate extends AbstractDateEnumValidator<DayOfWeekBefore, DayOfWeek> {
+    public static class ForDate extends DateEnumValidator<DayOfWeekBefore, DayOfWeek> {
 
         /**
          * Creates a new validator.
@@ -61,7 +61,7 @@ public final class DayOfWeekBeforeValidator {
      *
      * @author Rob Spoor
      */
-    public static class ForCalendar extends AbstractCalendarEnumValidator<DayOfWeekBefore, DayOfWeek> {
+    public static class ForCalendar extends CalendarEnumValidator<DayOfWeekBefore, DayOfWeek> {
 
         /**
          * Creates a new validator.
@@ -76,7 +76,7 @@ public final class DayOfWeekBeforeValidator {
      *
      * @author Rob Spoor
      */
-    public static class ForDayOfWeek extends AbstractTemporalAccessorEnumValidator<DayOfWeekBefore, DayOfWeek, DayOfWeek> {
+    public static class ForDayOfWeek extends TemporalAccessorEnumValidator<DayOfWeekBefore, DayOfWeek, DayOfWeek> {
 
         /**
          * Creates a new validator.
@@ -94,13 +94,13 @@ public final class DayOfWeekBeforeValidator {
      *
      * @author Rob Spoor
      */
-    public static class ForInstant extends AbstractTemporalAccessorEnumValidator<DayOfWeekBefore, Instant, DayOfWeek> {
+    public static class ForInstant extends InstantEnumValidator<DayOfWeekBefore, DayOfWeek> {
 
         /**
          * Creates a new validator.
          */
         public ForInstant() {
-            super(allowedDayOfWeeks(DayOfWeekBefore::value), nonProvidedZoneId(DayOfWeekBefore::zoneId), DateTimeValidator::toDayOfWeek);
+            super(allowedDayOfWeeks(DayOfWeekBefore::value), nonProvidedZoneId(DayOfWeekBefore::zoneId), ZonedDateTime::getDayOfWeek);
         }
     }
 
@@ -109,7 +109,7 @@ public final class DayOfWeekBeforeValidator {
      *
      * @author Rob Spoor
      */
-    public static class ForLocalDate extends AbstractTemporalAccessorEnumValidator<DayOfWeekBefore, LocalDate, DayOfWeek> {
+    public static class ForLocalDate extends TemporalAccessorEnumValidator<DayOfWeekBefore, LocalDate, DayOfWeek> {
 
         /**
          * Creates a new validator.
@@ -124,7 +124,7 @@ public final class DayOfWeekBeforeValidator {
      *
      * @author Rob Spoor
      */
-    public static class ForLocalDateTime extends AbstractTemporalAccessorEnumValidator<DayOfWeekBefore, LocalDateTime, DayOfWeek> {
+    public static class ForLocalDateTime extends TemporalAccessorEnumValidator<DayOfWeekBefore, LocalDateTime, DayOfWeek> {
 
         /**
          * Creates a new validator.
@@ -139,13 +139,14 @@ public final class DayOfWeekBeforeValidator {
      *
      * @author Rob Spoor
      */
-    public static class ForOffsetDateTime extends AbstractTemporalAccessorEnumValidator<DayOfWeekBefore, OffsetDateTime, DayOfWeek> {
+    public static class ForOffsetDateTime extends TemporalAccessorEnumValidator<DayOfWeekBefore, OffsetDateTime, DayOfWeek> {
 
         /**
          * Creates a new validator.
          */
         public ForOffsetDateTime() {
-            super(allowedDayOfWeeks(DayOfWeekBefore::value), DayOfWeekBefore::zoneId, DateTimeValidator::toDayOfWeek);
+            super(allowedDayOfWeeks(DayOfWeekBefore::value), DayOfWeekBefore::zoneId,
+                    OffsetDateTime::getDayOfWeek, OffsetDateTime::atZoneSameInstant, ZonedDateTime::getDayOfWeek);
         }
     }
 
@@ -154,13 +155,13 @@ public final class DayOfWeekBeforeValidator {
      *
      * @author Rob Spoor
      */
-    public static class ForZonedDateTime extends AbstractTemporalAccessorEnumValidator<DayOfWeekBefore, ZonedDateTime, DayOfWeek> {
+    public static class ForZonedDateTime extends ZonedDateTimeEnumValidator<DayOfWeekBefore, DayOfWeek> {
 
         /**
          * Creates a new validator.
          */
         public ForZonedDateTime() {
-            super(allowedDayOfWeeks(DayOfWeekBefore::value), DayOfWeekBefore::zoneId, DateTimeValidator::toDayOfWeek);
+            super(allowedDayOfWeeks(DayOfWeekBefore::value), DayOfWeekBefore::zoneId, ZonedDateTime::getDayOfWeek);
         }
     }
 

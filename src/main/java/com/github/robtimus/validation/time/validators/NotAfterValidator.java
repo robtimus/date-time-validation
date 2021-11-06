@@ -46,7 +46,7 @@ public final class NotAfterValidator {
      *
      * @author Rob Spoor
      */
-    public static class ForDate extends AbstractDateValidator<NotAfter> {
+    public static class ForDate extends DateValidator<NotAfter> {
 
         /**
          * Creates a new validator.
@@ -61,7 +61,7 @@ public final class NotAfterValidator {
      *
      * @author Rob Spoor
      */
-    public static class ForCalendar extends AbstractCalendarValidator<NotAfter> {
+    public static class ForCalendar extends CalendarValidator<NotAfter> {
 
         /**
          * Creates a new validator.
@@ -76,7 +76,7 @@ public final class NotAfterValidator {
      *
      * @author Rob Spoor
      */
-    public static class ForInstant extends AbstractTemporalAccessorValidator<NotAfter, Instant> {
+    public static class ForInstant extends TemporalAccessorValidator<NotAfter, Instant> {
 
         /**
          * Creates a new validator.
@@ -91,7 +91,7 @@ public final class NotAfterValidator {
      *
      * @author Rob Spoor
      */
-    public static class ForLocalDate extends AbstractTemporalAccessorValidator<NotAfter, LocalDate> {
+    public static class ForLocalDate extends TemporalAccessorValidator<NotAfter, LocalDate> {
 
         /**
          * Creates a new validator.
@@ -106,7 +106,7 @@ public final class NotAfterValidator {
      *
      * @author Rob Spoor
      */
-    public static class ForLocalDateTime extends AbstractTemporalAccessorValidator<NotAfter, LocalDateTime> {
+    public static class ForLocalDateTime extends TemporalAccessorValidator<NotAfter, LocalDateTime> {
 
         /**
          * Creates a new validator.
@@ -121,7 +121,7 @@ public final class NotAfterValidator {
      *
      * @author Rob Spoor
      */
-    public static class ForLocalTime extends AbstractTemporalAccessorValidator<NotAfter, LocalTime> {
+    public static class ForLocalTime extends TemporalAccessorValidator<NotAfter, LocalTime> {
 
         /**
          * Creates a new validator.
@@ -136,7 +136,7 @@ public final class NotAfterValidator {
      *
      * @author Rob Spoor
      */
-    public static class ForMonthDay extends AbstractTemporalAccessorValidator<NotAfter, MonthDay> {
+    public static class ForMonthDay extends TemporalAccessorValidator<NotAfter, MonthDay> {
 
         /**
          * Creates a new validator.
@@ -151,7 +151,7 @@ public final class NotAfterValidator {
      *
      * @author Rob Spoor
      */
-    public static class ForOffsetDateTime extends AbstractTemporalAccessorValidator<NotAfter, OffsetDateTime> {
+    public static class ForOffsetDateTime extends TemporalAccessorValidator<NotAfter, OffsetDateTime> {
 
         /**
          * Creates a new validator.
@@ -166,7 +166,7 @@ public final class NotAfterValidator {
      *
      * @author Rob Spoor
      */
-    public static class ForOffsetTime extends AbstractTemporalAccessorValidator<NotAfter, OffsetTime> {
+    public static class ForOffsetTime extends TemporalAccessorValidator<NotAfter, OffsetTime> {
 
         /**
          * Creates a new validator.
@@ -181,7 +181,7 @@ public final class NotAfterValidator {
      *
      * @author Rob Spoor
      */
-    public static class ForYear extends AbstractTemporalAccessorValidator<NotAfter, Year> {
+    public static class ForYear extends TemporalAccessorValidator<NotAfter, Year> {
 
         /**
          * Creates a new validator.
@@ -196,7 +196,7 @@ public final class NotAfterValidator {
      *
      * @author Rob Spoor
      */
-    public static class ForYearMonth extends AbstractTemporalAccessorValidator<NotAfter, YearMonth> {
+    public static class ForYearMonth extends TemporalAccessorValidator<NotAfter, YearMonth> {
 
         /**
          * Creates a new validator.
@@ -211,7 +211,7 @@ public final class NotAfterValidator {
      *
      * @author Rob Spoor
      */
-    public static class ForZonedDateTime extends AbstractTemporalAccessorValidator<NotAfter, ZonedDateTime> {
+    public static class ForZonedDateTime extends TemporalAccessorValidator<NotAfter, ZonedDateTime> {
 
         /**
          * Creates a new validator.

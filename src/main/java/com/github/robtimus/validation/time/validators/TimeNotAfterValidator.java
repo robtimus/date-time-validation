@@ -41,14 +41,13 @@ public final class TimeNotAfterValidator {
      *
      * @author Rob Spoor
      */
-    public static class ForDate extends AbstractDatePartValidator<TimeNotAfter, LocalTime> {
+    public static class ForDate extends DatePartValidator<TimeNotAfter, LocalTime> {
 
         /**
          * Creates a new validator.
          */
         public ForDate() {
-            super(TimeNotAfter::moment, nonProvidedZoneId(TimeNotAfter::zoneId), DateTimeValidator::toLocalTime,
-                    new NotAfterValidator.ForLocalTime());
+            super(TimeNotAfter::moment, nonProvidedZoneId(TimeNotAfter::zoneId), ZonedDateTime::toLocalTime, new NotAfterValidator.ForLocalTime());
         }
     }
 
@@ -57,7 +56,7 @@ public final class TimeNotAfterValidator {
      *
      * @author Rob Spoor
      */
-    public static class ForCalendar extends AbstractCalendarPartValidator<TimeNotAfter, LocalTime> {
+    public static class ForCalendar extends CalendarPartValidator<TimeNotAfter, LocalTime> {
 
         /**
          * Creates a new validator.
@@ -72,14 +71,13 @@ public final class TimeNotAfterValidator {
      *
      * @author Rob Spoor
      */
-    public static class ForInstant extends AbstractTemporalAccessorPartValidator<TimeNotAfter, Instant, LocalTime> {
+    public static class ForInstant extends InstantPartValidator<TimeNotAfter, LocalTime> {
 
         /**
          * Creates a new validator.
          */
         public ForInstant() {
-            super(TimeNotAfter::moment, nonProvidedZoneId(TimeNotAfter::zoneId), DateTimeValidator::toLocalTime,
-                    new NotAfterValidator.ForLocalTime());
+            super(TimeNotAfter::moment, nonProvidedZoneId(TimeNotAfter::zoneId), ZonedDateTime::toLocalTime, new NotAfterValidator.ForLocalTime());
         }
     }
 
@@ -88,7 +86,7 @@ public final class TimeNotAfterValidator {
      *
      * @author Rob Spoor
      */
-    public static class ForLocalDateTime extends AbstractTemporalAccessorPartValidator<TimeNotAfter, LocalDateTime, LocalTime> {
+    public static class ForLocalDateTime extends TemporalAccessorPartValidator<TimeNotAfter, LocalDateTime, LocalTime> {
 
         /**
          * Creates a new validator.
@@ -103,13 +101,15 @@ public final class TimeNotAfterValidator {
      *
      * @author Rob Spoor
      */
-    public static class ForOffsetDateTime extends AbstractTemporalAccessorPartValidator<TimeNotAfter, OffsetDateTime, LocalTime> {
+    public static class ForOffsetDateTime extends TemporalAccessorPartValidator<TimeNotAfter, OffsetDateTime, LocalTime> {
 
         /**
          * Creates a new validator.
          */
         public ForOffsetDateTime() {
-            super(TimeNotAfter::moment, TimeNotAfter::zoneId, DateTimeValidator::toLocalTime, new NotAfterValidator.ForLocalTime());
+            super(TimeNotAfter::moment, TimeNotAfter::zoneId,
+                    OffsetDateTime::toLocalTime, OffsetDateTime::atZoneSameInstant, ZonedDateTime::toLocalTime,
+                    new NotAfterValidator.ForLocalTime());
         }
     }
 
@@ -118,13 +118,13 @@ public final class TimeNotAfterValidator {
      *
      * @author Rob Spoor
      */
-    public static class ForZonedDateTime extends AbstractTemporalAccessorPartValidator<TimeNotAfter, ZonedDateTime, LocalTime> {
+    public static class ForZonedDateTime extends ZonedDateTimePartValidator<TimeNotAfter, LocalTime> {
 
         /**
          * Creates a new validator.
          */
         public ForZonedDateTime() {
-            super(TimeNotAfter::moment, TimeNotAfter::zoneId, DateTimeValidator::toLocalTime, new NotAfterValidator.ForLocalTime());
+            super(TimeNotAfter::moment, TimeNotAfter::zoneId, ZonedDateTime::toLocalTime, new NotAfterValidator.ForLocalTime());
         }
     }
 }

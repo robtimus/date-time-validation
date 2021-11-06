@@ -1,5 +1,5 @@
 /*
- * AbstractTemporalAccessorValidator.java
+ * TemporalAccessorValidator.java
  * Copyright 2021 Rob Spoor
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -33,7 +33,7 @@ import javax.validation.ConstraintValidatorContext;
  * @param <A> The constraint annotation type.
  * @param <T> The {@link TemporalAccessor} type to validate.
  */
-public abstract class AbstractTemporalAccessorValidator<A extends Annotation, T extends TemporalAccessor> extends DateTimeValidator<A, T> {
+public abstract class TemporalAccessorValidator<A extends Annotation, T extends TemporalAccessor> extends DateTimeValidator<A, T> {
 
     private final Function<A, String> momentExtractor;
     private final Function<String, T> momentParser;
@@ -54,7 +54,7 @@ public abstract class AbstractTemporalAccessorValidator<A extends Annotation, T 
      * @param validPredicate A predicate that determines whether or not a value (the first argument) is valid compared to a specific moment
      *                          (the second argument).
      */
-    protected AbstractTemporalAccessorValidator(Function<A, String> momentExtractor, Function<String, T> momentParser,
+    protected TemporalAccessorValidator(Function<A, String> momentExtractor, Function<String, T> momentParser,
             Function<Clock, T> momentCreator, BiPredicate<T, T> validPredicate) {
 
         this.momentExtractor = momentExtractor;
@@ -76,7 +76,7 @@ public abstract class AbstractTemporalAccessorValidator<A extends Annotation, T 
      * @param validPredicate A predicate that determines whether or not a value (the first argument) is valid compared to a specific moment
      *                          (the second argument).
      */
-    protected AbstractTemporalAccessorValidator(Function<A, String> momentExtractor, Function<String, T> momentParser,
+    protected TemporalAccessorValidator(Function<A, String> momentExtractor, Function<String, T> momentParser,
             Function<Clock, T> momentCreator,
             Function<A, String> durationExtractor, BiFunction<T, TemporalAmount, T> durationApplier,
             BiPredicate<T, T> validPredicate) {
