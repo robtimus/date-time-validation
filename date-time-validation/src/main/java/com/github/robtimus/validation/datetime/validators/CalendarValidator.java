@@ -50,7 +50,9 @@ public abstract class CalendarValidator<A extends Annotation> extends DateTimeVa
      * @param validPredicate A predicate that determines whether or not a value (the first argument) is valid compared to a specific moment
      *                          (the second argument).
      */
-    protected CalendarValidator(Function<A, String> momentExtractor, BiPredicate<ZonedDateTime, ZonedDateTime> validPredicate) {
+    protected CalendarValidator(Function<A, String> momentExtractor,
+            BiPredicate<ZonedDateTime, ZonedDateTime> validPredicate) {
+
         this.momentExtractor = momentExtractor;
         this.durationExtractor = null;
         this.durationApplier = null;

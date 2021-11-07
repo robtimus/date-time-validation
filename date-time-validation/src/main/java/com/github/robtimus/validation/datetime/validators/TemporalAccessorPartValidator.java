@@ -92,9 +92,7 @@ public abstract class TemporalAccessorPartValidator<A extends Annotation, T exte
      */
     protected TemporalAccessorPartValidator(Function<A, String> momentExtractor,
             Function<A, String> zoneIdExtractor,
-            Function<T, P> partExtractor,
-            BiFunction<T, ZoneId, ZonedDateTime> zoneIdApplier,
-            Function<ZonedDateTime, P> zonedDateTimePartExtractor,
+            Function<T, P> partExtractor, BiFunction<T, ZoneId, ZonedDateTime> zoneIdApplier, Function<ZonedDateTime, P> zonedDateTimePartExtractor,
             TemporalAccessorValidator<?, P> partValidator) {
 
         this(momentExtractor,
@@ -176,9 +174,7 @@ public abstract class TemporalAccessorPartValidator<A extends Annotation, T exte
     protected TemporalAccessorPartValidator(Function<A, String> momentExtractor,
             Function<A, String> durationExtractor,
             Function<A, String> zoneIdExtractor,
-            Function<T, P> partExtractor,
-            BiFunction<T, ZoneId, ZonedDateTime> zoneIdApplier,
-            Function<ZonedDateTime, P> zonedDateTimePartExtractor,
+            Function<T, P> partExtractor, BiFunction<T, ZoneId, ZonedDateTime> zoneIdApplier, Function<ZonedDateTime, P> zonedDateTimePartExtractor,
             TemporalAccessorValidator<?, P> partValidator) {
 
         this(momentExtractor,

@@ -49,7 +49,9 @@ public abstract class DateValidator<A extends Annotation> extends DateTimeValida
      * @param validPredicate A predicate that determines whether or not a value (the first argument) is valid compared to a specific moment
      *                          (the second argument).
      */
-    protected DateValidator(Function<A, String> momentExtractor, BiPredicate<Instant, Instant> validPredicate) {
+    protected DateValidator(Function<A, String> momentExtractor,
+            BiPredicate<Instant, Instant> validPredicate) {
+
         this.momentExtractor = momentExtractor;
         this.durationExtractor = null;
         this.durationApplier = null;

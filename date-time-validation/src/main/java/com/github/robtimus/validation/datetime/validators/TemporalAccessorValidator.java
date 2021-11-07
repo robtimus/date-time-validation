@@ -54,8 +54,8 @@ public abstract class TemporalAccessorValidator<A extends Annotation, T extends 
      * @param validPredicate A predicate that determines whether or not a value (the first argument) is valid compared to a specific moment
      *                          (the second argument).
      */
-    protected TemporalAccessorValidator(Function<A, String> momentExtractor, Function<String, T> momentParser,
-            Function<Clock, T> momentCreator, BiPredicate<T, T> validPredicate) {
+    protected TemporalAccessorValidator(Function<A, String> momentExtractor, Function<String, T> momentParser, Function<Clock, T> momentCreator,
+            BiPredicate<T, T> validPredicate) {
 
         this.momentExtractor = momentExtractor;
         this.momentParser = momentParser;
@@ -76,8 +76,7 @@ public abstract class TemporalAccessorValidator<A extends Annotation, T extends 
      * @param validPredicate A predicate that determines whether or not a value (the first argument) is valid compared to a specific moment
      *                          (the second argument).
      */
-    protected TemporalAccessorValidator(Function<A, String> momentExtractor, Function<String, T> momentParser,
-            Function<Clock, T> momentCreator,
+    protected TemporalAccessorValidator(Function<A, String> momentExtractor, Function<String, T> momentParser, Function<Clock, T> momentCreator,
             Function<A, String> durationExtractor, BiFunction<T, TemporalAmount, T> durationApplier,
             BiPredicate<T, T> validPredicate) {
 

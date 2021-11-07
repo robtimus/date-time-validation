@@ -93,9 +93,7 @@ public abstract class TemporalAccessorEnumValidator<A extends Annotation, T exte
      */
     protected TemporalAccessorEnumValidator(Function<A, Set<E>> allowedValuesExtractor,
             Function<A, String> zoneIdExtractor,
-            Function<T, E> partExtractor,
-            BiFunction<T, ZoneId, ZonedDateTime> zoneIdApplier,
-            Function<ZonedDateTime, E> zonedDateTimePartExtractor) {
+            Function<T, E> partExtractor, BiFunction<T, ZoneId, ZonedDateTime> zoneIdApplier, Function<ZonedDateTime, E> zonedDateTimePartExtractor) {
 
         this(allowedValuesExtractor,
                 zoneIdExtractor,
