@@ -17,11 +17,8 @@
 
 package com.github.robtimus.validation.datetime.dayofweek;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.instanceOf;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 import java.time.DayOfWeek;
 import java.time.Instant;
 import java.time.LocalDate;
@@ -35,7 +32,6 @@ import java.util.GregorianCalendar;
 import java.util.List;
 import javax.validation.ClockProvider;
 import javax.validation.ConstraintViolation;
-import javax.validation.ValidationException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -45,18 +41,10 @@ class DayOfWeekAfterTest extends AbstractConstraintTest {
 
     @Nested
     @DisplayName("Date")
-    class ForDate {
+    class ForDate extends AbstractNonProvidedZoneIdTest<Date> {
 
-        @Test
-        @DisplayName("zoneId 'provided' not allowed")
-        void testZoneIdProvidedNotAllowed() {
-            Date value = new Date();
-            ValidationException exception = assertThrows(ValidationException.class,
-                    () -> validate(() -> null, TestClassWithProvidedZoneId.class, "date", value));
-
-            Throwable cause = exception.getCause();
-            assertThat(cause, instanceOf(IllegalStateException.class));
-            assertEquals("zoneId should not be 'provided'", cause.getMessage());
+        ForDate() {
+            super(TestClassWithProvidedZoneId.class, "date", new Date());
         }
 
         @Nested
@@ -115,30 +103,10 @@ class DayOfWeekAfterTest extends AbstractConstraintTest {
 
     @Nested
     @DisplayName("DayOfWeek")
-    class ForDayOfWeek {
+    class ForDayOfWeek extends AbstractSystemOnlyZoneIdTest<DayOfWeek> {
 
-        @Test
-        @DisplayName("zoneId 'provided' not allowed")
-        void testZoneIdProvidedNotAllowed() {
-            DayOfWeek value = DayOfWeek.MONDAY;
-            ValidationException exception = assertThrows(ValidationException.class,
-                    () -> validate(() -> null, TestClassWithProvidedZoneId.class, "dayOfWeek", value));
-
-            Throwable cause = exception.getCause();
-            assertThat(cause, instanceOf(IllegalStateException.class));
-            assertEquals("zoneId should be 'system', is 'provided'", cause.getMessage());
-        }
-
-        @Test
-        @DisplayName("explicit zoneId not allowed")
-        void testZoneIdNotAllowed() {
-            DayOfWeek value = DayOfWeek.MONDAY;
-            ValidationException exception = assertThrows(ValidationException.class,
-                    () -> validate(() -> null, TestClassWithZoneId.class, "dayOfWeek", value));
-
-            Throwable cause = exception.getCause();
-            assertThat(cause, instanceOf(IllegalStateException.class));
-            assertEquals("zoneId should be 'system', is 'UTC'", cause.getMessage());
+        ForDayOfWeek() {
+            super(TestClassWithProvidedZoneId.class, TestClassWithZoneId.class, "dayOfWeek", DayOfWeek.MONDAY);
         }
 
         @Nested
@@ -157,18 +125,10 @@ class DayOfWeekAfterTest extends AbstractConstraintTest {
 
     @Nested
     @DisplayName("Instant")
-    class ForInstant {
+    class ForInstant extends AbstractNonProvidedZoneIdTest<Instant> {
 
-        @Test
-        @DisplayName("zoneId 'provided' not allowed")
-        void testZoneIdProvidedNotAllowed() {
-            Instant value = Instant.now();
-            ValidationException exception = assertThrows(ValidationException.class,
-                    () -> validate(() -> null, TestClassWithProvidedZoneId.class, "instant", value));
-
-            Throwable cause = exception.getCause();
-            assertThat(cause, instanceOf(IllegalStateException.class));
-            assertEquals("zoneId should not be 'provided'", cause.getMessage());
+        ForInstant() {
+            super(TestClassWithProvidedZoneId.class, "instant", Instant.now());
         }
 
         @Nested
@@ -186,30 +146,10 @@ class DayOfWeekAfterTest extends AbstractConstraintTest {
 
     @Nested
     @DisplayName("LocalDate")
-    class ForLocalDate {
+    class ForLocalDate extends AbstractSystemOnlyZoneIdTest<LocalDate> {
 
-        @Test
-        @DisplayName("zoneId 'provided' not allowed")
-        void testZoneIdProvidedNotAllowed() {
-            LocalDate value = LocalDate.now();
-            ValidationException exception = assertThrows(ValidationException.class,
-                    () -> validate(() -> null, TestClassWithProvidedZoneId.class, "localDate", value));
-
-            Throwable cause = exception.getCause();
-            assertThat(cause, instanceOf(IllegalStateException.class));
-            assertEquals("zoneId should be 'system', is 'provided'", cause.getMessage());
-        }
-
-        @Test
-        @DisplayName("explicit zoneId not allowed")
-        void testZoneIdNotAllowed() {
-            LocalDate value = LocalDate.now();
-            ValidationException exception = assertThrows(ValidationException.class,
-                    () -> validate(() -> null, TestClassWithZoneId.class, "localDate", value));
-
-            Throwable cause = exception.getCause();
-            assertThat(cause, instanceOf(IllegalStateException.class));
-            assertEquals("zoneId should be 'system', is 'UTC'", cause.getMessage());
+        ForLocalDate() {
+            super(TestClassWithProvidedZoneId.class, TestClassWithZoneId.class, "localDate", LocalDate.now());
         }
 
         @Nested
@@ -227,30 +167,10 @@ class DayOfWeekAfterTest extends AbstractConstraintTest {
 
     @Nested
     @DisplayName("LocalDateTime")
-    class ForLocalDateTime {
+    class ForLocalDateTime extends AbstractSystemOnlyZoneIdTest<LocalDateTime> {
 
-        @Test
-        @DisplayName("zoneId 'provided' not allowed")
-        void testZoneIdProvidedNotAllowed() {
-            LocalDateTime value = LocalDateTime.now();
-            ValidationException exception = assertThrows(ValidationException.class,
-                    () -> validate(() -> null, TestClassWithProvidedZoneId.class, "localDateTime", value));
-
-            Throwable cause = exception.getCause();
-            assertThat(cause, instanceOf(IllegalStateException.class));
-            assertEquals("zoneId should be 'system', is 'provided'", cause.getMessage());
-        }
-
-        @Test
-        @DisplayName("explicit zoneId not allowed")
-        void testZoneIdNotAllowed() {
-            LocalDateTime value = LocalDateTime.now();
-            ValidationException exception = assertThrows(ValidationException.class,
-                    () -> validate(() -> null, TestClassWithZoneId.class, "localDateTime", value));
-
-            Throwable cause = exception.getCause();
-            assertThat(cause, instanceOf(IllegalStateException.class));
-            assertEquals("zoneId should be 'system', is 'UTC'", cause.getMessage());
+        ForLocalDateTime() {
+            super(TestClassWithProvidedZoneId.class, TestClassWithZoneId.class, "localDateTime", LocalDateTime.now());
         }
 
         @Nested

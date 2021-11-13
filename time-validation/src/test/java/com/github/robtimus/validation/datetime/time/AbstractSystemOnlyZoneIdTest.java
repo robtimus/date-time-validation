@@ -17,9 +17,8 @@
 
 package com.github.robtimus.validation.datetime.time;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.instanceOf;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertInstanceOf;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import javax.validation.ValidationException;
 import org.junit.jupiter.api.DisplayName;
@@ -47,7 +46,7 @@ abstract class AbstractSystemOnlyZoneIdTest<T> extends AbstractConstraintTest {
                 () -> validate(() -> null, beanTypeWithProvidedZoneId, propertyName, value));
 
         Throwable cause = exception.getCause();
-        assertThat(cause, instanceOf(IllegalStateException.class));
+        assertInstanceOf(IllegalStateException.class, cause);
         assertEquals("zoneId should be 'system', is 'provided'", cause.getMessage());
     }
 
@@ -57,7 +56,7 @@ abstract class AbstractSystemOnlyZoneIdTest<T> extends AbstractConstraintTest {
         ValidationException exception = assertThrows(ValidationException.class, () -> validate(() -> null, beanTypeWithZoneId, propertyName, value));
 
         Throwable cause = exception.getCause();
-        assertThat(cause, instanceOf(IllegalStateException.class));
+        assertInstanceOf(IllegalStateException.class, cause);
         assertEquals("zoneId should be 'system', is 'UTC'", cause.getMessage());
     }
 }

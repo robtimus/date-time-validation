@@ -17,9 +17,8 @@
 
 package com.github.robtimus.validation.datetime.date;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.instanceOf;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertInstanceOf;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import javax.validation.ValidationException;
 import org.junit.jupiter.api.DisplayName;
@@ -44,7 +43,7 @@ abstract class AbstractNonProvidedZoneIdTest<T> extends AbstractConstraintTest {
         ValidationException exception = assertThrows(ValidationException.class, () -> validate(() -> null, beanType, propertyName, value));
 
         Throwable cause = exception.getCause();
-        assertThat(cause, instanceOf(IllegalStateException.class));
+        assertInstanceOf(IllegalStateException.class, cause);
         assertEquals("zoneId should not be 'provided'", cause.getMessage());
     }
 }

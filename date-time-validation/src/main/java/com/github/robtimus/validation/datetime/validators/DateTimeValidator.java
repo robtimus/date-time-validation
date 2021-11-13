@@ -71,12 +71,12 @@ public abstract class DateTimeValidator<A extends Annotation, T> implements Cons
     protected static ZoneId toZoneId(String text) {
         Objects.requireNonNull(text);
         switch (text) {
-        case SYSTEM_ZONE_ID:
-            return ZoneId.systemDefault();
-        case PROVIDED_ZONE_ID:
-            return null;
-        default:
-            return ZoneId.of(text);
+            case SYSTEM_ZONE_ID:
+                return ZoneId.systemDefault();
+            case PROVIDED_ZONE_ID:
+                return null;
+            default:
+                return ZoneId.of(text);
         }
     }
 

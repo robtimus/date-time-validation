@@ -17,11 +17,8 @@
 
 package com.github.robtimus.validation.datetime.dayofweek;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.instanceOf;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 import java.time.DayOfWeek;
 import java.time.Instant;
 import java.time.LocalDate;
@@ -35,7 +32,6 @@ import java.util.GregorianCalendar;
 import java.util.List;
 import javax.validation.ClockProvider;
 import javax.validation.ConstraintViolation;
-import javax.validation.ValidationException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -178,19 +174,6 @@ class DayOfWeekNotBeforeTest extends AbstractConstraintTest {
 
         ForLocalDate() {
             super(TestClassWithProvidedZoneId.class, TestClassWithZoneId.class, "localDate", LocalDate.now());
-        }
-
-        @Override
-        @Test
-        @DisplayName("explicit zoneId not allowed")
-        void testZoneIdNotAllowed() {
-            LocalDate value = LocalDate.now();
-            ValidationException exception = assertThrows(ValidationException.class,
-                    () -> validate(() -> null, TestClassWithZoneId.class, "localDate", value));
-
-            Throwable cause = exception.getCause();
-            assertThat(cause, instanceOf(IllegalStateException.class));
-            assertEquals("zoneId should be 'system', is 'UTC'", cause.getMessage());
         }
 
         @Nested
