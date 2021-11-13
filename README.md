@@ -24,6 +24,7 @@ Validation constraints for date/time objects that validate entire values. These 
 | MaxBefore  | object >= moment - duration |
 
 The format of `moment` and `duration` depends on the type to validate:
+
 * For classes from the `java.time` package, `moment` must be valid according to class' `parse` method.
 * For `Date`, `moment` must be valid according to `Instant.parse`.
 * For `Calendar`, `moment` must be valid according to `ZonedDateTime.parse`.
@@ -50,13 +51,14 @@ These annotations apply to the following types:
 | YearMonth           |✅     |✅        |✅        |✅        |✅      |✅         |✅         |✅         |
 | ZonedDateTime       |✅     |✅        |✅        |✅        |✅      |✅         |✅         |✅         |
 
-<sup>1</sup>: `MinAfter`, `MaxAfter`, `MinBefore` and `MaxBefore` cannot be applied to `MonthDay` because (from [MonthDay](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/MonthDay.html)) "it is not possible to define whether February 29th is valid or not without external information". This makes it impossible to apply durations to `MonthDay` moments.
+<sup>1</sup>: `MinAfter`, `MaxAfter`, `MinBefore` and `MaxBefore` cannot be applied to [MonthDay](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/MonthDay.html) because "it is not possible to define whether February 29th is valid or not without external information". This makes it impossible to apply durations to `MonthDay` moments.
 
 ### date-validation
 
 Validation constraints for date/time objects that validate only the date part. These work just like the constraints of the `date-time-validation` module, except it ignores any time part. The `moment` must be valid according to `LocalDate.parse`, and the `duration` may not contain any time elements.
 
 Because the date depends on the time zone, each annotation has an optional `zoneId` parameter. This can have the following values:
+
 * `system` (default): the system time zone, as returned by `ZoneId.systemDefault()`, should be used.
 * `provided`: the time zone or offset information from the actual value should be used.
 * A value that is valid according to `ZoneId.of` for an explicit time zone.
@@ -88,6 +90,7 @@ These annotations apply to the following types:
 Validation constraints for date/time objects that validate only the time part. These work just like the constraints of `date-time-validation` module, except it ignores any date part. The `moment` must be valid according to `LocalTime.parse`, and the `duration` may not contain any date elements.
 
 Because the time depends on the time zone, each annotation has an optional `zoneId` parameter. This can have the following values:
+
 * `system` (default): the system time zone, as returned by `ZoneId.systemDefault()`, should be used.
 * `provided`: the time zone or offset information from the actual value should be used.
 * A value that is valid according to `ZoneId.of` for an explicit time zone.
@@ -130,6 +133,7 @@ Validation constraints for date/time objects that validate only the day of the w
 Note that days of the week are ordered from Monday until Sunday.
 
 Because the date, and therefore also the day of the week, depends on the time zone, each annotation has an optional `zoneId` parameter. This can have the following values:
+
 * `system` (default): the system time zone, as returned by `ZoneId.systemDefault()`, should be used.
 * `provided`: the time zone or offset information from the actual value should be used.
 * A value that is valid according to `ZoneId.of` for an explicit time zone.
@@ -170,6 +174,7 @@ Validation constraints for date/time objects that validate only the month. These
 | MonthIn        | object.month in value |
 
 Because the date, and therefore also the month, depends on the time zone, each annotation has an optional `zoneId` parameter. This can have the following values:
+
 * `system` (default): the system time zone, as returned by `ZoneId.systemDefault()`, should be used.
 * `provided`: the time zone or offset information from the actual value should be used.
 * A value that is valid according to `ZoneId.of` for an explicit time zone.
