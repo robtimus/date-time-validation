@@ -53,6 +53,7 @@
     <module>date-time-validation</module>
     <module>date-validation</module>
     <module>time-validation</module>
+    <module>year-month-validation</module>
     <module>day-of-week-validation</module>
     <module>month-validation</module>
   </modules>
@@ -219,6 +220,10 @@
             <group>
               <title>time-validation</title>
               <packages>com.github.robtimus.validation.datetime.time:com.github.robtimus.validation.datetime.time.*</packages>
+            </group>
+            <group>
+              <title>year-month-validation</title>
+              <packages>com.github.robtimus.validation.datetime.yearmonth:com.github.robtimus.validation.datetime.yearmonth.*</packages>
             </group>
             <group>
               <title>day-of-week-validation</title>

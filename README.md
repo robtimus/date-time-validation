@@ -25,7 +25,7 @@ Validation constraints for date/time objects that validate entire values. These 
 
 The format of `moment` and `duration` depends on the type to validate:
 
-* For classes from the `java.time` package, `moment` must be valid according to class' `parse` method.
+* For classes from the `java.time` package, `moment` must be valid according to the class' `parse` method.
 * For `Date`, `moment` must be valid according to `Instant.parse`.
 * For `Calendar`, `moment` must be valid according to `ZonedDateTime.parse`.
 * `duration` may not contain parts that are not present in the type. For instance, for `LocalDate` `duration` may not contain any time elements, for `LocalTime` it may not contain any date elements, for `YearMonth` it may only contain year and/or month elements, etc.
@@ -71,8 +71,8 @@ These annotations apply to the following types:
 | Calendar                 |✅         |✅            |✅            |✅            |✅          |✅             |✅             |✅             |
 | DayOfWeek                |❌         |❌            |❌            |❌            |❌          |❌             |❌             |❌             |
 | Instant<sup>1</sup>      |✅         |✅            |✅            |✅            |✅          |✅             |✅             |✅             |
-| LocalDate                |❌         |❌            |❌            |❌            |❌          |❌             |❌             |❌             |
-| LocalDateTime<sup>2</sup>|✅         |✅            |✅            |✅            |✅          |✅             |✅             |✅             |
+| LocalDate<sup>2</sup>    |❌         |❌            |❌            |❌            |❌          |❌             |❌             |❌             |
+| LocalDateTime<sup>3</sup>|✅         |✅            |✅            |✅            |✅          |✅             |✅             |✅             |
 | LocalTime                |❌         |❌            |❌            |❌            |❌          |❌             |❌             |❌             |
 | Month                    |❌         |❌            |❌            |❌            |❌          |❌             |❌             |❌             |
 | MonthDay                 |❌         |❌            |❌            |❌            |❌          |❌             |❌             |❌             |
@@ -83,7 +83,8 @@ These annotations apply to the following types:
 | ZonedDateTime            |✅         |✅            |✅            |✅            |✅          |✅             |✅             |✅             |
 
 <sup>1</sup>: because the type has no time zone information, the `zoneId` may not be defined as `provided`.\
-<sup>2</sup>: because no time zone is applicanle for the type, the `zoneId` must be defined as `system`. Since this is the default, the `zoneId` parameter can simply be omitted.
+<sup>2</sup>: can be validated with annotations from `date-time-validation`.\
+<sup>3</sup>: because no time zone is applicanle for the type, the `zoneId` must be defined as `system`. Since this is the default, the `zoneId` parameter can simply be omitted.
 
 ### time-validation
 
@@ -105,17 +106,51 @@ These annotations apply to the following types:
 | Instant<sup>1</sup>      |✅         |✅            |✅            |✅            |✅          |✅             |✅             |✅             |
 | LocalDate                |❌         |❌            |❌            |❌            |❌          |❌             |❌             |❌             |
 | LocalDateTime<sup>2</sup>|✅         |✅            |✅            |✅            |✅          |✅             |✅             |✅             |
-| LocalTime                |❌         |❌            |❌            |❌            |❌          |❌             |❌             |❌             |
+| LocalTime<sup>3</sup>    |❌         |❌            |❌            |❌            |❌          |❌             |❌             |❌             |
 | Month                    |❌         |❌            |❌            |❌            |❌          |❌             |❌             |❌             |
 | MonthDay                 |❌         |❌            |❌            |❌            |❌          |❌             |❌             |❌             |
 | OffsetDateTime           |✅         |✅            |✅            |✅            |✅          |✅             |✅             |✅             |
-| OffsetTime               |❌         |❌            |❌            |❌            |❌          |❌             |❌             |❌             |
+| OffsetTime<sup>3</sup>   |❌         |❌            |❌            |❌            |❌          |❌             |❌             |❌             |
 | Year                     |❌         |❌            |❌            |❌            |❌          |❌             |❌             |❌             |
 | YearMonth                |❌         |❌            |❌            |❌            |❌          |❌             |❌             |❌             |
 | ZonedDateTime            |✅         |✅            |✅            |✅            |✅          |✅             |✅             |✅             |
 
 <sup>1</sup>: because the type has no time zone information, the `zoneId` may not be defined as `provided`.\
-<sup>2</sup>: because no time zone is applicanle for the type, the `zoneId` must be defined as `system`. Since this is the default, the `zoneId` parameter can simply be omitted.
+<sup>2</sup>: because no time zone is applicanle for the type, the `zoneId` must be defined as `system`. Since this is the default, the `zoneId` parameter can simply be omitted.\
+<sup>3</sup>: can be validated with annotations from `date-time-validation`.
+
+### year-month-validation
+
+Validation constraints for date/time objects that validate only the year and month. These work just like the constraints of the `date-time-validation` module, except it ignores the day of the month and any time part. The `moment` must be valid according to `YearMonth.parse`, and the `duration` may only contain year and month elements.
+
+Because the date, and therefore also the year-month, depends on the time zone, each annotation has an optional `zoneId` parameter. This can have the following values:
+
+* `system` (default): the system time zone, as returned by `ZoneId.systemDefault()`, should be used.
+* `provided`: the time zone or offset information from the actual value should be used.
+* A value that is valid according to `ZoneId.of` for an explicit time zone.
+
+These annotations apply to the following types:
+
+| Type                     | YearMonthAfter | YearMonthNotAfter | YearMonthBefore | YearMonthNotBefore | YearMonthIs | YearMonthIn |
+|--------------------------|:--------------:|:-----------------:|:---------------:|:------------------:|:-----------:|:-----------:|
+| Date<sup>1</sup>         |✅              |✅                 |✅               |✅                  |✅           |✅           |
+| Calendar                 |✅              |✅                 |✅               |✅                  |✅           |✅           |
+| DayOfWeek                |❌              |❌                 |❌               |❌                  |❌           |❌           |
+| Instant<sup>1</sup>      |✅              |✅                 |✅               |✅                  |✅           |✅           |
+| LocalDate<sup>2</sup>    |✅              |✅                 |✅               |✅                  |✅           |✅           |
+| LocalDateTime<sup>2</sup>|✅              |✅                 |✅               |✅                  |✅           |✅           |
+| LocalTime                |❌              |❌                 |❌               |❌                  |❌           |❌           |
+| Month                    |❌              |❌                 |❌               |❌                  |❌           |❌           |
+| MonthDay                 |❌              |❌                 |❌               |❌                  |❌           |❌           |
+| OffsetDateTime           |✅              |✅                 |✅               |✅                  |✅           |✅           |
+| OffsetTime               |❌              |❌                 |❌               |❌                  |❌           |❌           |
+| Year                     |❌              |❌                 |❌               |❌                  |❌           |❌           |
+| YearMonth<sup>3</sup>    |❌              |❌                 |❌               |❌                  |❌           |❌           |
+| ZonedDateTime            |✅              |✅                 |✅               |✅                  |✅           |✅           |
+
+<sup>1</sup>: because the type has no time zone information, the `zoneId` may not be defined as `provided`.\
+<sup>2</sup>: because no time zone is applicanle for the type, the `zoneId` must be defined as `system`. Since this is the default, the `zoneId` parameter can simply be omitted.\
+<sup>3</sup>: can be validated with annotations from `date-time-validation`.
 
 ### day-of-week-validation
 
@@ -201,11 +236,16 @@ These annotations apply to the following types:
 <sup>1</sup>: because the type has no time zone information, the `zoneId` may not be defined as `provided`.\
 <sup>2</sup>: because no time zone is applicanle for the type, the `zoneId` must be defined as `system`. Since this is the default, the `zoneId` parameter can simply be omitted.
 
+#### year-month-validation vs month-validation
+
+`year-month-validation` validates the combination of the year and the month. This allows it to be used for cases like credit card validation. `month-validation` on the other hand ignores the year.
+
 ## Examples
 
-To specify that a date of birth, specified as a `LocalDate`, must be at least 18 years in the past:
+To specify that a date of birth must be at least 18 years in the past:
 ```
 @MinBefore(moment = "now", duration = "P18Y")
+LocalDate dateOfBirth;
 ```
 
 To specify that a date/time object like `ZonedDateTime` must be on a weekday between 9:00 and 18:00:
@@ -216,4 +256,23 @@ To specify that a date/time object like `ZonedDateTime` must be on a weekday bet
 //@DayOfWeekBefore(SATURDAY)
 @TimeNotBefore(moment = "09:00:00")
 @TimeNotAfter(moment = "18:00:00")
+ZonedDateTime appointmentDateTime;
+```
+
+To specify that a credit card must not have expired:
+```
+@NotBefore(moment = "now")
+YearMonth expiryDate;
+```
+
+To specify that a credit card must not expire within the next 6 months:
+```
+@MinAfter(duration = "P6M", moment = "now")
+YearMonth expiryDate;
+```
+
+To specify that a date must be next month or later, where the day of the month is irrelevant:
+```
+@YearMonthMinAfter(duration = "P1M", moment = "now")
+LocalDate date;
 ```
