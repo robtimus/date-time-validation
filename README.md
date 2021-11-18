@@ -131,22 +131,22 @@ Because the date, and therefore also the year-month, depends on the time zone, e
 
 These annotations apply to the following types:
 
-| Type                     | YearMonthAfter | YearMonthNotAfter | YearMonthBefore | YearMonthNotBefore | YearMonthIs | YearMonthIn |
-|--------------------------|:--------------:|:-----------------:|:---------------:|:------------------:|:-----------:|:-----------:|
-| Date<sup>1</sup>         |✅              |✅                 |✅               |✅                  |✅           |✅           |
-| Calendar                 |✅              |✅                 |✅               |✅                  |✅           |✅           |
-| DayOfWeek                |❌              |❌                 |❌               |❌                  |❌           |❌           |
-| Instant<sup>1</sup>      |✅              |✅                 |✅               |✅                  |✅           |✅           |
-| LocalDate<sup>2</sup>    |✅              |✅                 |✅               |✅                  |✅           |✅           |
-| LocalDateTime<sup>2</sup>|✅              |✅                 |✅               |✅                  |✅           |✅           |
-| LocalTime                |❌              |❌                 |❌               |❌                  |❌           |❌           |
-| Month                    |❌              |❌                 |❌               |❌                  |❌           |❌           |
-| MonthDay                 |❌              |❌                 |❌               |❌                  |❌           |❌           |
-| OffsetDateTime           |✅              |✅                 |✅               |✅                  |✅           |✅           |
-| OffsetTime               |❌              |❌                 |❌               |❌                  |❌           |❌           |
-| Year                     |❌              |❌                 |❌               |❌                  |❌           |❌           |
-| YearMonth<sup>3</sup>    |❌              |❌                 |❌               |❌                  |❌           |❌           |
-| ZonedDateTime            |✅              |✅                 |✅               |✅                  |✅           |✅           |
+| Type                     | YearMonthAfter | YearMonthNotAfter | YearMonthMinAfter | YearMonthMaxAfter | YearMonthBefore | YearMonthNotBefore | YearMonthMinBefore | YearMonthMaxBefore |
+|--------------------------|:--------------:|:-----------------:|:-----------------:|:-----------------:|:---------------:|:------------------:|:-------------------:|:-----------------:|
+| Date<sup>1</sup>         |✅              |✅                 |✅                 |✅                 |✅               |✅                  |✅                  |✅                  |
+| Calendar                 |✅              |✅                 |✅                 |✅                 |✅               |✅                  |✅                  |✅                  |
+| DayOfWeek                |❌              |❌                 |❌                 |❌                 |❌               |❌                  |❌                  |❌                  |
+| Instant<sup>1</sup>      |✅              |✅                 |✅                 |✅                 |✅               |✅                  |✅                  |✅                  |
+| LocalDate<sup>2</sup>    |✅              |✅                 |✅                 |✅                 |✅               |✅                  |✅                  |✅                  |
+| LocalDateTime<sup>2</sup>|✅              |✅                 |✅                 |✅                 |✅               |✅                  |✅                  |✅                  |
+| LocalTime                |❌              |❌                 |❌                 |❌                 |❌               |❌                  |❌                  |❌                  |
+| Month                    |❌              |❌                 |❌                 |❌                 |❌               |❌                  |❌                  |❌                  |
+| MonthDay                 |❌              |❌                 |❌                 |❌                 |❌               |❌                  |❌                  |❌                  |
+| OffsetDateTime           |✅              |✅                 |✅                 |✅                 |✅               |✅                  |✅                  |✅                  |
+| OffsetTime               |❌              |❌                 |❌                 |❌                 |❌               |❌                  |❌                  |❌                  |
+| Year                     |❌              |❌                 |❌                 |❌                 |❌               |❌                  |❌                  |❌                  |
+| YearMonth<sup>3</sup>    |❌              |❌                 |❌                 |❌                 |❌               |❌                  |❌                  |❌                  |
+| ZonedDateTime            |✅              |✅                 |✅                 |✅                 |✅               |✅                  |✅                  |✅                  |
 
 <sup>1</sup>: because the type has no time zone information, the `zoneId` may not be defined as `provided`.\
 <sup>2</sup>: because no time zone is applicanle for the type, the `zoneId` must be defined as `system`. Since this is the default, the `zoneId` parameter can simply be omitted.\
@@ -177,20 +177,20 @@ These annotations apply to the following types:
 
 | Type                     | DayOfWeekAfter | DayOfWeekNotAfter | DayOfWeekBefore | DayOfWeekNotBefore | DayOfWeekIs | DayOfWeekIn |
 |--------------------------|:--------------:|:-----------------:|:---------------:|:------------------:|:-----------:|:-----------:|
-| Date<sup>1</sup>         |✅              |✅                 |✅               |✅                  |✅           |✅             |
-| Calendar                 |✅              |✅                 |✅               |✅                  |✅           |✅             |
-| DayOfWeek<sup>2</sup>    |✅              |✅                 |✅               |✅                  |✅           |✅             |
-| Instant<sup>1</sup>      |✅              |✅                 |✅               |✅                  |✅           |✅             |
-| LocalDate<sup>2</sup>    |✅              |✅                 |✅               |✅                  |✅           |✅             |
-| LocalDateTime<sup>2</sup>|✅              |✅                 |✅               |✅                  |✅           |✅             |
-| LocalTime                |❌              |❌                 |❌               |❌                  |❌           |❌             |
-| Month                    |❌              |❌                 |❌               |❌                  |❌           |❌             |
-| MonthDay                 |❌              |❌                 |❌               |❌                  |❌           |❌             |
-| OffsetDateTime           |✅              |✅                 |✅               |✅                  |✅           |✅             |
-| OffsetTime               |❌              |❌                 |❌               |❌                  |❌           |❌             |
-| Year                     |❌              |❌                 |❌               |❌                  |❌           |❌             |
-| YearMonth                |❌              |❌                 |❌               |❌                  |❌           |❌             |
-| ZonedDateTime            |✅              |✅                 |✅               |✅                  |✅           |✅             |
+| Date<sup>1</sup>         |✅              |✅                 |✅               |✅                  |✅           |✅           |
+| Calendar                 |✅              |✅                 |✅               |✅                  |✅           |✅           |
+| DayOfWeek<sup>2</sup>    |✅              |✅                 |✅               |✅                  |✅           |✅           |
+| Instant<sup>1</sup>      |✅              |✅                 |✅               |✅                  |✅           |✅           |
+| LocalDate<sup>2</sup>    |✅              |✅                 |✅               |✅                  |✅           |✅           |
+| LocalDateTime<sup>2</sup>|✅              |✅                 |✅               |✅                  |✅           |✅           |
+| LocalTime                |❌              |❌                 |❌               |❌                  |❌           |❌           |
+| Month                    |❌              |❌                 |❌               |❌                  |❌           |❌           |
+| MonthDay                 |❌              |❌                 |❌               |❌                  |❌           |❌           |
+| OffsetDateTime           |✅              |✅                 |✅               |✅                  |✅           |✅           |
+| OffsetTime               |❌              |❌                 |❌               |❌                  |❌           |❌           |
+| Year                     |❌              |❌                 |❌               |❌                  |❌           |❌           |
+| YearMonth                |❌              |❌                 |❌               |❌                  |❌           |❌           |
+| ZonedDateTime            |✅              |✅                 |✅               |✅                  |✅           |✅           |
 
 <sup>1</sup>: because the type has no time zone information, the `zoneId` may not be defined as `provided`.\
 <sup>2</sup>: because no time zone is applicanle for the type, the `zoneId` must be defined as `system`. Since this is the default, the `zoneId` parameter can simply be omitted.
