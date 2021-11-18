@@ -15,13 +15,10 @@
  * limitations under the License.
  */
 
-package com.github.robtimus.validation.datetime.validators;
+package com.github.robtimus.validation.datetime.core;
 
 import java.time.Duration;
-import java.time.Instant;
 import java.time.Period;
-import java.time.ZoneId;
-import java.time.ZonedDateTime;
 import java.time.temporal.Temporal;
 import java.time.temporal.TemporalAmount;
 import java.time.temporal.TemporalUnit;
@@ -73,23 +70,5 @@ final class ISODuration implements TemporalAmount {
         Period period = Period.parse(text.substring(0, timeIndex));
         Duration duration = Duration.parse(text.substring(0, periodIndex + 1) + text.substring(timeIndex));
         return new ISODuration(period, duration);
-    }
-
-    static Instant plus(Instant instant, TemporalAmount amount) {
-        if (amount instanceof Duration) {
-            return instant.plus(amount);
-        }
-        ZonedDateTime zonedDateTime = ZonedDateTime.ofInstant(instant, ZoneId.systemDefault());
-        zonedDateTime = zonedDateTime.plus(amount);
-        return zonedDateTime.toInstant();
-    }
-
-    static Instant minus(Instant instant, TemporalAmount amount) {
-        if (amount instanceof Duration) {
-            return instant.minus(amount);
-        }
-        ZonedDateTime zonedDateTime = ZonedDateTime.ofInstant(instant, ZoneId.systemDefault());
-        zonedDateTime = zonedDateTime.minus(amount);
-        return zonedDateTime.toInstant();
     }
 }

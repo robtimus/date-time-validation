@@ -25,12 +25,9 @@ import java.time.YearMonth;
 import java.time.ZonedDateTime;
 import java.util.Calendar;
 import java.util.Date;
-import com.github.robtimus.validation.datetime.validators.CalendarPartValidator;
-import com.github.robtimus.validation.datetime.validators.DatePartValidator;
-import com.github.robtimus.validation.datetime.validators.InstantPartValidator;
-import com.github.robtimus.validation.datetime.validators.MaxAfterValidator;
-import com.github.robtimus.validation.datetime.validators.TemporalAccessorPartValidator;
-import com.github.robtimus.validation.datetime.validators.ZonedDateTimePartValidator;
+import com.github.robtimus.validation.datetime.core.CalendarValidator;
+import com.github.robtimus.validation.datetime.core.DateValidator;
+import com.github.robtimus.validation.datetime.core.MomentPartValidator;
 import com.github.robtimus.validation.datetime.yearmonth.YearMonthMaxAfter;
 
 /**
@@ -48,14 +45,13 @@ public final class YearMonthMaxAfterValidator {
      *
      * @author Rob Spoor
      */
-    public static class ForDate extends DatePartValidator<YearMonthMaxAfter, YearMonth> {
+    public static class ForDate extends DateValidator<YearMonthMaxAfter> {
 
         /**
          * Creates a new validator.
          */
         public ForDate() {
-            super(YearMonthMaxAfter::moment, YearMonthMaxAfter::duration, nonProvidedZoneId(YearMonthMaxAfter::zoneId), YearMonth::from,
-                    new MaxAfterValidator.ForYearMonth());
+            super(new ForInstant());
         }
     }
 
@@ -64,14 +60,13 @@ public final class YearMonthMaxAfterValidator {
      *
      * @author Rob Spoor
      */
-    public static class ForCalendar extends CalendarPartValidator<YearMonthMaxAfter, YearMonth> {
+    public static class ForCalendar extends CalendarValidator<YearMonthMaxAfter> {
 
         /**
          * Creates a new validator.
          */
         public ForCalendar() {
-            super(YearMonthMaxAfter::moment, YearMonthMaxAfter::duration, YearMonthMaxAfter::zoneId, YearMonth::from,
-                    new MaxAfterValidator.ForYearMonth());
+            super(new ForZonedDateTime());
         }
     }
 
@@ -80,14 +75,14 @@ public final class YearMonthMaxAfterValidator {
      *
      * @author Rob Spoor
      */
-    public static class ForInstant extends InstantPartValidator<YearMonthMaxAfter, YearMonth> {
+    public static class ForInstant extends MomentPartValidator.ForInstant<YearMonthMaxAfter, YearMonth> {
 
         /**
          * Creates a new validator.
          */
         public ForInstant() {
-            super(YearMonthMaxAfter::moment, YearMonthMaxAfter::duration, nonProvidedZoneId(YearMonthMaxAfter::zoneId), YearMonth::from,
-                    new MaxAfterValidator.ForYearMonth());
+            super(YearMonthMaxAfter::moment, YearMonth::parse, YearMonth::now, YearMonthMaxAfter::duration, YearMonth::plus,
+                    YearMonthMaxAfter::zoneId, YearMonth::from, not(YearMonth::isAfter));
         }
     }
 
@@ -96,14 +91,14 @@ public final class YearMonthMaxAfterValidator {
      *
      * @author Rob Spoor
      */
-    public static class ForLocalDate extends TemporalAccessorPartValidator<YearMonthMaxAfter, LocalDate, YearMonth> {
+    public static class ForLocalDate extends MomentPartValidator.WithoutZoneId<YearMonthMaxAfter, LocalDate, YearMonth> {
 
         /**
          * Creates a new validator.
          */
         public ForLocalDate() {
-            super(YearMonthMaxAfter::moment, YearMonthMaxAfter::duration, systemOnlyZoneId(YearMonthMaxAfter::zoneId), YearMonth::from,
-                    new MaxAfterValidator.ForYearMonth());
+            super(YearMonthMaxAfter::moment, YearMonth::parse, YearMonth::now, YearMonthMaxAfter::duration, YearMonth::plus,
+                    YearMonthMaxAfter::zoneId, YearMonth::from, not(YearMonth::isAfter));
         }
     }
 
@@ -112,14 +107,14 @@ public final class YearMonthMaxAfterValidator {
      *
      * @author Rob Spoor
      */
-    public static class ForLocalDateTime extends TemporalAccessorPartValidator<YearMonthMaxAfter, LocalDateTime, YearMonth> {
+    public static class ForLocalDateTime extends MomentPartValidator.WithoutZoneId<YearMonthMaxAfter, LocalDateTime, YearMonth> {
 
         /**
          * Creates a new validator.
          */
         public ForLocalDateTime() {
-            super(YearMonthMaxAfter::moment, YearMonthMaxAfter::duration, systemOnlyZoneId(YearMonthMaxAfter::zoneId), YearMonth::from,
-                    new MaxAfterValidator.ForYearMonth());
+            super(YearMonthMaxAfter::moment, YearMonth::parse, YearMonth::now, YearMonthMaxAfter::duration, YearMonth::plus,
+                    YearMonthMaxAfter::zoneId, YearMonth::from, not(YearMonth::isAfter));
         }
     }
 
@@ -128,15 +123,16 @@ public final class YearMonthMaxAfterValidator {
      *
      * @author Rob Spoor
      */
-    public static class ForOffsetDateTime extends TemporalAccessorPartValidator<YearMonthMaxAfter, OffsetDateTime, YearMonth> {
+    public static class ForOffsetDateTime extends MomentPartValidator<YearMonthMaxAfter, OffsetDateTime, YearMonth> {
 
         /**
          * Creates a new validator.
          */
         public ForOffsetDateTime() {
-            super(YearMonthMaxAfter::moment, YearMonthMaxAfter::duration, YearMonthMaxAfter::zoneId,
+            super(YearMonthMaxAfter::moment, YearMonth::parse, YearMonth::now, YearMonthMaxAfter::duration, YearMonth::plus,
+                    YearMonthMaxAfter::zoneId,
                     YearMonth::from, OffsetDateTime::atZoneSameInstant, YearMonth::from,
-                    new MaxAfterValidator.ForYearMonth());
+                    not(YearMonth::isAfter));
         }
     }
 
@@ -145,14 +141,14 @@ public final class YearMonthMaxAfterValidator {
      *
      * @author Rob Spoor
      */
-    public static class ForZonedDateTime extends ZonedDateTimePartValidator<YearMonthMaxAfter, YearMonth> {
+    public static class ForZonedDateTime extends MomentPartValidator.ForZonedDateTime<YearMonthMaxAfter, YearMonth> {
 
         /**
          * Creates a new validator.
          */
         public ForZonedDateTime() {
-            super(YearMonthMaxAfter::moment, YearMonthMaxAfter::duration, YearMonthMaxAfter::zoneId, YearMonth::from,
-                    new MaxAfterValidator.ForYearMonth());
+            super(YearMonthMaxAfter::moment, YearMonth::parse, YearMonth::now, YearMonthMaxAfter::duration, YearMonth::plus,
+                    YearMonthMaxAfter::zoneId, YearMonth::from, not(YearMonth::isAfter));
         }
     }
 }

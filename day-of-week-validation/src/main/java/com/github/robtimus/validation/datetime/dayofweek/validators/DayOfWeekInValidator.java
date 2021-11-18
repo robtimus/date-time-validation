@@ -17,7 +17,6 @@
 
 package com.github.robtimus.validation.datetime.dayofweek.validators;
 
-import java.lang.annotation.Annotation;
 import java.time.DayOfWeek;
 import java.time.Instant;
 import java.time.LocalDate;
@@ -29,13 +28,13 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.EnumSet;
 import java.util.Set;
+import java.util.function.BiPredicate;
 import java.util.function.Function;
+import javax.validation.ConstraintValidatorContext;
+import com.github.robtimus.validation.datetime.core.CalendarValidator;
+import com.github.robtimus.validation.datetime.core.DateValidator;
+import com.github.robtimus.validation.datetime.core.PartValidator;
 import com.github.robtimus.validation.datetime.dayofweek.DayOfWeekIn;
-import com.github.robtimus.validation.datetime.validators.CalendarEnumValidator;
-import com.github.robtimus.validation.datetime.validators.DateEnumValidator;
-import com.github.robtimus.validation.datetime.validators.InstantEnumValidator;
-import com.github.robtimus.validation.datetime.validators.TemporalAccessorEnumValidator;
-import com.github.robtimus.validation.datetime.validators.ZonedDateTimeEnumValidator;
 
 /**
  * Container class for constraint validators for {@link DayOfWeekIn}.
@@ -52,13 +51,13 @@ public final class DayOfWeekInValidator {
      *
      * @author Rob Spoor
      */
-    public static class ForDate extends DateEnumValidator<DayOfWeekIn, DayOfWeek> {
+    public static class ForDate extends DateValidator<DayOfWeekIn> {
 
         /**
          * Creates a new validator.
          */
         public ForDate() {
-            super(allowedDayOfWeeks(DayOfWeekIn::value), nonProvidedZoneId(DayOfWeekIn::zoneId), ZonedDateTime::getDayOfWeek);
+            super(new ForInstant());
         }
     }
 
@@ -67,13 +66,13 @@ public final class DayOfWeekInValidator {
      *
      * @author Rob Spoor
      */
-    public static class ForCalendar extends CalendarEnumValidator<DayOfWeekIn, DayOfWeek> {
+    public static class ForCalendar extends CalendarValidator<DayOfWeekIn> {
 
         /**
          * Creates a new validator.
          */
         public ForCalendar() {
-            super(allowedDayOfWeeks(DayOfWeekIn::value), DayOfWeekIn::zoneId, ZonedDateTime::getDayOfWeek);
+            super(new ForZonedDateTime());
         }
     }
 
@@ -82,15 +81,16 @@ public final class DayOfWeekInValidator {
      *
      * @author Rob Spoor
      */
-    public static class ForDayOfWeek extends TemporalAccessorEnumValidator<DayOfWeekIn, DayOfWeek, DayOfWeek> {
+    public static class ForDayOfWeek extends PartValidator.WithoutZoneId<DayOfWeekIn, DayOfWeek, DayOfWeek> {
 
         /**
          * Creates a new validator.
          */
         @SuppressWarnings("nls")
         public ForDayOfWeek() {
-            super(allowedDayOfWeeks(DayOfWeekIn::value), systemOnlyZoneId(DayOfWeekIn::zoneId), Function.identity());
-            useReplacementMessage("{com.github.robtimus.validation.datetime.dayofweek.DayOfWeekIn.message}", DayOfWeekIn::message,
+            super(DayOfWeekIn::zoneId, Function.identity(), predicate());
+            useReplacementMessageTemplate(DayOfWeekIn::message,
+                    "{com.github.robtimus.validation.datetime.dayofweek.DayOfWeekIn.message}",
                     "{com.github.robtimus.validation.datetime.dayofweek.DayOfWeekIn.message.forDayOfWeek}");
         }
     }
@@ -100,13 +100,13 @@ public final class DayOfWeekInValidator {
      *
      * @author Rob Spoor
      */
-    public static class ForInstant extends InstantEnumValidator<DayOfWeekIn, DayOfWeek> {
+    public static class ForInstant extends PartValidator.ForInstant<DayOfWeekIn, DayOfWeek> {
 
         /**
          * Creates a new validator.
          */
         public ForInstant() {
-            super(allowedDayOfWeeks(DayOfWeekIn::value), nonProvidedZoneId(DayOfWeekIn::zoneId), ZonedDateTime::getDayOfWeek);
+            super(DayOfWeekIn::zoneId, ZonedDateTime::getDayOfWeek, predicate());
         }
     }
 
@@ -115,13 +115,13 @@ public final class DayOfWeekInValidator {
      *
      * @author Rob Spoor
      */
-    public static class ForLocalDate extends TemporalAccessorEnumValidator<DayOfWeekIn, LocalDate, DayOfWeek> {
+    public static class ForLocalDate extends PartValidator.WithoutZoneId<DayOfWeekIn, LocalDate, DayOfWeek> {
 
         /**
          * Creates a new validator.
          */
         public ForLocalDate() {
-            super(allowedDayOfWeeks(DayOfWeekIn::value), systemOnlyZoneId(DayOfWeekIn::zoneId), LocalDate::getDayOfWeek);
+            super(DayOfWeekIn::zoneId, LocalDate::getDayOfWeek, predicate());
         }
     }
 
@@ -130,13 +130,13 @@ public final class DayOfWeekInValidator {
      *
      * @author Rob Spoor
      */
-    public static class ForLocalDateTime extends TemporalAccessorEnumValidator<DayOfWeekIn, LocalDateTime, DayOfWeek> {
+    public static class ForLocalDateTime extends PartValidator.WithoutZoneId<DayOfWeekIn, LocalDateTime, DayOfWeek> {
 
         /**
          * Creates a new validator.
          */
         public ForLocalDateTime() {
-            super(allowedDayOfWeeks(DayOfWeekIn::value), systemOnlyZoneId(DayOfWeekIn::zoneId), LocalDateTime::getDayOfWeek);
+            super(DayOfWeekIn::zoneId, LocalDateTime::getDayOfWeek, predicate());
         }
     }
 
@@ -145,14 +145,13 @@ public final class DayOfWeekInValidator {
      *
      * @author Rob Spoor
      */
-    public static class ForOffsetDateTime extends TemporalAccessorEnumValidator<DayOfWeekIn, OffsetDateTime, DayOfWeek> {
+    public static class ForOffsetDateTime extends PartValidator<DayOfWeekIn, OffsetDateTime, DayOfWeek> {
 
         /**
          * Creates a new validator.
          */
         public ForOffsetDateTime() {
-            super(allowedDayOfWeeks(DayOfWeekIn::value), DayOfWeekIn::zoneId,
-                    OffsetDateTime::getDayOfWeek, OffsetDateTime::atZoneSameInstant, ZonedDateTime::getDayOfWeek);
+            super(DayOfWeekIn::zoneId, OffsetDateTime::getDayOfWeek, OffsetDateTime::atZoneSameInstant, ZonedDateTime::getDayOfWeek, predicate());
         }
     }
 
@@ -161,18 +160,21 @@ public final class DayOfWeekInValidator {
      *
      * @author Rob Spoor
      */
-    public static class ForZonedDateTime extends ZonedDateTimeEnumValidator<DayOfWeekIn, DayOfWeek> {
+    public static class ForZonedDateTime extends PartValidator.ForZonedDateTime<DayOfWeekIn, DayOfWeek> {
 
         /**
          * Creates a new validator.
          */
         public ForZonedDateTime() {
-            super(allowedDayOfWeeks(DayOfWeekIn::value), DayOfWeekIn::zoneId, ZonedDateTime::getDayOfWeek);
+            super(DayOfWeekIn::zoneId, ZonedDateTime::getDayOfWeek, predicate());
         }
     }
 
-    static <A extends Annotation> Function<A, Set<DayOfWeek>> allowedDayOfWeeks(Function<A, DayOfWeek[]> valueExtractor) {
-        return constraint -> asSet(valueExtractor.apply(constraint));
+    private static Function<DayOfWeekIn, BiPredicate<DayOfWeek, ConstraintValidatorContext>> predicate() {
+        return annotation -> {
+            Set<DayOfWeek> allowedValues = asSet(annotation.value());
+            return (value, context) -> allowedValues.contains(value);
+        };
     }
 
     private static Set<DayOfWeek> asSet(DayOfWeek[] values) {

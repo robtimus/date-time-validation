@@ -29,6 +29,10 @@ import java.time.ZonedDateTime;
 import java.util.Calendar;
 import java.util.Date;
 import com.github.robtimus.validation.datetime.MinBefore;
+import com.github.robtimus.validation.datetime.core.BaseValidator;
+import com.github.robtimus.validation.datetime.core.CalendarValidator;
+import com.github.robtimus.validation.datetime.core.DateValidator;
+import com.github.robtimus.validation.datetime.core.MomentValueValidator;
 
 /**
  * Container class for constraint validators for {@link MinBefore}.
@@ -51,7 +55,7 @@ public final class MinBeforeValidator {
          * Creates a new validator.
          */
         public ForDate() {
-            super(MinBefore::moment, MinBefore::duration, ISODuration::minus, not(Instant::isAfter));
+            super(new ForInstant());
         }
     }
 
@@ -66,7 +70,7 @@ public final class MinBeforeValidator {
          * Creates a new validator.
          */
         public ForCalendar() {
-            super(MinBefore::moment, MinBefore::duration, ZonedDateTime::minus, not(ZonedDateTime::isAfter));
+            super(new ForZonedDateTime());
         }
     }
 
@@ -75,13 +79,13 @@ public final class MinBeforeValidator {
      *
      * @author Rob Spoor
      */
-    public static class ForInstant extends TemporalAccessorValidator<MinBefore, Instant> {
+    public static class ForInstant extends MomentValueValidator<MinBefore, Instant> {
 
         /**
          * Creates a new validator.
          */
         public ForInstant() {
-            super(MinBefore::moment, Instant::parse, Instant::now, MinBefore::duration, ISODuration::minus, not(Instant::isAfter));
+            super(MinBefore::moment, Instant::parse, Instant::now, MinBefore::duration, BaseValidator::minus, not(Instant::isAfter));
         }
     }
 
@@ -90,7 +94,7 @@ public final class MinBeforeValidator {
      *
      * @author Rob Spoor
      */
-    public static class ForLocalDate extends TemporalAccessorValidator<MinBefore, LocalDate> {
+    public static class ForLocalDate extends MomentValueValidator<MinBefore, LocalDate> {
 
         /**
          * Creates a new validator.
@@ -105,7 +109,7 @@ public final class MinBeforeValidator {
      *
      * @author Rob Spoor
      */
-    public static class ForLocalDateTime extends TemporalAccessorValidator<MinBefore, LocalDateTime> {
+    public static class ForLocalDateTime extends MomentValueValidator<MinBefore, LocalDateTime> {
 
         /**
          * Creates a new validator.
@@ -121,7 +125,7 @@ public final class MinBeforeValidator {
      *
      * @author Rob Spoor
      */
-    public static class ForLocalTime extends TemporalAccessorValidator<MinBefore, LocalTime> {
+    public static class ForLocalTime extends MomentValueValidator<MinBefore, LocalTime> {
 
         /**
          * Creates a new validator.
@@ -136,7 +140,7 @@ public final class MinBeforeValidator {
      *
      * @author Rob Spoor
      */
-    public static class ForOffsetDateTime extends TemporalAccessorValidator<MinBefore, OffsetDateTime> {
+    public static class ForOffsetDateTime extends MomentValueValidator<MinBefore, OffsetDateTime> {
 
         /**
          * Creates a new validator.
@@ -152,7 +156,7 @@ public final class MinBeforeValidator {
      *
      * @author Rob Spoor
      */
-    public static class ForOffsetTime extends TemporalAccessorValidator<MinBefore, OffsetTime> {
+    public static class ForOffsetTime extends MomentValueValidator<MinBefore, OffsetTime> {
 
         /**
          * Creates a new validator.
@@ -167,7 +171,7 @@ public final class MinBeforeValidator {
      *
      * @author Rob Spoor
      */
-    public static class ForYear extends TemporalAccessorValidator<MinBefore, Year> {
+    public static class ForYear extends MomentValueValidator<MinBefore, Year> {
 
         /**
          * Creates a new validator.
@@ -182,7 +186,7 @@ public final class MinBeforeValidator {
      *
      * @author Rob Spoor
      */
-    public static class ForYearMonth extends TemporalAccessorValidator<MinBefore, YearMonth> {
+    public static class ForYearMonth extends MomentValueValidator<MinBefore, YearMonth> {
 
         /**
          * Creates a new validator.
@@ -197,7 +201,7 @@ public final class MinBeforeValidator {
      *
      * @author Rob Spoor
      */
-    public static class ForZonedDateTime extends TemporalAccessorValidator<MinBefore, ZonedDateTime> {
+    public static class ForZonedDateTime extends MomentValueValidator<MinBefore, ZonedDateTime> {
 
         /**
          * Creates a new validator.

@@ -30,13 +30,13 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.EnumSet;
 import java.util.Set;
+import java.util.function.BiPredicate;
 import java.util.function.Function;
+import javax.validation.ConstraintValidatorContext;
+import com.github.robtimus.validation.datetime.core.CalendarValidator;
+import com.github.robtimus.validation.datetime.core.DateValidator;
+import com.github.robtimus.validation.datetime.core.PartValidator;
 import com.github.robtimus.validation.datetime.month.MonthNotAfter;
-import com.github.robtimus.validation.datetime.validators.CalendarEnumValidator;
-import com.github.robtimus.validation.datetime.validators.DateEnumValidator;
-import com.github.robtimus.validation.datetime.validators.InstantEnumValidator;
-import com.github.robtimus.validation.datetime.validators.TemporalAccessorEnumValidator;
-import com.github.robtimus.validation.datetime.validators.ZonedDateTimeEnumValidator;
 
 /**
  * Container class for constraint validators for {@link MonthNotAfter}.
@@ -53,13 +53,13 @@ public final class MonthNotAfterValidator {
      *
      * @author Rob Spoor
      */
-    public static class ForDate extends DateEnumValidator<MonthNotAfter, Month> {
+    public static class ForDate extends DateValidator<MonthNotAfter> {
 
         /**
          * Creates a new validator.
          */
         public ForDate() {
-            super(allowedMonths(MonthNotAfter::value), nonProvidedZoneId(MonthNotAfter::zoneId), ZonedDateTime::getMonth);
+            super(new ForInstant());
         }
     }
 
@@ -68,13 +68,13 @@ public final class MonthNotAfterValidator {
      *
      * @author Rob Spoor
      */
-    public static class ForCalendar extends CalendarEnumValidator<MonthNotAfter, Month> {
+    public static class ForCalendar extends CalendarValidator<MonthNotAfter> {
 
         /**
          * Creates a new validator.
          */
         public ForCalendar() {
-            super(allowedMonths(MonthNotAfter::value), MonthNotAfter::zoneId, ZonedDateTime::getMonth);
+            super(new ForZonedDateTime());
         }
     }
 
@@ -83,13 +83,13 @@ public final class MonthNotAfterValidator {
      *
      * @author Rob Spoor
      */
-    public static class ForInstant extends InstantEnumValidator<MonthNotAfter, Month> {
+    public static class ForInstant extends PartValidator.ForInstant<MonthNotAfter, Month> {
 
         /**
          * Creates a new validator.
          */
         public ForInstant() {
-            super(allowedMonths(MonthNotAfter::value), nonProvidedZoneId(MonthNotAfter::zoneId), ZonedDateTime::getMonth);
+            super(MonthNotAfter::zoneId, ZonedDateTime::getMonth, predicate());
         }
     }
 
@@ -98,13 +98,13 @@ public final class MonthNotAfterValidator {
      *
      * @author Rob Spoor
      */
-    public static class ForLocalDate extends TemporalAccessorEnumValidator<MonthNotAfter, LocalDate, Month> {
+    public static class ForLocalDate extends PartValidator.WithoutZoneId<MonthNotAfter, LocalDate, Month> {
 
         /**
          * Creates a new validator.
          */
         public ForLocalDate() {
-            super(allowedMonths(MonthNotAfter::value), systemOnlyZoneId(MonthNotAfter::zoneId), LocalDate::getMonth);
+            super(MonthNotAfter::zoneId, LocalDate::getMonth, predicate());
         }
     }
 
@@ -113,13 +113,13 @@ public final class MonthNotAfterValidator {
      *
      * @author Rob Spoor
      */
-    public static class ForLocalDateTime extends TemporalAccessorEnumValidator<MonthNotAfter, LocalDateTime, Month> {
+    public static class ForLocalDateTime extends PartValidator.WithoutZoneId<MonthNotAfter, LocalDateTime, Month> {
 
         /**
          * Creates a new validator.
          */
         public ForLocalDateTime() {
-            super(allowedMonths(MonthNotAfter::value), systemOnlyZoneId(MonthNotAfter::zoneId), LocalDateTime::getMonth);
+            super(MonthNotAfter::zoneId, LocalDateTime::getMonth, predicate());
         }
     }
 
@@ -128,15 +128,16 @@ public final class MonthNotAfterValidator {
      *
      * @author Rob Spoor
      */
-    public static class ForMonth extends TemporalAccessorEnumValidator<MonthNotAfter, Month, Month> {
+    public static class ForMonth extends PartValidator.WithoutZoneId<MonthNotAfter, Month, Month> {
 
         /**
          * Creates a new validator.
          */
         @SuppressWarnings("nls")
         public ForMonth() {
-            super(allowedMonths(MonthNotAfter::value), systemOnlyZoneId(MonthNotAfter::zoneId), Function.identity());
-            useReplacementMessage("{com.github.robtimus.validation.datetime.month.MonthNotAfter.message}", MonthNotAfter::message,
+            super(MonthNotAfter::zoneId, Function.identity(), predicate());
+            useReplacementMessageTemplate(MonthNotAfter::message,
+                    "{com.github.robtimus.validation.datetime.month.MonthNotAfter.message}",
                     "{com.github.robtimus.validation.datetime.month.MonthNotAfter.message.forMonth}");
         }
     }
@@ -146,13 +147,13 @@ public final class MonthNotAfterValidator {
      *
      * @author Rob Spoor
      */
-    public static class ForMonthDay extends TemporalAccessorEnumValidator<MonthNotAfter, MonthDay, Month> {
+    public static class ForMonthDay extends PartValidator.WithoutZoneId<MonthNotAfter, MonthDay, Month> {
 
         /**
          * Creates a new validator.
          */
         public ForMonthDay() {
-            super(allowedMonths(MonthNotAfter::value), systemOnlyZoneId(MonthNotAfter::zoneId), MonthDay::getMonth);
+            super(MonthNotAfter::zoneId, MonthDay::getMonth, predicate());
         }
     }
 
@@ -161,14 +162,13 @@ public final class MonthNotAfterValidator {
      *
      * @author Rob Spoor
      */
-    public static class ForOffsetDateTime extends TemporalAccessorEnumValidator<MonthNotAfter, OffsetDateTime, Month> {
+    public static class ForOffsetDateTime extends PartValidator<MonthNotAfter, OffsetDateTime, Month> {
 
         /**
          * Creates a new validator.
          */
         public ForOffsetDateTime() {
-            super(allowedMonths(MonthNotAfter::value), MonthNotAfter::zoneId,
-                    OffsetDateTime::getMonth, OffsetDateTime::atZoneSameInstant, ZonedDateTime::getMonth);
+            super(MonthNotAfter::zoneId, OffsetDateTime::getMonth, OffsetDateTime::atZoneSameInstant, ZonedDateTime::getMonth, predicate());
         }
     }
 
@@ -177,13 +177,13 @@ public final class MonthNotAfterValidator {
      *
      * @author Rob Spoor
      */
-    public static class ForYearMonth extends TemporalAccessorEnumValidator<MonthNotAfter, YearMonth, Month> {
+    public static class ForYearMonth extends PartValidator.WithoutZoneId<MonthNotAfter, YearMonth, Month> {
 
         /**
          * Creates a new validator.
          */
         public ForYearMonth() {
-            super(allowedMonths(MonthNotAfter::value), systemOnlyZoneId(MonthNotAfter::zoneId), YearMonth::getMonth);
+            super(MonthNotAfter::zoneId, YearMonth::getMonth, predicate());
         }
     }
 
@@ -192,13 +192,13 @@ public final class MonthNotAfterValidator {
      *
      * @author Rob Spoor
      */
-    public static class ForZonedDateTime extends ZonedDateTimeEnumValidator<MonthNotAfter, Month> {
+    public static class ForZonedDateTime extends PartValidator.ForZonedDateTime<MonthNotAfter, Month> {
 
         /**
          * Creates a new validator.
          */
         public ForZonedDateTime() {
-            super(allowedMonths(MonthNotAfter::value), MonthNotAfter::zoneId, ZonedDateTime::getMonth);
+            super(MonthNotAfter::zoneId, ZonedDateTime::getMonth, predicate());
         }
     }
 
@@ -208,5 +208,12 @@ public final class MonthNotAfterValidator {
 
     private static Set<Month> notAfter(Month value) {
         return EnumSet.range(Month.JANUARY, value);
+    }
+
+    private static Function<MonthNotAfter, BiPredicate<Month, ConstraintValidatorContext>> predicate() {
+        return annotation -> {
+            Month boundary = annotation.value();
+            return (value, context) -> value.compareTo(boundary) <= 0;
+        };
     }
 }

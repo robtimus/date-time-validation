@@ -29,6 +29,10 @@ import java.time.ZonedDateTime;
 import java.util.Calendar;
 import java.util.Date;
 import com.github.robtimus.validation.datetime.MaxBefore;
+import com.github.robtimus.validation.datetime.core.BaseValidator;
+import com.github.robtimus.validation.datetime.core.CalendarValidator;
+import com.github.robtimus.validation.datetime.core.DateValidator;
+import com.github.robtimus.validation.datetime.core.MomentValueValidator;
 
 /**
  * Container class for constraint validators for {@link MaxBefore}.
@@ -51,7 +55,7 @@ public final class MaxBeforeValidator {
          * Creates a new validator.
          */
         public ForDate() {
-            super(MaxBefore::moment, MaxBefore::duration, ISODuration::minus, not(Instant::isBefore));
+            super(new ForInstant());
         }
     }
 
@@ -66,7 +70,7 @@ public final class MaxBeforeValidator {
          * Creates a new validator.
          */
         public ForCalendar() {
-            super(MaxBefore::moment, MaxBefore::duration, ZonedDateTime::minus, not(ZonedDateTime::isBefore));
+            super(new ForZonedDateTime());
         }
     }
 
@@ -75,13 +79,13 @@ public final class MaxBeforeValidator {
      *
      * @author Rob Spoor
      */
-    public static class ForInstant extends TemporalAccessorValidator<MaxBefore, Instant> {
+    public static class ForInstant extends MomentValueValidator<MaxBefore, Instant> {
 
         /**
          * Creates a new validator.
          */
         public ForInstant() {
-            super(MaxBefore::moment, Instant::parse, Instant::now, MaxBefore::duration, ISODuration::minus, not(Instant::isBefore));
+            super(MaxBefore::moment, Instant::parse, Instant::now, MaxBefore::duration, BaseValidator::minus, not(Instant::isBefore));
         }
     }
 
@@ -90,7 +94,7 @@ public final class MaxBeforeValidator {
      *
      * @author Rob Spoor
      */
-    public static class ForLocalDate extends TemporalAccessorValidator<MaxBefore, LocalDate> {
+    public static class ForLocalDate extends MomentValueValidator<MaxBefore, LocalDate> {
 
         /**
          * Creates a new validator.
@@ -105,7 +109,7 @@ public final class MaxBeforeValidator {
      *
      * @author Rob Spoor
      */
-    public static class ForLocalDateTime extends TemporalAccessorValidator<MaxBefore, LocalDateTime> {
+    public static class ForLocalDateTime extends MomentValueValidator<MaxBefore, LocalDateTime> {
 
         /**
          * Creates a new validator.
@@ -121,7 +125,7 @@ public final class MaxBeforeValidator {
      *
      * @author Rob Spoor
      */
-    public static class ForLocalTime extends TemporalAccessorValidator<MaxBefore, LocalTime> {
+    public static class ForLocalTime extends MomentValueValidator<MaxBefore, LocalTime> {
 
         /**
          * Creates a new validator.
@@ -136,7 +140,7 @@ public final class MaxBeforeValidator {
      *
      * @author Rob Spoor
      */
-    public static class ForOffsetDateTime extends TemporalAccessorValidator<MaxBefore, OffsetDateTime> {
+    public static class ForOffsetDateTime extends MomentValueValidator<MaxBefore, OffsetDateTime> {
 
         /**
          * Creates a new validator.
@@ -152,7 +156,7 @@ public final class MaxBeforeValidator {
      *
      * @author Rob Spoor
      */
-    public static class ForOffsetTime extends TemporalAccessorValidator<MaxBefore, OffsetTime> {
+    public static class ForOffsetTime extends MomentValueValidator<MaxBefore, OffsetTime> {
 
         /**
          * Creates a new validator.
@@ -167,7 +171,7 @@ public final class MaxBeforeValidator {
      *
      * @author Rob Spoor
      */
-    public static class ForYear extends TemporalAccessorValidator<MaxBefore, Year> {
+    public static class ForYear extends MomentValueValidator<MaxBefore, Year> {
 
         /**
          * Creates a new validator.
@@ -182,7 +186,7 @@ public final class MaxBeforeValidator {
      *
      * @author Rob Spoor
      */
-    public static class ForYearMonth extends TemporalAccessorValidator<MaxBefore, YearMonth> {
+    public static class ForYearMonth extends MomentValueValidator<MaxBefore, YearMonth> {
 
         /**
          * Creates a new validator.
@@ -197,7 +201,7 @@ public final class MaxBeforeValidator {
      *
      * @author Rob Spoor
      */
-    public static class ForZonedDateTime extends TemporalAccessorValidator<MaxBefore, ZonedDateTime> {
+    public static class ForZonedDateTime extends MomentValueValidator<MaxBefore, ZonedDateTime> {
 
         /**
          * Creates a new validator.

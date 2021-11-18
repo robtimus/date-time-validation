@@ -24,13 +24,10 @@ import java.time.OffsetDateTime;
 import java.time.ZonedDateTime;
 import java.util.Calendar;
 import java.util.Date;
+import com.github.robtimus.validation.datetime.core.CalendarValidator;
+import com.github.robtimus.validation.datetime.core.DateValidator;
+import com.github.robtimus.validation.datetime.core.MomentPartValidator;
 import com.github.robtimus.validation.datetime.date.DateMinBefore;
-import com.github.robtimus.validation.datetime.validators.CalendarPartValidator;
-import com.github.robtimus.validation.datetime.validators.DatePartValidator;
-import com.github.robtimus.validation.datetime.validators.InstantPartValidator;
-import com.github.robtimus.validation.datetime.validators.MinBeforeValidator;
-import com.github.robtimus.validation.datetime.validators.TemporalAccessorPartValidator;
-import com.github.robtimus.validation.datetime.validators.ZonedDateTimePartValidator;
 
 /**
  * Container class for constraint validators for {@link DateMinBefore}.
@@ -47,14 +44,13 @@ public final class DateMinBeforeValidator {
      *
      * @author Rob Spoor
      */
-    public static class ForDate extends DatePartValidator<DateMinBefore, LocalDate> {
+    public static class ForDate extends DateValidator<DateMinBefore> {
 
         /**
          * Creates a new validator.
          */
         public ForDate() {
-            super(DateMinBefore::moment, DateMinBefore::duration, nonProvidedZoneId(DateMinBefore::zoneId), ZonedDateTime::toLocalDate,
-                    new MinBeforeValidator.ForLocalDate());
+            super(new ForInstant());
         }
     }
 
@@ -63,14 +59,13 @@ public final class DateMinBeforeValidator {
      *
      * @author Rob Spoor
      */
-    public static class ForCalendar extends CalendarPartValidator<DateMinBefore, LocalDate> {
+    public static class ForCalendar extends CalendarValidator<DateMinBefore> {
 
         /**
          * Creates a new validator.
          */
         public ForCalendar() {
-            super(DateMinBefore::moment, DateMinBefore::duration, DateMinBefore::zoneId, ZonedDateTime::toLocalDate,
-                    new MinBeforeValidator.ForLocalDate());
+            super(new ForZonedDateTime());
         }
     }
 
@@ -79,14 +74,14 @@ public final class DateMinBeforeValidator {
      *
      * @author Rob Spoor
      */
-    public static class ForInstant extends InstantPartValidator<DateMinBefore, LocalDate> {
+    public static class ForInstant extends MomentPartValidator.ForInstant<DateMinBefore, LocalDate> {
 
         /**
          * Creates a new validator.
          */
         public ForInstant() {
-            super(DateMinBefore::moment, DateMinBefore::duration, nonProvidedZoneId(DateMinBefore::zoneId), ZonedDateTime::toLocalDate,
-                    new MinBeforeValidator.ForLocalDate());
+            super(DateMinBefore::moment, LocalDate::parse, LocalDate::now, DateMinBefore::duration, LocalDate::minus, DateMinBefore::zoneId,
+                    ZonedDateTime::toLocalDate, not(LocalDate::isAfter));
         }
     }
 
@@ -95,14 +90,14 @@ public final class DateMinBeforeValidator {
      *
      * @author Rob Spoor
      */
-    public static class ForLocalDateTime extends TemporalAccessorPartValidator<DateMinBefore, LocalDateTime, LocalDate> {
+    public static class ForLocalDateTime extends MomentPartValidator.WithoutZoneId<DateMinBefore, LocalDateTime, LocalDate> {
 
         /**
          * Creates a new validator.
          */
         public ForLocalDateTime() {
-            super(DateMinBefore::moment, DateMinBefore::duration, systemOnlyZoneId(DateMinBefore::zoneId), LocalDateTime::toLocalDate,
-                    new MinBeforeValidator.ForLocalDate());
+            super(DateMinBefore::moment, LocalDate::parse, LocalDate::now, DateMinBefore::duration, LocalDate::minus, DateMinBefore::zoneId,
+                    LocalDateTime::toLocalDate, not(LocalDate::isAfter));
         }
     }
 
@@ -111,15 +106,15 @@ public final class DateMinBeforeValidator {
      *
      * @author Rob Spoor
      */
-    public static class ForOffsetDateTime extends TemporalAccessorPartValidator<DateMinBefore, OffsetDateTime, LocalDate> {
+    public static class ForOffsetDateTime extends MomentPartValidator<DateMinBefore, OffsetDateTime, LocalDate> {
 
         /**
          * Creates a new validator.
          */
         public ForOffsetDateTime() {
-            super(DateMinBefore::moment, DateMinBefore::duration, DateMinBefore::zoneId,
+            super(DateMinBefore::moment, LocalDate::parse, LocalDate::now, DateMinBefore::duration, LocalDate::minus, DateMinBefore::zoneId,
                     OffsetDateTime::toLocalDate, OffsetDateTime::atZoneSameInstant, ZonedDateTime::toLocalDate,
-                    new MinBeforeValidator.ForLocalDate());
+                    not(LocalDate::isAfter));
         }
     }
 
@@ -128,14 +123,14 @@ public final class DateMinBeforeValidator {
      *
      * @author Rob Spoor
      */
-    public static class ForZonedDateTime extends ZonedDateTimePartValidator<DateMinBefore, LocalDate> {
+    public static class ForZonedDateTime extends MomentPartValidator.ForZonedDateTime<DateMinBefore, LocalDate> {
 
         /**
          * Creates a new validator.
          */
         public ForZonedDateTime() {
-            super(DateMinBefore::moment, DateMinBefore::duration, DateMinBefore::zoneId, ZonedDateTime::toLocalDate,
-                    new MinBeforeValidator.ForLocalDate());
+            super(DateMinBefore::moment, LocalDate::parse, LocalDate::now, DateMinBefore::duration, LocalDate::minus, DateMinBefore::zoneId,
+                    ZonedDateTime::toLocalDate, not(LocalDate::isAfter));
         }
     }
 }

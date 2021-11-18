@@ -25,12 +25,9 @@ import java.time.YearMonth;
 import java.time.ZonedDateTime;
 import java.util.Calendar;
 import java.util.Date;
-import com.github.robtimus.validation.datetime.validators.CalendarPartValidator;
-import com.github.robtimus.validation.datetime.validators.DatePartValidator;
-import com.github.robtimus.validation.datetime.validators.InstantPartValidator;
-import com.github.robtimus.validation.datetime.validators.NotBeforeValidator;
-import com.github.robtimus.validation.datetime.validators.TemporalAccessorPartValidator;
-import com.github.robtimus.validation.datetime.validators.ZonedDateTimePartValidator;
+import com.github.robtimus.validation.datetime.core.CalendarValidator;
+import com.github.robtimus.validation.datetime.core.DateValidator;
+import com.github.robtimus.validation.datetime.core.MomentPartValidator;
 import com.github.robtimus.validation.datetime.yearmonth.YearMonthNotBefore;
 
 /**
@@ -48,13 +45,13 @@ public final class YearMonthNotBeforeValidator {
      *
      * @author Rob Spoor
      */
-    public static class ForDate extends DatePartValidator<YearMonthNotBefore, YearMonth> {
+    public static class ForDate extends DateValidator<YearMonthNotBefore> {
 
         /**
          * Creates a new validator.
          */
         public ForDate() {
-            super(YearMonthNotBefore::moment, nonProvidedZoneId(YearMonthNotBefore::zoneId), YearMonth::from, new NotBeforeValidator.ForYearMonth());
+            super(new ForInstant());
         }
     }
 
@@ -63,13 +60,13 @@ public final class YearMonthNotBeforeValidator {
      *
      * @author Rob Spoor
      */
-    public static class ForCalendar extends CalendarPartValidator<YearMonthNotBefore, YearMonth> {
+    public static class ForCalendar extends CalendarValidator<YearMonthNotBefore> {
 
         /**
          * Creates a new validator.
          */
         public ForCalendar() {
-            super(YearMonthNotBefore::moment, YearMonthNotBefore::zoneId, YearMonth::from, new NotBeforeValidator.ForYearMonth());
+            super(new ForZonedDateTime());
         }
     }
 
@@ -78,13 +75,14 @@ public final class YearMonthNotBeforeValidator {
      *
      * @author Rob Spoor
      */
-    public static class ForInstant extends InstantPartValidator<YearMonthNotBefore, YearMonth> {
+    public static class ForInstant extends MomentPartValidator.ForInstant<YearMonthNotBefore, YearMonth> {
 
         /**
          * Creates a new validator.
          */
         public ForInstant() {
-            super(YearMonthNotBefore::moment, nonProvidedZoneId(YearMonthNotBefore::zoneId), YearMonth::from, new NotBeforeValidator.ForYearMonth());
+            super(YearMonthNotBefore::moment, YearMonth::parse, YearMonth::now, YearMonthNotBefore::zoneId, YearMonth::from,
+                    not(YearMonth::isBefore));
         }
     }
 
@@ -93,13 +91,14 @@ public final class YearMonthNotBeforeValidator {
      *
      * @author Rob Spoor
      */
-    public static class ForLocalDate extends TemporalAccessorPartValidator<YearMonthNotBefore, LocalDate, YearMonth> {
+    public static class ForLocalDate extends MomentPartValidator.WithoutZoneId<YearMonthNotBefore, LocalDate, YearMonth> {
 
         /**
          * Creates a new validator.
          */
         public ForLocalDate() {
-            super(YearMonthNotBefore::moment, systemOnlyZoneId(YearMonthNotBefore::zoneId), YearMonth::from, new NotBeforeValidator.ForYearMonth());
+            super(YearMonthNotBefore::moment, YearMonth::parse, YearMonth::now, YearMonthNotBefore::zoneId, YearMonth::from,
+                    not(YearMonth::isBefore));
         }
     }
 
@@ -108,13 +107,14 @@ public final class YearMonthNotBeforeValidator {
      *
      * @author Rob Spoor
      */
-    public static class ForLocalDateTime extends TemporalAccessorPartValidator<YearMonthNotBefore, LocalDateTime, YearMonth> {
+    public static class ForLocalDateTime extends MomentPartValidator.WithoutZoneId<YearMonthNotBefore, LocalDateTime, YearMonth> {
 
         /**
          * Creates a new validator.
          */
         public ForLocalDateTime() {
-            super(YearMonthNotBefore::moment, systemOnlyZoneId(YearMonthNotBefore::zoneId), YearMonth::from, new NotBeforeValidator.ForYearMonth());
+            super(YearMonthNotBefore::moment, YearMonth::parse, YearMonth::now, YearMonthNotBefore::zoneId, YearMonth::from,
+                    not(YearMonth::isBefore));
         }
     }
 
@@ -123,15 +123,15 @@ public final class YearMonthNotBeforeValidator {
      *
      * @author Rob Spoor
      */
-    public static class ForOffsetDateTime extends TemporalAccessorPartValidator<YearMonthNotBefore, OffsetDateTime, YearMonth> {
+    public static class ForOffsetDateTime extends MomentPartValidator<YearMonthNotBefore, OffsetDateTime, YearMonth> {
 
         /**
          * Creates a new validator.
          */
         public ForOffsetDateTime() {
-            super(YearMonthNotBefore::moment, YearMonthNotBefore::zoneId,
+            super(YearMonthNotBefore::moment, YearMonth::parse, YearMonth::now, YearMonthNotBefore::zoneId,
                     YearMonth::from, OffsetDateTime::atZoneSameInstant, YearMonth::from,
-                    new NotBeforeValidator.ForYearMonth());
+                    not(YearMonth::isBefore));
         }
     }
 
@@ -140,13 +140,14 @@ public final class YearMonthNotBeforeValidator {
      *
      * @author Rob Spoor
      */
-    public static class ForZonedDateTime extends ZonedDateTimePartValidator<YearMonthNotBefore, YearMonth> {
+    public static class ForZonedDateTime extends MomentPartValidator.ForZonedDateTime<YearMonthNotBefore, YearMonth> {
 
         /**
          * Creates a new validator.
          */
         public ForZonedDateTime() {
-            super(YearMonthNotBefore::moment, YearMonthNotBefore::zoneId, YearMonth::from, new NotBeforeValidator.ForYearMonth());
+            super(YearMonthNotBefore::moment, YearMonth::parse, YearMonth::now, YearMonthNotBefore::zoneId, YearMonth::from,
+                    not(YearMonth::isBefore));
         }
     }
 }

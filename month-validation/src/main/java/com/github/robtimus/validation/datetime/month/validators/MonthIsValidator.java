@@ -30,13 +30,13 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.EnumSet;
 import java.util.Set;
+import java.util.function.BiPredicate;
 import java.util.function.Function;
+import javax.validation.ConstraintValidatorContext;
+import com.github.robtimus.validation.datetime.core.CalendarValidator;
+import com.github.robtimus.validation.datetime.core.DateValidator;
+import com.github.robtimus.validation.datetime.core.PartValidator;
 import com.github.robtimus.validation.datetime.month.MonthIs;
-import com.github.robtimus.validation.datetime.validators.CalendarEnumValidator;
-import com.github.robtimus.validation.datetime.validators.DateEnumValidator;
-import com.github.robtimus.validation.datetime.validators.InstantEnumValidator;
-import com.github.robtimus.validation.datetime.validators.TemporalAccessorEnumValidator;
-import com.github.robtimus.validation.datetime.validators.ZonedDateTimeEnumValidator;
 
 /**
  * Container class for constraint validators for {@link MonthIs}.
@@ -53,13 +53,13 @@ public final class MonthIsValidator {
      *
      * @author Rob Spoor
      */
-    public static class ForDate extends DateEnumValidator<MonthIs, Month> {
+    public static class ForDate extends DateValidator<MonthIs> {
 
         /**
          * Creates a new validator.
          */
         public ForDate() {
-            super(allowedMonths(MonthIs::value), nonProvidedZoneId(MonthIs::zoneId), ZonedDateTime::getMonth);
+            super(new ForInstant());
         }
     }
 
@@ -68,13 +68,13 @@ public final class MonthIsValidator {
      *
      * @author Rob Spoor
      */
-    public static class ForCalendar extends CalendarEnumValidator<MonthIs, Month> {
+    public static class ForCalendar extends CalendarValidator<MonthIs> {
 
         /**
          * Creates a new validator.
          */
         public ForCalendar() {
-            super(allowedMonths(MonthIs::value), MonthIs::zoneId, ZonedDateTime::getMonth);
+            super(new ForZonedDateTime());
         }
     }
 
@@ -83,13 +83,13 @@ public final class MonthIsValidator {
      *
      * @author Rob Spoor
      */
-    public static class ForInstant extends InstantEnumValidator<MonthIs, Month> {
+    public static class ForInstant extends PartValidator.ForInstant<MonthIs, Month> {
 
         /**
          * Creates a new validator.
          */
         public ForInstant() {
-            super(allowedMonths(MonthIs::value), nonProvidedZoneId(MonthIs::zoneId), ZonedDateTime::getMonth);
+            super(MonthIs::zoneId, ZonedDateTime::getMonth, predicate());
         }
     }
 
@@ -98,13 +98,13 @@ public final class MonthIsValidator {
      *
      * @author Rob Spoor
      */
-    public static class ForLocalDate extends TemporalAccessorEnumValidator<MonthIs, LocalDate, Month> {
+    public static class ForLocalDate extends PartValidator.WithoutZoneId<MonthIs, LocalDate, Month> {
 
         /**
          * Creates a new validator.
          */
         public ForLocalDate() {
-            super(allowedMonths(MonthIs::value), systemOnlyZoneId(MonthIs::zoneId), LocalDate::getMonth);
+            super(MonthIs::zoneId, LocalDate::getMonth, predicate());
         }
     }
 
@@ -113,13 +113,13 @@ public final class MonthIsValidator {
      *
      * @author Rob Spoor
      */
-    public static class ForLocalDateTime extends TemporalAccessorEnumValidator<MonthIs, LocalDateTime, Month> {
+    public static class ForLocalDateTime extends PartValidator.WithoutZoneId<MonthIs, LocalDateTime, Month> {
 
         /**
          * Creates a new validator.
          */
         public ForLocalDateTime() {
-            super(allowedMonths(MonthIs::value), systemOnlyZoneId(MonthIs::zoneId), LocalDateTime::getMonth);
+            super(MonthIs::zoneId, LocalDateTime::getMonth, predicate());
         }
     }
 
@@ -128,15 +128,16 @@ public final class MonthIsValidator {
      *
      * @author Rob Spoor
      */
-    public static class ForMonth extends TemporalAccessorEnumValidator<MonthIs, Month, Month> {
+    public static class ForMonth extends PartValidator.WithoutZoneId<MonthIs, Month, Month> {
 
         /**
          * Creates a new validator.
          */
         @SuppressWarnings("nls")
         public ForMonth() {
-            super(allowedMonths(MonthIs::value), systemOnlyZoneId(MonthIs::zoneId), Function.identity());
-            useReplacementMessage("{com.github.robtimus.validation.datetime.month.MonthIs.message}", MonthIs::message,
+            super(MonthIs::zoneId, Function.identity(), predicate());
+            useReplacementMessageTemplate(MonthIs::message,
+                    "{com.github.robtimus.validation.datetime.month.MonthIs.message}",
                     "{com.github.robtimus.validation.datetime.month.MonthIs.message.forMonth}");
         }
     }
@@ -146,13 +147,13 @@ public final class MonthIsValidator {
      *
      * @author Rob Spoor
      */
-    public static class ForMonthDay extends TemporalAccessorEnumValidator<MonthIs, MonthDay, Month> {
+    public static class ForMonthDay extends PartValidator.WithoutZoneId<MonthIs, MonthDay, Month> {
 
         /**
          * Creates a new validator.
          */
         public ForMonthDay() {
-            super(allowedMonths(MonthIs::value), systemOnlyZoneId(MonthIs::zoneId), MonthDay::getMonth);
+            super(MonthIs::zoneId, MonthDay::getMonth, predicate());
         }
     }
 
@@ -161,14 +162,13 @@ public final class MonthIsValidator {
      *
      * @author Rob Spoor
      */
-    public static class ForOffsetDateTime extends TemporalAccessorEnumValidator<MonthIs, OffsetDateTime, Month> {
+    public static class ForOffsetDateTime extends PartValidator<MonthIs, OffsetDateTime, Month> {
 
         /**
          * Creates a new validator.
          */
         public ForOffsetDateTime() {
-            super(allowedMonths(MonthIs::value), MonthIs::zoneId,
-                    OffsetDateTime::getMonth, OffsetDateTime::atZoneSameInstant, ZonedDateTime::getMonth);
+            super(MonthIs::zoneId, OffsetDateTime::getMonth, OffsetDateTime::atZoneSameInstant, ZonedDateTime::getMonth, predicate());
         }
     }
 
@@ -177,13 +177,13 @@ public final class MonthIsValidator {
      *
      * @author Rob Spoor
      */
-    public static class ForYearMonth extends TemporalAccessorEnumValidator<MonthIs, YearMonth, Month> {
+    public static class ForYearMonth extends PartValidator.WithoutZoneId<MonthIs, YearMonth, Month> {
 
         /**
          * Creates a new validator.
          */
         public ForYearMonth() {
-            super(allowedMonths(MonthIs::value), systemOnlyZoneId(MonthIs::zoneId), YearMonth::getMonth);
+            super(MonthIs::zoneId, YearMonth::getMonth, predicate());
         }
     }
 
@@ -192,17 +192,24 @@ public final class MonthIsValidator {
      *
      * @author Rob Spoor
      */
-    public static class ForZonedDateTime extends ZonedDateTimeEnumValidator<MonthIs, Month> {
+    public static class ForZonedDateTime extends PartValidator.ForZonedDateTime<MonthIs, Month> {
 
         /**
          * Creates a new validator.
          */
         public ForZonedDateTime() {
-            super(allowedMonths(MonthIs::value), MonthIs::zoneId, ZonedDateTime::getMonth);
+            super(MonthIs::zoneId, ZonedDateTime::getMonth, predicate());
         }
     }
 
     static <A extends Annotation> Function<A, Set<Month>> allowedMonths(Function<A, Month> valueExtractor) {
         return constraint -> EnumSet.of(valueExtractor.apply(constraint));
+    }
+
+    private static Function<MonthIs, BiPredicate<Month, ConstraintValidatorContext>> predicate() {
+        return annotation -> {
+            Month allowedValue = annotation.value();
+            return (value, context) -> value == allowedValue;
+        };
     }
 }

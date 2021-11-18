@@ -30,6 +30,9 @@ import java.time.ZonedDateTime;
 import java.util.Calendar;
 import java.util.Date;
 import com.github.robtimus.validation.datetime.After;
+import com.github.robtimus.validation.datetime.core.CalendarValidator;
+import com.github.robtimus.validation.datetime.core.DateValidator;
+import com.github.robtimus.validation.datetime.core.MomentValueValidator;
 
 /**
  * Container class for constraint validators for {@link After}.
@@ -52,7 +55,7 @@ public final class AfterValidator {
          * Creates a new validator.
          */
         public ForDate() {
-            super(After::moment, Instant::isAfter);
+            super(new ForInstant());
         }
     }
 
@@ -67,7 +70,7 @@ public final class AfterValidator {
          * Creates a new validator.
          */
         public ForCalendar() {
-            super(After::moment, ZonedDateTime::isAfter);
+            super(new ForZonedDateTime());
         }
     }
 
@@ -76,7 +79,7 @@ public final class AfterValidator {
      *
      * @author Rob Spoor
      */
-    public static class ForInstant extends TemporalAccessorValidator<After, Instant> {
+    public static class ForInstant extends MomentValueValidator<After, Instant> {
 
         /**
          * Creates a new validator.
@@ -91,7 +94,7 @@ public final class AfterValidator {
      *
      * @author Rob Spoor
      */
-    public static class ForLocalDate extends TemporalAccessorValidator<After, LocalDate> {
+    public static class ForLocalDate extends MomentValueValidator<After, LocalDate> {
 
         /**
          * Creates a new validator.
@@ -106,7 +109,7 @@ public final class AfterValidator {
      *
      * @author Rob Spoor
      */
-    public static class ForLocalDateTime extends TemporalAccessorValidator<After, LocalDateTime> {
+    public static class ForLocalDateTime extends MomentValueValidator<After, LocalDateTime> {
 
         /**
          * Creates a new validator.
@@ -121,7 +124,7 @@ public final class AfterValidator {
      *
      * @author Rob Spoor
      */
-    public static class ForLocalTime extends TemporalAccessorValidator<After, LocalTime> {
+    public static class ForLocalTime extends MomentValueValidator<After, LocalTime> {
 
         /**
          * Creates a new validator.
@@ -136,7 +139,7 @@ public final class AfterValidator {
      *
      * @author Rob Spoor
      */
-    public static class ForMonthDay extends TemporalAccessorValidator<After, MonthDay> {
+    public static class ForMonthDay extends MomentValueValidator<After, MonthDay> {
 
         /**
          * Creates a new validator.
@@ -151,7 +154,7 @@ public final class AfterValidator {
      *
      * @author Rob Spoor
      */
-    public static class ForOffsetDateTime extends TemporalAccessorValidator<After, OffsetDateTime> {
+    public static class ForOffsetDateTime extends MomentValueValidator<After, OffsetDateTime> {
 
         /**
          * Creates a new validator.
@@ -166,7 +169,7 @@ public final class AfterValidator {
      *
      * @author Rob Spoor
      */
-    public static class ForOffsetTime extends TemporalAccessorValidator<After, OffsetTime> {
+    public static class ForOffsetTime extends MomentValueValidator<After, OffsetTime> {
 
         /**
          * Creates a new validator.
@@ -181,7 +184,7 @@ public final class AfterValidator {
      *
      * @author Rob Spoor
      */
-    public static class ForYear extends TemporalAccessorValidator<After, Year> {
+    public static class ForYear extends MomentValueValidator<After, Year> {
 
         /**
          * Creates a new validator.
@@ -196,7 +199,7 @@ public final class AfterValidator {
      *
      * @author Rob Spoor
      */
-    public static class ForYearMonth extends TemporalAccessorValidator<After, YearMonth> {
+    public static class ForYearMonth extends MomentValueValidator<After, YearMonth> {
 
         /**
          * Creates a new validator.
@@ -211,7 +214,7 @@ public final class AfterValidator {
      *
      * @author Rob Spoor
      */
-    public static class ForZonedDateTime extends TemporalAccessorValidator<After, ZonedDateTime> {
+    public static class ForZonedDateTime extends MomentValueValidator<After, ZonedDateTime> {
 
         /**
          * Creates a new validator.
