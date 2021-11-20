@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package com.github.robtimus.validation.datetime.core;
+package com.github.robtimus.validation.datetime.base;
 
 import java.lang.annotation.Annotation;
 import java.time.ZoneId;

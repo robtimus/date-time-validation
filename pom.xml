@@ -50,6 +50,7 @@
   </developers>
 
   <modules>
+    <module>date-time-base-validators</module>
     <module>date-time-validation</module>
     <module>date-validation</module>
     <module>time-validation</module>
@@ -81,7 +82,7 @@
     <dependencies>
       <dependency>
         <groupId>${project.groupId}</groupId>
-        <artifactId>date-time-validation</artifactId>
+        <artifactId>date-time-base-validators</artifactId>
         <version>${project.version}</version>
       </dependency>
 
@@ -209,6 +210,10 @@
         <inherited>false</inherited>
         <configuration>
           <groups>
+            <group>
+              <title>date-time-base-validators</title>
+              <packages>com.github.robtimus.validation.datetime.base:com.github.robtimus.validation.datetime.base.*</packages>
+            </group>
             <group>
               <title>date-time-validation</title>
               <packages>com.github.robtimus.validation.datetime:com.github.robtimus.validation.datetime.*</packages>

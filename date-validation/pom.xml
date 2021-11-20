@@ -34,8 +34,7 @@
   <dependencies>
     <dependency>
       <groupId>${project.groupId}</groupId>
-      <artifactId>date-time-validation</artifactId>
-      <version>${project.version}</version>
+      <artifactId>date-time-base-validators</artifactId>
     </dependency>
 
     <dependency>

@@ -30,9 +30,9 @@ import java.time.ZonedDateTime;
 import java.util.Calendar;
 import java.util.Date;
 import com.github.robtimus.validation.datetime.NotBefore;
-import com.github.robtimus.validation.datetime.core.CalendarValidator;
-import com.github.robtimus.validation.datetime.core.DateValidator;
-import com.github.robtimus.validation.datetime.core.MomentValueValidator;
+import com.github.robtimus.validation.datetime.base.CalendarValidator;
+import com.github.robtimus.validation.datetime.base.DateValidator;
+import com.github.robtimus.validation.datetime.base.MomentValueValidator;
 
 /**
  * Container class for constraint validators for {@link NotBefore}.

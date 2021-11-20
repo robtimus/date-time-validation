@@ -15,11 +15,11 @@
  * limitations under the License.
  */
 
-package com.github.robtimus.validation.datetime.core;
+package com.github.robtimus.validation.datetime.base;
 
-import static com.github.robtimus.validation.datetime.core.MomentValueValidator.momentPredicate;
-import static com.github.robtimus.validation.datetime.core.ZoneIdUtils.nonProvidedZoneId;
-import static com.github.robtimus.validation.datetime.core.ZoneIdUtils.systemOnlyZoneId;
+import static com.github.robtimus.validation.datetime.base.MomentValueValidator.momentPredicate;
+import static com.github.robtimus.validation.datetime.base.ZoneIdUtils.nonProvidedZoneId;
+import static com.github.robtimus.validation.datetime.base.ZoneIdUtils.systemOnlyZoneId;
 import java.lang.annotation.Annotation;
 import java.time.Clock;
 import java.time.Instant;

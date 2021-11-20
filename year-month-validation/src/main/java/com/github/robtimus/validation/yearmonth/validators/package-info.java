@@ -16,6 +16,6 @@
  */
 
 /**
- * Contains validators for the date validation constraints.
+ * Contains validators for the year-month validation constraints.
  */
 package com.github.robtimus.validation.yearmonth.validators;

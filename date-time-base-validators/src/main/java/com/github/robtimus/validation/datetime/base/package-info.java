@@ -16,6 +16,6 @@
  */
 
 /**
- * Contains validator base classes for the date/time object validation constraints.
+ * Contains validator base classes for date/time validation constraints.
  */
-package com.github.robtimus.validation.datetime.core;
+package com.github.robtimus.validation.datetime.base;

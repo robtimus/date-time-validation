@@ -16,6 +16,6 @@
  */
 
 /**
- * Contains validation constraints for dates.
+ * Contains validation constraints for year-months.
  */
 package com.github.robtimus.validation.yearmonth;

@@ -25,9 +25,9 @@ import java.time.ZonedDateTime;
 import java.util.Calendar;
 import java.util.Date;
 import com.github.robtimus.validation.date.DateMaxAfter;
-import com.github.robtimus.validation.datetime.core.CalendarValidator;
-import com.github.robtimus.validation.datetime.core.DateValidator;
-import com.github.robtimus.validation.datetime.core.MomentPartValidator;
+import com.github.robtimus.validation.datetime.base.CalendarValidator;
+import com.github.robtimus.validation.datetime.base.DateValidator;
+import com.github.robtimus.validation.datetime.base.MomentPartValidator;
 
 /**
  * Container class for constraint validators for {@link DateMaxAfter}.
