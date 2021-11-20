@@ -6,7 +6,11 @@ Validation constraints for date/time objects.
 
 Because this repository contains a lot of constraints, and each applies to several date/time object types, it is split into several modules. This allows you to only use those modules you need without getting a single, large dependency.
 
-The following sections each describe a module.
+The following sections each describe a module. Most of these modules validate only a part of the value. Because the exact date and time depends on the time zone, each annotation in these modules has an optional `zoneId` parameter. This can have the following values:
+
+* `system` (default): the system time zone, as returned by `ZoneId.systemDefault()`, should be used.
+* `provided`: the time zone or offset information from the actual value should be used.
+* A value that is valid according to `ZoneId.of` for an explicit time zone.
 
 ### date-time-validation
 
@@ -55,13 +59,7 @@ These annotations apply to the following types:
 
 ### date-validation
 
-Validation constraints for date/time objects that validate only the date part. These work just like the constraints of the `date-time-validation` module, except it ignores any time part. The `moment` must be `now` or valid according to `LocalDate.parse`, and the `duration` may not contain any time elements.
-
-Because the date depends on the time zone, each annotation has an optional `zoneId` parameter. This can have the following values:
-
-* `system` (default): the system time zone, as returned by `ZoneId.systemDefault()`, should be used.
-* `provided`: the time zone or offset information from the actual value should be used.
-* A value that is valid according to `ZoneId.of` for an explicit time zone.
+Validation constraints for date/time objects that validate only the date part. These work just like the constraints of the `date-time-validation` module, except they ignore any time part. The `moment` must be `now` or valid according to `LocalDate.parse`, and the `duration` may not contain any time elements.
 
 These annotations apply to the following types:
 
@@ -88,13 +86,7 @@ These annotations apply to the following types:
 
 ### time-validation
 
-Validation constraints for date/time objects that validate only the time part. These work just like the constraints of `date-time-validation` module, except it ignores any date part. The `moment` must be `now` or valid according to `LocalTime.parse`, and the `duration` may not contain any date elements.
-
-Because the time depends on the time zone, each annotation has an optional `zoneId` parameter. This can have the following values:
-
-* `system` (default): the system time zone, as returned by `ZoneId.systemDefault()`, should be used.
-* `provided`: the time zone or offset information from the actual value should be used.
-* A value that is valid according to `ZoneId.of` for an explicit time zone.
+Validation constraints for date/time objects that validate only the time part. These work just like the constraints of `date-time-validation` module, except they ignore any date part. The `moment` must be `now` or valid according to `LocalTime.parse`, and the `duration` may not contain any date elements.
 
 These annotations apply to the following types:
 
@@ -121,13 +113,7 @@ These annotations apply to the following types:
 
 ### year-month-validation
 
-Validation constraints for date/time objects that validate only the year and month. These work just like the constraints of the `date-time-validation` module, except it ignores the day of the month and any time part. The `moment` must be `now` or valid according to `YearMonth.parse`, and the `duration` may only contain year and month elements.
-
-Because the date, and therefore also the year-month, depends on the time zone, each annotation has an optional `zoneId` parameter. This can have the following values:
-
-* `system` (default): the system time zone, as returned by `ZoneId.systemDefault()`, should be used.
-* `provided`: the time zone or offset information from the actual value should be used.
-* A value that is valid according to `ZoneId.of` for an explicit time zone.
+Validation constraints for date/time objects that validate only the year and month. These work just like the constraints of the `date-time-validation` module, except they ignore the day of the month and any time part. The `moment` must be `now` or valid according to `YearMonth.parse`, and the `duration` may only contain year and month elements.
 
 These annotations apply to the following types:
 
@@ -154,13 +140,7 @@ These annotations apply to the following types:
 
 ### year-validation
 
-Validation constraints for date/time objects that validate only the year. These work just like the constraints of the `date-time-validation` module, except it ignores everything but the year. The `moment` must be `now` or valid according to `Year.parse`, and the `duration` may only contain a year element.
-
-Because the date, and therefore also the year, depends on the time zone, each annotation has an optional `zoneId` parameter. This can have the following values:
-
-* `system` (default): the system time zone, as returned by `ZoneId.systemDefault()`, should be used.
-* `provided`: the time zone or offset information from the actual value should be used.
-* A value that is valid according to `ZoneId.of` for an explicit time zone.
+Validation constraints for date/time objects that validate only the year. These work just like the constraints of the `date-time-validation` module, except they ignore the month, the day of the month and any time part. The `moment` must be `now` or valid according to `Year.parse`, and the `duration` may only contain a year element.
 
 These annotations apply to the following types:
 
@@ -200,12 +180,6 @@ Validation constraints for date/time objects that validate only the day of the w
 
 Note that days of the week are ordered from Monday until Sunday.
 
-Because the date, and therefore also the day of the week, depends on the time zone, each annotation has an optional `zoneId` parameter. This can have the following values:
-
-* `system` (default): the system time zone, as returned by `ZoneId.systemDefault()`, should be used.
-* `provided`: the time zone or offset information from the actual value should be used.
-* A value that is valid according to `ZoneId.of` for an explicit time zone.
-
 These annotations apply to the following types:
 
 | Type                     | DayOfWeekAfter | DayOfWeekNotAfter | DayOfWeekBefore | DayOfWeekNotBefore | DayOfWeekIs | DayOfWeekIn |
@@ -240,12 +214,6 @@ Validation constraints for date/time objects that validate only the month. These
 | MonthNotBefore | object.month >= value |
 | MonthIs        | object.month == value |
 | MonthIn        | object.month in value |
-
-Because the date, and therefore also the month, depends on the time zone, each annotation has an optional `zoneId` parameter. This can have the following values:
-
-* `system` (default): the system time zone, as returned by `ZoneId.systemDefault()`, should be used.
-* `provided`: the time zone or offset information from the actual value should be used.
-* A value that is valid according to `ZoneId.of` for an explicit time zone.
 
 These annotations apply to the following types:
 
