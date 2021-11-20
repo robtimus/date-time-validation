@@ -82,7 +82,7 @@ public final class YearMaxAfterValidator {
          * Creates a new validator.
          */
         public ForInstant() {
-            super(YearMaxAfter::moment, Year::parse, Year::now, YearMaxAfter::duration, Year::plus,
+            super(YearMaxAfter::moment, Year::parse, Year::now, YearMaxAfterValidator::extractDuration, Year::plus,
                     YearMaxAfter::zoneId, Year::from, not(Year::isAfter));
         }
     }
@@ -98,7 +98,7 @@ public final class YearMaxAfterValidator {
          * Creates a new validator.
          */
         public ForLocalDate() {
-            super(YearMaxAfter::moment, Year::parse, Year::now, YearMaxAfter::duration, Year::plus,
+            super(YearMaxAfter::moment, Year::parse, Year::now, YearMaxAfterValidator::extractDuration, Year::plus,
                     YearMaxAfter::zoneId, Year::from, not(Year::isAfter));
         }
     }
@@ -114,7 +114,7 @@ public final class YearMaxAfterValidator {
          * Creates a new validator.
          */
         public ForLocalDateTime() {
-            super(YearMaxAfter::moment, Year::parse, Year::now, YearMaxAfter::duration, Year::plus,
+            super(YearMaxAfter::moment, Year::parse, Year::now, YearMaxAfterValidator::extractDuration, Year::plus,
                     YearMaxAfter::zoneId, Year::from, not(Year::isAfter));
         }
     }
@@ -130,7 +130,7 @@ public final class YearMaxAfterValidator {
          * Creates a new validator.
          */
         public ForOffsetDateTime() {
-            super(YearMaxAfter::moment, Year::parse, Year::now, YearMaxAfter::duration, Year::plus,
+            super(YearMaxAfter::moment, Year::parse, Year::now, YearMaxAfterValidator::extractDuration, Year::plus,
                     YearMaxAfter::zoneId,
                     Year::from, OffsetDateTime::atZoneSameInstant, Year::from,
                     not(Year::isAfter));
@@ -148,7 +148,7 @@ public final class YearMaxAfterValidator {
          * Creates a new validator.
          */
         public ForYearMonth() {
-            super(YearMaxAfter::moment, Year::parse, Year::now, YearMaxAfter::duration, Year::plus,
+            super(YearMaxAfter::moment, Year::parse, Year::now, YearMaxAfterValidator::extractDuration, Year::plus,
                     YearMaxAfter::zoneId, Year::from, not(Year::isAfter));
         }
     }
@@ -164,8 +164,14 @@ public final class YearMaxAfterValidator {
          * Creates a new validator.
          */
         public ForZonedDateTime() {
-            super(YearMaxAfter::moment, Year::parse, Year::now, YearMaxAfter::duration, Year::plus,
+            super(YearMaxAfter::moment, Year::parse, Year::now, YearMaxAfterValidator::extractDuration, Year::plus,
                     YearMaxAfter::zoneId, Year::from, not(Year::isAfter));
         }
+    }
+
+    @SuppressWarnings("nls")
+    private static String extractDuration(YearMaxAfter annotation) {
+        int years = annotation.years();
+        return "P" + years + "Y";
     }
 }

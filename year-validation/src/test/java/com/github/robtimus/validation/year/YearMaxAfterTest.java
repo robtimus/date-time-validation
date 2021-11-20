@@ -419,7 +419,7 @@ class YearMaxAfterTest extends AbstractConstraintTest {
         private final Class<?> beanType;
         private final String propertyName;
         private final String moment;
-        private final String duration;
+        private final int years;
         private final T exactValue;
         private final T smallerValue;
         private final T largerValue;
@@ -436,7 +436,7 @@ class YearMaxAfterTest extends AbstractConstraintTest {
             YearMaxAfter maxAfter = assertDoesNotThrow(() -> beanType.getDeclaredField(propertyName))
                     .getAnnotation(YearMaxAfter.class);
             this.moment = maxAfter.moment();
-            this.duration = maxAfter.duration();
+            this.years = maxAfter.years();
         }
 
         @Test
@@ -468,112 +468,112 @@ class YearMaxAfterTest extends AbstractConstraintTest {
 
             ConstraintViolation<?> violation = violations.get(0);
             assertAnnotation(violation, YearMaxAfter.class);
-            assertEquals("must have a year that is at most " + duration + " after " + moment, violation.getMessage());
+            assertEquals("must have a year that is at most " + years + " years after " + moment, violation.getMessage());
             assertEquals(propertyName, violation.getPropertyPath().toString());
         }
     }
 
     private static final class TestClassWithNow {
-        @YearMaxAfter(duration = "P1Y", moment = "now", zoneId = "system")
+        @YearMaxAfter(years = 1, moment = "now", zoneId = "system")
         Date date;
 
-        @YearMaxAfter(duration = "P1Y", moment = "now", zoneId = "system")
+        @YearMaxAfter(years = 1, moment = "now", zoneId = "system")
         Calendar calendar;
 
-        @YearMaxAfter(duration = "P1Y", moment = "now", zoneId = "system")
+        @YearMaxAfter(years = 1, moment = "now", zoneId = "system")
         Instant instant;
 
-        @YearMaxAfter(duration = "P1Y", moment = "now", zoneId = "system")
+        @YearMaxAfter(years = 1, moment = "now", zoneId = "system")
         LocalDate localDate;
 
-        @YearMaxAfter(duration = "P1Y", moment = "now", zoneId = "system")
+        @YearMaxAfter(years = 1, moment = "now", zoneId = "system")
         LocalDateTime localDateTime;
 
-        @YearMaxAfter(duration = "P1Y", moment = "now", zoneId = "system")
+        @YearMaxAfter(years = 1, moment = "now", zoneId = "system")
         OffsetDateTime offsetDateTime;
 
-        @YearMaxAfter(duration = "P1Y", moment = "now", zoneId = "system")
+        @YearMaxAfter(years = 1, moment = "now", zoneId = "system")
         YearMonth yearMonth;
 
-        @YearMaxAfter(duration = "P1Y", moment = "now", zoneId = "system")
+        @YearMaxAfter(years = 1, moment = "now", zoneId = "system")
         ZonedDateTime zonedDateTime;
     }
 
     private static final class TestClassWithProvidedZoneId {
-        @YearMaxAfter(duration = "P1Y", moment = "2007", zoneId = "provided")
+        @YearMaxAfter(years = 1, moment = "2007", zoneId = "provided")
         Date date;
 
-        @YearMaxAfter(duration = "P1Y", moment = "2007", zoneId = "provided")
+        @YearMaxAfter(years = 1, moment = "2007", zoneId = "provided")
         Calendar calendar;
 
-        @YearMaxAfter(duration = "P1Y", moment = "2007", zoneId = "provided")
+        @YearMaxAfter(years = 1, moment = "2007", zoneId = "provided")
         Instant instant;
 
-        @YearMaxAfter(duration = "P1Y", moment = "2007", zoneId = "provided")
+        @YearMaxAfter(years = 1, moment = "2007", zoneId = "provided")
         LocalDate localDate;
 
-        @YearMaxAfter(duration = "P1Y", moment = "2007", zoneId = "provided")
+        @YearMaxAfter(years = 1, moment = "2007", zoneId = "provided")
         LocalDateTime localDateTime;
 
-        @YearMaxAfter(duration = "P1Y", moment = "2007", zoneId = "provided")
+        @YearMaxAfter(years = 1, moment = "2007", zoneId = "provided")
         OffsetDateTime offsetDateTime;
 
-        @YearMaxAfter(duration = "P1Y", moment = "2007", zoneId = "provided")
+        @YearMaxAfter(years = 1, moment = "2007", zoneId = "provided")
         YearMonth yearMonth;
 
-        @YearMaxAfter(duration = "P1Y", moment = "2007", zoneId = "provided")
+        @YearMaxAfter(years = 1, moment = "2007", zoneId = "provided")
         ZonedDateTime zonedDateTime;
     }
 
     private static final class TestClassWithZoneId {
-        @YearMaxAfter(duration = "P1Y", moment = "2007", zoneId = "UTC")
+        @YearMaxAfter(years = 1, moment = "2007", zoneId = "UTC")
         Date date;
 
-        @YearMaxAfter(duration = "P1Y", moment = "2007", zoneId = "UTC")
+        @YearMaxAfter(years = 1, moment = "2007", zoneId = "UTC")
         Calendar calendar;
 
-        @YearMaxAfter(duration = "P1Y", moment = "2007", zoneId = "UTC")
+        @YearMaxAfter(years = 1, moment = "2007", zoneId = "UTC")
         Instant instant;
 
-        @YearMaxAfter(duration = "P1Y", moment = "2007", zoneId = "UTC")
+        @YearMaxAfter(years = 1, moment = "2007", zoneId = "UTC")
         LocalDate localDate;
 
-        @YearMaxAfter(duration = "P1Y", moment = "2007", zoneId = "UTC")
+        @YearMaxAfter(years = 1, moment = "2007", zoneId = "UTC")
         LocalDateTime localDateTime;
 
-        @YearMaxAfter(duration = "P1Y", moment = "2007", zoneId = "UTC")
+        @YearMaxAfter(years = 1, moment = "2007", zoneId = "UTC")
         OffsetDateTime offsetDateTime;
 
-        @YearMaxAfter(duration = "P1Y", moment = "2007", zoneId = "UTC")
+        @YearMaxAfter(years = 1, moment = "2007", zoneId = "UTC")
         YearMonth yearMonth;
 
-        @YearMaxAfter(duration = "P1Y", moment = "2007", zoneId = "UTC")
+        @YearMaxAfter(years = 1, moment = "2007", zoneId = "UTC")
         ZonedDateTime zonedDateTime;
     }
 
     private static final class TestClassWithSystemZoneId {
-        @YearMaxAfter(duration = "P1Y", moment = "2007")
+        @YearMaxAfter(years = 1, moment = "2007")
         Date date;
 
-        @YearMaxAfter(duration = "P1Y", moment = "2007")
+        @YearMaxAfter(years = 1, moment = "2007")
         Calendar calendar;
 
-        @YearMaxAfter(duration = "P1Y", moment = "2007")
+        @YearMaxAfter(years = 1, moment = "2007")
         Instant instant;
 
-        @YearMaxAfter(duration = "P1Y", moment = "2007")
+        @YearMaxAfter(years = 1, moment = "2007")
         LocalDate localDate;
 
-        @YearMaxAfter(duration = "P1Y", moment = "2007")
+        @YearMaxAfter(years = 1, moment = "2007")
         LocalDateTime localDateTime;
 
-        @YearMaxAfter(duration = "P1Y", moment = "2007")
+        @YearMaxAfter(years = 1, moment = "2007")
         OffsetDateTime offsetDateTime;
 
-        @YearMaxAfter(duration = "P1Y", moment = "2007")
+        @YearMaxAfter(years = 1, moment = "2007")
         YearMonth yearMonth;
 
-        @YearMaxAfter(duration = "P1Y", moment = "2007")
+        @YearMaxAfter(years = 1, moment = "2007")
         ZonedDateTime zonedDateTime;
     }
 }

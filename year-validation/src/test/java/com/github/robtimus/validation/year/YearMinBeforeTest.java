@@ -419,7 +419,7 @@ class YearMinBeforeTest extends AbstractConstraintTest {
         private final Class<?> beanType;
         private final String propertyName;
         private final String moment;
-        private final String duration;
+        private final int years;
         private final T exactValue;
         private final T smallerValue;
         private final T largerValue;
@@ -436,7 +436,7 @@ class YearMinBeforeTest extends AbstractConstraintTest {
             YearMinBefore minBefore = assertDoesNotThrow(() -> beanType.getDeclaredField(propertyName))
                     .getAnnotation(YearMinBefore.class);
             this.moment = minBefore.moment();
-            this.duration = minBefore.duration();
+            this.years = minBefore.years();
         }
 
         @Test
@@ -468,112 +468,112 @@ class YearMinBeforeTest extends AbstractConstraintTest {
 
             ConstraintViolation<?> violation = violations.get(0);
             assertAnnotation(violation, YearMinBefore.class);
-            assertEquals("must have a year that is at least " + duration + " before " + moment, violation.getMessage());
+            assertEquals("must have a year that is at least " + years + " years before " + moment, violation.getMessage());
             assertEquals(propertyName, violation.getPropertyPath().toString());
         }
     }
 
     private static final class TestClassWithNow {
-        @YearMinBefore(duration = "P1Y", moment = "now", zoneId = "system")
+        @YearMinBefore(years = 1, moment = "now", zoneId = "system")
         Date date;
 
-        @YearMinBefore(duration = "P1Y", moment = "now", zoneId = "system")
+        @YearMinBefore(years = 1, moment = "now", zoneId = "system")
         Calendar calendar;
 
-        @YearMinBefore(duration = "P1Y", moment = "now", zoneId = "system")
+        @YearMinBefore(years = 1, moment = "now", zoneId = "system")
         Instant instant;
 
-        @YearMinBefore(duration = "P1Y", moment = "now", zoneId = "system")
+        @YearMinBefore(years = 1, moment = "now", zoneId = "system")
         LocalDate localDate;
 
-        @YearMinBefore(duration = "P1Y", moment = "now", zoneId = "system")
+        @YearMinBefore(years = 1, moment = "now", zoneId = "system")
         LocalDateTime localDateTime;
 
-        @YearMinBefore(duration = "P1Y", moment = "now", zoneId = "system")
+        @YearMinBefore(years = 1, moment = "now", zoneId = "system")
         OffsetDateTime offsetDateTime;
 
-        @YearMinBefore(duration = "P1Y", moment = "now", zoneId = "system")
+        @YearMinBefore(years = 1, moment = "now", zoneId = "system")
         YearMonth yearMonth;
 
-        @YearMinBefore(duration = "P1Y", moment = "now", zoneId = "system")
+        @YearMinBefore(years = 1, moment = "now", zoneId = "system")
         ZonedDateTime zonedDateTime;
     }
 
     private static final class TestClassWithProvidedZoneId {
-        @YearMinBefore(duration = "P1Y", moment = "2007", zoneId = "provided")
+        @YearMinBefore(years = 1, moment = "2007", zoneId = "provided")
         Date date;
 
-        @YearMinBefore(duration = "P1Y", moment = "2007", zoneId = "provided")
+        @YearMinBefore(years = 1, moment = "2007", zoneId = "provided")
         Calendar calendar;
 
-        @YearMinBefore(duration = "P1Y", moment = "2007", zoneId = "provided")
+        @YearMinBefore(years = 1, moment = "2007", zoneId = "provided")
         Instant instant;
 
-        @YearMinBefore(duration = "P1Y", moment = "2007", zoneId = "provided")
+        @YearMinBefore(years = 1, moment = "2007", zoneId = "provided")
         LocalDate localDate;
 
-        @YearMinBefore(duration = "P1Y", moment = "2007", zoneId = "provided")
+        @YearMinBefore(years = 1, moment = "2007", zoneId = "provided")
         LocalDateTime localDateTime;
 
-        @YearMinBefore(duration = "P1Y", moment = "2007", zoneId = "provided")
+        @YearMinBefore(years = 1, moment = "2007", zoneId = "provided")
         OffsetDateTime offsetDateTime;
 
-        @YearMinBefore(duration = "P1Y", moment = "2007", zoneId = "provided")
+        @YearMinBefore(years = 1, moment = "2007", zoneId = "provided")
         YearMonth yearMonth;
 
-        @YearMinBefore(duration = "P1Y", moment = "2007", zoneId = "provided")
+        @YearMinBefore(years = 1, moment = "2007", zoneId = "provided")
         ZonedDateTime zonedDateTime;
     }
 
     private static final class TestClassWithZoneId {
-        @YearMinBefore(duration = "P1Y", moment = "2007", zoneId = "UTC")
+        @YearMinBefore(years = 1, moment = "2007", zoneId = "UTC")
         Date date;
 
-        @YearMinBefore(duration = "P1Y", moment = "2007", zoneId = "UTC")
+        @YearMinBefore(years = 1, moment = "2007", zoneId = "UTC")
         Calendar calendar;
 
-        @YearMinBefore(duration = "P1Y", moment = "2007", zoneId = "UTC")
+        @YearMinBefore(years = 1, moment = "2007", zoneId = "UTC")
         Instant instant;
 
-        @YearMinBefore(duration = "P1Y", moment = "2007", zoneId = "UTC")
+        @YearMinBefore(years = 1, moment = "2007", zoneId = "UTC")
         LocalDate localDate;
 
-        @YearMinBefore(duration = "P1Y", moment = "2007", zoneId = "UTC")
+        @YearMinBefore(years = 1, moment = "2007", zoneId = "UTC")
         LocalDateTime localDateTime;
 
-        @YearMinBefore(duration = "P1Y", moment = "2007", zoneId = "UTC")
+        @YearMinBefore(years = 1, moment = "2007", zoneId = "UTC")
         OffsetDateTime offsetDateTime;
 
-        @YearMinBefore(duration = "P1Y", moment = "2007", zoneId = "UTC")
+        @YearMinBefore(years = 1, moment = "2007", zoneId = "UTC")
         YearMonth yearMonth;
 
-        @YearMinBefore(duration = "P1Y", moment = "2007", zoneId = "UTC")
+        @YearMinBefore(years = 1, moment = "2007", zoneId = "UTC")
         ZonedDateTime zonedDateTime;
     }
 
     private static final class TestClassWithSystemZoneId {
-        @YearMinBefore(duration = "P1Y", moment = "2007")
+        @YearMinBefore(years = 1, moment = "2007")
         Date date;
 
-        @YearMinBefore(duration = "P1Y", moment = "2007")
+        @YearMinBefore(years = 1, moment = "2007")
         Calendar calendar;
 
-        @YearMinBefore(duration = "P1Y", moment = "2007")
+        @YearMinBefore(years = 1, moment = "2007")
         Instant instant;
 
-        @YearMinBefore(duration = "P1Y", moment = "2007")
+        @YearMinBefore(years = 1, moment = "2007")
         LocalDate localDate;
 
-        @YearMinBefore(duration = "P1Y", moment = "2007")
+        @YearMinBefore(years = 1, moment = "2007")
         LocalDateTime localDateTime;
 
-        @YearMinBefore(duration = "P1Y", moment = "2007")
+        @YearMinBefore(years = 1, moment = "2007")
         OffsetDateTime offsetDateTime;
 
-        @YearMinBefore(duration = "P1Y", moment = "2007")
+        @YearMinBefore(years = 1, moment = "2007")
         YearMonth yearMonth;
 
-        @YearMinBefore(duration = "P1Y", moment = "2007")
+        @YearMinBefore(years = 1, moment = "2007")
         ZonedDateTime zonedDateTime;
     }
 }

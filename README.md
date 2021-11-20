@@ -140,7 +140,7 @@ These annotations apply to the following types:
 
 ### year-validation
 
-Validation constraints for date/time objects that validate only the year. These work just like the constraints of the `date-time-validation` module, except they ignore the month, the day of the month and any time part. The `moment` must be `now` or valid according to `Year.parse`, and the `duration` may only contain a year element.
+Validation constraints for date/time objects that validate only the year. These work just like the constraints of the `date-time-validation` module, except they ignore the month, the day of the month and any time part. The `moment` must be `now` or valid according to `Year.parse`, and the `duration` (renamed to `years`) must be specified as a number of years only. The latter prevents having to write `"P1Y"` instead of just `1`.
 
 These annotations apply to the following types:
 
@@ -275,5 +275,11 @@ YearMonth expiryDate;
 To specify that a date must be next month or later, where the day of the month is irrelevant:
 ```
 @YearMonthMinAfter(duration = "P1M", moment = "now")
+LocalDate date;
+```
+
+To specify that a date must be next year or later, where the actual date is irrelevant:
+```
+@YearMinAfter(years = 1, moment = "now")
 LocalDate date;
 ```
