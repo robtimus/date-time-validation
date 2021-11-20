@@ -55,7 +55,7 @@ These annotations apply to the following types:
 
 ### date-validation
 
-Validation constraints for date/time objects that validate only the date part. These work just like the constraints of the `date-time-validation` module, except it ignores any time part. The `moment` must be valid according to `LocalDate.parse`, and the `duration` may not contain any time elements.
+Validation constraints for date/time objects that validate only the date part. These work just like the constraints of the `date-time-validation` module, except it ignores any time part. The `moment` must be `now` or valid according to `LocalDate.parse`, and the `duration` may not contain any time elements.
 
 Because the date depends on the time zone, each annotation has an optional `zoneId` parameter. This can have the following values:
 
@@ -88,7 +88,7 @@ These annotations apply to the following types:
 
 ### time-validation
 
-Validation constraints for date/time objects that validate only the time part. These work just like the constraints of `date-time-validation` module, except it ignores any date part. The `moment` must be valid according to `LocalTime.parse`, and the `duration` may not contain any date elements.
+Validation constraints for date/time objects that validate only the time part. These work just like the constraints of `date-time-validation` module, except it ignores any date part. The `moment` must be `now` or valid according to `LocalTime.parse`, and the `duration` may not contain any date elements.
 
 Because the time depends on the time zone, each annotation has an optional `zoneId` parameter. This can have the following values:
 
@@ -121,7 +121,7 @@ These annotations apply to the following types:
 
 ### year-month-validation
 
-Validation constraints for date/time objects that validate only the year and month. These work just like the constraints of the `date-time-validation` module, except it ignores the day of the month and any time part. The `moment` must be valid according to `YearMonth.parse`, and the `duration` may only contain year and month elements.
+Validation constraints for date/time objects that validate only the year and month. These work just like the constraints of the `date-time-validation` module, except it ignores the day of the month and any time part. The `moment` must be `now` or valid according to `YearMonth.parse`, and the `duration` may only contain year and month elements.
 
 Because the date, and therefore also the year-month, depends on the time zone, each annotation has an optional `zoneId` parameter. This can have the following values:
 
@@ -132,7 +132,7 @@ Because the date, and therefore also the year-month, depends on the time zone, e
 These annotations apply to the following types:
 
 | Type                     | YearMonthAfter | YearMonthNotAfter | YearMonthMinAfter | YearMonthMaxAfter | YearMonthBefore | YearMonthNotBefore | YearMonthMinBefore | YearMonthMaxBefore |
-|--------------------------|:--------------:|:-----------------:|:-----------------:|:-----------------:|:---------------:|:------------------:|:-------------------:|:-----------------:|
+|--------------------------|:--------------:|:-----------------:|:-----------------:|:-----------------:|:---------------:|:------------------:|:------------------:|:------------------:|
 | Date<sup>1</sup>         |✅              |✅                 |✅                 |✅                 |✅               |✅                  |✅                  |✅                  |
 | Calendar                 |✅              |✅                 |✅                 |✅                 |✅               |✅                  |✅                  |✅                  |
 | DayOfWeek                |❌              |❌                 |❌                 |❌                 |❌               |❌                  |❌                  |❌                  |
@@ -147,6 +147,39 @@ These annotations apply to the following types:
 | Year                     |❌              |❌                 |❌                 |❌                 |❌               |❌                  |❌                  |❌                  |
 | YearMonth<sup>3</sup>    |❌              |❌                 |❌                 |❌                 |❌               |❌                  |❌                  |❌                  |
 | ZonedDateTime            |✅              |✅                 |✅                 |✅                 |✅               |✅                  |✅                  |✅                  |
+
+<sup>1</sup>: because the type has no time zone information, the `zoneId` may not be defined as `provided`.\
+<sup>2</sup>: because no time zone is applicanle for the type, the `zoneId` must be defined as `system`. Since this is the default, the `zoneId` parameter can simply be omitted.\
+<sup>3</sup>: can be validated with annotations from `date-time-validation`.
+
+### year-validation
+
+Validation constraints for date/time objects that validate only the year. These work just like the constraints of the `date-time-validation` module, except it ignores everything but the year. The `moment` must be `now` or valid according to `Year.parse`, and the `duration` may only contain a year element.
+
+Because the date, and therefore also the year, depends on the time zone, each annotation has an optional `zoneId` parameter. This can have the following values:
+
+* `system` (default): the system time zone, as returned by `ZoneId.systemDefault()`, should be used.
+* `provided`: the time zone or offset information from the actual value should be used.
+* A value that is valid according to `ZoneId.of` for an explicit time zone.
+
+These annotations apply to the following types:
+
+| Type                     | YearAfter | YearNotAfter | YearMinAfter | YearMaxAfter | YearBefore | YearNotBefore | YearMinBefore | YearMaxBefore |
+|--------------------------|:---------:|:------------:|:------------:|:------------:|:----------:|:-------------:|:-------------:|:-------------:|
+| Date<sup>1</sup>         |✅         |✅            |✅            |✅            |✅          |✅             |✅             |✅             |
+| Calendar                 |✅         |✅            |✅            |✅            |✅          |✅             |✅             |✅             |
+| DayOfWeek                |❌         |❌            |❌            |❌            |❌          |❌             |❌             |❌             |
+| Instant<sup>1</sup>      |✅         |✅            |✅            |✅            |✅          |✅             |✅             |✅             |
+| LocalDate<sup>2</sup>    |✅         |✅            |✅            |✅            |✅          |✅             |✅             |✅             |
+| LocalDateTime<sup>2</sup>|✅         |✅            |✅            |✅            |✅          |✅             |✅             |✅             |
+| LocalTime                |❌         |❌            |❌            |❌            |❌          |❌             |❌             |❌             |
+| Month                    |❌         |❌            |❌            |❌            |❌          |❌             |❌             |❌             |
+| MonthDay                 |❌         |❌            |❌            |❌            |❌          |❌             |❌             |❌             |
+| OffsetDateTime           |✅         |✅            |✅            |✅            |✅          |✅             |✅             |✅             |
+| OffsetTime               |❌         |❌            |❌            |❌            |❌          |❌             |❌             |❌             |
+| Year<sup>3</sup>         |❌         |❌            |❌            |❌            |❌          |❌             |❌             |❌             |
+| YearMonth<sup>2</sup>    |✅         |✅            |✅            |✅            |✅          |✅             |✅             |✅             |
+| ZonedDateTime            |✅         |✅            |✅            |✅            |✅          |✅             |✅             |✅             |
 
 <sup>1</sup>: because the type has no time zone information, the `zoneId` may not be defined as `provided`.\
 <sup>2</sup>: because no time zone is applicanle for the type, the `zoneId` must be defined as `system`. Since this is the default, the `zoneId` parameter can simply be omitted.\

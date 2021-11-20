@@ -87,7 +87,7 @@ public @interface YearMonthMaxBefore {
     Class<? extends Payload>[] payload() default { };
 
     /**
-     * The minimum amount of time, as an <a href="https://en.wikipedia.org/wiki/ISO_8601" target="_blank">ISO 8601 duration</a>, that the year-month
+     * The maximum amount of time, as an <a href="https://en.wikipedia.org/wiki/ISO_8601" target="_blank">ISO 8601 duration</a>, that the year-month
      * part of a date/time object can be before the value specified in {@link #moment()}.
      * <p>
      * This duration may only have a year and/or month part.

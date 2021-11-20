@@ -1,5 +1,5 @@
 /*
- * YearMonthMaxAfter.java
+ * YearMaxBefore.java
  * Copyright 2021 Rob Spoor
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package com.github.robtimus.validation.yearmonth;
+package com.github.robtimus.validation.year;
 
 import static java.lang.annotation.ElementType.ANNOTATION_TYPE;
 import static java.lang.annotation.ElementType.CONSTRUCTOR;
@@ -28,19 +28,19 @@ import java.lang.annotation.Documented;
 import java.lang.annotation.Repeatable;
 import java.lang.annotation.Retention;
 import java.lang.annotation.Target;
-import java.time.YearMonth;
+import java.time.Year;
 import java.time.ZoneId;
 import javax.validation.ClockProvider;
 import javax.validation.Constraint;
 import javax.validation.Payload;
 import javax.validation.Validator;
 import javax.validation.ValidatorFactory;
-import com.github.robtimus.validation.yearmonth.YearMonthMaxAfter.List;
-import com.github.robtimus.validation.yearmonth.validators.YearMonthMaxAfterValidator;
+import com.github.robtimus.validation.year.YearMaxBefore.List;
+import com.github.robtimus.validation.year.validators.YearMaxBeforeValidator;
 
 /**
- * Validates that the year-month part of a date/time object is not more than a specific duration after a specific moment in time.
- * More specifically, for a date/time object {@code value}, validates that {@code value.yearmonth &lt;= moment + duration}.
+ * Validates that the year part of a date/time object is not more than a specific duration before a specific moment in time.
+ * More specifically, for a date/time object {@code value}, validates that {@code value.year &gt;= moment - duration}.
  * <p>
  * Supported types are:
  * <ul>
@@ -50,6 +50,7 @@ import com.github.robtimus.validation.yearmonth.validators.YearMonthMaxAfterVali
  * <li>{@link java.time.LocalDate}</li>
  * <li>{@link java.time.LocalDateTime}</li>
  * <li>{@link java.time.OffsetDateTime}</li>
+ * <li>{@link java.time.YearMonth}</li>
  * <li>{@link java.time.ZonedDateTime}</li>
  * </ul>
  * <p>
@@ -58,23 +59,24 @@ import com.github.robtimus.validation.yearmonth.validators.YearMonthMaxAfterVali
  * @author Rob Spoor
  */
 @Documented
-@Constraint(validatedBy = { YearMonthMaxAfterValidator.ForDate.class,
-        YearMonthMaxAfterValidator.ForCalendar.class,
-        YearMonthMaxAfterValidator.ForInstant.class,
-        YearMonthMaxAfterValidator.ForLocalDate.class,
-        YearMonthMaxAfterValidator.ForLocalDateTime.class,
-        YearMonthMaxAfterValidator.ForOffsetDateTime.class,
-        YearMonthMaxAfterValidator.ForZonedDateTime.class
+@Constraint(validatedBy = { YearMaxBeforeValidator.ForDate.class,
+        YearMaxBeforeValidator.ForCalendar.class,
+        YearMaxBeforeValidator.ForInstant.class,
+        YearMaxBeforeValidator.ForLocalDate.class,
+        YearMaxBeforeValidator.ForLocalDateTime.class,
+        YearMaxBeforeValidator.ForOffsetDateTime.class,
+        YearMaxBeforeValidator.ForYearMonth.class,
+        YearMaxBeforeValidator.ForZonedDateTime.class
 })
 @Target({ METHOD, FIELD, ANNOTATION_TYPE, CONSTRUCTOR, PARAMETER, TYPE_USE })
 @Retention(RUNTIME)
 @Repeatable(List.class)
-public @interface YearMonthMaxAfter {
+public @interface YearMaxBefore {
 
     /**
      * The error message.
      */
-    String message() default "{com.github.robtimus.validation.yearmonth.YearMonthMaxAfter.message}";
+    String message() default "{com.github.robtimus.validation.year.YearMaxBefore.message}";
 
     /**
      * The validation groups.
@@ -87,16 +89,16 @@ public @interface YearMonthMaxAfter {
     Class<? extends Payload>[] payload() default { };
 
     /**
-     * The maximum amount of time, as an <a href="https://en.wikipedia.org/wiki/ISO_8601" target="_blank">ISO 8601 duration</a>, that the year-month
-     * part of a date/time object can be after the value specified in {@link #moment()}.
+     * The maximum amount of time, as an <a href="https://en.wikipedia.org/wiki/ISO_8601" target="_blank">ISO 8601 duration</a>, that the year part of
+     * a date/time object can be before the value specified in {@link #moment()}.
      * <p>
-     * This duration may only have a year and/or month part.
+     * This duration may only have a year part.
      */
     String duration();
 
     /**
      * The moment against which to validate.
-     * This should either be a value that can be parsed to {@link YearMonth}, or {@code now} to use the current moment in time as defined by the
+     * This should either be a value that can be parsed to {@link Year}, or {@code now} to use the current moment in time as defined by the
      * {@link ClockProvider} attached to the {@link Validator} or {@link ValidatorFactory}. The default {@link ClockProvider} defines the current time
      * according to the virtual machine, applying the current default time zone if needed.
      */
@@ -107,7 +109,7 @@ public @interface YearMonthMaxAfter {
      * from the actual value, or otherwise a value that is accepted by {@link java.time.ZoneId#of(String)} for a specific zone id.
      * <ul>
      * <li>For {@link java.util.Calendar}, {@link java.time.OffsetDateTime} and {@link java.time.ZonedDateTime}, if the zone id is not
-     *     {@code provided}, the value is converted to the given zone id before extracting the year-month.</li>
+     *     {@code provided}, the value is converted to the given zone id before extracting the year.</li>
      * <li>For {@link java.util.Date} and {@link java.time.Instant}, no zone id is available, so {@code provided} is not allowed.</li>
      * <li>For {@link java.time.LocalDate} and {@link java.time.LocalDateTime}, no zone id is applicable, so only the default value ({@code system})
      *     is allowed.</li>
@@ -116,7 +118,7 @@ public @interface YearMonthMaxAfter {
     String zoneId() default "system";
 
     /**
-     * Defines several {@link YearMonthMaxAfter} annotations on the same element.
+     * Defines several {@link YearMaxBefore} annotations on the same element.
      */
     @Target({ METHOD, FIELD, ANNOTATION_TYPE, CONSTRUCTOR, PARAMETER, TYPE_USE })
     @Retention(RUNTIME)
@@ -124,8 +126,8 @@ public @interface YearMonthMaxAfter {
     public @interface List {
 
         /**
-         * The {@link YearMonthMaxAfter} annotations.
+         * The {@link YearMaxBefore} annotations.
          */
-        YearMonthMaxAfter[] value();
+        YearMaxBefore[] value();
     }
 }
