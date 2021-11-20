@@ -1,7 +1,7 @@
-module com.github.robtimus.validation.datetime.month {
+module com.github.robtimus.validation.month {
     requires com.github.robtimus.validation.datetime;
     requires transitive java.validation;
 
-    exports com.github.robtimus.validation.datetime.month;
-    exports com.github.robtimus.validation.datetime.month.validators;
+    exports com.github.robtimus.validation.month;
+    exports com.github.robtimus.validation.month.validators;
 }

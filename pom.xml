@@ -215,23 +215,23 @@
             </group>
             <group>
               <title>date-validation</title>
-              <packages>com.github.robtimus.validation.datetime.date:com.github.robtimus.validation.datetime.date.*</packages>
+              <packages>com.github.robtimus.validation.date:com.github.robtimus.validation.date.*</packages>
             </group>
             <group>
               <title>time-validation</title>
-              <packages>com.github.robtimus.validation.datetime.time:com.github.robtimus.validation.datetime.time.*</packages>
+              <packages>com.github.robtimus.validation.time:com.github.robtimus.validation.time.*</packages>
             </group>
             <group>
               <title>year-month-validation</title>
-              <packages>com.github.robtimus.validation.datetime.yearmonth:com.github.robtimus.validation.datetime.yearmonth.*</packages>
+              <packages>com.github.robtimus.validation.yearmonth:com.github.robtimus.validation.yearmonth.*</packages>
             </group>
             <group>
               <title>day-of-week-validation</title>
-              <packages>com.github.robtimus.validation.datetime.dayofweek:com.github.robtimus.validation.datetime.dayofweek.*</packages>
+              <packages>com.github.robtimus.validation.dayofweek:com.github.robtimus.validation.dayofweek.*</packages>
             </group>
             <group>
               <title>month-validation</title>
-              <packages>com.github.robtimus.validation.datetime.month:com.github.robtimus.validation.datetime.month.*</packages>
+              <packages>com.github.robtimus.validation.month:com.github.robtimus.validation.month.*</packages>
             </group>
           </groups>
         </configuration>
