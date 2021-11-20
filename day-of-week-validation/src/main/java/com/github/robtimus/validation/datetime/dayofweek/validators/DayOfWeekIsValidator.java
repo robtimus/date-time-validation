@@ -27,7 +27,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.function.BiPredicate;
 import java.util.function.Function;
-import javax.validation.ConstraintValidatorContext;
+import javax.validation.ClockProvider;
 import com.github.robtimus.validation.datetime.core.CalendarValidator;
 import com.github.robtimus.validation.datetime.core.DateValidator;
 import com.github.robtimus.validation.datetime.core.PartValidator;
@@ -167,7 +167,7 @@ public final class DayOfWeekIsValidator {
         }
     }
 
-    private static Function<DayOfWeekIs, BiPredicate<DayOfWeek, ConstraintValidatorContext>> predicate() {
+    private static Function<DayOfWeekIs, BiPredicate<DayOfWeek, ClockProvider>> predicate() {
         return annotation -> {
             DayOfWeek allowedValue = annotation.value();
             return (value, context) -> value == allowedValue;

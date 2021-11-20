@@ -28,6 +28,7 @@ import java.util.Objects;
 import java.util.function.BiPredicate;
 import java.util.function.Function;
 import java.util.function.Predicate;
+import javax.validation.ClockProvider;
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
@@ -40,22 +41,24 @@ import javax.validation.ConstraintValidatorContext;
  */
 public abstract class BaseValidator<A extends Annotation, T> implements ConstraintValidator<A, T> {
 
-    private final Function<A, BiPredicate<T, ConstraintValidatorContext>> predicateExtractor;
+    private final Function<A, BiPredicate<T, ClockProvider>> predicateExtractor;
 
     private Function<A, String> messageExtractor;
     private String defaultMessage;
     private String replacementMessageTemplate;
 
-    private BiPredicate<T, ConstraintValidatorContext> predicate;
+    private BiPredicate<T, ClockProvider> predicate;
     private String messageTemplate;
 
     /**
      * Creates a new validator.
      *
      * @param predicateExtractor A function that extracts a predicate from a constraint annotation.
-     *                               This predicate will be used in {@link #isValid(Object, ConstraintValidatorContext)}.
+     *                               This predicate will be called from {@link #isValid(Object, ConstraintValidatorContext)},
+     *                               with as arguments the value to validate and the {@link ClockProvider} returned by
+     *                               {@link ConstraintValidatorContext#getClockProvider()}.
      */
-    protected BaseValidator(Function<A, BiPredicate<T, ConstraintValidatorContext>> predicateExtractor) {
+    protected BaseValidator(Function<A, BiPredicate<T, ClockProvider>> predicateExtractor) {
         this.predicateExtractor = Objects.requireNonNull(predicateExtractor);
     }
 
@@ -100,7 +103,7 @@ public abstract class BaseValidator<A extends Annotation, T> implements Constrai
             return true;
         }
 
-        boolean valid = predicate.test(value, context);
+        boolean valid = predicate.test(value, context.getClockProvider());
         if (!valid && messageTemplate != null) {
             context.disableDefaultConstraintViolation();
             context.buildConstraintViolationWithTemplate(messageTemplate).addConstraintViolation();

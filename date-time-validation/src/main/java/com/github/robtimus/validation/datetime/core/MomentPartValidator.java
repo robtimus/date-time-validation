@@ -36,6 +36,7 @@ import java.util.function.Function;
 
 /**
  * The base for all {@link TemporalAccessor} validators that validate only a specific part of the value against a specific moment in time.
+ * This class combined the functionality of both {@link PartValidator} and {@link MomentValueValidator}.
  *
  * @author Rob Spoor
  * @param <A> The constraint annotation type.

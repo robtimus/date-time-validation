@@ -25,7 +25,7 @@ import java.util.Objects;
 import java.util.function.BiFunction;
 import java.util.function.BiPredicate;
 import java.util.function.Function;
-import javax.validation.ConstraintValidatorContext;
+import javax.validation.ClockProvider;
 
 /**
  * The base for all {@link TemporalAccessor} validators that validate the entire value against a specific moment in time.
@@ -34,7 +34,7 @@ import javax.validation.ConstraintValidatorContext;
  * @param <A> The constraint annotation type.
  * @param <T> The {@link TemporalAccessor} type to validate.
  */
-public abstract class MomentValueValidator<A extends Annotation, T> extends BaseValidator<A, T> {
+public abstract class MomentValueValidator<A extends Annotation, T extends TemporalAccessor> extends ValueValidator<A, T> {
 
     /** A string representing the current date/time. */
     public static final String NOW = "now"; //$NON-NLS-1$
@@ -72,7 +72,7 @@ public abstract class MomentValueValidator<A extends Annotation, T> extends Base
         super(momentPredicate(momentExtractor, momentParser, momentCreator, durationExtractor, durationApplier, validPredicate));
     }
 
-    static <A, T> Function<A, BiPredicate<T, ConstraintValidatorContext>> momentPredicate(
+    static <A, T> Function<A, BiPredicate<T, ClockProvider>> momentPredicate(
             Function<A, String> momentExtractor, Function<String, T> momentParser, Function<Clock, T> momentCreator,
             BiPredicate<T, T> validPredicate) {
 
@@ -84,14 +84,14 @@ public abstract class MomentValueValidator<A extends Annotation, T> extends Base
         return annotation -> {
             T moment = extractMoment(annotation, momentExtractor, momentParser);
 
-            return (value, context) -> {
-                T temporalAccessor = moment != null ? moment : momentCreator.apply(context.getClockProvider().getClock());
+            return (value, clockProvider) -> {
+                T temporalAccessor = moment != null ? moment : momentCreator.apply(clockProvider.getClock());
                 return validPredicate.test(value, temporalAccessor);
             };
         };
     }
 
-    static <A, T> Function<A, BiPredicate<T, ConstraintValidatorContext>> momentPredicate(
+    static <A, T> Function<A, BiPredicate<T, ClockProvider>> momentPredicate(
             Function<A, String> momentExtractor, Function<String, T> momentParser, Function<Clock, T> momentCreator,
             Function<A, String> durationExtractor, BiFunction<T, TemporalAmount, T> durationApplier,
             BiPredicate<T, T> validPredicate) {
@@ -107,8 +107,8 @@ public abstract class MomentValueValidator<A extends Annotation, T> extends Base
             T moment = extractMoment(annotation, momentExtractor, momentParser);
             TemporalAmount duration = extractDuration(annotation, momentCreator, durationExtractor, durationApplier);
 
-            return (value, context) -> {
-                T temporalAccessor = moment != null ? moment : momentCreator.apply(context.getClockProvider().getClock());
+            return (value, clockProvider) -> {
+                T temporalAccessor = moment != null ? moment : momentCreator.apply(clockProvider.getClock());
                 temporalAccessor = durationApplier.apply(temporalAccessor, duration);
                 return validPredicate.test(value, temporalAccessor);
             };

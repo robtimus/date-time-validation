@@ -32,7 +32,7 @@ import java.util.EnumSet;
 import java.util.Set;
 import java.util.function.BiPredicate;
 import java.util.function.Function;
-import javax.validation.ConstraintValidatorContext;
+import javax.validation.ClockProvider;
 import com.github.robtimus.validation.datetime.core.CalendarValidator;
 import com.github.robtimus.validation.datetime.core.DateValidator;
 import com.github.robtimus.validation.datetime.core.PartValidator;
@@ -206,7 +206,7 @@ public final class MonthIsValidator {
         return constraint -> EnumSet.of(valueExtractor.apply(constraint));
     }
 
-    private static Function<MonthIs, BiPredicate<Month, ConstraintValidatorContext>> predicate() {
+    private static Function<MonthIs, BiPredicate<Month, ClockProvider>> predicate() {
         return annotation -> {
             Month allowedValue = annotation.value();
             return (value, context) -> value == allowedValue;

@@ -31,6 +31,7 @@ import java.util.Objects;
 import java.util.function.BiFunction;
 import java.util.function.BiPredicate;
 import java.util.function.Function;
+import javax.validation.ClockProvider;
 import javax.validation.ConstraintValidatorContext;
 
 /**
@@ -49,12 +50,13 @@ public abstract class PartValidator<A extends Annotation, T extends TemporalAcce
      * @param zoneIdExtractor A function that extracts the zone id from a constraint annotation.
      * @param partExtractor A function that extracts a part from a {@link TemporalAccessor}.
      * @param partPredicateExtractor A function that extracts a part predicate from a constraint annotation.
-     *                                   This predicate will be used in {@link #isValid(Object, ConstraintValidatorContext)},
-     *                                   with the extracted part as argument instead of the {@link TemporalAccessor}.
+     *                                   This predicate will be called in {@link #isValid(Object, ConstraintValidatorContext)},
+     *                                   with as arguments the part extracted from the value to validate and the {@link ClockProvider} returned by
+     *                                   {@link ConstraintValidatorContext#getClockProvider()}.
      */
     protected PartValidator(Function<A, String> zoneIdExtractor,
             BiFunction<T, ZoneId, P> partExtractor,
-            Function<A, BiPredicate<P, ConstraintValidatorContext>> partPredicateExtractor) {
+            Function<A, BiPredicate<P, ClockProvider>> partPredicateExtractor) {
 
         super(partPredicate(zoneIdExtractor, partExtractor, partPredicateExtractor));
     }
@@ -79,19 +81,20 @@ public abstract class PartValidator<A extends Annotation, T extends TemporalAcce
      *                          The result should represent the same instant.
      * @param zonedDateTimePartExtractor A function that extracts the part from a {@link ZonedDateTime}.
      * @param partPredicateExtractor A function that extracts a part predicate from a constraint annotation.
-     *                                   This predicate will be used in {@link #isValid(Object, ConstraintValidatorContext)},
-     *                                   with the extracted part as argument instead of the {@link TemporalAccessor}.
+     *                                   This predicate will be called in {@link #isValid(Object, ConstraintValidatorContext)},
+     *                                   with as arguments the part extracted from the value to validate and the {@link ClockProvider} returned by
+     *                                   {@link ConstraintValidatorContext#getClockProvider()}.
      */
     protected PartValidator(Function<A, String> zoneIdExtractor,
             Function<T, P> partExtractor, BiFunction<T, ZoneId, ZonedDateTime> zoneIdApplier, Function<ZonedDateTime, P> zonedDateTimePartExtractor,
-            Function<A, BiPredicate<P, ConstraintValidatorContext>> partPredicateExtractor) {
+            Function<A, BiPredicate<P, ClockProvider>> partPredicateExtractor) {
 
         super(partPredicate(zoneIdExtractor, partExtractor(partExtractor, zoneIdApplier, zonedDateTimePartExtractor), partPredicateExtractor));
     }
 
-    private static <A, T, P> Function<A, BiPredicate<T, ConstraintValidatorContext>> partPredicate(
+    private static <A, T, P> Function<A, BiPredicate<T, ClockProvider>> partPredicate(
             Function<A, String> zoneIdExtractor,
-            BiFunction<T, ZoneId, P> partExtractor, Function<A, BiPredicate<P, ConstraintValidatorContext>> partPredicateExtractor) {
+            BiFunction<T, ZoneId, P> partExtractor, Function<A, BiPredicate<P, ClockProvider>> partPredicateExtractor) {
 
         Objects.requireNonNull(zoneIdExtractor);
         Objects.requireNonNull(partExtractor);
@@ -99,11 +102,11 @@ public abstract class PartValidator<A extends Annotation, T extends TemporalAcce
 
         return annotation -> {
             ZoneId zoneId = extractZoneId(annotation, zoneIdExtractor);
-            BiPredicate<P, ConstraintValidatorContext> partPredicate = partPredicateExtractor.apply(annotation);
+            BiPredicate<P, ClockProvider> partPredicate = partPredicateExtractor.apply(annotation);
 
-            return (value, context) -> {
+            return (value, clockProvider) -> {
                 P part = partExtractor.apply(value, zoneId);
-                return partPredicate.test(part, context);
+                return partPredicate.test(part, clockProvider);
             };
         };
     }
@@ -137,12 +140,13 @@ public abstract class PartValidator<A extends Annotation, T extends TemporalAcce
          *                            It will be wrapped using {@link ZoneIdUtils#systemOnlyZoneId(Function)}.
          * @param partExtractor A function that extracts a part from a {@link TemporalAccessor}.
          * @param partPredicateExtractor A function that extracts a part predicate from a constraint annotation.
-         *                                   This predicate will be used in {@link #isValid(Object, ConstraintValidatorContext)},
-         *                                   with the extracted part as argument instead of the {@link TemporalAccessor}.
+         *                                   This predicate will be called in {@link #isValid(Object, ConstraintValidatorContext)},
+         *                                   with as arguments the part extracted from the value to validate and the {@link ClockProvider} returned by
+         *                                   {@link ConstraintValidatorContext#getClockProvider()}.
          */
         protected WithoutZoneId(Function<A, String> zoneIdExtractor,
                 Function<T, P> partExtractor,
-                Function<A, BiPredicate<P, ConstraintValidatorContext>> partPredicateExtractor) {
+                Function<A, BiPredicate<P, ClockProvider>> partPredicateExtractor) {
 
             super(systemOnlyZoneId(zoneIdExtractor), partExtractor(partExtractor), partPredicateExtractor);
         }
@@ -170,12 +174,13 @@ public abstract class PartValidator<A extends Annotation, T extends TemporalAcce
          *                            It will be wrapped using {@link ZoneIdUtils#nonProvidedZoneId(Function)}.
          * @param partExtractor A function that extracts a part from a {@link ZonedDateTime}.
          * @param partPredicateExtractor A function that extracts a part predicate from a constraint annotation.
-         *                                   This predicate will be used in {@link #isValid(Object, ConstraintValidatorContext)},
-         *                                   with the extracted part as argument instead of the {@link Instant}.
+         *                                   This predicate will be called in {@link #isValid(Object, ConstraintValidatorContext)},
+         *                                   with as arguments the part extracted from the value to validate and the {@link ClockProvider} returned by
+         *                                   {@link ConstraintValidatorContext#getClockProvider()}.
          */
         protected ForInstant(Function<A, String> zoneIdExtractor,
                 Function<ZonedDateTime, P> partExtractor,
-                Function<A, BiPredicate<P, ConstraintValidatorContext>> partPredicateExtractor) {
+                Function<A, BiPredicate<P, ClockProvider>> partPredicateExtractor) {
 
             super(nonProvidedZoneId(zoneIdExtractor), partExtractor(partExtractor), partPredicateExtractor);
         }
@@ -202,12 +207,13 @@ public abstract class PartValidator<A extends Annotation, T extends TemporalAcce
          * @param zoneIdExtractor A function that extracts the zone id from a constraint annotation.
          * @param partExtractor A function that extracts a part from a {@link TemporalAccessor}.
          * @param partPredicateExtractor A function that extracts a part predicate from a constraint annotation.
-         *                                   This predicate will be used in {@link #isValid(Object, ConstraintValidatorContext)},
-         *                                   with the extracted part as argument instead of the {@link TemporalAccessor}.
+         *                                   This predicate will be called in {@link #isValid(Object, ConstraintValidatorContext)},
+         *                                   with as arguments the part extracted from the value to validate and the {@link ClockProvider} returned by
+         *                                   {@link ConstraintValidatorContext#getClockProvider()}.
          */
         protected ForZonedDateTime(Function<A, String> zoneIdExtractor,
                 Function<ZonedDateTime, P> partExtractor,
-                Function<A, BiPredicate<P, ConstraintValidatorContext>> partPredicateExtractor) {
+                Function<A, BiPredicate<P, ClockProvider>> partPredicateExtractor) {
 
             super(zoneIdExtractor, partExtractor, ZonedDateTime::withZoneSameInstant, partExtractor, partPredicateExtractor);
         }

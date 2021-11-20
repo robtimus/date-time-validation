@@ -29,7 +29,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.function.BiPredicate;
 import java.util.function.Function;
-import javax.validation.ConstraintValidatorContext;
+import javax.validation.ClockProvider;
 import com.github.robtimus.validation.datetime.core.CalendarValidator;
 import com.github.robtimus.validation.datetime.core.DateValidator;
 import com.github.robtimus.validation.datetime.core.PartValidator;
@@ -199,7 +199,7 @@ public final class MonthBeforeValidator {
         }
     }
 
-    private static Function<MonthBefore, BiPredicate<Month, ConstraintValidatorContext>> predicate() {
+    private static Function<MonthBefore, BiPredicate<Month, ClockProvider>> predicate() {
         return annotation -> {
             Month boundary = annotation.value();
             return (value, context) -> value.compareTo(boundary) < 0;
