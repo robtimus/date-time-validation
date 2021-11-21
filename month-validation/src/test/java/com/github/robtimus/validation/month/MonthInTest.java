@@ -61,14 +61,16 @@ class MonthInTest extends AbstractConstraintTest {
             WithZoneId() {
                 super(TestClassWithZoneId.class, "date",
                         Arrays.asList(
-                                Date.from(utcInstantAtOffset("2007-06-01T00:50:15.00Z", 1)),
-                                Date.from(utcInstantAtOffset("2007-11-01T00:50:15.00Z", 1))
+                                Date.from(utcInstantAtOffset("2007-05-01T01:00:00Z", 1)),
+                                Date.from(utcInstantAtOffset("2007-06-01T00:59:59.999Z", 1)),
+                                Date.from(utcInstantAtOffset("2007-10-01T01:00:00Z", 1)),
+                                Date.from(utcInstantAtOffset("2007-11-01T00:59:59.999Z", 1))
                         ),
                         Arrays.asList(
-                                Date.from(utcInstantAtOffset("2007-05-01T00:50:15.00Z", 1)),
-                                Date.from(utcInstantAtOffset("2007-06-01T01:50:15.00Z", 1)),
-                                Date.from(utcInstantAtOffset("2007-10-01T00:50:15.00Z", 1)),
-                                Date.from(utcInstantAtOffset("2007-11-01T01:50:15.00Z", 1))
+                                Date.from(utcInstantAtOffset("2007-05-01T00:59:59.999Z", 1)),
+                                Date.from(utcInstantAtOffset("2007-06-01T01:00:00Z", 1)),
+                                Date.from(utcInstantAtOffset("2007-10-01T00:59:59.999Z", 1)),
+                                Date.from(utcInstantAtOffset("2007-11-01T01:00:00Z", 1))
                         ));
             }
         }
@@ -80,14 +82,16 @@ class MonthInTest extends AbstractConstraintTest {
             WithSystemZoneId() {
                 super(TestClassWithSystemZoneId.class, "date",
                         Arrays.asList(
-                                Date.from(utcInstantAtOffsetAfterSystem("2007-06-01T00:50:15.00Z", 1)),
-                                Date.from(utcInstantAtOffsetAfterSystem("2007-11-01T00:50:15.00Z", 1))
+                                Date.from(utcInstantAtOffsetAfterSystem("2007-05-01T01:00:00Z", 1)),
+                                Date.from(utcInstantAtOffsetAfterSystem("2007-06-01T00:59:59.999Z", 1)),
+                                Date.from(utcInstantAtOffsetAfterSystem("2007-10-01T01:00:00Z", 1)),
+                                Date.from(utcInstantAtOffsetAfterSystem("2007-11-01T00:59:59.999Z", 1))
                         ),
                         Arrays.asList(
-                                Date.from(utcInstantAtOffsetAfterSystem("2007-05-01T00:50:15.00Z", 1)),
-                                Date.from(utcInstantAtOffsetAfterSystem("2007-06-01T01:50:15.00Z", 1)),
-                                Date.from(utcInstantAtOffsetAfterSystem("2007-10-01T00:50:15.00Z", 1)),
-                                Date.from(utcInstantAtOffsetAfterSystem("2007-11-01T01:50:15.00Z", 1))
+                                Date.from(utcInstantAtOffsetAfterSystem("2007-05-01T00:59:59.999Z", 1)),
+                                Date.from(utcInstantAtOffsetAfterSystem("2007-06-01T01:00:00Z", 1)),
+                                Date.from(utcInstantAtOffsetAfterSystem("2007-10-01T00:59:59.999Z", 1)),
+                                Date.from(utcInstantAtOffsetAfterSystem("2007-11-01T01:00:00Z", 1))
                         ));
             }
         }
@@ -100,12 +104,14 @@ class MonthInTest extends AbstractConstraintTest {
                 super(TestClassWithNoValues.class, "date",
                         Collections.emptyList(),
                         Arrays.asList(
-                                Date.from(utcInstantAtOffsetAfterSystem("2007-06-01T00:50:15.00Z", 1)),
-                                Date.from(utcInstantAtOffsetAfterSystem("2007-11-01T00:50:15.00Z", 1)),
-                                Date.from(utcInstantAtOffsetAfterSystem("2007-05-01T00:50:15.00Z", 1)),
-                                Date.from(utcInstantAtOffsetAfterSystem("2007-06-01T01:50:15.00Z", 1)),
-                                Date.from(utcInstantAtOffsetAfterSystem("2007-10-01T00:50:15.00Z", 1)),
-                                Date.from(utcInstantAtOffsetAfterSystem("2007-11-01T01:50:15.00Z", 1))
+                                Date.from(utcInstantAtOffsetAfterSystem("2007-05-01T00:59:59.999Z", 1)),
+                                Date.from(utcInstantAtOffsetAfterSystem("2007-05-01T01:00:00Z", 1)),
+                                Date.from(utcInstantAtOffsetAfterSystem("2007-06-01T00:59:59.999Z", 1)),
+                                Date.from(utcInstantAtOffsetAfterSystem("2007-06-01T01:00:00Z", 1)),
+                                Date.from(utcInstantAtOffsetAfterSystem("2007-10-01T00:59:59.999Z", 1)),
+                                Date.from(utcInstantAtOffsetAfterSystem("2007-10-01T01:00:00Z", 1)),
+                                Date.from(utcInstantAtOffsetAfterSystem("2007-11-01T00:59:59.999Z", 1)),
+                                Date.from(utcInstantAtOffsetAfterSystem("2007-11-01T01:00:00Z", 1))
                         ));
             }
 
@@ -127,14 +133,16 @@ class MonthInTest extends AbstractConstraintTest {
             WithProvidedZoneId() {
                 super(TestClassWithProvidedZoneId.class, "calendar",
                         Arrays.asList(
-                                GregorianCalendar.from(ZonedDateTime.parse("2007-05-01T00:50:15+02:00[Europe/Paris]")),
-                                GregorianCalendar.from(ZonedDateTime.parse("2007-10-01T00:50:15+02:00[Europe/Paris]"))
+                                GregorianCalendar.from(ZonedDateTime.parse("2007-05-01T00:00:00+02:00[Europe/Paris]")),
+                                GregorianCalendar.from(ZonedDateTime.parse("2007-05-31T23:59:59.999+02:00[Europe/Paris]")),
+                                GregorianCalendar.from(ZonedDateTime.parse("2007-10-01T00:00:00+02:00[Europe/Paris]")),
+                                GregorianCalendar.from(ZonedDateTime.parse("2007-10-01T23:59:59.999+02:00[Europe/Paris]"))
                         ),
                         Arrays.asList(
-                                GregorianCalendar.from(ZonedDateTime.parse("2007-04-30T23:50:15+02:00[Europe/Paris]")),
-                                GregorianCalendar.from(ZonedDateTime.parse("2007-06-01T00:50:15+02:00[Europe/Paris]")),
-                                GregorianCalendar.from(ZonedDateTime.parse("2007-09-30T23:50:15+02:00[Europe/Paris]")),
-                                GregorianCalendar.from(ZonedDateTime.parse("2007-11-01T00:50:15+01:00[Europe/Paris]"))
+                                GregorianCalendar.from(ZonedDateTime.parse("2007-04-30T23:59:59.999+02:00[Europe/Paris]")),
+                                GregorianCalendar.from(ZonedDateTime.parse("2007-06-01T00:00:00+02:00[Europe/Paris]")),
+                                GregorianCalendar.from(ZonedDateTime.parse("2007-09-30T23:59:59.999+02:00[Europe/Paris]")),
+                                GregorianCalendar.from(ZonedDateTime.parse("2007-11-01T00:00:00+01:00[Europe/Paris]"))
                         ));
             }
         }
@@ -146,14 +154,16 @@ class MonthInTest extends AbstractConstraintTest {
             WithZoneId() {
                 super(TestClassWithZoneId.class, "calendar",
                         Arrays.asList(
-                                GregorianCalendar.from(ZonedDateTime.parse("2007-06-01T01:50:15+02:00[Europe/Paris]")),
-                                GregorianCalendar.from(ZonedDateTime.parse("2007-11-01T00:50:15+01:00[Europe/Paris]"))
+                                GregorianCalendar.from(ZonedDateTime.parse("2007-05-01T02:00:00+02:00[Europe/Paris]")),
+                                GregorianCalendar.from(ZonedDateTime.parse("2007-06-01T01:59:59.999+02:00[Europe/Paris]")),
+                                GregorianCalendar.from(ZonedDateTime.parse("2007-10-01T02:00:00+02:00[Europe/Paris]")),
+                                GregorianCalendar.from(ZonedDateTime.parse("2007-11-01T00:59:59.999+01:00[Europe/Paris]"))
                         ),
                         Arrays.asList(
-                                GregorianCalendar.from(ZonedDateTime.parse("2007-05-01T01:50:15+02:00[Europe/Paris]")),
-                                GregorianCalendar.from(ZonedDateTime.parse("2007-06-01T02:50:15+02:00[Europe/Paris]")),
-                                GregorianCalendar.from(ZonedDateTime.parse("2007-10-01T01:50:15+02:00[Europe/Paris]")),
-                                GregorianCalendar.from(ZonedDateTime.parse("2007-11-01T01:50:15+01:00[Europe/Paris]"))
+                                GregorianCalendar.from(ZonedDateTime.parse("2007-05-01T01:59:59.999+02:00[Europe/Paris]")),
+                                GregorianCalendar.from(ZonedDateTime.parse("2007-06-01T02:00:00+02:00[Europe/Paris]")),
+                                GregorianCalendar.from(ZonedDateTime.parse("2007-10-01T01:59:59.999+02:00[Europe/Paris]")),
+                                GregorianCalendar.from(ZonedDateTime.parse("2007-11-01T01:00:00+01:00[Europe/Paris]"))
                         ));
             }
         }
@@ -165,14 +175,16 @@ class MonthInTest extends AbstractConstraintTest {
             WithSystemZoneId() {
                 super(TestClassWithSystemZoneId.class, "calendar",
                         Arrays.asList(
-                                GregorianCalendar.from(zonedDateTimeAtOffsetAfterSystem("2007-06-01T00:50:15+02:00[Europe/Paris]", 1)),
-                                GregorianCalendar.from(zonedDateTimeAtOffsetAfterSystem("2007-11-01T00:50:15+01:00[Europe/Paris]", 1))
+                                GregorianCalendar.from(zonedDateTimeAtOffsetAfterSystem("2007-05-01T01:00:00+02:00[Europe/Paris]", 1)),
+                                GregorianCalendar.from(zonedDateTimeAtOffsetAfterSystem("2007-06-01T00:59:59.999+02:00[Europe/Paris]", 1)),
+                                GregorianCalendar.from(zonedDateTimeAtOffsetAfterSystem("2007-10-01T01:00:00+02:00[Europe/Paris]", 1)),
+                                GregorianCalendar.from(zonedDateTimeAtOffsetAfterSystem("2007-11-01T00:59:59.999+01:00[Europe/Paris]", 1))
                         ),
                         Arrays.asList(
-                                GregorianCalendar.from(zonedDateTimeAtOffsetAfterSystem("2007-05-01T00:50:15+02:00[Europe/Paris]", 1)),
-                                GregorianCalendar.from(zonedDateTimeAtOffsetAfterSystem("2007-06-01T01:50:15+02:00[Europe/Paris]", 1)),
-                                GregorianCalendar.from(zonedDateTimeAtOffsetAfterSystem("2007-10-01T00:50:15+02:00[Europe/Paris]", 1)),
-                                GregorianCalendar.from(zonedDateTimeAtOffsetAfterSystem("2007-11-01T01:50:15+01:00[Europe/Paris]", 1))
+                                GregorianCalendar.from(zonedDateTimeAtOffsetAfterSystem("2007-05-01T00:59:59.999+02:00[Europe/Paris]", 1)),
+                                GregorianCalendar.from(zonedDateTimeAtOffsetAfterSystem("2007-06-01T01:00:00+02:00[Europe/Paris]", 1)),
+                                GregorianCalendar.from(zonedDateTimeAtOffsetAfterSystem("2007-10-01T00:59:59.999+02:00[Europe/Paris]", 1)),
+                                GregorianCalendar.from(zonedDateTimeAtOffsetAfterSystem("2007-11-01T01:00:00+01:00[Europe/Paris]", 1))
                         ));
             }
         }
@@ -185,12 +197,14 @@ class MonthInTest extends AbstractConstraintTest {
                 super(TestClassWithNoValues.class, "calendar",
                         Collections.emptyList(),
                         Arrays.asList(
-                                GregorianCalendar.from(zonedDateTimeAtOffsetAfterSystem("2007-06-01T00:50:15+02:00[Europe/Paris]", 1)),
-                                GregorianCalendar.from(zonedDateTimeAtOffsetAfterSystem("2007-11-01T00:50:15+01:00[Europe/Paris]", 1)),
-                                GregorianCalendar.from(zonedDateTimeAtOffsetAfterSystem("2007-05-01T00:50:15+02:00[Europe/Paris]", 1)),
-                                GregorianCalendar.from(zonedDateTimeAtOffsetAfterSystem("2007-06-01T01:50:15+02:00[Europe/Paris]", 1)),
-                                GregorianCalendar.from(zonedDateTimeAtOffsetAfterSystem("2007-10-01T00:50:15+02:00[Europe/Paris]", 1)),
-                                GregorianCalendar.from(zonedDateTimeAtOffsetAfterSystem("2007-11-01T01:50:15+01:00[Europe/Paris]", 1))
+                                GregorianCalendar.from(zonedDateTimeAtOffsetAfterSystem("2007-05-01T00:59:59.999+02:00[Europe/Paris]", 1)),
+                                GregorianCalendar.from(zonedDateTimeAtOffsetAfterSystem("2007-05-01T01:00:00+02:00[Europe/Paris]", 1)),
+                                GregorianCalendar.from(zonedDateTimeAtOffsetAfterSystem("2007-06-01T00:59:59.999+02:00[Europe/Paris]", 1)),
+                                GregorianCalendar.from(zonedDateTimeAtOffsetAfterSystem("2007-06-01T01:00:00+02:00[Europe/Paris]", 1)),
+                                GregorianCalendar.from(zonedDateTimeAtOffsetAfterSystem("2007-10-01T00:59:59.999+02:00[Europe/Paris]", 1)),
+                                GregorianCalendar.from(zonedDateTimeAtOffsetAfterSystem("2007-10-01T01:00:00+02:00[Europe/Paris]", 1)),
+                                GregorianCalendar.from(zonedDateTimeAtOffsetAfterSystem("2007-11-01T00:59:59.999+01:00[Europe/Paris]", 1)),
+                                GregorianCalendar.from(zonedDateTimeAtOffsetAfterSystem("2007-11-01T01:00:00+01:00[Europe/Paris]", 1))
                         ));
             }
 
@@ -216,14 +230,16 @@ class MonthInTest extends AbstractConstraintTest {
             WithZoneId() {
                 super(TestClassWithZoneId.class, "instant",
                         Arrays.asList(
-                                utcInstantAtOffset("2007-06-01T00:50:15.00Z", 1),
-                                utcInstantAtOffset("2007-11-01T00:50:15.00Z", 1)
+                                utcInstantAtOffset("2007-05-01T01:00:00Z", 1),
+                                utcInstantAtOffset("2007-06-01T00:59:59.999999999Z", 1),
+                                utcInstantAtOffset("2007-10-01T01:00:00Z", 1),
+                                utcInstantAtOffset("2007-11-01T00:59:59.999999999Z", 1)
                         ),
                         Arrays.asList(
-                                utcInstantAtOffset("2007-05-01T00:50:15.00Z", 1),
-                                utcInstantAtOffset("2007-06-01T01:50:15.00Z", 1),
-                                utcInstantAtOffset("2007-10-01T00:50:15.00Z", 1),
-                                utcInstantAtOffset("2007-11-01T01:50:15.00Z", 1)
+                                utcInstantAtOffset("2007-05-01T00:59:59.999999999Z", 1),
+                                utcInstantAtOffset("2007-06-01T01:00:00Z", 1),
+                                utcInstantAtOffset("2007-10-01T00:59:59.999999999Z", 1),
+                                utcInstantAtOffset("2007-11-01T01:00:00Z", 1)
                         ));
             }
         }
@@ -235,14 +251,16 @@ class MonthInTest extends AbstractConstraintTest {
             WithSystemZoneId() {
                 super(TestClassWithSystemZoneId.class, "instant",
                         Arrays.asList(
-                                utcInstantAtOffsetAfterSystem("2007-06-01T00:50:15.00Z", 1),
-                                utcInstantAtOffsetAfterSystem("2007-11-01T00:50:15.00Z", 1)
+                                utcInstantAtOffsetAfterSystem("2007-05-01T01:00:00Z", 1),
+                                utcInstantAtOffsetAfterSystem("2007-06-01T00:59:59.999999999Z", 1),
+                                utcInstantAtOffsetAfterSystem("2007-10-01T01:00:00Z", 1),
+                                utcInstantAtOffsetAfterSystem("2007-11-01T00:59:59.999999999Z", 1)
                         ),
                         Arrays.asList(
-                                utcInstantAtOffsetAfterSystem("2007-05-01T00:50:15.00Z", 1),
-                                utcInstantAtOffsetAfterSystem("2007-06-01T01:50:15.00Z", 1),
-                                utcInstantAtOffsetAfterSystem("2007-10-01T00:50:15.00Z", 1),
-                                utcInstantAtOffsetAfterSystem("2007-11-01T01:50:15.00Z", 1)
+                                utcInstantAtOffsetAfterSystem("2007-05-01T00:59:59.999999999Z", 1),
+                                utcInstantAtOffsetAfterSystem("2007-06-01T01:00:00Z", 1),
+                                utcInstantAtOffsetAfterSystem("2007-10-01T00:59:59.999999999Z", 1),
+                                utcInstantAtOffsetAfterSystem("2007-11-01T01:00:00Z", 1)
                         ));
             }
         }
@@ -255,12 +273,14 @@ class MonthInTest extends AbstractConstraintTest {
                 super(TestClassWithNoValues.class, "instant",
                         Collections.emptyList(),
                         Arrays.asList(
-                                utcInstantAtOffsetAfterSystem("2007-06-01T00:50:15.00Z", 1),
-                                utcInstantAtOffsetAfterSystem("2007-11-01T00:50:15.00Z", 1),
-                                utcInstantAtOffsetAfterSystem("2007-05-01T00:50:15.00Z", 1),
-                                utcInstantAtOffsetAfterSystem("2007-06-01T01:50:15.00Z", 1),
-                                utcInstantAtOffsetAfterSystem("2007-10-01T00:50:15.00Z", 1),
-                                utcInstantAtOffsetAfterSystem("2007-11-01T01:50:15.00Z", 1)
+                                utcInstantAtOffsetAfterSystem("2007-05-01T00:59:59.999999999Z", 1),
+                                utcInstantAtOffsetAfterSystem("2007-05-01T01:00:00Z", 1),
+                                utcInstantAtOffsetAfterSystem("2007-06-01T00:59:59.999999999Z", 1),
+                                utcInstantAtOffsetAfterSystem("2007-06-01T01:00:00Z", 1),
+                                utcInstantAtOffsetAfterSystem("2007-10-01T00:59:59.999999999Z", 1),
+                                utcInstantAtOffsetAfterSystem("2007-10-01T01:00:00Z", 1),
+                                utcInstantAtOffsetAfterSystem("2007-11-01T00:59:59.999999999Z", 1),
+                                utcInstantAtOffsetAfterSystem("2007-11-01T01:00:00Z", 1)
                         ));
             }
 
@@ -286,7 +306,9 @@ class MonthInTest extends AbstractConstraintTest {
             WithSystemZoneId() {
                 super(TestClassWithSystemZoneId.class, "localDate",
                         Arrays.asList(
+                                LocalDate.parse("2007-05-01"),
                                 LocalDate.parse("2007-05-31"),
+                                LocalDate.parse("2007-10-01"),
                                 LocalDate.parse("2007-10-31")
                         ),
                         Arrays.asList(
@@ -306,11 +328,13 @@ class MonthInTest extends AbstractConstraintTest {
                 super(TestClassWithNoValues.class, "localDate",
                         Collections.emptyList(),
                         Arrays.asList(
-                                LocalDate.parse("2007-05-31"),
-                                LocalDate.parse("2007-10-31"),
                                 LocalDate.parse("2007-04-30"),
+                                LocalDate.parse("2007-05-01"),
+                                LocalDate.parse("2007-05-31"),
                                 LocalDate.parse("2007-06-01"),
                                 LocalDate.parse("2007-09-30"),
+                                LocalDate.parse("2007-10-01"),
+                                LocalDate.parse("2007-10-31"),
                                 LocalDate.parse("2007-11-01")
                         ));
             }
@@ -337,14 +361,16 @@ class MonthInTest extends AbstractConstraintTest {
             WithSystemZoneId() {
                 super(TestClassWithSystemZoneId.class, "localDateTime",
                         Arrays.asList(
-                                LocalDateTime.parse("2007-05-01T00:50:15"),
-                                LocalDateTime.parse("2007-10-01T00:50:15")
+                                LocalDateTime.parse("2007-05-01T00:00:00"),
+                                LocalDateTime.parse("2007-05-31T23:59:59.999999999"),
+                                LocalDateTime.parse("2007-10-01T00:00:00"),
+                                LocalDateTime.parse("2007-10-31T23:59:59.999999999")
                         ),
                         Arrays.asList(
-                                LocalDateTime.parse("2007-04-30T23:50:15"),
-                                LocalDateTime.parse("2007-06-01T00:50:15"),
-                                LocalDateTime.parse("2007-09-30T23:50:15"),
-                                LocalDateTime.parse("2007-11-01T00:50:15")
+                                LocalDateTime.parse("2007-04-30T23:59:59.999999999"),
+                                LocalDateTime.parse("2007-06-01T00:00:00"),
+                                LocalDateTime.parse("2007-09-30T23:59:59.999999999"),
+                                LocalDateTime.parse("2007-11-01T00:00:00")
                         ));
             }
         }
@@ -357,12 +383,14 @@ class MonthInTest extends AbstractConstraintTest {
                 super(TestClassWithNoValues.class, "localDateTime",
                         Collections.emptyList(),
                         Arrays.asList(
-                                LocalDateTime.parse("2007-05-01T00:50:15"),
-                                LocalDateTime.parse("2007-10-01T00:50:15"),
-                                LocalDateTime.parse("2007-04-30T23:50:15"),
-                                LocalDateTime.parse("2007-06-01T00:50:15"),
-                                LocalDateTime.parse("2007-09-30T23:50:15"),
-                                LocalDateTime.parse("2007-11-01T00:50:15")
+                                LocalDateTime.parse("2007-04-30T23:59:59.999999999"),
+                                LocalDateTime.parse("2007-05-01T00:00:00"),
+                                LocalDateTime.parse("2007-05-31T23:59:59.999999999"),
+                                LocalDateTime.parse("2007-06-01T00:00:00"),
+                                LocalDateTime.parse("2007-09-30T23:59:59.999999999"),
+                                LocalDateTime.parse("2007-10-01T00:00:00"),
+                                LocalDateTime.parse("2007-10-31T23:59:59.999999999"),
+                                LocalDateTime.parse("2007-11-01T00:00:00")
                         ));
             }
 
@@ -409,11 +437,11 @@ class MonthInTest extends AbstractConstraintTest {
                 super(TestClassWithNoValues.class, "month",
                         Collections.emptyList(),
                         Arrays.asList(
-                                Month.MAY,
-                                Month.OCTOBER,
                                 Month.APRIL,
                                 Month.JUNE,
+                                Month.MAY,
                                 Month.SEPTEMBER,
+                                Month.OCTOBER,
                                 Month.NOVEMBER
                         ),
                         "must be one of %s");
@@ -441,7 +469,9 @@ class MonthInTest extends AbstractConstraintTest {
             WithSystemZoneId() {
                 super(TestClassWithSystemZoneId.class, "monthDay",
                         Arrays.asList(
+                                MonthDay.parse("--05-01"),
                                 MonthDay.parse("--05-31"),
+                                MonthDay.parse("--10-01"),
                                 MonthDay.parse("--10-31")
                         ),
                         Arrays.asList(
@@ -461,11 +491,13 @@ class MonthInTest extends AbstractConstraintTest {
                 super(TestClassWithNoValues.class, "monthDay",
                         Collections.emptyList(),
                         Arrays.asList(
-                                MonthDay.parse("--05-31"),
-                                MonthDay.parse("--10-31"),
                                 MonthDay.parse("--04-30"),
+                                MonthDay.parse("--05-01"),
+                                MonthDay.parse("--05-31"),
                                 MonthDay.parse("--06-01"),
                                 MonthDay.parse("--09-30"),
+                                MonthDay.parse("--10-01"),
+                                MonthDay.parse("--10-31"),
                                 MonthDay.parse("--11-01")
                         ));
             }
@@ -488,14 +520,16 @@ class MonthInTest extends AbstractConstraintTest {
             WithProvidedZoneId() {
                 super(TestClassWithProvidedZoneId.class, "offsetDateTime",
                         Arrays.asList(
-                                OffsetDateTime.parse("2007-05-01T00:50:15+01:00"),
-                                OffsetDateTime.parse("2007-10-01T00:50:15+01:00")
+                                OffsetDateTime.parse("2007-05-01T00:00:00+01:00"),
+                                OffsetDateTime.parse("2007-05-31T23:59:59.999999999+01:00"),
+                                OffsetDateTime.parse("2007-10-01T00:00:00+01:00"),
+                                OffsetDateTime.parse("2007-10-31T23:59:59.999999999+01:00")
                         ),
                         Arrays.asList(
-                                OffsetDateTime.parse("2007-04-30T23:50:15+01:00"),
-                                OffsetDateTime.parse("2007-06-01T00:50:15+01:00"),
-                                OffsetDateTime.parse("2007-09-30T23:50:15+01:00"),
-                                OffsetDateTime.parse("2007-11-01T00:50:15+01:00")
+                                OffsetDateTime.parse("2007-04-30T23:59:59.999999999+01:00"),
+                                OffsetDateTime.parse("2007-06-01T00:00:00+01:00"),
+                                OffsetDateTime.parse("2007-09-30T23:59:59.999999999+01:00"),
+                                OffsetDateTime.parse("2007-11-01T00:00:00+01:00")
                         ));
             }
         }
@@ -507,14 +541,16 @@ class MonthInTest extends AbstractConstraintTest {
             WithZoneId() {
                 super(TestClassWithZoneId.class, "offsetDateTime",
                         Arrays.asList(
-                                OffsetDateTime.parse("2007-06-01T00:15:30+01:00"),
-                                OffsetDateTime.parse("2007-11-01T00:15:30+01:00")
+                                OffsetDateTime.parse("2007-05-01T01:00:00+01:00"),
+                                OffsetDateTime.parse("2007-06-01T00:59:59.999999999+01:00"),
+                                OffsetDateTime.parse("2007-10-01T01:00:00+01:00"),
+                                OffsetDateTime.parse("2007-11-01T00:59:59.999999999+01:00")
                         ),
                         Arrays.asList(
-                                OffsetDateTime.parse("2007-05-01T00:50:15+01:00"),
-                                OffsetDateTime.parse("2007-06-01T01:50:15+01:00"),
-                                OffsetDateTime.parse("2007-10-01T00:50:15+01:00"),
-                                OffsetDateTime.parse("2007-11-01T01:50:15+01:00")
+                                OffsetDateTime.parse("2007-05-01T00:59:59.999999999+01:00"),
+                                OffsetDateTime.parse("2007-06-01T01:00:00+01:00"),
+                                OffsetDateTime.parse("2007-10-01T00:59:59.999999999+01:00"),
+                                OffsetDateTime.parse("2007-11-01T01:00:00+01:00")
                         ));
             }
         }
@@ -526,14 +562,16 @@ class MonthInTest extends AbstractConstraintTest {
             WithSystemZoneId() {
                 super(TestClassWithSystemZoneId.class, "offsetDateTime",
                         Arrays.asList(
-                                offsetDateTimeAtOffsetAfterSystem("2007-06-01T00:15:30+01:00", 1),
-                                offsetDateTimeAtOffsetAfterSystem("2007-11-01T00:15:30+01:00", 1)
+                                offsetDateTimeAtOffsetAfterSystem("2007-05-01T01:00:00+01:00", 1),
+                                offsetDateTimeAtOffsetAfterSystem("2007-06-01T00:59:59.999999999+01:00", 1),
+                                offsetDateTimeAtOffsetAfterSystem("2007-10-01T01:00:00+01:00", 1),
+                                offsetDateTimeAtOffsetAfterSystem("2007-11-01T00:59:59.999999999+01:00", 1)
                         ),
                         Arrays.asList(
-                                offsetDateTimeAtOffsetAfterSystem("2007-05-01T00:50:15+01:00", 1),
-                                offsetDateTimeAtOffsetAfterSystem("2007-06-01T01:50:15+01:00", 1),
-                                offsetDateTimeAtOffsetAfterSystem("2007-10-01T00:50:15+01:00", 1),
-                                offsetDateTimeAtOffsetAfterSystem("2007-11-01T01:50:15+01:00", 1)
+                                offsetDateTimeAtOffsetAfterSystem("2007-05-01T00:59:59.999999999+01:00", 1),
+                                offsetDateTimeAtOffsetAfterSystem("2007-06-01T01:00:00+01:00", 1),
+                                offsetDateTimeAtOffsetAfterSystem("2007-10-01T00:59:59.999999999+01:00", 1),
+                                offsetDateTimeAtOffsetAfterSystem("2007-11-01T01:00:00+01:00", 1)
                         ));
             }
         }
@@ -546,12 +584,14 @@ class MonthInTest extends AbstractConstraintTest {
                 super(TestClassWithNoValues.class, "offsetDateTime",
                         Collections.emptyList(),
                         Arrays.asList(
-                                offsetDateTimeAtOffsetAfterSystem("2007-06-01T00:15:30+01:00", 1),
-                                offsetDateTimeAtOffsetAfterSystem("2007-11-01T00:15:30+01:00", 1),
-                                offsetDateTimeAtOffsetAfterSystem("2007-05-01T00:50:15+01:00", 1),
-                                offsetDateTimeAtOffsetAfterSystem("2007-06-01T01:50:15+01:00", 1),
-                                offsetDateTimeAtOffsetAfterSystem("2007-10-01T00:50:15+01:00", 1),
-                                offsetDateTimeAtOffsetAfterSystem("2007-11-01T01:50:15+01:00", 1)
+                                offsetDateTimeAtOffsetAfterSystem("2007-05-01T00:59:59.999999999+01:00", 1),
+                                offsetDateTimeAtOffsetAfterSystem("2007-05-01T01:00:00+01:00", 1),
+                                offsetDateTimeAtOffsetAfterSystem("2007-06-01T00:59:59.999999999+01:00", 1),
+                                offsetDateTimeAtOffsetAfterSystem("2007-06-01T01:00:00+01:00", 1),
+                                offsetDateTimeAtOffsetAfterSystem("2007-10-01T00:59:59.999999999+01:00", 1),
+                                offsetDateTimeAtOffsetAfterSystem("2007-10-01T01:00:00+01:00", 1),
+                                offsetDateTimeAtOffsetAfterSystem("2007-11-01T00:59:59.999999999+01:00", 1),
+                                offsetDateTimeAtOffsetAfterSystem("2007-11-01T01:00:00+01:00", 1)
                         ));
             }
 
@@ -597,11 +637,11 @@ class MonthInTest extends AbstractConstraintTest {
                 super(TestClassWithNoValues.class, "yearMonth",
                         Collections.emptyList(),
                         Arrays.asList(
-                                YearMonth.parse("2007-05"),
-                                YearMonth.parse("2007-10"),
                                 YearMonth.parse("2007-04"),
+                                YearMonth.parse("2007-05"),
                                 YearMonth.parse("2007-06"),
                                 YearMonth.parse("2007-09"),
+                                YearMonth.parse("2007-10"),
                                 YearMonth.parse("2007-11")
                         ));
             }
@@ -624,14 +664,16 @@ class MonthInTest extends AbstractConstraintTest {
             WithProvidedZoneId() {
                 super(TestClassWithProvidedZoneId.class, "zonedDateTime",
                         Arrays.asList(
-                                ZonedDateTime.parse("2007-05-01T00:50:15+02:00[Europe/Paris]"),
-                                ZonedDateTime.parse("2007-10-01T00:50:15+02:00[Europe/Paris]")
+                                ZonedDateTime.parse("2007-05-01T00:00:00+02:00[Europe/Paris]"),
+                                ZonedDateTime.parse("2007-05-31T23:59:59.999999999+02:00[Europe/Paris]"),
+                                ZonedDateTime.parse("2007-10-01T00:00:00+02:00[Europe/Paris]"),
+                                ZonedDateTime.parse("2007-10-01T23:59:59.999999999+02:00[Europe/Paris]")
                         ),
                         Arrays.asList(
-                                ZonedDateTime.parse("2007-04-30T23:50:15+02:00[Europe/Paris]"),
-                                ZonedDateTime.parse("2007-06-01T00:50:15+02:00[Europe/Paris]"),
-                                ZonedDateTime.parse("2007-09-30T23:50:15+02:00[Europe/Paris]"),
-                                ZonedDateTime.parse("2007-11-01T00:50:15+01:00[Europe/Paris]")
+                                ZonedDateTime.parse("2007-04-30T23:59:59.999999999+02:00[Europe/Paris]"),
+                                ZonedDateTime.parse("2007-06-01T00:00:00+02:00[Europe/Paris]"),
+                                ZonedDateTime.parse("2007-09-30T23:59:59.999999999+02:00[Europe/Paris]"),
+                                ZonedDateTime.parse("2007-11-01T00:00:00+01:00[Europe/Paris]")
                         ));
             }
         }
@@ -643,14 +685,16 @@ class MonthInTest extends AbstractConstraintTest {
             WithZoneId() {
                 super(TestClassWithZoneId.class, "zonedDateTime",
                         Arrays.asList(
-                                ZonedDateTime.parse("2007-06-01T01:50:15+02:00[Europe/Paris]"),
-                                ZonedDateTime.parse("2007-11-01T00:50:15+01:00[Europe/Paris]")
+                                ZonedDateTime.parse("2007-05-01T02:00:00+02:00[Europe/Paris]"),
+                                ZonedDateTime.parse("2007-06-01T01:59:59.999999999+02:00[Europe/Paris]"),
+                                ZonedDateTime.parse("2007-10-01T02:00:00+02:00[Europe/Paris]"),
+                                ZonedDateTime.parse("2007-11-01T00:59:59.999999999+01:00[Europe/Paris]")
                         ),
                         Arrays.asList(
-                                ZonedDateTime.parse("2007-05-01T01:50:15+02:00[Europe/Paris]"),
-                                ZonedDateTime.parse("2007-06-01T02:50:15+02:00[Europe/Paris]"),
-                                ZonedDateTime.parse("2007-10-01T01:50:15+02:00[Europe/Paris]"),
-                                ZonedDateTime.parse("2007-11-01T01:50:15+01:00[Europe/Paris]")
+                                ZonedDateTime.parse("2007-05-01T01:59:59.999999999+02:00[Europe/Paris]"),
+                                ZonedDateTime.parse("2007-06-01T02:00:00+02:00[Europe/Paris]"),
+                                ZonedDateTime.parse("2007-10-01T01:59:59.999999999+02:00[Europe/Paris]"),
+                                ZonedDateTime.parse("2007-11-01T01:00:00+01:00[Europe/Paris]")
                         ));
             }
         }
@@ -662,14 +706,16 @@ class MonthInTest extends AbstractConstraintTest {
             WithSystemZoneId() {
                 super(TestClassWithSystemZoneId.class, "zonedDateTime",
                         Arrays.asList(
-                                zonedDateTimeAtOffsetAfterSystem("2007-06-01T00:50:15+02:00[Europe/Paris]", 1),
-                                zonedDateTimeAtOffsetAfterSystem("2007-11-01T00:50:15+01:00[Europe/Paris]", 1)
+                                zonedDateTimeAtOffsetAfterSystem("2007-05-01T01:00:00+02:00[Europe/Paris]", 1),
+                                zonedDateTimeAtOffsetAfterSystem("2007-06-01T00:59:59.999999999+02:00[Europe/Paris]", 1),
+                                zonedDateTimeAtOffsetAfterSystem("2007-10-01T01:00:00+02:00[Europe/Paris]", 1),
+                                zonedDateTimeAtOffsetAfterSystem("2007-11-01T00:59:59.999999999+01:00[Europe/Paris]", 1)
                         ),
                         Arrays.asList(
-                                zonedDateTimeAtOffsetAfterSystem("2007-05-01T00:50:15+02:00[Europe/Paris]", 1),
-                                zonedDateTimeAtOffsetAfterSystem("2007-06-01T01:50:15+02:00[Europe/Paris]", 1),
-                                zonedDateTimeAtOffsetAfterSystem("2007-10-01T00:50:15+02:00[Europe/Paris]", 1),
-                                zonedDateTimeAtOffsetAfterSystem("2007-11-01T01:50:15+01:00[Europe/Paris]", 1)
+                                zonedDateTimeAtOffsetAfterSystem("2007-05-01T00:59:59.999999999+02:00[Europe/Paris]", 1),
+                                zonedDateTimeAtOffsetAfterSystem("2007-06-01T01:00:00+02:00[Europe/Paris]", 1),
+                                zonedDateTimeAtOffsetAfterSystem("2007-10-01T00:59:59.999999999+02:00[Europe/Paris]", 1),
+                                zonedDateTimeAtOffsetAfterSystem("2007-11-01T01:00:00+01:00[Europe/Paris]", 1)
                         ));
             }
         }
@@ -682,12 +728,14 @@ class MonthInTest extends AbstractConstraintTest {
                 super(TestClassWithNoValues.class, "zonedDateTime",
                         Collections.emptyList(),
                         Arrays.asList(
-                                zonedDateTimeAtOffsetAfterSystem("2007-06-01T00:50:15+02:00[Europe/Paris]", 1),
-                                zonedDateTimeAtOffsetAfterSystem("2007-11-01T00:50:15+01:00[Europe/Paris]", 1),
-                                zonedDateTimeAtOffsetAfterSystem("2007-05-01T00:50:15+02:00[Europe/Paris]", 1),
-                                zonedDateTimeAtOffsetAfterSystem("2007-06-01T01:50:15+02:00[Europe/Paris]", 1),
-                                zonedDateTimeAtOffsetAfterSystem("2007-10-01T00:50:15+02:00[Europe/Paris]", 1),
-                                zonedDateTimeAtOffsetAfterSystem("2007-11-01T01:50:15+01:00[Europe/Paris]", 1)
+                                zonedDateTimeAtOffsetAfterSystem("2007-05-01T00:59:59.999999999+02:00[Europe/Paris]", 1),
+                                zonedDateTimeAtOffsetAfterSystem("2007-05-01T01:00:00+02:00[Europe/Paris]", 1),
+                                zonedDateTimeAtOffsetAfterSystem("2007-06-01T00:59:59.999999999+02:00[Europe/Paris]", 1),
+                                zonedDateTimeAtOffsetAfterSystem("2007-06-01T01:00:00+02:00[Europe/Paris]", 1),
+                                zonedDateTimeAtOffsetAfterSystem("2007-10-01T00:59:59.999999999+02:00[Europe/Paris]", 1),
+                                zonedDateTimeAtOffsetAfterSystem("2007-10-01T01:00:00+02:00[Europe/Paris]", 1),
+                                zonedDateTimeAtOffsetAfterSystem("2007-11-01T00:59:59.999999999+01:00[Europe/Paris]", 1),
+                                zonedDateTimeAtOffsetAfterSystem("2007-11-01T01:00:00+01:00[Europe/Paris]", 1)
                         ));
             }
 

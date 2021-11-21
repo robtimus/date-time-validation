@@ -59,14 +59,16 @@ class DayOfWeekInTest extends AbstractConstraintTest {
             WithZoneId() {
                 super(TestClassWithZoneId.class, "date",
                         Arrays.asList(
-                                Date.from(utcInstantAtOffset("2007-05-18T00:50:15.00Z", 1)),
-                                Date.from(utcInstantAtOffset("2007-05-20T00:50:15.00Z", 1))
+                                Date.from(utcInstantAtOffset("2007-05-17T01:00:00Z", 1)),
+                                Date.from(utcInstantAtOffset("2007-05-18T00:59:59.999Z", 1)),
+                                Date.from(utcInstantAtOffset("2007-10-13T01:00:00Z", 1)),
+                                Date.from(utcInstantAtOffset("2007-10-14T00:59:59.999Z", 1))
                         ),
                         Arrays.asList(
-                                Date.from(utcInstantAtOffset("2007-05-17T00:50:15.00Z", 1)),
-                                Date.from(utcInstantAtOffset("2007-05-18T01:50:15.00Z", 1)),
-                                Date.from(utcInstantAtOffset("2007-05-19T00:50:15.00Z", 1)),
-                                Date.from(utcInstantAtOffset("2007-05-20T01:50:15.00Z", 1))
+                                Date.from(utcInstantAtOffset("2007-05-17T00:59:59.999Z", 1)),
+                                Date.from(utcInstantAtOffset("2007-05-18T01:00:00Z", 1)),
+                                Date.from(utcInstantAtOffset("2007-10-13T00:59:59.999Z", 1)),
+                                Date.from(utcInstantAtOffset("2007-10-14T01:00:00Z", 1))
                         ));
             }
         }
@@ -78,14 +80,16 @@ class DayOfWeekInTest extends AbstractConstraintTest {
             WithSystemZoneId() {
                 super(TestClassWithSystemZoneId.class, "date",
                         Arrays.asList(
-                                Date.from(utcInstantAtOffsetAfterSystem("2007-05-18T00:50:15.00Z", 1)),
-                                Date.from(utcInstantAtOffsetAfterSystem("2007-05-20T00:50:15.00Z", 1))
+                                Date.from(utcInstantAtOffsetAfterSystem("2007-05-17T01:00:00Z", 1)),
+                                Date.from(utcInstantAtOffsetAfterSystem("2007-05-18T00:59:59.999Z", 1)),
+                                Date.from(utcInstantAtOffsetAfterSystem("2007-10-13T01:00:00Z", 1)),
+                                Date.from(utcInstantAtOffsetAfterSystem("2007-10-14T00:59:59.999Z", 1))
                         ),
                         Arrays.asList(
-                                Date.from(utcInstantAtOffsetAfterSystem("2007-05-17T00:50:15.00Z", 1)),
-                                Date.from(utcInstantAtOffsetAfterSystem("2007-05-18T01:50:15.00Z", 1)),
-                                Date.from(utcInstantAtOffsetAfterSystem("2007-05-19T00:50:15.00Z", 1)),
-                                Date.from(utcInstantAtOffsetAfterSystem("2007-05-20T01:50:15.00Z", 1))
+                                Date.from(utcInstantAtOffsetAfterSystem("2007-05-17T00:59:59.999Z", 1)),
+                                Date.from(utcInstantAtOffsetAfterSystem("2007-05-18T01:00:00Z", 1)),
+                                Date.from(utcInstantAtOffsetAfterSystem("2007-10-13T00:59:59.999Z", 1)),
+                                Date.from(utcInstantAtOffsetAfterSystem("2007-10-14T01:00:00Z", 1))
                         ));
             }
         }
@@ -98,12 +102,14 @@ class DayOfWeekInTest extends AbstractConstraintTest {
                 super(TestClassWithNoValues.class, "date",
                         Collections.emptyList(),
                         Arrays.asList(
-                                Date.from(utcInstantAtOffsetAfterSystem("2007-05-18T00:50:15.00Z", 1)),
-                                Date.from(utcInstantAtOffsetAfterSystem("2007-05-20T00:50:15.00Z", 1)),
-                                Date.from(utcInstantAtOffsetAfterSystem("2007-05-17T00:50:15.00Z", 1)),
-                                Date.from(utcInstantAtOffsetAfterSystem("2007-05-18T01:50:15.00Z", 1)),
-                                Date.from(utcInstantAtOffsetAfterSystem("2007-05-19T00:50:15.00Z", 1)),
-                                Date.from(utcInstantAtOffsetAfterSystem("2007-05-20T01:50:15.00Z", 1))
+                                Date.from(utcInstantAtOffsetAfterSystem("2007-05-17T00:59:59.999Z", 1)),
+                                Date.from(utcInstantAtOffsetAfterSystem("2007-05-17T01:00:00Z", 1)),
+                                Date.from(utcInstantAtOffsetAfterSystem("2007-05-18T00:59:59.999Z", 1)),
+                                Date.from(utcInstantAtOffsetAfterSystem("2007-05-18T01:00:00Z", 1)),
+                                Date.from(utcInstantAtOffsetAfterSystem("2007-10-13T00:59:59.999Z", 1)),
+                                Date.from(utcInstantAtOffsetAfterSystem("2007-10-13T01:00:00Z", 1)),
+                                Date.from(utcInstantAtOffsetAfterSystem("2007-10-14T00:59:59.999Z", 1)),
+                                Date.from(utcInstantAtOffsetAfterSystem("2007-10-14T01:00:00Z", 1))
                         ));
             }
 
@@ -125,14 +131,16 @@ class DayOfWeekInTest extends AbstractConstraintTest {
             WithProvidedZoneId() {
                 super(TestClassWithProvidedZoneId.class, "calendar",
                         Arrays.asList(
-                                GregorianCalendar.from(ZonedDateTime.parse("2007-05-17T00:50:15+02:00[Europe/Paris]")),
-                                GregorianCalendar.from(ZonedDateTime.parse("2007-05-19T00:50:15+02:00[Europe/Paris]"))
+                                GregorianCalendar.from(ZonedDateTime.parse("2007-05-17T00:00:00+02:00[Europe/Paris]")),
+                                GregorianCalendar.from(ZonedDateTime.parse("2007-05-17T23:59:59.999+02:00[Europe/Paris]")),
+                                GregorianCalendar.from(ZonedDateTime.parse("2007-10-13T00:00:00+02:00[Europe/Paris]")),
+                                GregorianCalendar.from(ZonedDateTime.parse("2007-10-13T23:59:59.999+02:00[Europe/Paris]"))
                         ),
                         Arrays.asList(
-                                GregorianCalendar.from(ZonedDateTime.parse("2007-05-16T23:50:15+02:00[Europe/Paris]")),
-                                GregorianCalendar.from(ZonedDateTime.parse("2007-05-18T00:50:15+02:00[Europe/Paris]")),
-                                GregorianCalendar.from(ZonedDateTime.parse("2007-05-18T23:50:15+02:00[Europe/Paris]")),
-                                GregorianCalendar.from(ZonedDateTime.parse("2007-05-20T00:50:15+02:00[Europe/Paris]"))
+                                GregorianCalendar.from(ZonedDateTime.parse("2007-05-16T23:59:59.999+02:00[Europe/Paris]")),
+                                GregorianCalendar.from(ZonedDateTime.parse("2007-05-18T00:00:00+02:00[Europe/Paris]")),
+                                GregorianCalendar.from(ZonedDateTime.parse("2007-10-12T23:59:59.999+02:00[Europe/Paris]")),
+                                GregorianCalendar.from(ZonedDateTime.parse("2007-10-14T00:00:00+02:00[Europe/Paris]"))
                         ));
             }
         }
@@ -144,14 +152,16 @@ class DayOfWeekInTest extends AbstractConstraintTest {
             WithZoneId() {
                 super(TestClassWithZoneId.class, "calendar",
                         Arrays.asList(
-                                GregorianCalendar.from(ZonedDateTime.parse("2007-05-18T01:50:15+02:00[Europe/Paris]")),
-                                GregorianCalendar.from(ZonedDateTime.parse("2007-05-20T01:50:15+02:00[Europe/Paris]"))
+                                GregorianCalendar.from(ZonedDateTime.parse("2007-05-17T02:00:00+02:00[Europe/Paris]")),
+                                GregorianCalendar.from(ZonedDateTime.parse("2007-05-18T01:59:59.999+02:00[Europe/Paris]")),
+                                GregorianCalendar.from(ZonedDateTime.parse("2007-10-13T02:00:00+02:00[Europe/Paris]")),
+                                GregorianCalendar.from(ZonedDateTime.parse("2007-10-14T01:59:59.999+02:00[Europe/Paris]"))
                         ),
                         Arrays.asList(
-                                GregorianCalendar.from(ZonedDateTime.parse("2007-05-17T01:50:15+02:00[Europe/Paris]")),
-                                GregorianCalendar.from(ZonedDateTime.parse("2007-05-18T02:50:15+02:00[Europe/Paris]")),
-                                GregorianCalendar.from(ZonedDateTime.parse("2007-05-19T01:50:15+02:00[Europe/Paris]")),
-                                GregorianCalendar.from(ZonedDateTime.parse("2007-05-20T02:50:15+02:00[Europe/Paris]"))
+                                GregorianCalendar.from(ZonedDateTime.parse("2007-05-17T01:59:59.999+02:00[Europe/Paris]")),
+                                GregorianCalendar.from(ZonedDateTime.parse("2007-05-18T02:00:00+02:00[Europe/Paris]")),
+                                GregorianCalendar.from(ZonedDateTime.parse("2007-10-13T01:59:59.999+02:00[Europe/Paris]")),
+                                GregorianCalendar.from(ZonedDateTime.parse("2007-10-14T02:00:00+02:00[Europe/Paris]"))
                         ));
             }
         }
@@ -163,14 +173,16 @@ class DayOfWeekInTest extends AbstractConstraintTest {
             WithSystemZoneId() {
                 super(TestClassWithSystemZoneId.class, "calendar",
                         Arrays.asList(
-                                GregorianCalendar.from(zonedDateTimeAtOffsetAfterSystem("2007-05-18T00:50:15+02:00[Europe/Paris]", 1)),
-                                GregorianCalendar.from(zonedDateTimeAtOffsetAfterSystem("2007-05-20T00:50:15+02:00[Europe/Paris]", 1))
+                                GregorianCalendar.from(zonedDateTimeAtOffsetAfterSystem("2007-05-17T01:00:00+02:00[Europe/Paris]", 1)),
+                                GregorianCalendar.from(zonedDateTimeAtOffsetAfterSystem("2007-05-18T00:59:59.999+02:00[Europe/Paris]", 1)),
+                                GregorianCalendar.from(zonedDateTimeAtOffsetAfterSystem("2007-10-13T01:00:00+02:00[Europe/Paris]", 1)),
+                                GregorianCalendar.from(zonedDateTimeAtOffsetAfterSystem("2007-10-14T00:59:59.999+02:00[Europe/Paris]", 1))
                         ),
                         Arrays.asList(
-                                GregorianCalendar.from(zonedDateTimeAtOffsetAfterSystem("2007-05-17T00:50:15+02:00[Europe/Paris]", 1)),
-                                GregorianCalendar.from(zonedDateTimeAtOffsetAfterSystem("2007-05-18T01:50:15+02:00[Europe/Paris]", 1)),
-                                GregorianCalendar.from(zonedDateTimeAtOffsetAfterSystem("2007-05-19T00:50:15+02:00[Europe/Paris]", 1)),
-                                GregorianCalendar.from(zonedDateTimeAtOffsetAfterSystem("2007-05-20T01:50:15+02:00[Europe/Paris]", 1))
+                                GregorianCalendar.from(zonedDateTimeAtOffsetAfterSystem("2007-05-17T00:59:59.999+02:00[Europe/Paris]", 1)),
+                                GregorianCalendar.from(zonedDateTimeAtOffsetAfterSystem("2007-05-18T01:00:00+02:00[Europe/Paris]", 1)),
+                                GregorianCalendar.from(zonedDateTimeAtOffsetAfterSystem("2007-10-13T00:59:59.999+02:00[Europe/Paris]", 1)),
+                                GregorianCalendar.from(zonedDateTimeAtOffsetAfterSystem("2007-10-14T01:00:00+02:00[Europe/Paris]", 1))
                         ));
             }
         }
@@ -183,12 +195,14 @@ class DayOfWeekInTest extends AbstractConstraintTest {
                 super(TestClassWithNoValues.class, "calendar",
                         Collections.emptyList(),
                         Arrays.asList(
-                                GregorianCalendar.from(zonedDateTimeAtOffsetAfterSystem("2007-05-18T00:50:15+02:00[Europe/Paris]", 1)),
-                                GregorianCalendar.from(zonedDateTimeAtOffsetAfterSystem("2007-05-20T00:50:15+02:00[Europe/Paris]", 1)),
-                                GregorianCalendar.from(zonedDateTimeAtOffsetAfterSystem("2007-05-17T00:50:15+02:00[Europe/Paris]", 1)),
-                                GregorianCalendar.from(zonedDateTimeAtOffsetAfterSystem("2007-05-18T01:50:15+02:00[Europe/Paris]", 1)),
-                                GregorianCalendar.from(zonedDateTimeAtOffsetAfterSystem("2007-05-19T00:50:15+02:00[Europe/Paris]", 1)),
-                                GregorianCalendar.from(zonedDateTimeAtOffsetAfterSystem("2007-05-20T01:50:15+02:00[Europe/Paris]", 1))
+                                GregorianCalendar.from(zonedDateTimeAtOffsetAfterSystem("2007-05-17T00:59:59.999+02:00[Europe/Paris]", 1)),
+                                GregorianCalendar.from(zonedDateTimeAtOffsetAfterSystem("2007-05-17T01:00:00+02:00[Europe/Paris]", 1)),
+                                GregorianCalendar.from(zonedDateTimeAtOffsetAfterSystem("2007-05-18T00:59:59.999+02:00[Europe/Paris]", 1)),
+                                GregorianCalendar.from(zonedDateTimeAtOffsetAfterSystem("2007-05-18T01:00:00+02:00[Europe/Paris]", 1)),
+                                GregorianCalendar.from(zonedDateTimeAtOffsetAfterSystem("2007-10-13T00:59:59.999+02:00[Europe/Paris]", 1)),
+                                GregorianCalendar.from(zonedDateTimeAtOffsetAfterSystem("2007-10-13T01:00:00+02:00[Europe/Paris]", 1)),
+                                GregorianCalendar.from(zonedDateTimeAtOffsetAfterSystem("2007-10-14T00:59:59.999+02:00[Europe/Paris]", 1)),
+                                GregorianCalendar.from(zonedDateTimeAtOffsetAfterSystem("2007-10-14T01:00:00+02:00[Europe/Paris]", 1))
                         ));
             }
 
@@ -234,10 +248,10 @@ class DayOfWeekInTest extends AbstractConstraintTest {
                 super(TestClassWithNoValues.class, "dayOfWeek",
                         Collections.emptyList(),
                         Arrays.asList(
-                                DayOfWeek.THURSDAY,
-                                DayOfWeek.SATURDAY,
                                 DayOfWeek.WEDNESDAY,
+                                DayOfWeek.THURSDAY,
                                 DayOfWeek.FRIDAY,
+                                DayOfWeek.SATURDAY,
                                 DayOfWeek.SUNDAY
                         ),
                         "must be one of %s");
@@ -265,14 +279,16 @@ class DayOfWeekInTest extends AbstractConstraintTest {
             WithZoneId() {
                 super(TestClassWithZoneId.class, "instant",
                         Arrays.asList(
-                                utcInstantAtOffset("2007-05-18T00:50:15.00Z", 1),
-                                utcInstantAtOffset("2007-05-20T00:50:15.00Z", 1)
+                                utcInstantAtOffset("2007-05-17T01:00:00Z", 1),
+                                utcInstantAtOffset("2007-05-18T00:59:59.999999999Z", 1),
+                                utcInstantAtOffset("2007-10-13T01:00:00Z", 1),
+                                utcInstantAtOffset("2007-10-14T00:59:59.999999999Z", 1)
                         ),
                         Arrays.asList(
-                                utcInstantAtOffset("2007-05-17T00:50:15.00Z", 1),
-                                utcInstantAtOffset("2007-05-18T01:50:15.00Z", 1),
-                                utcInstantAtOffset("2007-05-19T00:50:15.00Z", 1),
-                                utcInstantAtOffset("2007-05-20T01:50:15.00Z", 1)
+                                utcInstantAtOffset("2007-05-17T00:59:59.999999999Z", 1),
+                                utcInstantAtOffset("2007-05-18T01:00:00Z", 1),
+                                utcInstantAtOffset("2007-10-13T00:59:59.999999999Z", 1),
+                                utcInstantAtOffset("2007-10-14T01:00:00Z", 1)
                         ));
             }
         }
@@ -284,14 +300,16 @@ class DayOfWeekInTest extends AbstractConstraintTest {
             WithSystemZoneId() {
                 super(TestClassWithSystemZoneId.class, "instant",
                         Arrays.asList(
-                                utcInstantAtOffsetAfterSystem("2007-05-18T00:50:15.00Z", 1),
-                                utcInstantAtOffsetAfterSystem("2007-05-20T00:50:15.00Z", 1)
+                                utcInstantAtOffsetAfterSystem("2007-05-17T01:00:00Z", 1),
+                                utcInstantAtOffsetAfterSystem("2007-05-18T00:59:59.999999999Z", 1),
+                                utcInstantAtOffsetAfterSystem("2007-10-13T01:00:00Z", 1),
+                                utcInstantAtOffsetAfterSystem("2007-10-14T00:59:59.999999999Z", 1)
                         ),
                         Arrays.asList(
-                                utcInstantAtOffsetAfterSystem("2007-05-17T00:50:15.00Z", 1),
-                                utcInstantAtOffsetAfterSystem("2007-05-18T01:50:15.00Z", 1),
-                                utcInstantAtOffsetAfterSystem("2007-05-19T00:50:15.00Z", 1),
-                                utcInstantAtOffsetAfterSystem("2007-05-20T01:50:15.00Z", 1)
+                                utcInstantAtOffsetAfterSystem("2007-05-17T00:59:59.999999999Z", 1),
+                                utcInstantAtOffsetAfterSystem("2007-05-18T01:00:00Z", 1),
+                                utcInstantAtOffsetAfterSystem("2007-10-13T00:59:59.999999999Z", 1),
+                                utcInstantAtOffsetAfterSystem("2007-10-14T01:00:00Z", 1)
                         ));
             }
         }
@@ -304,12 +322,14 @@ class DayOfWeekInTest extends AbstractConstraintTest {
                 super(TestClassWithNoValues.class, "instant",
                         Collections.emptyList(),
                         Arrays.asList(
-                                utcInstantAtOffsetAfterSystem("2007-05-18T00:50:15.00Z", 1),
-                                utcInstantAtOffsetAfterSystem("2007-05-20T00:50:15.00Z", 1),
-                                utcInstantAtOffsetAfterSystem("2007-05-17T00:50:15.00Z", 1),
-                                utcInstantAtOffsetAfterSystem("2007-05-18T01:50:15.00Z", 1),
-                                utcInstantAtOffsetAfterSystem("2007-05-19T00:50:15.00Z", 1),
-                                utcInstantAtOffsetAfterSystem("2007-05-20T01:50:15.00Z", 1)
+                                utcInstantAtOffsetAfterSystem("2007-05-17T00:59:59.999999999Z", 1),
+                                utcInstantAtOffsetAfterSystem("2007-05-17T01:00:00Z", 1),
+                                utcInstantAtOffsetAfterSystem("2007-05-18T00:59:59.999999999Z", 1),
+                                utcInstantAtOffsetAfterSystem("2007-05-18T01:00:00Z", 1),
+                                utcInstantAtOffsetAfterSystem("2007-10-13T00:59:59.999999999Z", 1),
+                                utcInstantAtOffsetAfterSystem("2007-10-13T01:00:00Z", 1),
+                                utcInstantAtOffsetAfterSystem("2007-10-14T00:59:59.999999999Z", 1),
+                                utcInstantAtOffsetAfterSystem("2007-10-14T01:00:00Z", 1)
                         ));
             }
 
@@ -336,12 +356,13 @@ class DayOfWeekInTest extends AbstractConstraintTest {
                 super(TestClassWithSystemZoneId.class, "localDate",
                         Arrays.asList(
                                 LocalDate.parse("2007-05-17"),
-                                LocalDate.parse("2007-05-19")
+                                LocalDate.parse("2007-10-13")
                         ),
                         Arrays.asList(
                                 LocalDate.parse("2007-05-16"),
                                 LocalDate.parse("2007-05-18"),
-                                LocalDate.parse("2007-05-20")
+                                LocalDate.parse("2007-10-12"),
+                                LocalDate.parse("2007-10-14")
                         ));
             }
         }
@@ -354,11 +375,12 @@ class DayOfWeekInTest extends AbstractConstraintTest {
                 super(TestClassWithNoValues.class, "localDate",
                         Collections.emptyList(),
                         Arrays.asList(
-                                LocalDate.parse("2007-05-17"),
-                                LocalDate.parse("2007-05-19"),
                                 LocalDate.parse("2007-05-16"),
+                                LocalDate.parse("2007-05-17"),
                                 LocalDate.parse("2007-05-18"),
-                                LocalDate.parse("2007-05-20")
+                                LocalDate.parse("2007-10-12"),
+                                LocalDate.parse("2007-10-13"),
+                                LocalDate.parse("2007-10-14")
                         ));
             }
 
@@ -384,14 +406,16 @@ class DayOfWeekInTest extends AbstractConstraintTest {
             WithSystemZoneId() {
                 super(TestClassWithSystemZoneId.class, "localDateTime",
                         Arrays.asList(
-                                LocalDateTime.parse("2007-05-17T00:50:15"),
-                                LocalDateTime.parse("2007-05-19T00:50:15")
+                                LocalDateTime.parse("2007-05-17T00:00:00"),
+                                LocalDateTime.parse("2007-05-17T23:59:59.999999999"),
+                                LocalDateTime.parse("2007-10-13T00:00:00"),
+                                LocalDateTime.parse("2007-10-13T23:59:59.999999999")
                         ),
                         Arrays.asList(
-                                LocalDateTime.parse("2007-05-16T23:50:15"),
-                                LocalDateTime.parse("2007-05-18T00:50:15"),
-                                LocalDateTime.parse("2007-05-18T23:50:15"),
-                                LocalDateTime.parse("2007-05-20T00:50:15")
+                                LocalDateTime.parse("2007-05-16T23:59:59.999999999"),
+                                LocalDateTime.parse("2007-05-18T00:00:00"),
+                                LocalDateTime.parse("2007-10-12T23:59:59.999999999"),
+                                LocalDateTime.parse("2007-10-14T00:00:00")
                         ));
             }
         }
@@ -404,12 +428,14 @@ class DayOfWeekInTest extends AbstractConstraintTest {
                 super(TestClassWithNoValues.class, "localDateTime",
                         Collections.emptyList(),
                         Arrays.asList(
-                                LocalDateTime.parse("2007-05-17T00:50:15"),
-                                LocalDateTime.parse("2007-05-19T00:50:15"),
-                                LocalDateTime.parse("2007-05-16T23:50:15"),
-                                LocalDateTime.parse("2007-05-18T00:50:15"),
-                                LocalDateTime.parse("2007-05-18T23:50:15"),
-                                LocalDateTime.parse("2007-05-20T00:50:15")
+                                LocalDateTime.parse("2007-05-16T23:59:59.999999999"),
+                                LocalDateTime.parse("2007-05-17T00:00:00"),
+                                LocalDateTime.parse("2007-05-17T23:59:59.999999999"),
+                                LocalDateTime.parse("2007-05-18T00:00:00"),
+                                LocalDateTime.parse("2007-10-12T23:59:59.999999999"),
+                                LocalDateTime.parse("2007-10-13T00:00:00"),
+                                LocalDateTime.parse("2007-10-13T23:59:59.999999999"),
+                                LocalDateTime.parse("2007-10-14T00:00:00")
                         ));
             }
 
@@ -431,14 +457,16 @@ class DayOfWeekInTest extends AbstractConstraintTest {
             WithProvidedZoneId() {
                 super(TestClassWithProvidedZoneId.class, "offsetDateTime",
                         Arrays.asList(
-                                OffsetDateTime.parse("2007-05-17T00:50:15+01:00"),
-                                OffsetDateTime.parse("2007-05-19T00:50:15+01:00")
+                                OffsetDateTime.parse("2007-05-17T00:00:00+01:00"),
+                                OffsetDateTime.parse("2007-05-17T23:59:59.999999999+01:00"),
+                                OffsetDateTime.parse("2007-10-13T00:00:00+01:00"),
+                                OffsetDateTime.parse("2007-10-13T23:59:59.999999999+01:00")
                         ),
                         Arrays.asList(
-                                OffsetDateTime.parse("2007-05-16T23:50:15+01:00"),
-                                OffsetDateTime.parse("2007-05-18T00:50:15+01:00"),
-                                OffsetDateTime.parse("2007-05-18T23:50:15+01:00"),
-                                OffsetDateTime.parse("2007-05-20T00:50:15+01:00")
+                                OffsetDateTime.parse("2007-05-16T23:59:59.999999999+01:00"),
+                                OffsetDateTime.parse("2007-05-18T00:00:00+01:00"),
+                                OffsetDateTime.parse("2007-10-12T23:59:59.999999999+01:00"),
+                                OffsetDateTime.parse("2007-10-14T00:00:00+01:00")
                         ));
             }
         }
@@ -450,14 +478,16 @@ class DayOfWeekInTest extends AbstractConstraintTest {
             WithZoneId() {
                 super(TestClassWithZoneId.class, "offsetDateTime",
                         Arrays.asList(
-                                OffsetDateTime.parse("2007-05-18T00:15:30+01:00"),
-                                OffsetDateTime.parse("2007-05-20T00:15:30+01:00")
+                                OffsetDateTime.parse("2007-05-17T01:00:00+01:00"),
+                                OffsetDateTime.parse("2007-05-18T00:59:59.999999999+01:00"),
+                                OffsetDateTime.parse("2007-10-13T01:00:00+01:00"),
+                                OffsetDateTime.parse("2007-10-14T00:59:59.999999999+01:00")
                         ),
                         Arrays.asList(
-                                OffsetDateTime.parse("2007-05-17T00:50:15+01:00"),
-                                OffsetDateTime.parse("2007-05-18T01:50:15+01:00"),
-                                OffsetDateTime.parse("2007-05-19T00:50:15+01:00"),
-                                OffsetDateTime.parse("2007-05-20T01:50:15+01:00")
+                                OffsetDateTime.parse("2007-05-17T00:59:59.999999999+01:00"),
+                                OffsetDateTime.parse("2007-05-18T01:00:00+01:00"),
+                                OffsetDateTime.parse("2007-10-13T00:59:59.999999999+01:00"),
+                                OffsetDateTime.parse("2007-10-14T01:00:00+01:00")
                         ));
             }
         }
@@ -469,14 +499,16 @@ class DayOfWeekInTest extends AbstractConstraintTest {
             WithSystemZoneId() {
                 super(TestClassWithSystemZoneId.class, "offsetDateTime",
                         Arrays.asList(
-                                offsetDateTimeAtOffsetAfterSystem("2007-05-18T00:15:30+01:00", 1),
-                                offsetDateTimeAtOffsetAfterSystem("2007-05-20T00:15:30+01:00", 1)
+                                offsetDateTimeAtOffsetAfterSystem("2007-05-17T01:00:00+01:00", 1),
+                                offsetDateTimeAtOffsetAfterSystem("2007-05-18T00:59:59.999999999+01:00", 1),
+                                offsetDateTimeAtOffsetAfterSystem("2007-10-13T01:00:00+01:00", 1),
+                                offsetDateTimeAtOffsetAfterSystem("2007-10-14T00:59:59.999999999+01:00", 1)
                         ),
                         Arrays.asList(
-                                offsetDateTimeAtOffsetAfterSystem("2007-05-17T00:50:15+01:00", 1),
-                                offsetDateTimeAtOffsetAfterSystem("2007-05-18T01:50:15+01:00", 1),
-                                offsetDateTimeAtOffsetAfterSystem("2007-05-19T00:50:15+01:00", 1),
-                                offsetDateTimeAtOffsetAfterSystem("2007-05-20T01:50:15+01:00", 1)
+                                offsetDateTimeAtOffsetAfterSystem("2007-05-17T00:59:59.999999999+01:00", 1),
+                                offsetDateTimeAtOffsetAfterSystem("2007-05-18T01:00:00+01:00", 1),
+                                offsetDateTimeAtOffsetAfterSystem("2007-10-13T00:59:59.999999999+01:00", 1),
+                                offsetDateTimeAtOffsetAfterSystem("2007-10-14T01:00:00+01:00", 1)
                         ));
             }
         }
@@ -489,12 +521,14 @@ class DayOfWeekInTest extends AbstractConstraintTest {
                 super(TestClassWithNoValues.class, "offsetDateTime",
                         Collections.emptyList(),
                         Arrays.asList(
-                                offsetDateTimeAtOffsetAfterSystem("2007-05-18T00:15:30+01:00", 1),
-                                offsetDateTimeAtOffsetAfterSystem("2007-05-20T00:15:30+01:00", 1),
-                                offsetDateTimeAtOffsetAfterSystem("2007-05-17T00:50:15+01:00", 1),
-                                offsetDateTimeAtOffsetAfterSystem("2007-05-18T01:50:15+01:00", 1),
-                                offsetDateTimeAtOffsetAfterSystem("2007-05-19T00:50:15+01:00", 1),
-                                offsetDateTimeAtOffsetAfterSystem("2007-05-20T01:50:15+01:00", 1)
+                                offsetDateTimeAtOffsetAfterSystem("2007-05-17T00:59:59.999999999+01:00", 1),
+                                offsetDateTimeAtOffsetAfterSystem("2007-05-17T01:00:00+01:00", 1),
+                                offsetDateTimeAtOffsetAfterSystem("2007-05-18T00:59:59.999999999+01:00", 1),
+                                offsetDateTimeAtOffsetAfterSystem("2007-05-18T01:00:00+01:00", 1),
+                                offsetDateTimeAtOffsetAfterSystem("2007-10-13T00:59:59.999999999+01:00", 1),
+                                offsetDateTimeAtOffsetAfterSystem("2007-10-13T01:00:00+01:00", 1),
+                                offsetDateTimeAtOffsetAfterSystem("2007-10-14T00:59:59.999999999+01:00", 1),
+                                offsetDateTimeAtOffsetAfterSystem("2007-10-14T01:00:00+01:00", 1)
                         ));
             }
 
@@ -516,14 +550,16 @@ class DayOfWeekInTest extends AbstractConstraintTest {
             WithProvidedZoneId() {
                 super(TestClassWithProvidedZoneId.class, "zonedDateTime",
                         Arrays.asList(
-                                ZonedDateTime.parse("2007-05-17T00:50:15+02:00[Europe/Paris]"),
-                                ZonedDateTime.parse("2007-05-19T00:50:15+02:00[Europe/Paris]")
+                                ZonedDateTime.parse("2007-05-17T00:00:00+02:00[Europe/Paris]"),
+                                ZonedDateTime.parse("2007-05-17T23:59:59.999999999+02:00[Europe/Paris]"),
+                                ZonedDateTime.parse("2007-10-13T00:00:00+02:00[Europe/Paris]"),
+                                ZonedDateTime.parse("2007-10-13T23:59:59.999999999+02:00[Europe/Paris]")
                         ),
                         Arrays.asList(
-                                ZonedDateTime.parse("2007-05-16T23:50:15+02:00[Europe/Paris]"),
-                                ZonedDateTime.parse("2007-05-18T00:50:15+02:00[Europe/Paris]"),
-                                ZonedDateTime.parse("2007-05-18T23:50:15+02:00[Europe/Paris]"),
-                                ZonedDateTime.parse("2007-05-20T00:50:15+02:00[Europe/Paris]")
+                                ZonedDateTime.parse("2007-05-16T23:59:59.999999999+02:00[Europe/Paris]"),
+                                ZonedDateTime.parse("2007-05-18T00:00:00+02:00[Europe/Paris]"),
+                                ZonedDateTime.parse("2007-10-12T23:59:59.999999999+02:00[Europe/Paris]"),
+                                ZonedDateTime.parse("2007-10-14T00:00:00+02:00[Europe/Paris]")
                         ));
             }
         }
@@ -535,14 +571,16 @@ class DayOfWeekInTest extends AbstractConstraintTest {
             WithZoneId() {
                 super(TestClassWithZoneId.class, "zonedDateTime",
                         Arrays.asList(
-                                ZonedDateTime.parse("2007-05-18T01:50:15+02:00[Europe/Paris]"),
-                                ZonedDateTime.parse("2007-05-20T01:50:15+02:00[Europe/Paris]")
+                                ZonedDateTime.parse("2007-05-17T02:00:00+02:00[Europe/Paris]"),
+                                ZonedDateTime.parse("2007-05-18T01:59:59.999999999+02:00[Europe/Paris]"),
+                                ZonedDateTime.parse("2007-10-13T02:00:00+02:00[Europe/Paris]"),
+                                ZonedDateTime.parse("2007-10-14T01:59:59.999999999+02:00[Europe/Paris]")
                         ),
                         Arrays.asList(
-                                ZonedDateTime.parse("2007-05-17T01:50:15+02:00[Europe/Paris]"),
-                                ZonedDateTime.parse("2007-05-18T02:50:15+02:00[Europe/Paris]"),
-                                ZonedDateTime.parse("2007-05-19T01:50:15+02:00[Europe/Paris]"),
-                                ZonedDateTime.parse("2007-05-20T02:50:15+02:00[Europe/Paris]")
+                                ZonedDateTime.parse("2007-05-17T01:59:59.999999999+02:00[Europe/Paris]"),
+                                ZonedDateTime.parse("2007-05-18T02:00:00+02:00[Europe/Paris]"),
+                                ZonedDateTime.parse("2007-10-13T01:59:59.999999999+02:00[Europe/Paris]"),
+                                ZonedDateTime.parse("2007-10-14T02:00:00+02:00[Europe/Paris]")
                         ));
             }
         }
@@ -554,14 +592,16 @@ class DayOfWeekInTest extends AbstractConstraintTest {
             WithSystemZoneId() {
                 super(TestClassWithSystemZoneId.class, "zonedDateTime",
                         Arrays.asList(
-                                zonedDateTimeAtOffsetAfterSystem("2007-05-18T00:50:15+02:00[Europe/Paris]", 1),
-                                zonedDateTimeAtOffsetAfterSystem("2007-05-20T00:50:15+02:00[Europe/Paris]", 1)
+                                zonedDateTimeAtOffsetAfterSystem("2007-05-17T01:00:00+02:00[Europe/Paris]", 1),
+                                zonedDateTimeAtOffsetAfterSystem("2007-05-18T00:59:59.999999999+02:00[Europe/Paris]", 1),
+                                zonedDateTimeAtOffsetAfterSystem("2007-10-13T01:00:00+02:00[Europe/Paris]", 1),
+                                zonedDateTimeAtOffsetAfterSystem("2007-10-14T00:59:59.999999999+02:00[Europe/Paris]", 1)
                         ),
                         Arrays.asList(
-                                zonedDateTimeAtOffsetAfterSystem("2007-05-17T00:50:15+02:00[Europe/Paris]", 1),
-                                zonedDateTimeAtOffsetAfterSystem("2007-05-18T01:50:15+02:00[Europe/Paris]", 1),
-                                zonedDateTimeAtOffsetAfterSystem("2007-05-19T00:50:15+02:00[Europe/Paris]", 1),
-                                zonedDateTimeAtOffsetAfterSystem("2007-05-20T01:50:15+02:00[Europe/Paris]", 1)
+                                zonedDateTimeAtOffsetAfterSystem("2007-05-17T00:59:59.999999999+02:00[Europe/Paris]", 1),
+                                zonedDateTimeAtOffsetAfterSystem("2007-05-18T01:00:00+02:00[Europe/Paris]", 1),
+                                zonedDateTimeAtOffsetAfterSystem("2007-10-13T00:59:59.999999999+02:00[Europe/Paris]", 1),
+                                zonedDateTimeAtOffsetAfterSystem("2007-10-14T01:00:00+02:00[Europe/Paris]", 1)
                         ));
             }
         }
@@ -574,12 +614,14 @@ class DayOfWeekInTest extends AbstractConstraintTest {
                 super(TestClassWithNoValues.class, "zonedDateTime",
                         Collections.emptyList(),
                         Arrays.asList(
-                                zonedDateTimeAtOffsetAfterSystem("2007-05-18T00:50:15+02:00[Europe/Paris]", 1),
-                                zonedDateTimeAtOffsetAfterSystem("2007-05-20T00:50:15+02:00[Europe/Paris]", 1),
-                                zonedDateTimeAtOffsetAfterSystem("2007-05-17T00:50:15+02:00[Europe/Paris]", 1),
-                                zonedDateTimeAtOffsetAfterSystem("2007-05-18T01:50:15+02:00[Europe/Paris]", 1),
-                                zonedDateTimeAtOffsetAfterSystem("2007-05-19T00:50:15+02:00[Europe/Paris]", 1),
-                                zonedDateTimeAtOffsetAfterSystem("2007-05-20T01:50:15+02:00[Europe/Paris]", 1)
+                                zonedDateTimeAtOffsetAfterSystem("2007-05-17T00:59:59.999999999+02:00[Europe/Paris]", 1),
+                                zonedDateTimeAtOffsetAfterSystem("2007-05-17T01:00:00+02:00[Europe/Paris]", 1),
+                                zonedDateTimeAtOffsetAfterSystem("2007-05-18T00:59:59.999999999+02:00[Europe/Paris]", 1),
+                                zonedDateTimeAtOffsetAfterSystem("2007-05-18T01:00:00+02:00[Europe/Paris]", 1),
+                                zonedDateTimeAtOffsetAfterSystem("2007-10-13T00:59:59.999999999+02:00[Europe/Paris]", 1),
+                                zonedDateTimeAtOffsetAfterSystem("2007-10-13T01:00:00+02:00[Europe/Paris]", 1),
+                                zonedDateTimeAtOffsetAfterSystem("2007-10-14T00:59:59.999999999+02:00[Europe/Paris]", 1),
+                                zonedDateTimeAtOffsetAfterSystem("2007-10-14T01:00:00+02:00[Europe/Paris]", 1)
                         ));
             }
 

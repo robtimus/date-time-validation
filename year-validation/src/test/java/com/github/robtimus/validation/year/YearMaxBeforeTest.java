@@ -28,6 +28,7 @@ import java.time.YearMonth;
 import java.time.ZoneId;
 import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
@@ -38,6 +39,10 @@ import javax.validation.ConstraintViolation;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInstance;
+import org.junit.jupiter.api.TestInstance.Lifecycle;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.MethodSource;
 
 @SuppressWarnings("nls")
 class YearMaxBeforeTest extends AbstractConstraintTest {
@@ -56,10 +61,13 @@ class YearMaxBeforeTest extends AbstractConstraintTest {
 
             WithNow() {
                 super(TestClassWithNow.class, "date",
-                        Date.from(Instant.parse("2006-01-01T13:50:15.00Z")),
-                        Date.from(Instant.parse("2005-12-31T13:50:15.00Z")),
-                        Date.from(Instant.parse("2007-01-01T13:50:15.00Z")),
-                        () -> Clock.fixed(Instant.parse("2007-12-01T10:15:30.00Z"), ZoneId.of("UTC")));
+                        Arrays.asList(
+                                Date.from(utcInstantAtDefaultZone("2006-01-01T00:00:00Z")),
+                                Date.from(utcInstantAtDefaultZone("2006-12-31T00:59:59.999Z"))
+                        ),
+                        Date.from(utcInstantAtDefaultZone("2005-12-31T23:59:59.999Z")),
+                        Date.from(utcInstantAtDefaultZone("2007-01-01T00:00:00Z")),
+                        () -> Clock.fixed(Instant.parse("2007-12-03T10:15:30Z"), ZoneId.of("UTC")));
             }
         }
 
@@ -69,9 +77,12 @@ class YearMaxBeforeTest extends AbstractConstraintTest {
 
             WithZoneId() {
                 super(TestClassWithZoneId.class, "date",
-                        Date.from(utcInstantAtOffset("2007-01-01T00:50:15.00Z", 1)),
-                        Date.from(utcInstantAtOffset("2006-01-01T00:50:15.00Z", 1)),
-                        Date.from(utcInstantAtOffset("2007-01-02T00:50:15.00Z", 1)),
+                        Arrays.asList(
+                                Date.from(utcInstantAtOffset("2006-01-01T01:00:00Z", 1)),
+                                Date.from(utcInstantAtOffset("2007-01-01T00:59:59.999Z", 1))
+                        ),
+                        Date.from(utcInstantAtOffset("2006-01-01T00:59:59.999Z", 1)),
+                        Date.from(utcInstantAtOffset("2007-01-01T01:00:00Z", 1)),
                         () -> null);
             }
         }
@@ -82,9 +93,12 @@ class YearMaxBeforeTest extends AbstractConstraintTest {
 
             WithSystemZoneId() {
                 super(TestClassWithSystemZoneId.class, "date",
-                        Date.from(utcInstantAtOffsetAfterSystem("2007-01-01T00:50:15.00Z", 1)),
-                        Date.from(utcInstantAtOffsetAfterSystem("2006-01-01T00:50:15.00Z", 1)),
-                        Date.from(utcInstantAtOffsetAfterSystem("2007-01-02T00:50:15.00Z", 1)),
+                        Arrays.asList(
+                                Date.from(utcInstantAtOffsetAfterSystem("2006-01-01T01:00:00Z", 1)),
+                                Date.from(utcInstantAtOffsetAfterSystem("2007-01-01T00:59:59.999Z", 1))
+                        ),
+                        Date.from(utcInstantAtOffsetAfterSystem("2006-01-01T00:59:59.999Z", 1)),
+                        Date.from(utcInstantAtOffsetAfterSystem("2007-01-01T01:00:00Z", 1)),
                         () -> null);
             }
         }
@@ -100,10 +114,13 @@ class YearMaxBeforeTest extends AbstractConstraintTest {
 
             WithNow() {
                 super(TestClassWithNow.class, "calendar",
-                        GregorianCalendar.from(ZonedDateTime.parse("2006-01-01T13:50:15+01:00[Europe/Paris]")),
-                        GregorianCalendar.from(ZonedDateTime.parse("2005-12-31T13:50:15+01:00[Europe/Paris]")),
-                        GregorianCalendar.from(ZonedDateTime.parse("2007-01-01T13:50:15+01:00[Europe/Paris]")),
-                        () -> Clock.fixed(ZonedDateTime.parse("2007-12-01T10:15:30+01:00[Europe/Paris]").toInstant(), ZoneId.of("Europe/Paris")));
+                        Arrays.asList(
+                                GregorianCalendar.from(zonedDateTimeAtDefaultZone("2006-01-01T00:00:00+01:00[Europe/Paris]")),
+                                GregorianCalendar.from(zonedDateTimeAtDefaultZone("2006-12-31T00:59:59.999+01:00[Europe/Paris]"))
+                        ),
+                        GregorianCalendar.from(zonedDateTimeAtDefaultZone("2005-12-31T23:59:59.999+01:00[Europe/Paris]")),
+                        GregorianCalendar.from(zonedDateTimeAtDefaultZone("2007-01-01T00:00:00+01:00[Europe/Paris]")),
+                        () -> Clock.fixed(ZonedDateTime.parse("2007-12-03T10:15:30+01:00[Europe/Paris]").toInstant(), ZoneId.of("Europe/Paris")));
             }
         }
 
@@ -113,9 +130,12 @@ class YearMaxBeforeTest extends AbstractConstraintTest {
 
             WithMoment() {
                 super(TestClassWithProvidedZoneId.class, "calendar",
-                        GregorianCalendar.from(ZonedDateTime.parse("2006-01-01T13:50:15+01:00[Europe/Paris]")),
-                        GregorianCalendar.from(ZonedDateTime.parse("2005-12-31T13:50:15+01:00[Europe/Paris]")),
-                        GregorianCalendar.from(ZonedDateTime.parse("2007-01-01T13:50:15+01:00[Europe/Paris]")),
+                        Arrays.asList(
+                                GregorianCalendar.from(ZonedDateTime.parse("2006-01-01T00:00:00+01:00[Europe/Paris]")),
+                                GregorianCalendar.from(ZonedDateTime.parse("2006-12-31T00:59:59.999+01:00[Europe/Paris]"))
+                        ),
+                        GregorianCalendar.from(ZonedDateTime.parse("2005-12-31T23:59:59.999+01:00[Europe/Paris]")),
+                        GregorianCalendar.from(ZonedDateTime.parse("2007-01-01T00:00:00+01:00[Europe/Paris]")),
                         () -> null);
             }
         }
@@ -126,9 +146,12 @@ class YearMaxBeforeTest extends AbstractConstraintTest {
 
             WithZoneId() {
                 super(TestClassWithZoneId.class, "calendar",
-                        GregorianCalendar.from(ZonedDateTime.parse("2007-01-01T00:50:15+01:00[Europe/Paris]")),
-                        GregorianCalendar.from(ZonedDateTime.parse("2006-01-01T00:50:15+01:00[Europe/Paris]")),
-                        GregorianCalendar.from(ZonedDateTime.parse("2007-01-02T00:50:15+01:00[Europe/Paris]")),
+                        Arrays.asList(
+                                GregorianCalendar.from(ZonedDateTime.parse("2006-01-01T01:00:00+01:00[Europe/Paris]")),
+                                GregorianCalendar.from(ZonedDateTime.parse("2007-01-01T00:59:59.999+01:00[Europe/Paris]"))
+                        ),
+                        GregorianCalendar.from(ZonedDateTime.parse("2006-01-01T00:59:59.999+01:00[Europe/Paris]")),
+                        GregorianCalendar.from(ZonedDateTime.parse("2007-01-01T01:00:00+01:00[Europe/Paris]")),
                         () -> null);
             }
         }
@@ -139,9 +162,12 @@ class YearMaxBeforeTest extends AbstractConstraintTest {
 
             WithSystemZoneId() {
                 super(TestClassWithSystemZoneId.class, "calendar",
-                        GregorianCalendar.from(zonedDateTimeAtOffsetAfterSystem("2007-01-01T00:50:15+01:00[Europe/Paris]", 1)),
-                        GregorianCalendar.from(zonedDateTimeAtOffsetAfterSystem("2006-01-01T00:50:15+01:00[Europe/Paris]", 1)),
-                        GregorianCalendar.from(zonedDateTimeAtOffsetAfterSystem("2007-01-02T00:50:15+01:00[Europe/Paris]", 1)),
+                        Arrays.asList(
+                                GregorianCalendar.from(zonedDateTimeAtOffsetAfterSystem("2006-01-01T01:00:00+01:00[Europe/Paris]", 1)),
+                                GregorianCalendar.from(zonedDateTimeAtOffsetAfterSystem("2007-01-01T00:59:59.999+01:00[Europe/Paris]", 1))
+                        ),
+                        GregorianCalendar.from(zonedDateTimeAtOffsetAfterSystem("2006-01-01T00:59:59.999+01:00[Europe/Paris]", 1)),
+                        GregorianCalendar.from(zonedDateTimeAtOffsetAfterSystem("2007-01-01T01:00:00+01:00[Europe/Paris]", 1)),
                         () -> null);
             }
         }
@@ -161,10 +187,13 @@ class YearMaxBeforeTest extends AbstractConstraintTest {
 
             WithNow() {
                 super(TestClassWithNow.class, "instant",
-                        Instant.parse("2006-01-01T13:50:15.00Z"),
-                        Instant.parse("2005-12-31T13:50:15.00Z"),
-                        Instant.parse("2007-01-01T13:50:15.00Z"),
-                        () -> Clock.fixed(Instant.parse("2007-12-01T10:15:30.00Z"), ZoneId.of("UTC")));
+                        Arrays.asList(
+                                utcInstantAtDefaultZone("2006-01-01T00:00:00Z"),
+                                utcInstantAtDefaultZone("2006-12-31T00:59:59.999999999Z")
+                        ),
+                        utcInstantAtDefaultZone("2005-12-31T23:59:59.999999999Z"),
+                        utcInstantAtDefaultZone("2007-01-01T00:00:00Z"),
+                        () -> Clock.fixed(Instant.parse("2007-12-03T10:15:30Z"), ZoneId.of("UTC")));
             }
         }
 
@@ -174,9 +203,12 @@ class YearMaxBeforeTest extends AbstractConstraintTest {
 
             WithZoneId() {
                 super(TestClassWithZoneId.class, "instant",
-                        utcInstantAtOffset("2007-01-01T00:50:15.00Z", 1),
-                        utcInstantAtOffset("2006-01-01T00:50:15.00Z", 1),
-                        utcInstantAtOffset("2007-01-02T00:50:15.00Z", 1),
+                        Arrays.asList(
+                                utcInstantAtOffset("2006-01-01T01:00:00Z", 1),
+                                utcInstantAtOffset("2007-01-01T00:59:59.999999999Z", 1)
+                        ),
+                        utcInstantAtOffset("2006-01-01T00:59:59.999999999Z", 1),
+                        utcInstantAtOffset("2007-01-01T01:00:00Z", 1),
                         () -> null);
             }
         }
@@ -187,9 +219,12 @@ class YearMaxBeforeTest extends AbstractConstraintTest {
 
             WithSystemZoneId() {
                 super(TestClassWithSystemZoneId.class, "instant",
-                        utcInstantAtOffsetAfterSystem("2007-01-01T00:50:15.00Z", 1),
-                        utcInstantAtOffsetAfterSystem("2006-01-01T00:50:15.00Z", 1),
-                        utcInstantAtOffsetAfterSystem("2007-01-02T00:50:15.00Z", 1),
+                        Arrays.asList(
+                                utcInstantAtOffsetAfterSystem("2006-01-01T01:00:00Z", 1),
+                                utcInstantAtOffsetAfterSystem("2007-01-01T00:59:59.999999999Z", 1)
+                        ),
+                        utcInstantAtOffsetAfterSystem("2006-01-01T00:59:59.999999999Z", 1),
+                        utcInstantAtOffsetAfterSystem("2007-01-01T01:00:00Z", 1),
                         () -> null);
             }
         }
@@ -209,10 +244,13 @@ class YearMaxBeforeTest extends AbstractConstraintTest {
 
             WithNow() {
                 super(TestClassWithNow.class, "localDate",
-                        LocalDate.parse("2006-01-01"),
+                        Arrays.asList(
+                                LocalDate.parse("2006-01-01"),
+                                LocalDate.parse("2006-12-31")
+                        ),
                         LocalDate.parse("2005-12-31"),
                         LocalDate.parse("2007-01-01"),
-                        () -> Clock.fixed(Instant.parse("2007-12-01T10:15:30.00Z"), ZoneId.of("UTC")));
+                        () -> Clock.fixed(Instant.parse("2007-12-03T10:15:30Z"), ZoneId.of("UTC")));
             }
         }
 
@@ -222,7 +260,10 @@ class YearMaxBeforeTest extends AbstractConstraintTest {
 
             WithSystemZoneId() {
                 super(TestClassWithSystemZoneId.class, "localDate",
-                        LocalDate.parse("2006-01-01"),
+                        Arrays.asList(
+                                LocalDate.parse("2006-01-01"),
+                                LocalDate.parse("2006-12-31")
+                        ),
                         LocalDate.parse("2005-12-31"),
                         LocalDate.parse("2007-01-01"),
                         () -> null);
@@ -244,10 +285,13 @@ class YearMaxBeforeTest extends AbstractConstraintTest {
 
             WithNow() {
                 super(TestClassWithNow.class, "localDateTime",
-                        LocalDateTime.parse("2006-01-01T13:50:15"),
-                        LocalDateTime.parse("2005-12-31T13:50:15"),
-                        LocalDateTime.parse("2007-01-01T13:50:15"),
-                        () -> Clock.fixed(Instant.parse("2007-12-01T10:15:30.00Z"), ZoneId.of("UTC")));
+                        Arrays.asList(
+                                LocalDateTime.parse("2006-01-01T00:00:00"),
+                                LocalDateTime.parse("2006-12-31T00:59:59.999999999")
+                        ),
+                        LocalDateTime.parse("2005-12-31T23:59:59.999999999"),
+                        LocalDateTime.parse("2007-01-01T00:00:00"),
+                        () -> Clock.fixed(Instant.parse("2007-12-03T10:15:30Z"), ZoneId.of("UTC")));
             }
         }
 
@@ -257,9 +301,12 @@ class YearMaxBeforeTest extends AbstractConstraintTest {
 
             WithSystemZoneId() {
                 super(TestClassWithSystemZoneId.class, "localDateTime",
-                        LocalDateTime.parse("2006-01-01T13:50:15"),
-                        LocalDateTime.parse("2005-12-31T13:50:15"),
-                        LocalDateTime.parse("2007-01-01T13:50:15"),
+                        Arrays.asList(
+                                LocalDateTime.parse("2006-01-01T00:00:00"),
+                                LocalDateTime.parse("2006-12-31T00:59:59.999999999")
+                        ),
+                        LocalDateTime.parse("2005-12-31T23:59:59.999999999"),
+                        LocalDateTime.parse("2007-01-01T00:00:00"),
                         () -> null);
             }
         }
@@ -275,10 +322,13 @@ class YearMaxBeforeTest extends AbstractConstraintTest {
 
             WithNow() {
                 super(TestClassWithNow.class, "offsetDateTime",
-                        OffsetDateTime.parse("2006-01-01T13:50:15+01:00"),
-                        OffsetDateTime.parse("2005-12-31T13:50:15+01:00"),
-                        OffsetDateTime.parse("2007-01-01T13:50:15+01:00"),
-                        () -> Clock.fixed(Instant.parse("2007-12-01T09:15:30.00Z"), ZoneOffset.ofHours(1)));
+                        Arrays.asList(
+                                offsetDateTimeAtDefaultZone("2006-01-01T00:00:00+01:00"),
+                                offsetDateTimeAtDefaultZone("2006-12-31T00:59:59.999999999+01:00")
+                        ),
+                        offsetDateTimeAtDefaultZone("2005-12-31T23:59:59.999999999+01:00"),
+                        offsetDateTimeAtDefaultZone("2007-01-01T00:00:00+01:00"),
+                        () -> Clock.fixed(Instant.parse("2007-12-03T09:15:30Z"), ZoneOffset.ofHours(1)));
             }
         }
 
@@ -288,9 +338,12 @@ class YearMaxBeforeTest extends AbstractConstraintTest {
 
             WithMoment() {
                 super(TestClassWithProvidedZoneId.class, "offsetDateTime",
-                        OffsetDateTime.parse("2006-01-01T13:50:15+01:00"),
-                        OffsetDateTime.parse("2005-12-31T13:50:15+01:00"),
-                        OffsetDateTime.parse("2007-01-01T13:50:15+01:00"),
+                        Arrays.asList(
+                                OffsetDateTime.parse("2006-01-01T00:00:00+01:00"),
+                                OffsetDateTime.parse("2006-12-31T00:59:59.999999999+01:00")
+                        ),
+                        OffsetDateTime.parse("2005-12-31T23:59:59.999999999+01:00"),
+                        OffsetDateTime.parse("2007-01-01T00:00:00+01:00"),
                         () -> null);
             }
         }
@@ -301,9 +354,12 @@ class YearMaxBeforeTest extends AbstractConstraintTest {
 
             WithZoneId() {
                 super(TestClassWithZoneId.class, "offsetDateTime",
-                        OffsetDateTime.parse("2007-01-01T00:50:15+01:00"),
-                        OffsetDateTime.parse("2006-01-01T00:50:15+01:00"),
-                        OffsetDateTime.parse("2007-01-02T00:50:15+01:00"),
+                        Arrays.asList(
+                                OffsetDateTime.parse("2006-01-01T01:00:00+01:00"),
+                                OffsetDateTime.parse("2007-01-01T00:59:59.999999999+01:00")
+                        ),
+                        OffsetDateTime.parse("2006-01-01T00:59:59.999999999+01:00"),
+                        OffsetDateTime.parse("2007-01-01T01:00:00+01:00"),
                         () -> null);
             }
         }
@@ -314,9 +370,12 @@ class YearMaxBeforeTest extends AbstractConstraintTest {
 
             WithSystemZoneId() {
                 super(TestClassWithSystemZoneId.class, "offsetDateTime",
-                        offsetDateTimeAtOffsetAfterSystem("2007-01-01T00:50:15+01:00", 1),
-                        offsetDateTimeAtOffsetAfterSystem("2006-01-01T00:50:15+01:00", 1),
-                        offsetDateTimeAtOffsetAfterSystem("2007-01-02T00:50:15+01:00", 1),
+                        Arrays.asList(
+                                offsetDateTimeAtOffsetAfterSystem("2006-01-01T01:00:00+01:00", 1),
+                                offsetDateTimeAtOffsetAfterSystem("2007-01-01T00:59:59.999999999+01:00", 1)
+                        ),
+                        offsetDateTimeAtOffsetAfterSystem("2006-01-01T00:59:59.999999999+01:00", 1),
+                        offsetDateTimeAtOffsetAfterSystem("2007-01-01T01:00:00+01:00", 1),
                         () -> null);
             }
         }
@@ -336,10 +395,13 @@ class YearMaxBeforeTest extends AbstractConstraintTest {
 
             WithNow() {
                 super(TestClassWithNow.class, "yearMonth",
-                        YearMonth.parse("2006-01"),
+                        Arrays.asList(
+                                YearMonth.parse("2006-01"),
+                                YearMonth.parse("2006-12")
+                        ),
                         YearMonth.parse("2005-12"),
                         YearMonth.parse("2007-01"),
-                        () -> Clock.fixed(Instant.parse("2007-12-01T10:15:30.00Z"), ZoneId.of("UTC")));
+                        () -> Clock.fixed(Instant.parse("2007-12-03T10:15:30Z"), ZoneId.of("UTC")));
             }
         }
 
@@ -349,7 +411,10 @@ class YearMaxBeforeTest extends AbstractConstraintTest {
 
             WithSystemZoneId() {
                 super(TestClassWithSystemZoneId.class, "yearMonth",
-                        YearMonth.parse("2006-01"),
+                        Arrays.asList(
+                                YearMonth.parse("2006-01"),
+                                YearMonth.parse("2006-12")
+                        ),
                         YearMonth.parse("2005-12"),
                         YearMonth.parse("2007-01"),
                         () -> null);
@@ -367,10 +432,13 @@ class YearMaxBeforeTest extends AbstractConstraintTest {
 
             WithNow() {
                 super(TestClassWithNow.class, "zonedDateTime",
-                        ZonedDateTime.parse("2006-01-01T13:50:15+01:00[Europe/Paris]"),
-                        ZonedDateTime.parse("2005-12-31T13:50:15+01:00[Europe/Paris]"),
-                        ZonedDateTime.parse("2007-01-01T13:50:15+01:00[Europe/Paris]"),
-                        () -> Clock.fixed(ZonedDateTime.parse("2007-12-01T10:15:30+01:00[Europe/Paris]").toInstant(), ZoneId.of("Europe/Paris")));
+                        Arrays.asList(
+                                zonedDateTimeAtDefaultZone("2006-01-01T00:00:00+01:00[Europe/Paris]"),
+                                zonedDateTimeAtDefaultZone("2006-12-31T00:59:59.999+01:00[Europe/Paris]")
+                        ),
+                        zonedDateTimeAtDefaultZone("2005-12-31T23:59:59.999+01:00[Europe/Paris]"),
+                        zonedDateTimeAtDefaultZone("2007-01-01T00:00:00+01:00[Europe/Paris]"),
+                        () -> Clock.fixed(ZonedDateTime.parse("2007-12-03T10:15:30+01:00[Europe/Paris]").toInstant(), ZoneId.of("Europe/Paris")));
             }
         }
 
@@ -380,9 +448,12 @@ class YearMaxBeforeTest extends AbstractConstraintTest {
 
             WithMoment() {
                 super(TestClassWithProvidedZoneId.class, "zonedDateTime",
-                        ZonedDateTime.parse("2006-01-01T13:50:15+01:00[Europe/Paris]"),
-                        ZonedDateTime.parse("2005-12-31T13:50:15+01:00[Europe/Paris]"),
-                        ZonedDateTime.parse("2007-01-01T13:50:15+01:00[Europe/Paris]"),
+                        Arrays.asList(
+                                ZonedDateTime.parse("2006-01-01T00:00:00+01:00[Europe/Paris]"),
+                                ZonedDateTime.parse("2006-12-31T00:59:59.999+01:00[Europe/Paris]")
+                        ),
+                        ZonedDateTime.parse("2005-12-31T23:59:59.999+01:00[Europe/Paris]"),
+                        ZonedDateTime.parse("2007-01-01T00:00:00+01:00[Europe/Paris]"),
                         () -> null);
             }
         }
@@ -393,9 +464,12 @@ class YearMaxBeforeTest extends AbstractConstraintTest {
 
             WithZoneId() {
                 super(TestClassWithZoneId.class, "zonedDateTime",
-                        ZonedDateTime.parse("2007-01-01T00:50:15+01:00[Europe/Paris]"),
-                        ZonedDateTime.parse("2006-01-01T00:50:15+01:00[Europe/Paris]"),
-                        ZonedDateTime.parse("2007-01-02T00:50:15+01:00[Europe/Paris]"),
+                        Arrays.asList(
+                                ZonedDateTime.parse("2006-01-01T01:00:00+01:00[Europe/Paris]"),
+                                ZonedDateTime.parse("2007-01-01T00:59:59.999+01:00[Europe/Paris]")
+                        ),
+                        ZonedDateTime.parse("2006-01-01T00:59:59.999+01:00[Europe/Paris]"),
+                        ZonedDateTime.parse("2007-01-01T01:00:00+01:00[Europe/Paris]"),
                         () -> null);
             }
         }
@@ -406,29 +480,35 @@ class YearMaxBeforeTest extends AbstractConstraintTest {
 
             WithSystemZoneId() {
                 super(TestClassWithSystemZoneId.class, "zonedDateTime",
-                        zonedDateTimeAtOffsetAfterSystem("2007-01-01T00:50:15+01:00[Europe/Paris]", 1),
-                        zonedDateTimeAtOffsetAfterSystem("2006-01-01T00:50:15+01:00[Europe/Paris]", 1),
-                        zonedDateTimeAtOffsetAfterSystem("2007-01-02T00:50:15+01:00[Europe/Paris]", 1),
+                        Arrays.asList(
+                                zonedDateTimeAtOffsetAfterSystem("2006-01-01T01:00:00+01:00[Europe/Paris]", 1),
+                                zonedDateTimeAtOffsetAfterSystem("2007-01-01T00:59:59.999+01:00[Europe/Paris]", 1)
+                        ),
+                        zonedDateTimeAtOffsetAfterSystem("2006-01-01T00:59:59.999+01:00[Europe/Paris]", 1),
+                        zonedDateTimeAtOffsetAfterSystem("2007-01-01T01:00:00+01:00[Europe/Paris]", 1),
                         () -> null);
             }
         }
     }
 
+    @TestInstance(Lifecycle.PER_CLASS)
     private abstract static class ConstraintTest<T> extends AbstractConstraintTest {
 
         private final Class<?> beanType;
         private final String propertyName;
         private final String moment;
         private final int years;
-        private final T exactValue;
+        private final List<T> exactValues;
         private final T smallerValue;
         private final T largerValue;
         private final ClockProvider clockProvider;
 
-        private ConstraintTest(Class<?> beanType, String propertyName, T exactValue, T smallerValue, T largerValue, ClockProvider clockProvider) {
+        private ConstraintTest(Class<?> beanType, String propertyName, List<T> exactValues, T smallerValue, T largerValue,
+                ClockProvider clockProvider) {
+
             this.beanType = beanType;
             this.propertyName = propertyName;
-            this.exactValue = exactValue;
+            this.exactValues = exactValues;
             this.smallerValue = smallerValue;
             this.largerValue = largerValue;
             this.clockProvider = clockProvider;
@@ -446,11 +526,16 @@ class YearMaxBeforeTest extends AbstractConstraintTest {
             assertEquals(Collections.emptyList(), violations);
         }
 
-        @Test
+        @ParameterizedTest(name = "{0}")
+        @MethodSource("exactValues")
         @DisplayName("exact value")
-        void testExactValue() {
+        void testExactValue(T exactValue) {
             List<?> violations = validate(clockProvider, beanType, propertyName, exactValue);
             assertEquals(Collections.emptyList(), violations);
+        }
+
+        List<T> exactValues() {
+            return exactValues;
         }
 
         @Test

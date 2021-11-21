@@ -84,12 +84,23 @@ abstract class AbstractConstraintTest {
                 .toInstant();
     }
 
+    static OffsetDateTime offsetDateTimeAtDefaultZone(String text) {
+        return OffsetDateTime.parse(text)
+                .atZoneSimilarLocal(ZoneId.systemDefault())
+                .toOffsetDateTime();
+    }
+
     static OffsetDateTime offsetDateTimeAtOffsetAfterSystem(String text, int hours) {
         ZonedDateTime zonedDateTime = OffsetDateTime.parse(text)
                 .atZoneSimilarLocal(ZoneId.systemDefault());
 
         return addOffset(zonedDateTime, hours)
                 .toOffsetDateTime();
+    }
+
+    static ZonedDateTime zonedDateTimeAtDefaultZone(String text) {
+        return ZonedDateTime.parse(text)
+                .withZoneSameLocal(ZoneId.systemDefault());
     }
 
     static ZonedDateTime zonedDateTimeAtOffsetAfterSystem(String text, int hours) {
