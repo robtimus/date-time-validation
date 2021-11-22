@@ -119,8 +119,8 @@ public abstract class MomentPartValidator<A extends Annotation, T extends Tempor
             Function<T, P> partExtractor, BiFunction<T, ZoneId, ZonedDateTime> zoneIdApplier, Function<ZonedDateTime, P> zonedDateTimePartExtractor,
             BiPredicate<P, P> validPredicate) {
 
-        super(zoneIdExtractor, partExtractor, zoneIdApplier, zonedDateTimePartExtractor,
-                momentPredicate(momentExtractor, momentParser, momentCreator, validPredicate));
+        this(momentExtractor, momentParser, momentCreator, zoneIdExtractor, partExtractor(partExtractor, zoneIdApplier, zonedDateTimePartExtractor),
+                validPredicate);
     }
 
     /**
@@ -158,8 +158,8 @@ public abstract class MomentPartValidator<A extends Annotation, T extends Tempor
             Function<T, P> partExtractor, BiFunction<T, ZoneId, ZonedDateTime> zoneIdApplier, Function<ZonedDateTime, P> zonedDateTimePartExtractor,
             BiPredicate<P, P> validPredicate) {
 
-        super(zoneIdExtractor, partExtractor, zoneIdApplier, zonedDateTimePartExtractor,
-                momentPredicate(momentExtractor, momentParser, momentCreator, durationExtractor, durationApplier, validPredicate));
+        this(momentExtractor, momentParser, momentCreator, durationExtractor, durationApplier, zoneIdExtractor,
+                partExtractor(partExtractor, zoneIdApplier, zonedDateTimePartExtractor), validPredicate);
     }
 
     /**

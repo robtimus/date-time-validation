@@ -89,7 +89,7 @@ public abstract class PartValidator<A extends Annotation, T extends TemporalAcce
             Function<T, P> partExtractor, BiFunction<T, ZoneId, ZonedDateTime> zoneIdApplier, Function<ZonedDateTime, P> zonedDateTimePartExtractor,
             Function<A, BiPredicate<P, ClockProvider>> partPredicateExtractor) {
 
-        super(partPredicate(zoneIdExtractor, partExtractor(partExtractor, zoneIdApplier, zonedDateTimePartExtractor), partPredicateExtractor));
+        this(zoneIdExtractor, partExtractor(partExtractor, zoneIdApplier, zonedDateTimePartExtractor), partPredicateExtractor);
     }
 
     private static <A, T, P> Function<A, BiPredicate<T, ClockProvider>> partPredicate(
@@ -111,7 +111,7 @@ public abstract class PartValidator<A extends Annotation, T extends TemporalAcce
         };
     }
 
-    private static <T, P> BiFunction<T, ZoneId, P> partExtractor(Function<T, P> partExtractor,
+    static <T, P> BiFunction<T, ZoneId, P> partExtractor(Function<T, P> partExtractor,
             BiFunction<T, ZoneId, ZonedDateTime> zoneIdApplier, Function<ZonedDateTime, P> zonedDateTimePartExtractor) {
 
         Objects.requireNonNull(partExtractor);

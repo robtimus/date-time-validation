@@ -25,8 +25,8 @@ import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
-import java.time.temporal.ChronoField;
 import java.time.temporal.TemporalAccessor;
+import java.time.temporal.TemporalField;
 import java.util.Objects;
 import java.util.function.BiFunction;
 import java.util.function.BiPredicate;
@@ -59,7 +59,7 @@ public abstract class FieldValidator<A extends Annotation, T extends TemporalAcc
      *                                    with as arguments the field extracted from the value to validate and the {@link ClockProvider} returned by
      *                                    {@link ConstraintValidatorContext#getClockProvider()}.
      */
-    protected FieldValidator(ChronoField field,
+    protected FieldValidator(TemporalField field,
             Function<A, String> zoneIdExtractor,
             BiFunction<T, ZoneId, TemporalAccessor> zoneIdApplier,
             Function<A, BiPredicate<Integer, ClockProvider>> fieldPredicateExtractor) {
@@ -68,7 +68,7 @@ public abstract class FieldValidator<A extends Annotation, T extends TemporalAcc
     }
 
     private static <A, T extends TemporalAccessor> Function<A, BiPredicate<T, ClockProvider>> fieldPredicate(
-            ChronoField field,
+            TemporalField field,
             Function<A, String> zoneIdExtractor,
             BiFunction<T, ZoneId, TemporalAccessor> zoneIdApplier,
             Function<A, BiPredicate<Integer, ClockProvider>> fieldPredicateExtractor) {
@@ -111,7 +111,7 @@ public abstract class FieldValidator<A extends Annotation, T extends TemporalAcc
      *                                        with as arguments the field extracted from the value to validate and the {@link ClockProvider} returned
      *                                        by {@link ConstraintValidatorContext#getClockProvider()}.
          */
-        protected WithoutZoneId(ChronoField field,
+        protected WithoutZoneId(TemporalField field,
                 Function<A, String> zoneIdExtractor,
                 Function<A, BiPredicate<Integer, ClockProvider>> fieldPredicateExtractor) {
 
@@ -138,7 +138,7 @@ public abstract class FieldValidator<A extends Annotation, T extends TemporalAcc
      *                                        with as arguments the field extracted from the value to validate and the {@link ClockProvider} returned
      *                                        by {@link ConstraintValidatorContext#getClockProvider()}.
          */
-        protected ForInstant(ChronoField field,
+        protected ForInstant(TemporalField field,
                 Function<A, String> zoneIdExtractor,
                 Function<A, BiPredicate<Integer, ClockProvider>> fieldPredicateExtractor) {
 
@@ -164,7 +164,7 @@ public abstract class FieldValidator<A extends Annotation, T extends TemporalAcc
      *                                        with as arguments the field extracted from the value to validate and the {@link ClockProvider} returned
      *                                        by {@link ConstraintValidatorContext#getClockProvider()}.
          */
-        protected ForZonedDateTime(ChronoField field,
+        protected ForZonedDateTime(TemporalField field,
                 Function<A, String> zoneIdExtractor,
                 Function<A, BiPredicate<Integer, ClockProvider>> fieldPredicateExtractor) {
 
