@@ -23,6 +23,8 @@ import static com.github.robtimus.validation.datetime.base.ZoneIdUtils.systemOnl
 import java.lang.annotation.Annotation;
 import java.time.Instant;
 import java.time.LocalDate;
+import java.time.OffsetDateTime;
+import java.time.OffsetTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.temporal.TemporalAccessor;
@@ -49,6 +51,30 @@ public abstract class FieldValidator<A extends Annotation, T extends TemporalAcc
      * If a {@link ZoneId} is available, the field will be extracted from the result of applying the given {@code zoneIdApplier} function to the value
      * to validate. Otherwise it will be extracted from the value itself.
      *
+     * @param fieldExtractor A function that extracts the field to validate from a constraint annotation.
+     * @param zoneIdExtractor A function that extracts the zone id from a constraint annotation.
+     * @param zoneIdApplier A function that applies a zone id  to a {@link TemporalAccessor}, resulting in a {@link TemporalAccessor} with the zone id
+     *                          applied. The result is usually a {@link ZonedDateTime} but doesn't have to be.
+     *                          The result should represent the same instant.
+     * @param fieldPredicateExtractor A function that extracts a field predicate from a constraint annotation.
+     *                                    This predicate will be called in {@link #isValid(Object, ConstraintValidatorContext)},
+     *                                    with as arguments the field extracted from the value to validate and the {@link ClockProvider} returned by
+     *                                    {@link ConstraintValidatorContext#getClockProvider()}.
+     */
+    protected FieldValidator(Function<A, TemporalField> fieldExtractor,
+            Function<A, String> zoneIdExtractor,
+            BiFunction<T, ZoneId, TemporalAccessor> zoneIdApplier,
+            Function<A, BiPredicate<Integer, ClockProvider>> fieldPredicateExtractor) {
+
+        super(fieldPredicate(fieldExtractor, zoneIdExtractor, zoneIdApplier, fieldPredicateExtractor));
+    }
+
+    /**
+     * Creates a new validator.
+     * <p>
+     * If a {@link ZoneId} is available, the field will be extracted from the result of applying the given {@code zoneIdApplier} function to the value
+     * to validate. Otherwise it will be extracted from the value itself.
+     *
      * @param field The field to validate.
      * @param zoneIdExtractor A function that extracts the zone id from a constraint annotation.
      * @param zoneIdApplier A function that applies a zone id  to a {@link TemporalAccessor}, resulting in a {@link TemporalAccessor} with the zone id
@@ -64,21 +90,28 @@ public abstract class FieldValidator<A extends Annotation, T extends TemporalAcc
             BiFunction<T, ZoneId, TemporalAccessor> zoneIdApplier,
             Function<A, BiPredicate<Integer, ClockProvider>> fieldPredicateExtractor) {
 
-        super(fieldPredicate(field, zoneIdExtractor, zoneIdApplier, fieldPredicateExtractor));
+        this(fieldExtractor(field), zoneIdExtractor, zoneIdApplier, fieldPredicateExtractor);
+    }
+
+    private static <A> Function<A, TemporalField> fieldExtractor(TemporalField field) {
+        Objects.requireNonNull(field);
+
+        return annotation -> field;
     }
 
     private static <A, T extends TemporalAccessor> Function<A, BiPredicate<T, ClockProvider>> fieldPredicate(
-            TemporalField field,
+            Function<A, TemporalField> fieldExtractor,
             Function<A, String> zoneIdExtractor,
             BiFunction<T, ZoneId, TemporalAccessor> zoneIdApplier,
             Function<A, BiPredicate<Integer, ClockProvider>> fieldPredicateExtractor) {
 
+        Objects.requireNonNull(fieldExtractor);
         Objects.requireNonNull(zoneIdExtractor);
-        Objects.requireNonNull(field);
         Objects.requireNonNull(zoneIdApplier);
         Objects.requireNonNull(fieldPredicateExtractor);
 
         return annotation -> {
+            TemporalField field = fieldExtractor.apply(annotation);
             ZoneId zoneId = extractZoneId(annotation, zoneIdExtractor);
             BiPredicate<Integer, ClockProvider> fieldPredicate = fieldPredicateExtractor.apply(annotation);
 
@@ -103,19 +136,37 @@ public abstract class FieldValidator<A extends Annotation, T extends TemporalAcc
         /**
          * Creates a new validator.
          *
+         * @param fieldExtractor A function that extracts the field to validate from a constraint annotation.
+         * @param zoneIdExtractor A function that extracts the zone id from a constraint annotation.
+         *                            It will be wrapped using {@link ZoneIdUtils#systemOnlyZoneId(Function)}.
+         * @param fieldPredicateExtractor A function that extracts a field predicate from a constraint annotation.
+         *                                    This predicate will be called in {@link #isValid(Object, ConstraintValidatorContext)},
+         *                                    with as arguments the field extracted from the value to validate and the {@link ClockProvider} returned
+         *                                    by {@link ConstraintValidatorContext#getClockProvider()}.
+         */
+        protected WithoutZoneId(Function<A, TemporalField> fieldExtractor,
+                Function<A, String> zoneIdExtractor,
+                Function<A, BiPredicate<Integer, ClockProvider>> fieldPredicateExtractor) {
+
+            super(fieldExtractor, systemOnlyZoneId(zoneIdExtractor), (t, z) -> t, fieldPredicateExtractor);
+        }
+
+        /**
+         * Creates a new validator.
+         *
          * @param field The field to validate.
          * @param zoneIdExtractor A function that extracts the zone id from a constraint annotation.
          *                            It will be wrapped using {@link ZoneIdUtils#systemOnlyZoneId(Function)}.
          * @param fieldPredicateExtractor A function that extracts a field predicate from a constraint annotation.
-     *                                        This predicate will be called in {@link #isValid(Object, ConstraintValidatorContext)},
-     *                                        with as arguments the field extracted from the value to validate and the {@link ClockProvider} returned
-     *                                        by {@link ConstraintValidatorContext#getClockProvider()}.
+         *                                    This predicate will be called in {@link #isValid(Object, ConstraintValidatorContext)},
+         *                                    with as arguments the field extracted from the value to validate and the {@link ClockProvider} returned
+         *                                    by {@link ConstraintValidatorContext#getClockProvider()}.
          */
         protected WithoutZoneId(TemporalField field,
                 Function<A, String> zoneIdExtractor,
                 Function<A, BiPredicate<Integer, ClockProvider>> fieldPredicateExtractor) {
 
-            super(field, systemOnlyZoneId(zoneIdExtractor), (t, z) -> t, fieldPredicateExtractor);
+            this(fieldExtractor(field), zoneIdExtractor, fieldPredicateExtractor);
         }
     }
 
@@ -130,19 +181,97 @@ public abstract class FieldValidator<A extends Annotation, T extends TemporalAcc
         /**
          * Creates a new validator.
          *
+         * @param fieldExtractor A function that extracts the field to validate from a constraint annotation.
+         * @param zoneIdExtractor A function that extracts the zone id from a constraint annotation.
+         *                            It will be wrapped using {@link ZoneIdUtils#nonProvidedZoneId(Function)}.
+         * @param fieldPredicateExtractor A function that extracts a field predicate from a constraint annotation.
+         *                                    This predicate will be called in {@link #isValid(Object, ConstraintValidatorContext)},
+         *                                    with as arguments the field extracted from the value to validate and the {@link ClockProvider} returned
+         *                                    by {@link ConstraintValidatorContext#getClockProvider()}.
+         */
+        protected ForInstant(Function<A, TemporalField> fieldExtractor,
+                Function<A, String> zoneIdExtractor,
+                Function<A, BiPredicate<Integer, ClockProvider>> fieldPredicateExtractor) {
+
+            super(fieldExtractor, nonProvidedZoneId(zoneIdExtractor), Instant::atZone, fieldPredicateExtractor);
+        }
+
+        /**
+         * Creates a new validator.
+         *
          * @param field The field to validate.
          * @param zoneIdExtractor A function that extracts the zone id from a constraint annotation.
          *                            It will be wrapped using {@link ZoneIdUtils#nonProvidedZoneId(Function)}.
          * @param fieldPredicateExtractor A function that extracts a field predicate from a constraint annotation.
-     *                                        This predicate will be called in {@link #isValid(Object, ConstraintValidatorContext)},
-     *                                        with as arguments the field extracted from the value to validate and the {@link ClockProvider} returned
-     *                                        by {@link ConstraintValidatorContext#getClockProvider()}.
+         *                                    This predicate will be called in {@link #isValid(Object, ConstraintValidatorContext)},
+         *                                    with as arguments the field extracted from the value to validate and the {@link ClockProvider} returned
+         *                                    by {@link ConstraintValidatorContext#getClockProvider()}.
          */
         protected ForInstant(TemporalField field,
                 Function<A, String> zoneIdExtractor,
                 Function<A, BiPredicate<Integer, ClockProvider>> fieldPredicateExtractor) {
 
-            super(field, nonProvidedZoneId(zoneIdExtractor), Instant::atZone, fieldPredicateExtractor);
+            this(fieldExtractor(field), zoneIdExtractor, fieldPredicateExtractor);
+        }
+    }
+
+    /**
+     * The base for all {@link OffsetTime} validators that validate only a specific field of the value.
+     * <p>
+     * To apply a {@link ZoneId} to an {@link OffsetTime}, the following mappings are performed:
+     * <ul>
+     * <li>{@link OffsetTime} to {@link OffsetDateTime}, using {@link LocalDate#now()}.</li>
+     * <li>{@link OffsetDateTime} to {@link ZonedDateTime}, using the provided {@link ZoneId}.</li>
+     * <li>{@link ZonedDateTime} to {@link OffsetDateTime}.</li>
+     * <li>{@link OffsetDateTime} to {@link OffsetTime}.</li>
+     * </ul>
+     *
+     * @author Rob Spoor
+     * @param <A> The constraint annotation type.
+     */
+    public abstract static class ForOffsetTime<A extends Annotation> extends FieldValidator<A, OffsetTime> {
+
+        /**
+         * Creates a new validator.
+         *
+         * @param fieldExtractor A function that extracts the field to validate from a constraint annotation.
+         * @param zoneIdExtractor A function that extracts the zone id from a constraint annotation.
+         *                            It will be wrapped using {@link ZoneIdUtils#nonProvidedZoneId(Function)}.
+         * @param fieldPredicateExtractor A function that extracts a field predicate from a constraint annotation.
+         *                                    This predicate will be called in {@link #isValid(Object, ConstraintValidatorContext)},
+         *                                    with as arguments the field extracted from the value to validate and the {@link ClockProvider} returned
+         *                                    by {@link ConstraintValidatorContext#getClockProvider()}.
+         */
+        protected ForOffsetTime(Function<A, TemporalField> fieldExtractor,
+                Function<A, String> zoneIdExtractor,
+                Function<A, BiPredicate<Integer, ClockProvider>> fieldPredicateExtractor) {
+
+            super(fieldExtractor, zoneIdExtractor, ForOffsetTime::applyZoneId, fieldPredicateExtractor);
+        }
+
+        /**
+         * Creates a new validator.
+         *
+         * @param field The field to validate.
+         * @param zoneIdExtractor A function that extracts the zone id from a constraint annotation.
+         *                            It will be wrapped using {@link ZoneIdUtils#nonProvidedZoneId(Function)}.
+         * @param fieldPredicateExtractor A function that extracts a field predicate from a constraint annotation.
+         *                                    This predicate will be called in {@link #isValid(Object, ConstraintValidatorContext)},
+         *                                    with as arguments the field extracted from the value to validate and the {@link ClockProvider} returned
+         *                                    by {@link ConstraintValidatorContext#getClockProvider()}.
+         */
+        protected ForOffsetTime(TemporalField field,
+                Function<A, String> zoneIdExtractor,
+                Function<A, BiPredicate<Integer, ClockProvider>> fieldPredicateExtractor) {
+
+            this(fieldExtractor(field), zoneIdExtractor, fieldPredicateExtractor);
+        }
+
+        private static OffsetTime applyZoneId(OffsetTime offsetTime, ZoneId zoneId) {
+            return offsetTime.atDate(LocalDate.now())
+                    .atZoneSameInstant(zoneId)
+                    .toOffsetDateTime()
+                    .toOffsetTime();
         }
     }
 
@@ -157,18 +286,35 @@ public abstract class FieldValidator<A extends Annotation, T extends TemporalAcc
         /**
          * Creates a new validator.
          *
+         * @param fieldExtractor A function that extracts the field to validate from a constraint annotation.
+         * @param zoneIdExtractor A function that extracts the zone id from a constraint annotation.
+         * @param fieldPredicateExtractor A function that extracts a field predicate from a constraint annotation.
+         *                                    This predicate will be called in {@link #isValid(Object, ConstraintValidatorContext)},
+         *                                    with as arguments the field extracted from the value to validate and the {@link ClockProvider} returned
+         *                                    by {@link ConstraintValidatorContext#getClockProvider()}.
+         */
+        protected ForZonedDateTime(Function<A, TemporalField> fieldExtractor,
+                Function<A, String> zoneIdExtractor,
+                Function<A, BiPredicate<Integer, ClockProvider>> fieldPredicateExtractor) {
+
+            super(fieldExtractor, zoneIdExtractor, ZonedDateTime::withZoneSameInstant, fieldPredicateExtractor);
+        }
+
+        /**
+         * Creates a new validator.
+         *
          * @param field The field to validate.
          * @param zoneIdExtractor A function that extracts the zone id from a constraint annotation.
          * @param fieldPredicateExtractor A function that extracts a field predicate from a constraint annotation.
-     *                                        This predicate will be called in {@link #isValid(Object, ConstraintValidatorContext)},
-     *                                        with as arguments the field extracted from the value to validate and the {@link ClockProvider} returned
-     *                                        by {@link ConstraintValidatorContext#getClockProvider()}.
+         *                                    This predicate will be called in {@link #isValid(Object, ConstraintValidatorContext)},
+         *                                    with as arguments the field extracted from the value to validate and the {@link ClockProvider} returned
+         *                                    by {@link ConstraintValidatorContext#getClockProvider()}.
          */
         protected ForZonedDateTime(TemporalField field,
                 Function<A, String> zoneIdExtractor,
                 Function<A, BiPredicate<Integer, ClockProvider>> fieldPredicateExtractor) {
 
-            super(field, zoneIdExtractor, ZonedDateTime::withZoneSameInstant, fieldPredicateExtractor);
+            this(fieldExtractor(field), zoneIdExtractor, fieldPredicateExtractor);
         }
     }
 }

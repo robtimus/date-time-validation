@@ -37,6 +37,7 @@ import com.github.robtimus.validation.dayofweek.validators.DayOfWeekAfterValidat
 
 /**
  * Validates that the day of the week of a date/time object is after a specific day of the week.
+ * More specifically, for a date/time object {@code object}, validates that {@code object.dayofweek > value}.
  * <p>
  * Supported types are:
  * <ul>

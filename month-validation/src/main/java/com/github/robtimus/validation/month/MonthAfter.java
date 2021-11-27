@@ -37,6 +37,7 @@ import com.github.robtimus.validation.month.validators.MonthAfterValidator;
 
 /**
  * Validates that the month of a date/time object is after a specific month.
+ * More specifically, for a date/time object {@code object}, validates that {@code object.month > value}.
  * <p>
  * Supported types are:
  * <ul>

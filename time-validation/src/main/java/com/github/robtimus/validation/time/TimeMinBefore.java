@@ -40,7 +40,7 @@ import com.github.robtimus.validation.time.validators.TimeMinBeforeValidator;
 
 /**
  * Validates that the time part of a date/time object is not less than a specific duration before a specific moment in time.
- * More specifically, for a date/time object {@code value}, validates that {@code value.time &lt;= moment - duration}.
+ * More specifically, for a date/time object {@code object}, validates that {@code object.time <= moment - duration}.
  * <p>
  * Supported types are:
  * <ul>

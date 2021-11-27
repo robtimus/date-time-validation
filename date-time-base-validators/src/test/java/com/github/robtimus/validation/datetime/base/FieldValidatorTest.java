@@ -32,6 +32,7 @@ import java.lang.annotation.Target;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.OffsetDateTime;
+import java.time.OffsetTime;
 import java.time.ZonedDateTime;
 import java.time.temporal.ChronoField;
 import java.util.Collections;
@@ -291,6 +292,101 @@ public class FieldValidatorTest extends AbstractValidatorTest {
     }
 
     @Nested
+    @DisplayName("for OffsetTime")
+    class ForOffsetTimeTest {
+
+        @Nested
+        @DisplayName("with system zoneId")
+        class WithSystemZoneId {
+
+            @Test
+            @DisplayName("null value")
+            void testNullValue() {
+                List<?> violations = validate(TestClass.class, "offsetTimeWithSystemZoneId", null);
+                assertEquals(Collections.emptyList(), violations);
+            }
+
+            @Test
+            @DisplayName("valid value")
+            void testValidValue() {
+                List<?> violations = validate(TestClass.class, "offsetTimeWithSystemZoneId", OffsetTime.parse("10:15:30+01:00"));
+                assertEquals(Collections.emptyList(), violations);
+            }
+
+            @Test
+            @DisplayName("invalid value")
+            void testInvalidValue() {
+                List<ConstraintViolation<TestClass>> violations = validate(TestClass.class, "offsetTimeWithSystemZoneId",
+                        OffsetTime.parse("10:14:30+01:00"));
+                assertEquals(1, violations.size());
+
+                ConstraintViolation<?> violation = violations.get(0);
+                assertAnnotation(violation, TestConstraint.class);
+            }
+        }
+
+        @Nested
+        @DisplayName("with provided zoneId")
+        class WithProvidedZoneId {
+
+            @Test
+            @DisplayName("null value")
+            void testNullValue() {
+                List<?> violations = validate(TestClass.class, "offsetTimeWithProvidedZoneId", null);
+                assertEquals(Collections.emptyList(), violations);
+            }
+
+            @Test
+            @DisplayName("valid value")
+            void testValidValue() {
+                List<?> violations = validate(TestClass.class, "offsetTimeWithProvidedZoneId", OffsetTime.parse("10:15:30+01:00"));
+                assertEquals(Collections.emptyList(), violations);
+            }
+
+            @Test
+            @DisplayName("invalid value")
+            void testInvalidValue() {
+                List<ConstraintViolation<TestClass>> violations = validate(TestClass.class, "offsetTimeWithProvidedZoneId",
+                        OffsetTime.parse("10:14:30+01:00"));
+                assertEquals(1, violations.size());
+
+                ConstraintViolation<?> violation = violations.get(0);
+                assertAnnotation(violation, TestConstraint.class);
+            }
+        }
+
+        @Nested
+        @DisplayName("with explicit zoneId")
+        class WithExplicitZoneId {
+
+            @Test
+            @DisplayName("null value")
+            void testNullValue() {
+                List<?> violations = validate(TestClass.class, "offsetTimeWithExplicitZoneId", null);
+                assertEquals(Collections.emptyList(), violations);
+            }
+
+            @Test
+            @DisplayName("valid value")
+            void testValidValue() {
+                List<?> violations = validate(TestClass.class, "offsetTimeWithExplicitZoneId", OffsetTime.parse("10:15:30+01:00"));
+                assertEquals(Collections.emptyList(), violations);
+            }
+
+            @Test
+            @DisplayName("invalid value")
+            void testInvalidValue() {
+                List<ConstraintViolation<TestClass>> violations = validate(TestClass.class, "offsetTimeWithExplicitZoneId",
+                        OffsetTime.parse("10:14:30+01:00"));
+                assertEquals(1, violations.size());
+
+                ConstraintViolation<?> violation = violations.get(0);
+                assertAnnotation(violation, TestConstraint.class);
+            }
+        }
+    }
+
+    @Nested
     @DisplayName("for ZonedDateTime")
     class ForZonedDateTimeTest {
 
@@ -418,6 +514,15 @@ public class FieldValidatorTest extends AbstractValidatorTest {
         private Instant instantWithExplicitZoneId;
 
         @TestConstraint(zoneId = "system")
+        private OffsetTime offsetTimeWithSystemZoneId;
+
+        @TestConstraint(zoneId = "provided")
+        private OffsetTime offsetTimeWithProvidedZoneId;
+
+        @TestConstraint(zoneId = "UTC")
+        private OffsetTime offsetTimeWithExplicitZoneId;
+
+        @TestConstraint(zoneId = "system")
         private ZonedDateTime zonedDateTimeWithSystemZoneId;
 
         @TestConstraint(zoneId = "provided")
@@ -427,7 +532,12 @@ public class FieldValidatorTest extends AbstractValidatorTest {
         private ZonedDateTime zonedDateTimeWithExplicitZoneId;
     }
 
-    @Constraint(validatedBy = { OffsetDateTimeValidator.class, LocalDateValidator.class, InstantValidator.class, ZonedDateTimeValidator.class })
+    @Constraint(validatedBy = { OffsetDateTimeValidator.class,
+            LocalDateValidator.class,
+            InstantValidator.class,
+            OffsetTimeValidator.class,
+            ZonedDateTimeValidator.class
+    })
     @Target({ METHOD, FIELD, ANNOTATION_TYPE, CONSTRUCTOR, PARAMETER, TYPE_USE })
     @Retention(RUNTIME)
     public @interface TestConstraint {
@@ -459,6 +569,13 @@ public class FieldValidatorTest extends AbstractValidatorTest {
 
         public InstantValidator() {
             super(ChronoField.MONTH_OF_YEAR, TestConstraint::zoneId, annotation -> (m, p) -> m == 12);
+        }
+    }
+
+    public static final class OffsetTimeValidator extends FieldValidator.ForOffsetTime<TestConstraint> {
+
+        public OffsetTimeValidator() {
+            super(ChronoField.MINUTE_OF_HOUR, TestConstraint::zoneId, annotation -> (m, p) -> m == 15);
         }
     }
 

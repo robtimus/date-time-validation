@@ -42,7 +42,7 @@ import com.github.robtimus.validation.datetime.validators.NotAfterValidator;
 
 /**
  * Validates that a date/time object is not after a specific moment in time.
- * More specifically, for a date/time object {@code value}, validates that {@code value &lt;= moment}.
+ * More specifically, for a date/time object {@code object}, validates that {@code object <= moment}.
  * <p>
  * Supported types are:
  * <ul>

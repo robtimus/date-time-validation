@@ -169,14 +169,14 @@ These annotations apply to the following types:
 
 Validation constraints for date/time objects that validate only the day of the week. These validate the following, where `object` is the object to be validated, and `value` is the value specified in the constraint:
 
-| Constraint         | Meaning                   |
-|--------------------|---------------------------|
-| DayOfWeekAfter     | object.dayOfWeek > value  |
-| DayOfWeekNotAfter  | object.dayOfWeek <= value |
-| DayOfWeekBefore    | object.dayOfWeek < value  |
-| DayOfWeekNotBefore | object.dayOfWeek >= value |
-| DayOfWeekIs        | object.dayOfWeek == value |
-| DayOfWeekIn        | object.dayOfWeek in value |
+| Constraint         | Meaning                          |
+|--------------------|----------------------------------|
+| DayOfWeekAfter     | object.dayOfWeek > value         |
+| DayOfWeekNotAfter  | object.dayOfWeek <= value        |
+| DayOfWeekBefore    | object.dayOfWeek < value         |
+| DayOfWeekNotBefore | object.dayOfWeek >= value        |
+| DayOfWeekIs        | object.dayOfWeek == value        |
+| DayOfWeekIn        | value.contains(object.dayOfWeek) |
 
 Note that days of the week are ordered from Monday until Sunday.
 
@@ -206,14 +206,14 @@ These annotations apply to the following types:
 
 Validation constraints for date/time objects that validate only the month. These validate the following, where `object` is the object to be validated, and `value` is the value specified in the constraint:
 
-| Constraint         | Meaning                   |
-|--------------------|---------------------------|
-| MonthAfter     | object.month > value  |
-| MonthNotAfter  | object.month <= value |
-| MonthBefore    | object.month < value  |
-| MonthNotBefore | object.month >= value |
-| MonthIs        | object.month == value |
-| MonthIn        | object.month in value |
+| Constraint     | Meaning                      |
+|----------------|------------------------------|
+| MonthAfter     | object.month > value         |
+| MonthNotAfter  | object.month <= value        |
+| MonthBefore    | object.month < value         |
+| MonthNotBefore | object.month >= value        |
+| MonthIs        | object.month == value        |
+| MonthIn        | value.contains(object.month) |
 
 These annotations apply to the following types:
 
@@ -240,6 +240,41 @@ These annotations apply to the following types:
 #### year-month-validation vs month-validation
 
 `year-month-validation` validates the combination of the year and the month. This allows it to be used for cases like credit card validation. `month-validation` on the other hand ignores the year.
+
+### minute-validation
+
+Validation constraints for date/time objects that validate only the minute. These validate the following, where `object` is the object to be validated, and `value` and `modulo` are the values specified in the constraint:
+
+| Constraint   | Meaning                                   |
+|--------------|-------------------------------------------|
+| MinuteIs     | object.minute == value                    |
+| MinuteIn     | value.contains(object.minute)             |
+| MinuteNotIn  | !value.contains(object.minute)            |
+| MinuteModulo | object.minute % modulo == minute % modulo |
+
+These annotations apply to the following types:
+
+| Type                      | MinuteIs | MinuteIn | MinuteNotIn | MinuteModulo |
+|---------------------------|:--------:|:--------:|:-----------:|:------------:|
+| Date<sup>1</sup>          |✅        |✅        |✅           |✅            |
+| Calendar                  |✅        |✅        |✅           |✅            |
+| DayOfWeek                 |❌        |❌        |❌           |❌            |
+| Instant<sup>1</sup>       |✅        |✅        |✅           |✅            |
+| LocalDate                 |❌        |❌        |❌           |❌            |
+| LocalDateTime<sup>2</sup> |✅        |✅        |✅           |✅            |
+| LocalTime<sup>2</sup>     |✅        |✅        |✅           |✅            |
+| Month                     |❌        |❌        |❌           |❌            |
+| MonthDay                  |❌        |❌        |❌           |❌            |
+| OffsetDateTime            |✅        |✅        |✅           |✅            |
+| OffsetTime                |✅        |✅        |✅           |✅            |
+| Year                      |❌        |❌        |❌           |❌            |
+| YearMonth                 |❌        |❌        |❌           |❌            |
+| ZonedDateTime             |✅        |✅        |✅           |✅            |
+
+<sup>1</sup>: because the type has no time zone information, the `zoneId` may not be defined as `provided`.\
+<sup>2</sup>: because no time zone is applicanle for the type, the `zoneId` must be defined as `system`. Since this is the default, the `zoneId` parameter can simply be omitted.
+
+Note that there are no `MinuteAfter`, `MinuteNotAfter`, `MinuteBefore` and `MinuteNotBefore` annotations; due to the limited number of minutes in an hour, `MinuteIs`, `MinuteIn` and `MinuteNotIn` can be used instead.
 
 ## Examples
 

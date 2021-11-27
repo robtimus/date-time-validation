@@ -40,7 +40,7 @@ import com.github.robtimus.validation.year.validators.YearAfterValidator;
 
 /**
  * Validates that the year part of a date/time object is after a specific moment in time.
- * More specifically, for a date/time object {@code value}, validates that {@code value.year &gt; moment}.
+ * More specifically, for a date/time object {@code object}, validates that {@code object.year > moment}.
  * <p>
  * Supported types are:
  * <ul>

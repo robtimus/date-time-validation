@@ -37,6 +37,7 @@ import com.github.robtimus.validation.month.validators.MonthNotBeforeValidator;
 
 /**
  * Validates that the month of a date/time object is not before a specific month.
+ * More specifically, for a date/time object {@code object}, validates that {@code object.month >= value}.
  * <p>
  * Supported types are:
  * <ul>

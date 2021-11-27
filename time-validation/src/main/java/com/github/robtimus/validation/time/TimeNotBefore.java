@@ -40,7 +40,7 @@ import com.github.robtimus.validation.time.validators.TimeNotBeforeValidator;
 
 /**
  * Validates that the time part of a date/time object is not before a specific moment in time.
- * More specifically, for a date/time object {@code value}, validates that {@code value.time &gt;= moment}.
+ * More specifically, for a date/time object {@code object}, validates that {@code object.time >= moment}.
  * <p>
  * Supported types are:
  * <ul>

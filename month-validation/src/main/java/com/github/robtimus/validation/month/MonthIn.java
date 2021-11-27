@@ -37,6 +37,7 @@ import com.github.robtimus.validation.month.validators.MonthInValidator;
 
 /**
  * Validates that the month of a date/time object is one of a given list of months.
+ * More specifically, for a date/time object {@code object}, validates that {@code value.contains(object.month)}.
  * <p>
  * Supported types are:
  * <ul>

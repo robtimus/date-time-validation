@@ -40,7 +40,7 @@ import com.github.robtimus.validation.yearmonth.validators.YearMonthMinAfterVali
 
 /**
  * Validates that the year-month part of a date/time object is not less than a specific duration after a specific moment in time.
- * More specifically, for a date/time object {@code value}, validates that {@code value.yearmonth &gt;= moment + duration}.
+ * More specifically, for a date/time object {@code object}, validates that {@code object.yearmonth >= moment + duration}.
  * <p>
  * Supported types are:
  * <ul>

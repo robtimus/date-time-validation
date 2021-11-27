@@ -37,6 +37,7 @@ import com.github.robtimus.validation.dayofweek.validators.DayOfWeekIsValidator;
 
 /**
  * Validates that the day of the week of a date/time object is a given day of the week.
+ * More specifically, for a date/time object {@code object}, validates that {@code object.dyofweek == value}.
  * <p>
  * Supported types are:
  * <ul>

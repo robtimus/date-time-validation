@@ -40,7 +40,7 @@ import com.github.robtimus.validation.time.validators.TimeMaxBeforeValidator;
 
 /**
  * Validates that the time part of a date/time object is not more than a specific duration before a specific moment in time.
- * More specifically, for a date/time object {@code value}, validates that {@code value.time &gt;= moment - duration}.
+ * More specifically, for a date/time object {@code object}, validates that {@code object.time >= moment - duration}.
  * <p>
  * Supported types are:
  * <ul>
