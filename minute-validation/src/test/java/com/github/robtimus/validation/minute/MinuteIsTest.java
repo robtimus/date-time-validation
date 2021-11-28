@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package com.github.robtimus.validation.datetime.field;
+package com.github.robtimus.validation.minute;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -40,7 +40,6 @@ import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.TestInstance.Lifecycle;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
-import com.github.robtimus.validation.minute.MinuteIs;
 
 @SuppressWarnings("nls")
 class MinuteIsTest extends AbstractConstraintTest {
@@ -82,7 +81,7 @@ class MinuteIsTest extends AbstractConstraintTest {
                         ),
                         Arrays.asList(
                                 Date.from(utcInstantAtOffsetAfterSystem("2007-12-03T10:44:59.999Z", 30)),
-                                Date.from(utcInstantAtOffsetAfterSystem("2007-12-03T10:46:30Z", 30))
+                                Date.from(utcInstantAtOffsetAfterSystem("2007-12-03T10:46:00Z", 30))
                         ));
             }
         }

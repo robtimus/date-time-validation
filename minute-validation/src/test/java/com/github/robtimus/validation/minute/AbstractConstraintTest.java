@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package com.github.robtimus.validation.datetime.field;
+package com.github.robtimus.validation.minute;
 
 import static java.util.Comparator.comparing;
 import static java.util.stream.Collectors.toList;

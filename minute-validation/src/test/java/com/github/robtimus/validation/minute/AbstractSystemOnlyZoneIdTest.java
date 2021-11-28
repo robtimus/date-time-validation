@@ -1,5 +1,5 @@
 /*
- * AbstractNonProvidedZoneIdTest.java
+ * AbstractSystemOnlyZoneIdTest.java
  * Copyright 2021 Rob Spoor
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package com.github.robtimus.validation.datetime.field;
+package com.github.robtimus.validation.minute;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertInstanceOf;
@@ -25,14 +25,16 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 @SuppressWarnings("nls")
-abstract class AbstractNonProvidedZoneIdTest<T> extends AbstractConstraintTest {
+abstract class AbstractSystemOnlyZoneIdTest<T> extends AbstractConstraintTest {
 
-    private final Class<?> beanType;
+    private final Class<?> beanTypeWithProvidedZoneId;
+    private final Class<?> beanTypeWithZoneId;
     private final String propertyName;
     private final T value;
 
-    AbstractNonProvidedZoneIdTest(Class<?> beanType, String propertyName, T value) {
-        this.beanType = beanType;
+    AbstractSystemOnlyZoneIdTest(Class<?> beanTypeWithProvidedZoneId, Class<?> beanTypeWithZoneId, String propertyName, T value) {
+        this.beanTypeWithProvidedZoneId = beanTypeWithProvidedZoneId;
+        this.beanTypeWithZoneId = beanTypeWithZoneId;
         this.propertyName = propertyName;
         this.value = value;
     }
@@ -40,10 +42,21 @@ abstract class AbstractNonProvidedZoneIdTest<T> extends AbstractConstraintTest {
     @Test
     @DisplayName("zoneId 'provided' not allowed")
     void testZoneIdProvidedNotAllowed() {
-        ValidationException exception = assertThrows(ValidationException.class, () -> validate(() -> null, beanType, propertyName, value));
+        ValidationException exception = assertThrows(ValidationException.class,
+                () -> validate(() -> null, beanTypeWithProvidedZoneId, propertyName, value));
 
         Throwable cause = exception.getCause();
         assertInstanceOf(IllegalStateException.class, cause);
-        assertEquals("zoneId should not be 'provided'", cause.getMessage());
+        assertEquals("zoneId should be 'system', is 'provided'", cause.getMessage());
+    }
+
+    @Test
+    @DisplayName("explicit zoneId not allowed")
+    void testZoneIdNotAllowed() {
+        ValidationException exception = assertThrows(ValidationException.class, () -> validate(() -> null, beanTypeWithZoneId, propertyName, value));
+
+        Throwable cause = exception.getCause();
+        assertInstanceOf(IllegalStateException.class, cause);
+        assertEquals("zoneId should be 'system', is 'UTC'", cause.getMessage());
     }
 }

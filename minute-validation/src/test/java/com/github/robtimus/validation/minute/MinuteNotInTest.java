@@ -1,5 +1,5 @@
 /*
- * MinuteInTest.java
+ * MinuteNotInTest.java
  * Copyright 2021 Rob Spoor
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package com.github.robtimus.validation.datetime.field;
+package com.github.robtimus.validation.minute;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -40,10 +40,9 @@ import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.TestInstance.Lifecycle;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
-import com.github.robtimus.validation.minute.MinuteIn;
 
 @SuppressWarnings("nls")
-class MinuteInTest extends AbstractConstraintTest {
+class MinuteNotInTest extends AbstractConstraintTest {
 
     @Nested
     @DisplayName("Date")
@@ -60,16 +59,16 @@ class MinuteInTest extends AbstractConstraintTest {
             WithZoneId() {
                 super(TestClassWithZoneId.class, "date",
                         Arrays.asList(
-                                Date.from(utcInstantAtOffset("2007-12-03T10:45:00Z", 30)),
-                                Date.from(utcInstantAtOffset("2007-12-03T10:45:59.999Z", 30)),
-                                Date.from(utcInstantAtOffset("2007-12-03T10:50:00Z", 30)),
-                                Date.from(utcInstantAtOffset("2007-12-03T10:50:59.999Z", 30))
-                        ),
-                        Arrays.asList(
                                 Date.from(utcInstantAtOffset("2007-12-03T10:44:59.999Z", 30)),
                                 Date.from(utcInstantAtOffset("2007-12-03T10:46:00Z", 30)),
                                 Date.from(utcInstantAtOffset("2007-12-03T10:49:59.999Z", 30)),
                                 Date.from(utcInstantAtOffset("2007-12-03T10:51:00Z", 30))
+                        ),
+                        Arrays.asList(
+                                Date.from(utcInstantAtOffset("2007-12-03T10:45:00Z", 30)),
+                                Date.from(utcInstantAtOffset("2007-12-03T10:45:59.999Z", 30)),
+                                Date.from(utcInstantAtOffset("2007-12-03T10:50:00Z", 30)),
+                                Date.from(utcInstantAtOffset("2007-12-03T10:50:59.999Z", 30))
                         ));
             }
         }
@@ -81,16 +80,16 @@ class MinuteInTest extends AbstractConstraintTest {
             WithSystemZoneId() {
                 super(TestClassWithSystemZoneId.class, "date",
                         Arrays.asList(
+                                Date.from(utcInstantAtOffsetAfterSystem("2007-12-03T10:44:59.999Z", 30)),
+                                Date.from(utcInstantAtOffsetAfterSystem("2007-12-03T10:46:00Z", 30)),
+                                Date.from(utcInstantAtOffsetAfterSystem("2007-12-03T10:49:59.999Z", 30)),
+                                Date.from(utcInstantAtOffsetAfterSystem("2007-12-03T10:51:00Z", 30))
+                        ),
+                        Arrays.asList(
                                 Date.from(utcInstantAtOffsetAfterSystem("2007-12-03T10:45:00Z", 30)),
                                 Date.from(utcInstantAtOffsetAfterSystem("2007-12-03T10:45:59.999Z", 30)),
                                 Date.from(utcInstantAtOffsetAfterSystem("2007-12-03T10:50:00Z", 30)),
                                 Date.from(utcInstantAtOffsetAfterSystem("2007-12-03T10:50:59.999Z", 30))
-                        ),
-                        Arrays.asList(
-                                Date.from(utcInstantAtOffsetAfterSystem("2007-12-03T10:44:59.999Z", 30)),
-                                Date.from(utcInstantAtOffsetAfterSystem("2007-12-03T10:46:30Z", 30)),
-                                Date.from(utcInstantAtOffsetAfterSystem("2007-12-03T10:49:59.999Z", 30)),
-                                Date.from(utcInstantAtOffsetAfterSystem("2007-12-03T10:51:30Z", 30))
                         ));
             }
         }
@@ -101,21 +100,21 @@ class MinuteInTest extends AbstractConstraintTest {
 
             WithNoValues() {
                 super(TestClassWithNoValues.class, "date",
-                        Collections.emptyList(),
                         Arrays.asList(
                                 Date.from(utcInstantAtOffsetAfterSystem("2007-12-03T10:44:59.999Z", 30)),
                                 Date.from(utcInstantAtOffsetAfterSystem("2007-12-03T10:45:00Z", 30)),
                                 Date.from(utcInstantAtOffsetAfterSystem("2007-12-03T10:45:59.999Z", 30)),
-                                Date.from(utcInstantAtOffsetAfterSystem("2007-12-03T10:46:30Z", 30)),
+                                Date.from(utcInstantAtOffsetAfterSystem("2007-12-03T10:46:00Z", 30)),
                                 Date.from(utcInstantAtOffsetAfterSystem("2007-12-03T10:49:59.999Z", 30)),
                                 Date.from(utcInstantAtOffsetAfterSystem("2007-12-03T10:50:00Z", 30)),
                                 Date.from(utcInstantAtOffsetAfterSystem("2007-12-03T10:50:59.999Z", 30)),
-                                Date.from(utcInstantAtOffsetAfterSystem("2007-12-03T10:51:30Z", 30))
-                        ));
+                                Date.from(utcInstantAtOffsetAfterSystem("2007-12-03T10:51:00Z", 30))
+                        ),
+                        Collections.emptyList());
             }
 
             @Override
-            void testAllowedValue(Date allowedValue) {
+            void testNotAllowedValue(Date allowedValue) {
                 throw new UnsupportedOperationException();
             }
         }
@@ -132,16 +131,16 @@ class MinuteInTest extends AbstractConstraintTest {
             WithProvidedZoneId() {
                 super(TestClassWithProvidedZoneId.class, "calendar",
                         Arrays.asList(
-                                GregorianCalendar.from(ZonedDateTime.parse("2007-12-03T10:15:00+05:30")),
-                                GregorianCalendar.from(ZonedDateTime.parse("2007-12-03T10:15:59.999+05:30")),
-                                GregorianCalendar.from(ZonedDateTime.parse("2007-12-03T10:20:00+05:30")),
-                                GregorianCalendar.from(ZonedDateTime.parse("2007-12-03T10:20:59.999+05:30"))
-                        ),
-                        Arrays.asList(
                                 GregorianCalendar.from(ZonedDateTime.parse("2007-12-03T10:14:59.999+05:30")),
                                 GregorianCalendar.from(ZonedDateTime.parse("2007-12-03T10:16:00+05:30")),
                                 GregorianCalendar.from(ZonedDateTime.parse("2007-12-03T10:19:59.999+05:30")),
                                 GregorianCalendar.from(ZonedDateTime.parse("2007-12-03T10:21:00+05:30"))
+                        ),
+                        Arrays.asList(
+                                GregorianCalendar.from(ZonedDateTime.parse("2007-12-03T10:15:00+05:30")),
+                                GregorianCalendar.from(ZonedDateTime.parse("2007-12-03T10:15:59.999+05:30")),
+                                GregorianCalendar.from(ZonedDateTime.parse("2007-12-03T10:20:00+05:30")),
+                                GregorianCalendar.from(ZonedDateTime.parse("2007-12-03T10:20:59.999+05:30"))
                         ));
             }
         }
@@ -153,16 +152,16 @@ class MinuteInTest extends AbstractConstraintTest {
             WithZoneId() {
                 super(TestClassWithZoneId.class, "calendar",
                         Arrays.asList(
-                                GregorianCalendar.from(ZonedDateTime.parse("2007-12-03T10:45:00+05:30")),
-                                GregorianCalendar.from(ZonedDateTime.parse("2007-12-03T10:45:59.999+05:30")),
-                                GregorianCalendar.from(ZonedDateTime.parse("2007-12-03T10:50:00+05:30")),
-                                GregorianCalendar.from(ZonedDateTime.parse("2007-12-03T10:50:59.999+05:30"))
-                        ),
-                        Arrays.asList(
                                 GregorianCalendar.from(ZonedDateTime.parse("2007-12-03T10:44:59.999+05:30")),
                                 GregorianCalendar.from(ZonedDateTime.parse("2007-12-03T10:46:00+05:30")),
                                 GregorianCalendar.from(ZonedDateTime.parse("2007-12-03T10:49:59.999+05:30")),
                                 GregorianCalendar.from(ZonedDateTime.parse("2007-12-03T10:51:00+05:30"))
+                        ),
+                        Arrays.asList(
+                                GregorianCalendar.from(ZonedDateTime.parse("2007-12-03T10:45:00+05:30")),
+                                GregorianCalendar.from(ZonedDateTime.parse("2007-12-03T10:45:59.999+05:30")),
+                                GregorianCalendar.from(ZonedDateTime.parse("2007-12-03T10:50:00+05:30")),
+                                GregorianCalendar.from(ZonedDateTime.parse("2007-12-03T10:50:59.999+05:30"))
                         ));
             }
         }
@@ -174,16 +173,16 @@ class MinuteInTest extends AbstractConstraintTest {
             WithSystemZoneId() {
                 super(TestClassWithSystemZoneId.class, "calendar",
                         Arrays.asList(
-                                GregorianCalendar.from(zonedDateTimeAtOffsetAfterSystem("2007-12-03T10:45:00+05:30", 30)),
-                                GregorianCalendar.from(zonedDateTimeAtOffsetAfterSystem("2007-12-03T10:45:59.999+05:30", 30)),
-                                GregorianCalendar.from(zonedDateTimeAtOffsetAfterSystem("2007-12-03T10:50:00+05:30", 30)),
-                                GregorianCalendar.from(zonedDateTimeAtOffsetAfterSystem("2007-12-03T10:50:59.999+05:00", 30))
-                        ),
-                        Arrays.asList(
                                 GregorianCalendar.from(zonedDateTimeAtOffsetAfterSystem("2007-12-03T10:44:59.999+05:30", 30)),
                                 GregorianCalendar.from(zonedDateTimeAtOffsetAfterSystem("2007-12-03T10:46:00+05:30", 30)),
                                 GregorianCalendar.from(zonedDateTimeAtOffsetAfterSystem("2007-12-03T10:49:59.999+05:30", 30)),
                                 GregorianCalendar.from(zonedDateTimeAtOffsetAfterSystem("2007-12-03T10:51:00+05:30", 30))
+                        ),
+                        Arrays.asList(
+                                GregorianCalendar.from(zonedDateTimeAtOffsetAfterSystem("2007-12-03T10:45:00+05:30", 30)),
+                                GregorianCalendar.from(zonedDateTimeAtOffsetAfterSystem("2007-12-03T10:45:59.999+05:30", 30)),
+                                GregorianCalendar.from(zonedDateTimeAtOffsetAfterSystem("2007-12-03T10:50:00+05:30", 30)),
+                                GregorianCalendar.from(zonedDateTimeAtOffsetAfterSystem("2007-12-03T10:50:59.999+05:00", 30))
                         ));
             }
         }
@@ -194,7 +193,6 @@ class MinuteInTest extends AbstractConstraintTest {
 
             WithNoValues() {
                 super(TestClassWithNoValues.class, "calendar",
-                        Collections.emptyList(),
                         Arrays.asList(
                                 GregorianCalendar.from(zonedDateTimeAtOffsetAfterSystem("2007-12-03T10:44:59.999+05:30", 30)),
                                 GregorianCalendar.from(zonedDateTimeAtOffsetAfterSystem("2007-12-03T10:45:00+05:30", 30)),
@@ -204,11 +202,12 @@ class MinuteInTest extends AbstractConstraintTest {
                                 GregorianCalendar.from(zonedDateTimeAtOffsetAfterSystem("2007-12-03T10:50:00+05:30", 30)),
                                 GregorianCalendar.from(zonedDateTimeAtOffsetAfterSystem("2007-12-03T10:50:59.999+05:00", 30)),
                                 GregorianCalendar.from(zonedDateTimeAtOffsetAfterSystem("2007-12-03T10:51:00+05:30", 30))
-                        ));
+                        ),
+                        Collections.emptyList());
             }
 
             @Override
-            void testAllowedValue(Calendar allowedValue) {
+            void testNotAllowedValue(Calendar allowedValue) {
                 throw new UnsupportedOperationException();
             }
         }
@@ -229,16 +228,16 @@ class MinuteInTest extends AbstractConstraintTest {
             WithZoneId() {
                 super(TestClassWithZoneId.class, "instant",
                         Arrays.asList(
-                                utcInstantAtOffset("2007-12-03T10:45:00Z", 30),
-                                utcInstantAtOffset("2007-12-03T10:45:59.999999999Z", 30),
-                                utcInstantAtOffset("2007-12-03T10:50:00Z", 30),
-                                utcInstantAtOffset("2007-12-03T10:50:59.999999999Z", 30)
-                        ),
-                        Arrays.asList(
                                 utcInstantAtOffset("2007-12-03T10:44:59.999999999Z", 30),
                                 utcInstantAtOffset("2007-12-03T10:46:00Z", 30),
                                 utcInstantAtOffset("2007-12-03T10:49:59.999999999Z", 30),
                                 utcInstantAtOffset("2007-12-03T10:51:00Z", 30)
+                        ),
+                        Arrays.asList(
+                                utcInstantAtOffset("2007-12-03T10:45:00Z", 30),
+                                utcInstantAtOffset("2007-12-03T10:45:59.999999999Z", 30),
+                                utcInstantAtOffset("2007-12-03T10:50:00Z", 30),
+                                utcInstantAtOffset("2007-12-03T10:50:59.999999999Z", 30)
                         ));
             }
         }
@@ -250,16 +249,16 @@ class MinuteInTest extends AbstractConstraintTest {
             WithSystemZoneId() {
                 super(TestClassWithSystemZoneId.class, "instant",
                         Arrays.asList(
-                                utcInstantAtOffsetAfterSystem("2007-12-03T10:45:00Z", 30),
-                                utcInstantAtOffsetAfterSystem("2007-12-03T10:45:59.999999999Z", 30),
-                                utcInstantAtOffsetAfterSystem("2007-12-03T10:50:00Z", 30),
-                                utcInstantAtOffsetAfterSystem("2007-12-03T10:50:59.999999999Z", 30)
-                        ),
-                        Arrays.asList(
                                 utcInstantAtOffsetAfterSystem("2007-12-03T10:44:59.999999999Z", 30),
                                 utcInstantAtOffsetAfterSystem("2007-12-03T10:46:00Z", 30),
                                 utcInstantAtOffsetAfterSystem("2007-12-03T10:49:59.999999999Z", 30),
                                 utcInstantAtOffsetAfterSystem("2007-12-03T10:51:00Z", 30)
+                        ),
+                        Arrays.asList(
+                                utcInstantAtOffsetAfterSystem("2007-12-03T10:45:00Z", 30),
+                                utcInstantAtOffsetAfterSystem("2007-12-03T10:45:59.999999999Z", 30),
+                                utcInstantAtOffsetAfterSystem("2007-12-03T10:50:00Z", 30),
+                                utcInstantAtOffsetAfterSystem("2007-12-03T10:50:59.999999999Z", 30)
                         ));
             }
         }
@@ -270,7 +269,6 @@ class MinuteInTest extends AbstractConstraintTest {
 
             WithNoValues() {
                 super(TestClassWithNoValues.class, "instant",
-                        Collections.emptyList(),
                         Arrays.asList(
                                 utcInstantAtOffsetAfterSystem("2007-12-03T10:44:59.999999999Z", 30),
                                 utcInstantAtOffsetAfterSystem("2007-12-03T10:45:00Z", 30),
@@ -280,11 +278,12 @@ class MinuteInTest extends AbstractConstraintTest {
                                 utcInstantAtOffsetAfterSystem("2007-12-03T10:50:00Z", 30),
                                 utcInstantAtOffsetAfterSystem("2007-12-03T10:50:59.999999999Z", 30),
                                 utcInstantAtOffsetAfterSystem("2007-12-03T10:51:00Z", 30)
-                        ));
+                        ),
+                        Collections.emptyList());
             }
 
             @Override
-            void testAllowedValue(Instant allowedValue) {
+            void testNotAllowedValue(Instant allowedValue) {
                 throw new UnsupportedOperationException();
             }
         }
@@ -305,16 +304,16 @@ class MinuteInTest extends AbstractConstraintTest {
             WithSystemZoneId() {
                 super(TestClassWithSystemZoneId.class, "localDateTime",
                         Arrays.asList(
-                                LocalDateTime.parse("2007-12-03T10:15:00"),
-                                LocalDateTime.parse("2007-12-03T10:15:59.999999999"),
-                                LocalDateTime.parse("2007-12-03T10:20:00"),
-                                LocalDateTime.parse("2007-12-03T10:20:59.999999999")
-                        ),
-                        Arrays.asList(
                                 LocalDateTime.parse("2007-12-03T10:14:59.999999999"),
                                 LocalDateTime.parse("2007-12-03T10:16:00"),
                                 LocalDateTime.parse("2007-12-03T10:19:59.999999999"),
                                 LocalDateTime.parse("2007-12-03T10:21:00")
+                        ),
+                        Arrays.asList(
+                                LocalDateTime.parse("2007-12-03T10:15:00"),
+                                LocalDateTime.parse("2007-12-03T10:15:59.999999999"),
+                                LocalDateTime.parse("2007-12-03T10:20:00"),
+                                LocalDateTime.parse("2007-12-03T10:20:59.999999999")
                         ));
             }
         }
@@ -325,7 +324,6 @@ class MinuteInTest extends AbstractConstraintTest {
 
             WithNoValues() {
                 super(TestClassWithNoValues.class, "localDateTime",
-                        Collections.emptyList(),
                         Arrays.asList(
                                 LocalDateTime.parse("2007-12-03T10:14:59.999999999"),
                                 LocalDateTime.parse("2007-12-03T10:15:00"),
@@ -335,11 +333,12 @@ class MinuteInTest extends AbstractConstraintTest {
                                 LocalDateTime.parse("2007-12-03T10:20:00"),
                                 LocalDateTime.parse("2007-12-03T10:20:59.999999999"),
                                 LocalDateTime.parse("2007-12-03T10:21:00")
-                        ));
+                        ),
+                        Collections.emptyList());
             }
 
             @Override
-            void testAllowedValue(LocalDateTime allowedValue) {
+            void testNotAllowedValue(LocalDateTime allowedValue) {
                 throw new UnsupportedOperationException();
             }
         }
@@ -360,16 +359,16 @@ class MinuteInTest extends AbstractConstraintTest {
             WithSystemZoneId() {
                 super(TestClassWithSystemZoneId.class, "localTime",
                         Arrays.asList(
-                                LocalTime.parse("10:15:00"),
-                                LocalTime.parse("10:15:59.999999999"),
-                                LocalTime.parse("10:20:00"),
-                                LocalTime.parse("10:20:59.999999999")
-                        ),
-                        Arrays.asList(
                                 LocalTime.parse("10:14:59.999999999"),
                                 LocalTime.parse("10:16:00"),
                                 LocalTime.parse("10:19:59.999999999"),
                                 LocalTime.parse("10:21:00")
+                        ),
+                        Arrays.asList(
+                                LocalTime.parse("10:15:00"),
+                                LocalTime.parse("10:15:59.999999999"),
+                                LocalTime.parse("10:20:00"),
+                                LocalTime.parse("10:20:59.999999999")
                         ));
             }
         }
@@ -380,7 +379,6 @@ class MinuteInTest extends AbstractConstraintTest {
 
             WithNoValues() {
                 super(TestClassWithNoValues.class, "localTime",
-                        Collections.emptyList(),
                         Arrays.asList(
                                 LocalTime.parse("10:14:59.999999999"),
                                 LocalTime.parse("10:15:00"),
@@ -390,11 +388,12 @@ class MinuteInTest extends AbstractConstraintTest {
                                 LocalTime.parse("10:20:00"),
                                 LocalTime.parse("10:20:59.999999999"),
                                 LocalTime.parse("10:21:00")
-                        ));
+                        ),
+                        Collections.emptyList());
             }
 
             @Override
-            void testAllowedValue(LocalTime allowedValue) {
+            void testNotAllowedValue(LocalTime allowedValue) {
                 throw new UnsupportedOperationException();
             }
         }
@@ -411,16 +410,16 @@ class MinuteInTest extends AbstractConstraintTest {
             WithProvidedZoneId() {
                 super(TestClassWithProvidedZoneId.class, "offsetDateTime",
                         Arrays.asList(
-                                OffsetDateTime.parse("2007-12-03T10:15:00+05:30"),
-                                OffsetDateTime.parse("2007-12-03T10:15:59.999999999+05:30"),
-                                OffsetDateTime.parse("2007-12-03T10:20:00+05:30"),
-                                OffsetDateTime.parse("2007-12-03T10:20:59.999999999+05:30")
-                        ),
-                        Arrays.asList(
                                 OffsetDateTime.parse("2007-12-03T10:14:59.999999999+05:30"),
                                 OffsetDateTime.parse("2007-12-03T10:16:00+05:30"),
                                 OffsetDateTime.parse("2007-12-03T10:19:59.999999999+05:30"),
                                 OffsetDateTime.parse("2007-12-03T10:21:00+05:30")
+                        ),
+                        Arrays.asList(
+                                OffsetDateTime.parse("2007-12-03T10:15:00+05:30"),
+                                OffsetDateTime.parse("2007-12-03T10:15:59.999999999+05:30"),
+                                OffsetDateTime.parse("2007-12-03T10:20:00+05:30"),
+                                OffsetDateTime.parse("2007-12-03T10:20:59.999999999+05:30")
                         ));
             }
         }
@@ -432,16 +431,16 @@ class MinuteInTest extends AbstractConstraintTest {
             WithZoneId() {
                 super(TestClassWithZoneId.class, "offsetDateTime",
                         Arrays.asList(
-                                OffsetDateTime.parse("2007-12-03T10:45:00+05:30"),
-                                OffsetDateTime.parse("2007-12-03T10:45:59.999999999+05:30"),
-                                OffsetDateTime.parse("2007-12-03T10:50:00+05:30"),
-                                OffsetDateTime.parse("2007-12-03T10:50:59.999999999+05:30")
-                        ),
-                        Arrays.asList(
                                 OffsetDateTime.parse("2007-12-03T10:44:59.999999999+05:30"),
                                 OffsetDateTime.parse("2007-12-03T10:46:00+05:30"),
                                 OffsetDateTime.parse("2007-12-03T10:49:59.999999999+05:30"),
                                 OffsetDateTime.parse("2007-12-03T10:51:00+05:30")
+                        ),
+                        Arrays.asList(
+                                OffsetDateTime.parse("2007-12-03T10:45:00+05:30"),
+                                OffsetDateTime.parse("2007-12-03T10:45:59.999999999+05:30"),
+                                OffsetDateTime.parse("2007-12-03T10:50:00+05:30"),
+                                OffsetDateTime.parse("2007-12-03T10:50:59.999999999+05:30")
                         ));
             }
         }
@@ -453,16 +452,16 @@ class MinuteInTest extends AbstractConstraintTest {
             WithSystemZoneId() {
                 super(TestClassWithSystemZoneId.class, "offsetDateTime",
                         Arrays.asList(
-                                offsetDateTimeAtOffsetAfterSystem("2007-12-03T10:45:00+05:30", 30),
-                                offsetDateTimeAtOffsetAfterSystem("2007-12-03T10:45:59.999999999+05:30", 30),
-                                offsetDateTimeAtOffsetAfterSystem("2007-12-03T10:50:00+05:30", 30),
-                                offsetDateTimeAtOffsetAfterSystem("2007-12-03T10:50:59.999999999+05:30", 30)
-                        ),
-                        Arrays.asList(
                                 offsetDateTimeAtOffsetAfterSystem("2007-12-03T10:44:59.999999999+05:30", 30),
                                 offsetDateTimeAtOffsetAfterSystem("2007-12-03T10:46:00+05:30", 30),
                                 offsetDateTimeAtOffsetAfterSystem("2007-12-03T10:49:59.999999999+05:30", 30),
                                 offsetDateTimeAtOffsetAfterSystem("2007-12-03T10:51:00+05:30", 30)
+                        ),
+                        Arrays.asList(
+                                offsetDateTimeAtOffsetAfterSystem("2007-12-03T10:45:00+05:30", 30),
+                                offsetDateTimeAtOffsetAfterSystem("2007-12-03T10:45:59.999999999+05:30", 30),
+                                offsetDateTimeAtOffsetAfterSystem("2007-12-03T10:50:00+05:30", 30),
+                                offsetDateTimeAtOffsetAfterSystem("2007-12-03T10:50:59.999999999+05:30", 30)
                         ));
             }
         }
@@ -473,7 +472,6 @@ class MinuteInTest extends AbstractConstraintTest {
 
             WithNoValues() {
                 super(TestClassWithNoValues.class, "offsetDateTime",
-                        Collections.emptyList(),
                         Arrays.asList(
                                 offsetDateTimeAtOffsetAfterSystem("2007-12-03T10:44:59.999999999+05:30", 30),
                                 offsetDateTimeAtOffsetAfterSystem("2007-12-03T10:45:00+05:30", 30),
@@ -483,11 +481,12 @@ class MinuteInTest extends AbstractConstraintTest {
                                 offsetDateTimeAtOffsetAfterSystem("2007-12-03T10:50:00+05:30", 30),
                                 offsetDateTimeAtOffsetAfterSystem("2007-12-03T10:50:59.999999999+05:30", 30),
                                 offsetDateTimeAtOffsetAfterSystem("2007-12-03T10:51:00+05:30", 30)
-                        ));
+                        ),
+                        Collections.emptyList());
             }
 
             @Override
-            void testAllowedValue(OffsetDateTime allowedValue) {
+            void testNotAllowedValue(OffsetDateTime allowedValue) {
                 throw new UnsupportedOperationException();
             }
         }
@@ -504,16 +503,16 @@ class MinuteInTest extends AbstractConstraintTest {
             WithProvidedZoneId() {
                 super(TestClassWithProvidedZoneId.class, "offsetTime",
                         Arrays.asList(
-                                OffsetTime.parse("10:15:00+05:30"),
-                                OffsetTime.parse("10:15:59.999999999+05:30"),
-                                OffsetTime.parse("10:20:00+05:30"),
-                                OffsetTime.parse("10:20:59.999999999+05:30")
-                        ),
-                        Arrays.asList(
                                 OffsetTime.parse("10:14:59.999999999+05:30"),
                                 OffsetTime.parse("10:16:00+05:30"),
                                 OffsetTime.parse("10:19:59.999999999+05:30"),
                                 OffsetTime.parse("10:21:00+05:30")
+                        ),
+                        Arrays.asList(
+                                OffsetTime.parse("10:15:00+05:30"),
+                                OffsetTime.parse("10:15:59.999999999+05:30"),
+                                OffsetTime.parse("10:20:00+05:30"),
+                                OffsetTime.parse("10:20:59.999999999+05:30")
                         ));
             }
         }
@@ -525,16 +524,16 @@ class MinuteInTest extends AbstractConstraintTest {
             WithZoneId() {
                 super(TestClassWithZoneId.class, "offsetTime",
                         Arrays.asList(
-                                OffsetTime.parse("10:45:00+05:30"),
-                                OffsetTime.parse("10:45:59.999999999+05:30"),
-                                OffsetTime.parse("10:50:00+05:30"),
-                                OffsetTime.parse("10:50:59.999999999+05:30")
-                        ),
-                        Arrays.asList(
                                 OffsetTime.parse("10:44:59.999999999+05:30"),
                                 OffsetTime.parse("10:46:00+05:30"),
                                 OffsetTime.parse("10:49:59.999999999+05:30"),
                                 OffsetTime.parse("10:51:00+05:30")
+                        ),
+                        Arrays.asList(
+                                OffsetTime.parse("10:45:00+05:30"),
+                                OffsetTime.parse("10:45:59.999999999+05:30"),
+                                OffsetTime.parse("10:50:00+05:30"),
+                                OffsetTime.parse("10:50:59.999999999+05:30")
                         ));
             }
         }
@@ -546,16 +545,16 @@ class MinuteInTest extends AbstractConstraintTest {
             WithSystemZoneId() {
                 super(TestClassWithSystemZoneId.class, "offsetTime",
                         Arrays.asList(
-                                offsetTimeAtOffsetAfterSystem("10:45:00+05:30", 30),
-                                offsetTimeAtOffsetAfterSystem("10:45:59.999999999+05:30", 30),
-                                offsetTimeAtOffsetAfterSystem("10:50:00+05:30", 30),
-                                offsetTimeAtOffsetAfterSystem("10:50:59.999999999+05:30", 30)
-                        ),
-                        Arrays.asList(
                                 offsetTimeAtOffsetAfterSystem("10:44:59.999999999+05:30", 30),
                                 offsetTimeAtOffsetAfterSystem("10:46:00+05:30", 30),
                                 offsetTimeAtOffsetAfterSystem("10:49:59.999999999+05:30", 30),
                                 offsetTimeAtOffsetAfterSystem("10:51:00+05:30", 30)
+                        ),
+                        Arrays.asList(
+                                offsetTimeAtOffsetAfterSystem("10:45:00+05:30", 30),
+                                offsetTimeAtOffsetAfterSystem("10:45:59.999999999+05:30", 30),
+                                offsetTimeAtOffsetAfterSystem("10:50:00+05:30", 30),
+                                offsetTimeAtOffsetAfterSystem("10:50:59.999999999+05:30", 30)
                         ));
             }
         }
@@ -566,7 +565,6 @@ class MinuteInTest extends AbstractConstraintTest {
 
             WithNoValues() {
                 super(TestClassWithNoValues.class, "offsetTime",
-                        Collections.emptyList(),
                         Arrays.asList(
                                 offsetTimeAtOffsetAfterSystem("10:44:59.999999999+05:30", 30),
                                 offsetTimeAtOffsetAfterSystem("10:45:00+05:30", 30),
@@ -576,11 +574,12 @@ class MinuteInTest extends AbstractConstraintTest {
                                 offsetTimeAtOffsetAfterSystem("10:50:00+05:30", 30),
                                 offsetTimeAtOffsetAfterSystem("10:50:59.999999999+05:30", 30),
                                 offsetTimeAtOffsetAfterSystem("10:51:00+05:30", 30)
-                        ));
+                        ),
+                        Collections.emptyList());
             }
 
             @Override
-            void testAllowedValue(OffsetTime allowedValue) {
+            void testNotAllowedValue(OffsetTime allowedValue) {
                 throw new UnsupportedOperationException();
             }
         }
@@ -597,16 +596,16 @@ class MinuteInTest extends AbstractConstraintTest {
             WithProvidedZoneId() {
                 super(TestClassWithProvidedZoneId.class, "zonedDateTime",
                         Arrays.asList(
-                                ZonedDateTime.parse("2007-12-03T10:15:00+05:30"),
-                                ZonedDateTime.parse("2007-12-03T10:15:59.999999999+05:30"),
-                                ZonedDateTime.parse("2007-12-03T10:20:00+05:30"),
-                                ZonedDateTime.parse("2007-12-03T10:20:59.999999999+05:30")
-                        ),
-                        Arrays.asList(
                                 ZonedDateTime.parse("2007-12-03T10:14:59.999999999+05:30"),
                                 ZonedDateTime.parse("2007-12-03T10:16:00+05:30"),
                                 ZonedDateTime.parse("2007-12-03T10:19:59.999999999+05:30"),
                                 ZonedDateTime.parse("2007-12-03T10:21:00+05:30")
+                        ),
+                        Arrays.asList(
+                                ZonedDateTime.parse("2007-12-03T10:15:00+05:30"),
+                                ZonedDateTime.parse("2007-12-03T10:15:59.999999999+05:30"),
+                                ZonedDateTime.parse("2007-12-03T10:20:00+05:30"),
+                                ZonedDateTime.parse("2007-12-03T10:20:59.999999999+05:30")
                         ));
             }
         }
@@ -618,16 +617,16 @@ class MinuteInTest extends AbstractConstraintTest {
             WithZoneId() {
                 super(TestClassWithZoneId.class, "zonedDateTime",
                         Arrays.asList(
-                                ZonedDateTime.parse("2007-12-03T10:45:00+05:30"),
-                                ZonedDateTime.parse("2007-12-03T10:45:59.999999999+05:30"),
-                                ZonedDateTime.parse("2007-12-03T10:50:00+05:30"),
-                                ZonedDateTime.parse("2007-12-03T10:50:59.999999999+05:30")
-                        ),
-                        Arrays.asList(
                                 ZonedDateTime.parse("2007-12-03T10:44:59.999999999+05:30"),
                                 ZonedDateTime.parse("2007-12-03T10:46:00+05:30"),
                                 ZonedDateTime.parse("2007-12-03T10:49:59.999999999+05:30"),
                                 ZonedDateTime.parse("2007-12-03T10:51:00+05:30")
+                        ),
+                        Arrays.asList(
+                                ZonedDateTime.parse("2007-12-03T10:45:00+05:30"),
+                                ZonedDateTime.parse("2007-12-03T10:45:59.999999999+05:30"),
+                                ZonedDateTime.parse("2007-12-03T10:50:00+05:30"),
+                                ZonedDateTime.parse("2007-12-03T10:50:59.999999999+05:30")
                         ));
             }
         }
@@ -639,16 +638,16 @@ class MinuteInTest extends AbstractConstraintTest {
             WithSystemZoneId() {
                 super(TestClassWithSystemZoneId.class, "zonedDateTime",
                         Arrays.asList(
-                                zonedDateTimeAtOffsetAfterSystem("2007-12-03T10:45:00+05:30", 30),
-                                zonedDateTimeAtOffsetAfterSystem("2007-12-03T10:45:59.999999999+05:30", 30),
-                                zonedDateTimeAtOffsetAfterSystem("2007-12-03T10:50:00+05:30", 30),
-                                zonedDateTimeAtOffsetAfterSystem("2007-12-03T10:50:59.999999999+05:30", 30)
-                        ),
-                        Arrays.asList(
                                 zonedDateTimeAtOffsetAfterSystem("2007-12-03T10:44:59.999999999+05:30", 30),
                                 zonedDateTimeAtOffsetAfterSystem("2007-12-03T10:46:00+05:30", 30),
                                 zonedDateTimeAtOffsetAfterSystem("2007-12-03T10:49:59.999999999+05:30", 30),
                                 zonedDateTimeAtOffsetAfterSystem("2007-12-03T10:51:00+05:30", 30)
+                        ),
+                        Arrays.asList(
+                                zonedDateTimeAtOffsetAfterSystem("2007-12-03T10:45:00+05:30", 30),
+                                zonedDateTimeAtOffsetAfterSystem("2007-12-03T10:45:59.999999999+05:30", 30),
+                                zonedDateTimeAtOffsetAfterSystem("2007-12-03T10:50:00+05:30", 30),
+                                zonedDateTimeAtOffsetAfterSystem("2007-12-03T10:50:59.999999999+05:30", 30)
                         ));
             }
         }
@@ -659,7 +658,6 @@ class MinuteInTest extends AbstractConstraintTest {
 
             WithNoValues() {
                 super(TestClassWithNoValues.class, "zonedDateTime",
-                        Collections.emptyList(),
                         Arrays.asList(
                                 zonedDateTimeAtOffsetAfterSystem("2007-12-03T10:44:59.999999999+05:30", 30),
                                 zonedDateTimeAtOffsetAfterSystem("2007-12-03T10:45:00+05:30", 30),
@@ -669,11 +667,12 @@ class MinuteInTest extends AbstractConstraintTest {
                                 zonedDateTimeAtOffsetAfterSystem("2007-12-03T10:50:00+05:30", 30),
                                 zonedDateTimeAtOffsetAfterSystem("2007-12-03T10:50:59.999999999+05:30", 30),
                                 zonedDateTimeAtOffsetAfterSystem("2007-12-03T10:51:00+05:30", 30)
-                        ));
+                        ),
+                        Collections.emptyList());
             }
 
             @Override
-            void testAllowedValue(ZonedDateTime allowedValue) {
+            void testNotAllowedValue(ZonedDateTime allowedValue) {
                 throw new UnsupportedOperationException();
             }
         }
@@ -697,10 +696,10 @@ class MinuteInTest extends AbstractConstraintTest {
             this.clockProvider = () -> null;
 
             int[] minutes = assertDoesNotThrow(() -> beanType.getDeclaredField(propertyName))
-                    .getAnnotation(MinuteIn.class)
+                    .getAnnotation(MinuteNotIn.class)
                     .value();
 
-            this.expectedMessage = String.format("must have a minute that is one of %s", Arrays.toString(minutes));
+            this.expectedMessage = String.format("must have a minute that is not one of %s", Arrays.toString(minutes));
         }
 
         @Test
@@ -730,7 +729,7 @@ class MinuteInTest extends AbstractConstraintTest {
             assertEquals(1, violations.size());
 
             ConstraintViolation<?> violation = violations.get(0);
-            assertAnnotation(violation, MinuteIn.class);
+            assertAnnotation(violation, MinuteNotIn.class);
             assertEquals(expectedMessage, violation.getMessage());
             assertEquals(propertyName, violation.getPropertyPath().toString());
         }
@@ -741,106 +740,106 @@ class MinuteInTest extends AbstractConstraintTest {
     }
 
     private static final class TestClassWithProvidedZoneId {
-        @MinuteIn(value = { 15, 20 }, zoneId = "provided")
+        @MinuteNotIn(value = { 15, 20 }, zoneId = "provided")
         Date date;
 
-        @MinuteIn(value = { 15, 20 }, zoneId = "provided")
+        @MinuteNotIn(value = { 15, 20 }, zoneId = "provided")
         Calendar calendar;
 
-        @MinuteIn(value = { 15, 20 }, zoneId = "provided")
+        @MinuteNotIn(value = { 15, 20 }, zoneId = "provided")
         Instant instant;
 
-        @MinuteIn(value = { 15, 20 }, zoneId = "provided")
+        @MinuteNotIn(value = { 15, 20 }, zoneId = "provided")
         LocalDateTime localDateTime;
 
-        @MinuteIn(value = { 15, 20 }, zoneId = "provided")
+        @MinuteNotIn(value = { 15, 20 }, zoneId = "provided")
         LocalTime localTime;
 
-        @MinuteIn(value = { 15, 20 }, zoneId = "provided")
+        @MinuteNotIn(value = { 15, 20 }, zoneId = "provided")
         OffsetDateTime offsetDateTime;
 
-        @MinuteIn(value = { 15, 20 }, zoneId = "provided")
+        @MinuteNotIn(value = { 15, 20 }, zoneId = "provided")
         OffsetTime offsetTime;
 
-        @MinuteIn(value = { 15, 20 }, zoneId = "provided")
+        @MinuteNotIn(value = { 15, 20 }, zoneId = "provided")
         ZonedDateTime zonedDateTime;
     }
 
     private static final class TestClassWithZoneId {
-        @MinuteIn(value = { 15, 20 }, zoneId = "UTC")
+        @MinuteNotIn(value = { 15, 20 }, zoneId = "UTC")
         Date date;
 
-        @MinuteIn(value = { 15, 20 }, zoneId = "UTC")
+        @MinuteNotIn(value = { 15, 20 }, zoneId = "UTC")
         Calendar calendar;
 
-        @MinuteIn(value = { 15, 20 }, zoneId = "UTC")
+        @MinuteNotIn(value = { 15, 20 }, zoneId = "UTC")
         Instant instant;
 
-        @MinuteIn(value = { 15, 20 }, zoneId = "UTC")
+        @MinuteNotIn(value = { 15, 20 }, zoneId = "UTC")
         LocalDateTime localDateTime;
 
-        @MinuteIn(value = { 15, 20 }, zoneId = "UTC")
+        @MinuteNotIn(value = { 15, 20 }, zoneId = "UTC")
         LocalTime localTime;
 
-        @MinuteIn(value = { 15, 20 }, zoneId = "UTC")
+        @MinuteNotIn(value = { 15, 20 }, zoneId = "UTC")
         OffsetDateTime offsetDateTime;
 
-        @MinuteIn(value = { 15, 20 }, zoneId = "UTC")
+        @MinuteNotIn(value = { 15, 20 }, zoneId = "UTC")
         OffsetTime offsetTime;
 
-        @MinuteIn(value = { 15, 20 }, zoneId = "UTC")
+        @MinuteNotIn(value = { 15, 20 }, zoneId = "UTC")
         ZonedDateTime zonedDateTime;
     }
 
     private static final class TestClassWithSystemZoneId {
-        @MinuteIn({ 15, 20 })
+        @MinuteNotIn({ 15, 20 })
         Date date;
 
-        @MinuteIn({ 15, 20 })
+        @MinuteNotIn({ 15, 20 })
         Calendar calendar;
 
-        @MinuteIn({ 15, 20 })
+        @MinuteNotIn({ 15, 20 })
         Instant instant;
 
-        @MinuteIn({ 15, 20 })
+        @MinuteNotIn({ 15, 20 })
         LocalDateTime localDateTime;
 
-        @MinuteIn({ 15, 20 })
+        @MinuteNotIn({ 15, 20 })
         LocalTime localTime;
 
-        @MinuteIn({ 15, 20 })
+        @MinuteNotIn({ 15, 20 })
         OffsetDateTime offsetDateTime;
 
-        @MinuteIn({ 15, 20 })
+        @MinuteNotIn({ 15, 20 })
         OffsetTime offsetTime;
 
-        @MinuteIn({ 15, 20 })
+        @MinuteNotIn({ 15, 20 })
         ZonedDateTime zonedDateTime;
     }
 
     private static final class TestClassWithNoValues {
-        @MinuteIn({})
+        @MinuteNotIn({})
         Date date;
 
-        @MinuteIn({})
+        @MinuteNotIn({})
         Calendar calendar;
 
-        @MinuteIn({})
+        @MinuteNotIn({})
         Instant instant;
 
-        @MinuteIn({})
+        @MinuteNotIn({})
         LocalDateTime localDateTime;
 
-        @MinuteIn({})
+        @MinuteNotIn({})
         LocalTime localTime;
 
-        @MinuteIn({})
+        @MinuteNotIn({})
         OffsetDateTime offsetDateTime;
 
-        @MinuteIn({})
+        @MinuteNotIn({})
         OffsetTime offsetTime;
 
-        @MinuteIn({})
+        @MinuteNotIn({})
         ZonedDateTime zonedDateTime;
     }
 }
