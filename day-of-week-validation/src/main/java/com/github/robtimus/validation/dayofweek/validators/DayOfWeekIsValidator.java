@@ -40,6 +40,11 @@ import com.github.robtimus.validation.dayofweek.DayOfWeekIs;
  */
 public final class DayOfWeekIsValidator {
 
+    private static final Function<DayOfWeekIs, BiPredicate<DayOfWeek, ClockProvider>> PREDICATE_EXTRACTOR = annotation -> {
+        DayOfWeek allowedValue = annotation.value();
+        return (value, context) -> value == allowedValue;
+    };
+
     private DayOfWeekIsValidator() {
     }
 
@@ -85,7 +90,7 @@ public final class DayOfWeekIsValidator {
          */
         @SuppressWarnings("nls")
         public ForDayOfWeek() {
-            super(DayOfWeekIs::zoneId, Function.identity(), predicate());
+            super(DayOfWeekIs::zoneId, Function.identity(), PREDICATE_EXTRACTOR);
             useReplacementMessageTemplate(DayOfWeekIs::message,
                     "{com.github.robtimus.validation.dayofweek.DayOfWeekIs.message}",
                     "{com.github.robtimus.validation.dayofweek.DayOfWeekIs.message.forDayOfWeek}");
@@ -103,7 +108,7 @@ public final class DayOfWeekIsValidator {
          * Creates a new validator.
          */
         public ForInstant() {
-            super(DayOfWeekIs::zoneId, ZonedDateTime::getDayOfWeek, predicate());
+            super(DayOfWeekIs::zoneId, ZonedDateTime::getDayOfWeek, PREDICATE_EXTRACTOR);
         }
     }
 
@@ -118,7 +123,7 @@ public final class DayOfWeekIsValidator {
          * Creates a new validator.
          */
         public ForLocalDate() {
-            super(DayOfWeekIs::zoneId, LocalDate::getDayOfWeek, predicate());
+            super(DayOfWeekIs::zoneId, LocalDate::getDayOfWeek, PREDICATE_EXTRACTOR);
         }
     }
 
@@ -133,7 +138,7 @@ public final class DayOfWeekIsValidator {
          * Creates a new validator.
          */
         public ForLocalDateTime() {
-            super(DayOfWeekIs::zoneId, LocalDateTime::getDayOfWeek, predicate());
+            super(DayOfWeekIs::zoneId, LocalDateTime::getDayOfWeek, PREDICATE_EXTRACTOR);
         }
     }
 
@@ -148,7 +153,8 @@ public final class DayOfWeekIsValidator {
          * Creates a new validator.
          */
         public ForOffsetDateTime() {
-            super(DayOfWeekIs::zoneId, OffsetDateTime::getDayOfWeek, OffsetDateTime::atZoneSameInstant, ZonedDateTime::getDayOfWeek, predicate());
+            super(DayOfWeekIs::zoneId, OffsetDateTime::getDayOfWeek, OffsetDateTime::atZoneSameInstant, ZonedDateTime::getDayOfWeek,
+                    PREDICATE_EXTRACTOR);
         }
     }
 
@@ -163,14 +169,7 @@ public final class DayOfWeekIsValidator {
          * Creates a new validator.
          */
         public ForZonedDateTime() {
-            super(DayOfWeekIs::zoneId, ZonedDateTime::getDayOfWeek, predicate());
+            super(DayOfWeekIs::zoneId, ZonedDateTime::getDayOfWeek, PREDICATE_EXTRACTOR);
         }
-    }
-
-    private static Function<DayOfWeekIs, BiPredicate<DayOfWeek, ClockProvider>> predicate() {
-        return annotation -> {
-            DayOfWeek allowedValue = annotation.value();
-            return (value, context) -> value == allowedValue;
-        };
     }
 }

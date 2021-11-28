@@ -40,6 +40,14 @@ import com.github.robtimus.validation.dayofmonth.LastDayOfMonth;
  */
 public final class LastDayOfMonthValidator {
 
+    private static final BiPredicate<LocalDate, ClockProvider> PREDICATE = (value, context) -> {
+        boolean leapYear = Year.isLeap(value.getYear());
+        int lastDayOfMonth = value.getMonth().length(leapYear);
+        return value.getDayOfMonth() == lastDayOfMonth;
+    };
+
+    private static final Function<LastDayOfMonth, BiPredicate<LocalDate, ClockProvider>> PREDICATE_EXTRACTOR = annotation -> PREDICATE;
+
     private LastDayOfMonthValidator() {
     }
 
@@ -84,7 +92,7 @@ public final class LastDayOfMonthValidator {
          * Creates a new validator.
          */
         public ForInstant() {
-            super(LastDayOfMonth::zoneId, ZonedDateTime::toLocalDate, predicate());
+            super(LastDayOfMonth::zoneId, ZonedDateTime::toLocalDate, PREDICATE_EXTRACTOR);
         }
     }
 
@@ -99,7 +107,7 @@ public final class LastDayOfMonthValidator {
          * Creates a new validator.
          */
         public ForLocalDate() {
-            super(LastDayOfMonth::zoneId, Function.identity(), predicate());
+            super(LastDayOfMonth::zoneId, Function.identity(), PREDICATE_EXTRACTOR);
         }
     }
 
@@ -114,7 +122,7 @@ public final class LastDayOfMonthValidator {
          * Creates a new validator.
          */
         public ForLocalDateTime() {
-            super(LastDayOfMonth::zoneId, LocalDateTime::toLocalDate, predicate());
+            super(LastDayOfMonth::zoneId, LocalDateTime::toLocalDate, PREDICATE_EXTRACTOR);
         }
     }
 
@@ -129,7 +137,8 @@ public final class LastDayOfMonthValidator {
          * Creates a new validator.
          */
         public ForOffsetDateTime() {
-            super(LastDayOfMonth::zoneId, OffsetDateTime::toLocalDate, OffsetDateTime::atZoneSameInstant, ZonedDateTime::toLocalDate, predicate());
+            super(LastDayOfMonth::zoneId, OffsetDateTime::toLocalDate, OffsetDateTime::atZoneSameInstant, ZonedDateTime::toLocalDate,
+                    PREDICATE_EXTRACTOR);
         }
     }
 
@@ -144,15 +153,7 @@ public final class LastDayOfMonthValidator {
          * Creates a new validator.
          */
         public ForZonedDateTime() {
-            super(LastDayOfMonth::zoneId, ZonedDateTime::toLocalDate, predicate());
+            super(LastDayOfMonth::zoneId, ZonedDateTime::toLocalDate, PREDICATE_EXTRACTOR);
         }
-    }
-
-    private static Function<LastDayOfMonth, BiPredicate<LocalDate, ClockProvider>> predicate() {
-        return annotation -> (value, context) -> {
-            boolean leapYear = Year.isLeap(value.getYear());
-            int lastDayOfMonth = value.getMonth().length(leapYear);
-            return value.getDayOfMonth() == lastDayOfMonth;
-        };
     }
 }

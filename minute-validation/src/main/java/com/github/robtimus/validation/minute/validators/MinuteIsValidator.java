@@ -41,6 +41,11 @@ import com.github.robtimus.validation.minute.MinuteIs;
  */
 public final class MinuteIsValidator {
 
+    private static final Function<MinuteIs, BiPredicate<Integer, ClockProvider>> PREDICATE_EXTRACTOR = annotation -> {
+        int allowedValue = annotation.value();
+        return (value, context) -> value == allowedValue;
+    };
+
     private MinuteIsValidator() {
     }
 
@@ -85,7 +90,7 @@ public final class MinuteIsValidator {
          * Creates a new validator.
          */
         public ForInstant() {
-            super(ChronoField.MINUTE_OF_HOUR, MinuteIs::zoneId, predicate());
+            super(ChronoField.MINUTE_OF_HOUR, MinuteIs::zoneId, PREDICATE_EXTRACTOR);
         }
     }
 
@@ -100,7 +105,7 @@ public final class MinuteIsValidator {
          * Creates a new validator.
          */
         public ForLocalDateTime() {
-            super(ChronoField.MINUTE_OF_HOUR, MinuteIs::zoneId, predicate());
+            super(ChronoField.MINUTE_OF_HOUR, MinuteIs::zoneId, PREDICATE_EXTRACTOR);
         }
     }
 
@@ -115,7 +120,7 @@ public final class MinuteIsValidator {
          * Creates a new validator.
          */
         public ForLocalTime() {
-            super(ChronoField.MINUTE_OF_HOUR, MinuteIs::zoneId, predicate());
+            super(ChronoField.MINUTE_OF_HOUR, MinuteIs::zoneId, PREDICATE_EXTRACTOR);
         }
     }
 
@@ -130,7 +135,7 @@ public final class MinuteIsValidator {
          * Creates a new validator.
          */
         public ForOffsetDateTime() {
-            super(ChronoField.MINUTE_OF_HOUR, MinuteIs::zoneId, OffsetDateTime::atZoneSameInstant, predicate());
+            super(ChronoField.MINUTE_OF_HOUR, MinuteIs::zoneId, OffsetDateTime::atZoneSameInstant, PREDICATE_EXTRACTOR);
         }
     }
 
@@ -145,7 +150,7 @@ public final class MinuteIsValidator {
          * Creates a new validator.
          */
         public ForOffsetTime() {
-            super(ChronoField.MINUTE_OF_HOUR, MinuteIs::zoneId, predicate());
+            super(ChronoField.MINUTE_OF_HOUR, MinuteIs::zoneId, PREDICATE_EXTRACTOR);
         }
     }
 
@@ -160,14 +165,7 @@ public final class MinuteIsValidator {
          * Creates a new validator.
          */
         public ForZonedDateTime() {
-            super(ChronoField.MINUTE_OF_HOUR, MinuteIs::zoneId, predicate());
+            super(ChronoField.MINUTE_OF_HOUR, MinuteIs::zoneId, PREDICATE_EXTRACTOR);
         }
-    }
-
-    private static Function<MinuteIs, BiPredicate<Integer, ClockProvider>> predicate() {
-        return annotation -> {
-            int allowedValue = annotation.value();
-            return (value, context) -> value == allowedValue;
-        };
     }
 }

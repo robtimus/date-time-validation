@@ -42,6 +42,11 @@ import com.github.robtimus.validation.month.MonthIs;
  */
 public final class MonthIsValidator {
 
+    private static final Function<MonthIs, BiPredicate<Month, ClockProvider>> PREDICATE_EXTRACTOR = annotation -> {
+        Month allowedValue = annotation.value();
+        return (value, context) -> value == allowedValue;
+    };
+
     private MonthIsValidator() {
     }
 
@@ -86,7 +91,7 @@ public final class MonthIsValidator {
          * Creates a new validator.
          */
         public ForInstant() {
-            super(MonthIs::zoneId, ZonedDateTime::getMonth, predicate());
+            super(MonthIs::zoneId, ZonedDateTime::getMonth, PREDICATE_EXTRACTOR);
         }
     }
 
@@ -101,7 +106,7 @@ public final class MonthIsValidator {
          * Creates a new validator.
          */
         public ForLocalDate() {
-            super(MonthIs::zoneId, LocalDate::getMonth, predicate());
+            super(MonthIs::zoneId, LocalDate::getMonth, PREDICATE_EXTRACTOR);
         }
     }
 
@@ -116,7 +121,7 @@ public final class MonthIsValidator {
          * Creates a new validator.
          */
         public ForLocalDateTime() {
-            super(MonthIs::zoneId, LocalDateTime::getMonth, predicate());
+            super(MonthIs::zoneId, LocalDateTime::getMonth, PREDICATE_EXTRACTOR);
         }
     }
 
@@ -132,7 +137,7 @@ public final class MonthIsValidator {
          */
         @SuppressWarnings("nls")
         public ForMonth() {
-            super(MonthIs::zoneId, Function.identity(), predicate());
+            super(MonthIs::zoneId, Function.identity(), PREDICATE_EXTRACTOR);
             useReplacementMessageTemplate(MonthIs::message,
                     "{com.github.robtimus.validation.month.MonthIs.message}",
                     "{com.github.robtimus.validation.month.MonthIs.message.forMonth}");
@@ -150,7 +155,7 @@ public final class MonthIsValidator {
          * Creates a new validator.
          */
         public ForMonthDay() {
-            super(MonthIs::zoneId, MonthDay::getMonth, predicate());
+            super(MonthIs::zoneId, MonthDay::getMonth, PREDICATE_EXTRACTOR);
         }
     }
 
@@ -165,7 +170,7 @@ public final class MonthIsValidator {
          * Creates a new validator.
          */
         public ForOffsetDateTime() {
-            super(MonthIs::zoneId, OffsetDateTime::getMonth, OffsetDateTime::atZoneSameInstant, ZonedDateTime::getMonth, predicate());
+            super(MonthIs::zoneId, OffsetDateTime::getMonth, OffsetDateTime::atZoneSameInstant, ZonedDateTime::getMonth, PREDICATE_EXTRACTOR);
         }
     }
 
@@ -180,7 +185,7 @@ public final class MonthIsValidator {
          * Creates a new validator.
          */
         public ForYearMonth() {
-            super(MonthIs::zoneId, YearMonth::getMonth, predicate());
+            super(MonthIs::zoneId, YearMonth::getMonth, PREDICATE_EXTRACTOR);
         }
     }
 
@@ -195,14 +200,7 @@ public final class MonthIsValidator {
          * Creates a new validator.
          */
         public ForZonedDateTime() {
-            super(MonthIs::zoneId, ZonedDateTime::getMonth, predicate());
+            super(MonthIs::zoneId, ZonedDateTime::getMonth, PREDICATE_EXTRACTOR);
         }
-    }
-
-    private static Function<MonthIs, BiPredicate<Month, ClockProvider>> predicate() {
-        return annotation -> {
-            Month allowedValue = annotation.value();
-            return (value, context) -> value == allowedValue;
-        };
     }
 }

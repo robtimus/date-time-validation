@@ -42,6 +42,12 @@ import com.github.robtimus.validation.hour.HourNotIn;
  */
 public final class HourNotInValidator {
 
+    private static final Function<HourNotIn, BiPredicate<Integer, ClockProvider>> PREDICATE_EXTRACTOR = annotation -> {
+        int[] disallowedValues = annotation.value();
+        Arrays.sort(disallowedValues);
+        return (value, context) -> Arrays.binarySearch(disallowedValues, value) < 0;
+    };
+
     private HourNotInValidator() {
     }
 
@@ -86,7 +92,7 @@ public final class HourNotInValidator {
          * Creates a new validator.
          */
         public ForInstant() {
-            super(ChronoField.HOUR_OF_DAY, HourNotIn::zoneId, predicate());
+            super(ChronoField.HOUR_OF_DAY, HourNotIn::zoneId, PREDICATE_EXTRACTOR);
         }
     }
 
@@ -101,7 +107,7 @@ public final class HourNotInValidator {
          * Creates a new validator.
          */
         public ForLocalDateTime() {
-            super(ChronoField.HOUR_OF_DAY, HourNotIn::zoneId, predicate());
+            super(ChronoField.HOUR_OF_DAY, HourNotIn::zoneId, PREDICATE_EXTRACTOR);
         }
     }
 
@@ -116,7 +122,7 @@ public final class HourNotInValidator {
          * Creates a new validator.
          */
         public ForLocalTime() {
-            super(ChronoField.HOUR_OF_DAY, HourNotIn::zoneId, predicate());
+            super(ChronoField.HOUR_OF_DAY, HourNotIn::zoneId, PREDICATE_EXTRACTOR);
         }
     }
 
@@ -131,7 +137,7 @@ public final class HourNotInValidator {
          * Creates a new validator.
          */
         public ForOffsetDateTime() {
-            super(ChronoField.HOUR_OF_DAY, HourNotIn::zoneId, OffsetDateTime::atZoneSameInstant, predicate());
+            super(ChronoField.HOUR_OF_DAY, HourNotIn::zoneId, OffsetDateTime::atZoneSameInstant, PREDICATE_EXTRACTOR);
         }
     }
 
@@ -146,7 +152,7 @@ public final class HourNotInValidator {
          * Creates a new validator.
          */
         public ForOffsetTime() {
-            super(ChronoField.HOUR_OF_DAY, HourNotIn::zoneId, predicate());
+            super(ChronoField.HOUR_OF_DAY, HourNotIn::zoneId, PREDICATE_EXTRACTOR);
         }
     }
 
@@ -161,15 +167,7 @@ public final class HourNotInValidator {
          * Creates a new validator.
          */
         public ForZonedDateTime() {
-            super(ChronoField.HOUR_OF_DAY, HourNotIn::zoneId, predicate());
+            super(ChronoField.HOUR_OF_DAY, HourNotIn::zoneId, PREDICATE_EXTRACTOR);
         }
-    }
-
-    private static Function<HourNotIn, BiPredicate<Integer, ClockProvider>> predicate() {
-        return annotation -> {
-            int[] disallowedValues = annotation.value();
-            Arrays.sort(disallowedValues);
-            return (value, context) -> Arrays.binarySearch(disallowedValues, value) < 0;
-        };
     }
 }

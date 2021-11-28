@@ -43,7 +43,16 @@ import com.github.robtimus.validation.dayofweek.DayOfWeekIn;
  */
 public final class DayOfWeekInValidator {
 
+    private static final Function<DayOfWeekIn, BiPredicate<DayOfWeek, ClockProvider>> PREDICATE_EXTRACTOR = annotation -> {
+        Set<DayOfWeek> allowedValues = asSet(annotation.value());
+        return (value, context) -> allowedValues.contains(value);
+    };
+
     private DayOfWeekInValidator() {
+    }
+
+    private static Set<DayOfWeek> asSet(DayOfWeek[] values) {
+        return values.length == 0 ? Collections.emptySet() : EnumSet.of(values[0], values);
     }
 
     /**
@@ -88,7 +97,7 @@ public final class DayOfWeekInValidator {
          */
         @SuppressWarnings("nls")
         public ForDayOfWeek() {
-            super(DayOfWeekIn::zoneId, Function.identity(), predicate());
+            super(DayOfWeekIn::zoneId, Function.identity(), PREDICATE_EXTRACTOR);
             useReplacementMessageTemplate(DayOfWeekIn::message,
                     "{com.github.robtimus.validation.dayofweek.DayOfWeekIn.message}",
                     "{com.github.robtimus.validation.dayofweek.DayOfWeekIn.message.forDayOfWeek}");
@@ -106,7 +115,7 @@ public final class DayOfWeekInValidator {
          * Creates a new validator.
          */
         public ForInstant() {
-            super(DayOfWeekIn::zoneId, ZonedDateTime::getDayOfWeek, predicate());
+            super(DayOfWeekIn::zoneId, ZonedDateTime::getDayOfWeek, PREDICATE_EXTRACTOR);
         }
     }
 
@@ -121,7 +130,7 @@ public final class DayOfWeekInValidator {
          * Creates a new validator.
          */
         public ForLocalDate() {
-            super(DayOfWeekIn::zoneId, LocalDate::getDayOfWeek, predicate());
+            super(DayOfWeekIn::zoneId, LocalDate::getDayOfWeek, PREDICATE_EXTRACTOR);
         }
     }
 
@@ -136,7 +145,7 @@ public final class DayOfWeekInValidator {
          * Creates a new validator.
          */
         public ForLocalDateTime() {
-            super(DayOfWeekIn::zoneId, LocalDateTime::getDayOfWeek, predicate());
+            super(DayOfWeekIn::zoneId, LocalDateTime::getDayOfWeek, PREDICATE_EXTRACTOR);
         }
     }
 
@@ -151,7 +160,8 @@ public final class DayOfWeekInValidator {
          * Creates a new validator.
          */
         public ForOffsetDateTime() {
-            super(DayOfWeekIn::zoneId, OffsetDateTime::getDayOfWeek, OffsetDateTime::atZoneSameInstant, ZonedDateTime::getDayOfWeek, predicate());
+            super(DayOfWeekIn::zoneId, OffsetDateTime::getDayOfWeek, OffsetDateTime::atZoneSameInstant, ZonedDateTime::getDayOfWeek,
+                    PREDICATE_EXTRACTOR);
         }
     }
 
@@ -166,18 +176,7 @@ public final class DayOfWeekInValidator {
          * Creates a new validator.
          */
         public ForZonedDateTime() {
-            super(DayOfWeekIn::zoneId, ZonedDateTime::getDayOfWeek, predicate());
+            super(DayOfWeekIn::zoneId, ZonedDateTime::getDayOfWeek, PREDICATE_EXTRACTOR);
         }
-    }
-
-    private static Function<DayOfWeekIn, BiPredicate<DayOfWeek, ClockProvider>> predicate() {
-        return annotation -> {
-            Set<DayOfWeek> allowedValues = asSet(annotation.value());
-            return (value, context) -> allowedValues.contains(value);
-        };
-    }
-
-    private static Set<DayOfWeek> asSet(DayOfWeek[] values) {
-        return values.length == 0 ? Collections.emptySet() : EnumSet.of(values[0], values);
     }
 }

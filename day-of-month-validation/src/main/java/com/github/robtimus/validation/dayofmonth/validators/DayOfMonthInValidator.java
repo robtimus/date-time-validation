@@ -42,6 +42,12 @@ import com.github.robtimus.validation.dayofmonth.DayOfMonthIn;
  */
 public final class DayOfMonthInValidator {
 
+    private static final Function<DayOfMonthIn, BiPredicate<Integer, ClockProvider>> PREDICATE_EXTRACTOR = annotation -> {
+        int[] allowedValues = annotation.value();
+        Arrays.sort(allowedValues);
+        return (value, context) -> Arrays.binarySearch(allowedValues, value) >= 0;
+    };
+
     private DayOfMonthInValidator() {
     }
 
@@ -86,7 +92,7 @@ public final class DayOfMonthInValidator {
          * Creates a new validator.
          */
         public ForInstant() {
-            super(ChronoField.DAY_OF_MONTH, DayOfMonthIn::zoneId, predicate());
+            super(ChronoField.DAY_OF_MONTH, DayOfMonthIn::zoneId, PREDICATE_EXTRACTOR);
         }
     }
 
@@ -101,7 +107,7 @@ public final class DayOfMonthInValidator {
          * Creates a new validator.
          */
         public ForLocalDate() {
-            super(ChronoField.DAY_OF_MONTH, DayOfMonthIn::zoneId, predicate());
+            super(ChronoField.DAY_OF_MONTH, DayOfMonthIn::zoneId, PREDICATE_EXTRACTOR);
         }
     }
 
@@ -116,7 +122,7 @@ public final class DayOfMonthInValidator {
          * Creates a new validator.
          */
         public ForLocalDateTime() {
-            super(ChronoField.DAY_OF_MONTH, DayOfMonthIn::zoneId, predicate());
+            super(ChronoField.DAY_OF_MONTH, DayOfMonthIn::zoneId, PREDICATE_EXTRACTOR);
         }
     }
 
@@ -131,7 +137,7 @@ public final class DayOfMonthInValidator {
          * Creates a new validator.
          */
         public ForMonthDay() {
-            super(ChronoField.DAY_OF_MONTH, DayOfMonthIn::zoneId, predicate());
+            super(ChronoField.DAY_OF_MONTH, DayOfMonthIn::zoneId, PREDICATE_EXTRACTOR);
         }
     }
 
@@ -146,7 +152,7 @@ public final class DayOfMonthInValidator {
          * Creates a new validator.
          */
         public ForOffsetDateTime() {
-            super(ChronoField.DAY_OF_MONTH, DayOfMonthIn::zoneId, OffsetDateTime::atZoneSameInstant, predicate());
+            super(ChronoField.DAY_OF_MONTH, DayOfMonthIn::zoneId, OffsetDateTime::atZoneSameInstant, PREDICATE_EXTRACTOR);
         }
     }
 
@@ -161,15 +167,7 @@ public final class DayOfMonthInValidator {
          * Creates a new validator.
          */
         public ForZonedDateTime() {
-            super(ChronoField.DAY_OF_MONTH, DayOfMonthIn::zoneId, predicate());
+            super(ChronoField.DAY_OF_MONTH, DayOfMonthIn::zoneId, PREDICATE_EXTRACTOR);
         }
-    }
-
-    private static Function<DayOfMonthIn, BiPredicate<Integer, ClockProvider>> predicate() {
-        return annotation -> {
-            int[] allowedValues = annotation.value();
-            Arrays.sort(allowedValues);
-            return (value, context) -> Arrays.binarySearch(allowedValues, value) >= 0;
-        };
     }
 }

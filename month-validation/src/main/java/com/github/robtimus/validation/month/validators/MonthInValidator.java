@@ -45,7 +45,16 @@ import com.github.robtimus.validation.month.MonthIn;
  */
 public final class MonthInValidator {
 
+    private static final Function<MonthIn, BiPredicate<Month, ClockProvider>> PREDICATE_EXTRACTOR = annotation -> {
+        Set<Month> allowedValues = asSet(annotation.value());
+        return (value, context) -> allowedValues.contains(value);
+    };
+
     private MonthInValidator() {
+    }
+
+    private static Set<Month> asSet(Month[] values) {
+        return values.length == 0 ? Collections.emptySet() : EnumSet.of(values[0], values);
     }
 
     /**
@@ -89,7 +98,7 @@ public final class MonthInValidator {
          * Creates a new validator.
          */
         public ForInstant() {
-            super(MonthIn::zoneId, ZonedDateTime::getMonth, predicate());
+            super(MonthIn::zoneId, ZonedDateTime::getMonth, PREDICATE_EXTRACTOR);
         }
     }
 
@@ -104,7 +113,7 @@ public final class MonthInValidator {
          * Creates a new validator.
          */
         public ForLocalDate() {
-            super(MonthIn::zoneId, LocalDate::getMonth, predicate());
+            super(MonthIn::zoneId, LocalDate::getMonth, PREDICATE_EXTRACTOR);
         }
     }
 
@@ -119,7 +128,7 @@ public final class MonthInValidator {
          * Creates a new validator.
          */
         public ForLocalDateTime() {
-            super(MonthIn::zoneId, LocalDateTime::getMonth, predicate());
+            super(MonthIn::zoneId, LocalDateTime::getMonth, PREDICATE_EXTRACTOR);
         }
     }
 
@@ -135,7 +144,7 @@ public final class MonthInValidator {
          */
         @SuppressWarnings("nls")
         public ForMonth() {
-            super(MonthIn::zoneId, Function.identity(), predicate());
+            super(MonthIn::zoneId, Function.identity(), PREDICATE_EXTRACTOR);
             useReplacementMessageTemplate(MonthIn::message,
                     "{com.github.robtimus.validation.month.MonthIn.message}",
                     "{com.github.robtimus.validation.month.MonthIn.message.forMonth}");
@@ -153,7 +162,7 @@ public final class MonthInValidator {
          * Creates a new validator.
          */
         public ForMonthDay() {
-            super(MonthIn::zoneId, MonthDay::getMonth, predicate());
+            super(MonthIn::zoneId, MonthDay::getMonth, PREDICATE_EXTRACTOR);
         }
     }
 
@@ -168,7 +177,7 @@ public final class MonthInValidator {
          * Creates a new validator.
          */
         public ForOffsetDateTime() {
-            super(MonthIn::zoneId, OffsetDateTime::getMonth, OffsetDateTime::atZoneSameInstant, ZonedDateTime::getMonth, predicate());
+            super(MonthIn::zoneId, OffsetDateTime::getMonth, OffsetDateTime::atZoneSameInstant, ZonedDateTime::getMonth, PREDICATE_EXTRACTOR);
         }
     }
 
@@ -183,7 +192,7 @@ public final class MonthInValidator {
          * Creates a new validator.
          */
         public ForYearMonth() {
-            super(MonthIn::zoneId, YearMonth::getMonth, predicate());
+            super(MonthIn::zoneId, YearMonth::getMonth, PREDICATE_EXTRACTOR);
         }
     }
 
@@ -198,18 +207,7 @@ public final class MonthInValidator {
          * Creates a new validator.
          */
         public ForZonedDateTime() {
-            super(MonthIn::zoneId, ZonedDateTime::getMonth, predicate());
+            super(MonthIn::zoneId, ZonedDateTime::getMonth, PREDICATE_EXTRACTOR);
         }
-    }
-
-    private static Function<MonthIn, BiPredicate<Month, ClockProvider>> predicate() {
-        return annotation -> {
-            Set<Month> allowedValues = asSet(annotation.value());
-            return (value, context) -> allowedValues.contains(value);
-        };
-    }
-
-    private static Set<Month> asSet(Month[] values) {
-        return values.length == 0 ? Collections.emptySet() : EnumSet.of(values[0], values);
     }
 }
