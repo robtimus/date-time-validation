@@ -182,7 +182,7 @@ class MinuteNotInTest extends AbstractConstraintTest {
                                 GregorianCalendar.from(zonedDateTimeAtOffsetAfterSystem("2007-12-03T10:45:00+05:30", 30)),
                                 GregorianCalendar.from(zonedDateTimeAtOffsetAfterSystem("2007-12-03T10:45:59.999+05:30", 30)),
                                 GregorianCalendar.from(zonedDateTimeAtOffsetAfterSystem("2007-12-03T10:50:00+05:30", 30)),
-                                GregorianCalendar.from(zonedDateTimeAtOffsetAfterSystem("2007-12-03T10:50:59.999+05:00", 30))
+                                GregorianCalendar.from(zonedDateTimeAtOffsetAfterSystem("2007-12-03T10:50:59.999+05:30", 30))
                         ));
             }
         }
@@ -200,7 +200,7 @@ class MinuteNotInTest extends AbstractConstraintTest {
                                 GregorianCalendar.from(zonedDateTimeAtOffsetAfterSystem("2007-12-03T10:46:00+05:30", 30)),
                                 GregorianCalendar.from(zonedDateTimeAtOffsetAfterSystem("2007-12-03T10:49:59.999+05:30", 30)),
                                 GregorianCalendar.from(zonedDateTimeAtOffsetAfterSystem("2007-12-03T10:50:00+05:30", 30)),
-                                GregorianCalendar.from(zonedDateTimeAtOffsetAfterSystem("2007-12-03T10:50:59.999+05:00", 30)),
+                                GregorianCalendar.from(zonedDateTimeAtOffsetAfterSystem("2007-12-03T10:50:59.999+05:30", 30)),
                                 GregorianCalendar.from(zonedDateTimeAtOffsetAfterSystem("2007-12-03T10:51:00+05:30", 30))
                         ),
                         Collections.emptyList());

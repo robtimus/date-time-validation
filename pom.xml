@@ -59,6 +59,7 @@
     <module>day-of-week-validation</module>
     <module>month-validation</module>
     <module>minute-validation</module>
+    <module>hour-validation</module>
   </modules>
 
   <scm>
@@ -247,6 +248,10 @@
             <group>
               <title>minute-validation</title>
               <packages>com.github.robtimus.validation.minute:com.github.robtimus.validation.minute.*</packages>
+            </group>
+            <group>
+              <title>hour-validation</title>
+              <packages>com.github.robtimus.validation.hour:com.github.robtimus.validation.hour.*</packages>
             </group>
           </groups>
         </configuration>

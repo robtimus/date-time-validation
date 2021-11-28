@@ -235,15 +235,47 @@ These annotations apply to the following types:
 
 `year-month-validation` validates the combination of the year and the month. This allows it to be used for cases like credit card validation. `month-validation` on the other hand ignores the year.
 
+### hour-validation
+
+Validation constraints for date/time objects that validate only the hour. These validate the following, where `object` is the object to be validated, and `value` is the value specified in the constraint:
+
+| Constraint | Meaning                      |
+|------------|------------------------------|
+| HourIs     | object.hour == value         |
+| HourIn     | value.contains(object.hour)  |
+| HourNotIn  | !value.contains(object.hour) |
+
+These annotations apply to the following types:
+
+| Type                      | HourIs | HourIn | HourNotIn |
+|---------------------------|:------:|:------:|:---------:|
+| Date<sup>1</sup>          |✅      |✅      |✅         |
+| Calendar                  |✅      |✅      |✅         |
+| DayOfWeek                 |❌      |❌      |❌         |
+| Instant<sup>1</sup>       |✅      |✅      |✅         |
+| LocalDate                 |❌      |❌      |❌         |
+| LocalDateTime<sup>2</sup> |✅      |✅      |✅         |
+| LocalTime<sup>2</sup>     |✅      |✅      |✅         |
+| Month                     |❌      |❌      |❌         |
+| MonthDay                  |❌      |❌      |❌         |
+| OffsetDateTime            |✅      |✅      |✅         |
+| OffsetTime                |✅      |✅      |✅         |
+| Year                      |❌      |❌      |❌         |
+| YearMonth                 |❌      |❌      |❌         |
+| ZonedDateTime             |✅      |✅      |✅         |
+
+<sup>1</sup>: because the type has no time zone information, the `zoneId` may not be defined as `provided`.\
+<sup>2</sup>: because no time zone is applicanle for the type, the `zoneId` must be defined as `system`. Since this is the default, the `zoneId` parameter can simply be omitted.
+
 ### minute-validation
 
 Validation constraints for date/time objects that validate only the minute. These validate the following, where `object` is the object to be validated, and `value` is the value specified in the constraint:
 
-| Constraint   | Meaning                        |
-|--------------|--------------------------------|
-| MinuteIs     | object.minute == value         |
-| MinuteIn     | value.contains(object.minute)  |
-| MinuteNotIn  | !value.contains(object.minute) |
+| Constraint  | Meaning                        |
+|-------------|--------------------------------|
+| MinuteIs    | object.minute == value         |
+| MinuteIn    | value.contains(object.minute)  |
+| MinuteNotIn | !value.contains(object.minute) |
 
 These annotations apply to the following types:
 
@@ -266,8 +298,6 @@ These annotations apply to the following types:
 
 <sup>1</sup>: because the type has no time zone information, the `zoneId` may not be defined as `provided`.\
 <sup>2</sup>: because no time zone is applicanle for the type, the `zoneId` must be defined as `system`. Since this is the default, the `zoneId` parameter can simply be omitted.
-
-Note that there are no `MinuteAfter`, `MinuteNotAfter`, `MinuteBefore` and `MinuteNotBefore` annotations; due to the limited number of minutes in an hour, `MinuteIs`, `MinuteIn` and `MinuteNotIn` can be used instead.
 
 ## Examples
 
