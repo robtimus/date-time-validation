@@ -85,7 +85,7 @@ public @interface HourIs {
     Class<? extends Payload>[] payload() default { };
 
     /**
-     * The required value.
+     * The required hour.
      */
     int value();
 

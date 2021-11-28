@@ -58,8 +58,9 @@
     <module>year-validation</module>
     <module>day-of-week-validation</module>
     <module>month-validation</module>
-    <module>minute-validation</module>
+    <module>day-of-month-validation</module>
     <module>hour-validation</module>
+    <module>minute-validation</module>
   </modules>
 
   <scm>
@@ -246,12 +247,16 @@
               <packages>com.github.robtimus.validation.month:com.github.robtimus.validation.month.*</packages>
             </group>
             <group>
-              <title>minute-validation</title>
-              <packages>com.github.robtimus.validation.minute:com.github.robtimus.validation.minute.*</packages>
+              <title>day-of-month-validation</title>
+              <packages>com.github.robtimus.validation.dayofmonth:com.github.robtimus.validation.dayofmonth.*</packages>
             </group>
             <group>
               <title>hour-validation</title>
               <packages>com.github.robtimus.validation.hour:com.github.robtimus.validation.hour.*</packages>
+            </group>
+            <group>
+              <title>minute-validation</title>
+              <packages>com.github.robtimus.validation.minute:com.github.robtimus.validation.minute.*</packages>
             </group>
           </groups>
         </configuration>

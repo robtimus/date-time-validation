@@ -235,6 +235,38 @@ These annotations apply to the following types:
 
 `year-month-validation` validates the combination of the year and the month. This allows it to be used for cases like credit card validation. `month-validation` on the other hand ignores the year.
 
+### day-of-month-validation
+
+Validation constraints for date/time objects that validate only the day of the month. These validate the following, where `object` is the object to be validated, and `value` is the value specified in the constraint:
+
+| Constraint       | Meaning                            |
+|------------------|------------------------------------|
+| DayOfMonthIs     | object.dayOfMonth == value         |
+| DayOfMonthIn     | value.contains(object.dayOfMonth)  |
+| DayOfMonthNotIn  | !value.contains(object.dayOfMonth) |
+
+These annotations apply to the following types:
+
+| Type                      | DayOfMonthIs | DayOfMonthIn | DayOfMonthNotIn |
+|---------------------------|:------------:|:------------:|:---------------:|
+| Date<sup>1</sup>          |✅            |✅            |✅               |
+| Calendar                  |✅            |✅            |✅               |
+| DayOfWeek                 |❌            |❌            |❌               |
+| Instant<sup>1</sup>       |✅            |✅            |✅               |
+| LocalDate<sup>2</sup>     |✅            |✅            |✅               |
+| LocalDateTime<sup>2</sup> |✅            |✅            |✅               |
+| LocalTime                 |❌            |❌            |❌               |
+| Month                     |❌            |❌            |❌               |
+| MonthDay<sup>2</sup>      |✅            |✅            |✅               |
+| OffsetDateTime            |✅            |✅            |✅               |
+| OffsetTime                |❌            |❌            |❌               |
+| Year                      |❌            |❌            |❌               |
+| YearMonth                 |❌            |❌            |❌               |
+| ZonedDateTime             |✅            |✅            |✅               |
+
+<sup>1</sup>: because the type has no time zone information, the `zoneId` may not be defined as `provided`.\
+<sup>2</sup>: because no time zone is applicanle for the type, the `zoneId` must be defined as `system`. Since this is the default, the `zoneId` parameter can simply be omitted.
+
 ### hour-validation
 
 Validation constraints for date/time objects that validate only the hour. These validate the following, where `object` is the object to be validated, and `value` is the value specified in the constraint:

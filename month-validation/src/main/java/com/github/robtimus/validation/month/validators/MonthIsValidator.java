@@ -17,7 +17,6 @@
 
 package com.github.robtimus.validation.month.validators;
 
-import java.lang.annotation.Annotation;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -28,8 +27,6 @@ import java.time.YearMonth;
 import java.time.ZonedDateTime;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.EnumSet;
-import java.util.Set;
 import java.util.function.BiPredicate;
 import java.util.function.Function;
 import javax.validation.ClockProvider;
@@ -200,10 +197,6 @@ public final class MonthIsValidator {
         public ForZonedDateTime() {
             super(MonthIs::zoneId, ZonedDateTime::getMonth, predicate());
         }
-    }
-
-    static <A extends Annotation> Function<A, Set<Month>> allowedMonths(Function<A, Month> valueExtractor) {
-        return constraint -> EnumSet.of(valueExtractor.apply(constraint));
     }
 
     private static Function<MonthIs, BiPredicate<Month, ClockProvider>> predicate() {

@@ -85,7 +85,7 @@ public @interface HourIn {
     Class<? extends Payload>[] payload() default { };
 
     /**
-     * The allowed values.
+     * The allowed hours.
      */
     int[] value();
 

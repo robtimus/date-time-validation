@@ -85,7 +85,7 @@ public @interface MinuteNotIn {
     Class<? extends Payload>[] payload() default { };
 
     /**
-     * The disallowed values.
+     * The disallowed minutes.
      */
     int[] value();
 

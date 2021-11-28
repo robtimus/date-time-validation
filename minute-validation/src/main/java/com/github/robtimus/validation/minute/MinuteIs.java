@@ -85,7 +85,7 @@ public @interface MinuteIs {
     Class<? extends Payload>[] payload() default { };
 
     /**
-     * The required value.
+     * The required minute.
      */
     int value();
 

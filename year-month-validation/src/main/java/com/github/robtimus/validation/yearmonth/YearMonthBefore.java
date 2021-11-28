@@ -40,7 +40,7 @@ import com.github.robtimus.validation.yearmonth.validators.YearMonthBeforeValida
 
 /**
  * Validates that the year-month part of a date/time object is before a specific moment in time.
- * More specifically, for a date/time object {@code object}, validates that {@code object.yearmonth < moment}.
+ * More specifically, for a date/time object {@code object}, validates that {@code object.yearMonth < moment}.
  * <p>
  * Supported types are:
  * <ul>

@@ -40,7 +40,7 @@ import com.github.robtimus.validation.yearmonth.validators.YearMonthNotAfterVali
 
 /**
  * Validates that the year-month part of a date/time object is not after a specific moment in time.
- * More specifically, for a date/time object {@code object}, validates that {@code object.yearmonth <= moment}.
+ * More specifically, for a date/time object {@code object}, validates that {@code object.yearMonth <= moment}.
  * <p>
  * Supported types are:
  * <ul>

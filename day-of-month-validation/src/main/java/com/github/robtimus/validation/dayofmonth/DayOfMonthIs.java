@@ -1,5 +1,5 @@
 /*
- * MinuteIn.java
+ * DayOfMonthIs.java
  * Copyright 2021 Rob Spoor
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package com.github.robtimus.validation.minute;
+package com.github.robtimus.validation.dayofmonth;
 
 import static java.lang.annotation.ElementType.ANNOTATION_TYPE;
 import static java.lang.annotation.ElementType.CONSTRUCTOR;
@@ -31,22 +31,22 @@ import java.lang.annotation.Target;
 import java.time.ZoneId;
 import javax.validation.Constraint;
 import javax.validation.Payload;
-import com.github.robtimus.validation.minute.MinuteIn.List;
-import com.github.robtimus.validation.minute.validators.MinuteInValidator;
+import com.github.robtimus.validation.dayofmonth.DayOfMonthIs.List;
+import com.github.robtimus.validation.dayofmonth.validators.DayOfMonthIsValidator;
 
 /**
- * Validates that the minute of a date/time object is one of a given list of values.
- * More specifically, for a date/time object {@code object}, validates that {@code value.contains(object.minute)}.
+ * Validates that the day of the month of a date/time object is a given day.
+ * More specifically, for a date/time object {@code object}, validates that {@code object.dayOfMonth == value}.
  * <p>
  * Supported types are:
  * <ul>
  * <li>{@link java.util.Date}</li>
  * <li>{@link java.util.Calendar}</li>
  * <li>{@link java.time.Instant}</li>
+ * <li>{@link java.time.LocalDate}</li>
  * <li>{@link java.time.LocalDateTime}</li>
- * <li>{@link java.time.LocalTime}</li>
+ * <li>{@link java.time.MonthDay}</li>
  * <li>{@link java.time.OffsetDateTime}</li>
- * <li>{@link java.time.OffsetTime}</li>
  * <li>{@link java.time.ZonedDateTime}</li>
  * </ul>
  * <p>
@@ -55,24 +55,24 @@ import com.github.robtimus.validation.minute.validators.MinuteInValidator;
  * @author Rob Spoor
  */
 @Documented
-@Constraint(validatedBy = { MinuteInValidator.ForDate.class,
-        MinuteInValidator.ForCalendar.class,
-        MinuteInValidator.ForInstant.class,
-        MinuteInValidator.ForLocalDateTime.class,
-        MinuteInValidator.ForLocalTime.class,
-        MinuteInValidator.ForOffsetDateTime.class,
-        MinuteInValidator.ForOffsetTime.class,
-        MinuteInValidator.ForZonedDateTime.class
+@Constraint(validatedBy = { DayOfMonthIsValidator.ForDate.class,
+        DayOfMonthIsValidator.ForCalendar.class,
+        DayOfMonthIsValidator.ForInstant.class,
+        DayOfMonthIsValidator.ForLocalDate.class,
+        DayOfMonthIsValidator.ForLocalDateTime.class,
+        DayOfMonthIsValidator.ForMonthDay.class,
+        DayOfMonthIsValidator.ForOffsetDateTime.class,
+        DayOfMonthIsValidator.ForZonedDateTime.class
 })
 @Target({ METHOD, FIELD, ANNOTATION_TYPE, CONSTRUCTOR, PARAMETER, TYPE_USE })
 @Retention(RUNTIME)
 @Repeatable(List.class)
-public @interface MinuteIn {
+public @interface DayOfMonthIs {
 
     /**
      * The error message.
      */
-    String message() default "{com.github.robtimus.validation.minute.MinuteIn.message}";
+    String message() default "{com.github.robtimus.validation.dayofmonth.DayOfMonthIs.message}";
 
     /**
      * The validation groups.
@@ -85,27 +85,25 @@ public @interface MinuteIn {
     Class<? extends Payload>[] payload() default { };
 
     /**
-     * The allowed minutes.
+     * The required day of the month.
      */
-    int[] value();
+    int value();
 
     /**
      * The zone id to use. This should be {@code system} for the value returned by {@link ZoneId#systemDefault()}, {@code provided} for the zone id
      * from the actual value, or otherwise a value that is accepted by {@link java.time.ZoneId#of(String)} for a specific zone id.
      * <ul>
      * <li>For {@link java.util.Calendar}, {@link java.time.OffsetDateTime} and {@link java.time.ZonedDateTime}, if the zone id is not
-     *     {@code provided}, the value is converted to the given zone id before extracting the minute.</li>
-     * <li>For {@link java.time.OffsetTime}, if the zone id is not {@code provided}, the value is converted to the current date at the the given zone
-     *     id before extracting the minute.</li>
+     *     {@code provided}, the value is converted to the given zone id before extracting the day of the month.</li>
      * <li>For {@link java.util.Date} and {@link java.time.Instant}, no zone id is available, so {@code provided} is not allowed.</li>
-     * <li>For {@link java.time.LocalDateTime} and {@link java.time.LocalTime}, no zone id is applicable, so only the default value ({@code system})
-     *     is allowed.</li>
+     * <li>For {@link java.time.LocalDate}, {@link java.time.LocalDateTime}, {@link java.time.Month} and {@link java.time.MonthDay}, no zone id is
+     *     applicable, so only the default value ({@code system}) is allowed.</li>
      * </ul>
      */
     String zoneId() default "system";
 
     /**
-     * Defines several {@link MinuteIn} annotations on the same element.
+     * Defines several {@link DayOfMonthIs} annotations on the same element.
      */
     @Target({ METHOD, FIELD, ANNOTATION_TYPE, CONSTRUCTOR, PARAMETER, TYPE_USE })
     @Retention(RUNTIME)
@@ -113,8 +111,8 @@ public @interface MinuteIn {
     public @interface List {
 
         /**
-         * The {@link MinuteIn} annotations.
+         * The {@link DayOfMonthIs} annotations.
          */
-        MinuteIn[] value();
+        DayOfMonthIs[] value();
     }
 }
