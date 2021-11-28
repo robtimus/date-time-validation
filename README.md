@@ -165,40 +165,6 @@ These annotations apply to the following types:
 <sup>2</sup>: because no time zone is applicanle for the type, the `zoneId` must be defined as `system`. Since this is the default, the `zoneId` parameter can simply be omitted.\
 <sup>3</sup>: can be validated with annotations from `date-time-validation`.
 
-### day-of-week-validation
-
-Validation constraints for date/time objects that validate only the day of the week. These validate the following, where `object` is the object to be validated, and `value` is the value specified in the constraint:
-
-| Constraint     | Meaning                           |
-|----------------|-----------------------------------|
-| DayOfWeekIs    | object.dayOfWeek == value         |
-| DayOfWeekIn    | value.contains(object.dayOfWeek)  |
-| DayOfWeekNotIn | !value.contains(object.dayOfWeek) |
-
-Note that days of the week are ordered from Monday until Sunday.
-
-These annotations apply to the following types:
-
-| Type                     | DayOfWeekIs | DayOfWeekIn | DayOfWeekNotIn |
-|--------------------------|:-----------:|:-----------:|:--------------:|
-| Date<sup>1</sup>         |✅           |✅           |✅              |
-| Calendar                 |✅           |✅           |✅              |
-| Instant<sup>1</sup>      |✅           |✅           |✅              |
-| LocalDate<sup>2</sup>    |✅           |✅           |✅              |
-| DayOfWeek<sup>2</sup>    |✅           |✅           |✅              |
-| LocalDateTime<sup>2</sup>|✅           |✅           |✅              |
-| LocalTime                |❌           |❌           |❌              |
-| Month                    |❌           |❌           |❌              |
-| MonthDay                 |❌           |❌           |❌              |
-| OffsetDateTime           |✅           |✅           |✅              |
-| OffsetTime               |❌           |❌           |❌              |
-| Year                     |❌           |❌           |❌              |
-| YearMonth                |❌           |❌           |❌              |
-| ZonedDateTime            |✅           |✅           |✅              |
-
-<sup>1</sup>: because the type has no time zone information, the `zoneId` may not be defined as `provided`.\
-<sup>2</sup>: because no time zone is applicanle for the type, the `zoneId` must be defined as `system`. Since this is the default, the `zoneId` parameter can simply be omitted.
-
 ### month-validation
 
 Validation constraints for date/time objects that validate only the month. These validate the following, where `object` is the object to be validated, and `value` is the value specified in the constraint:
@@ -234,6 +200,40 @@ These annotations apply to the following types:
 #### year-month-validation vs month-validation
 
 `year-month-validation` validates the combination of the year and the month. This allows it to be used for cases like credit card validation. `month-validation` on the other hand ignores the year.
+
+### day-of-week-validation
+
+Validation constraints for date/time objects that validate only the day of the week. These validate the following, where `object` is the object to be validated, and `value` is the value specified in the constraint:
+
+| Constraint     | Meaning                           |
+|----------------|-----------------------------------|
+| DayOfWeekIs    | object.dayOfWeek == value         |
+| DayOfWeekIn    | value.contains(object.dayOfWeek)  |
+| DayOfWeekNotIn | !value.contains(object.dayOfWeek) |
+
+Note that days of the week are ordered from Monday until Sunday.
+
+These annotations apply to the following types:
+
+| Type                     | DayOfWeekIs | DayOfWeekIn | DayOfWeekNotIn |
+|--------------------------|:-----------:|:-----------:|:--------------:|
+| Date<sup>1</sup>         |✅           |✅           |✅              |
+| Calendar                 |✅           |✅           |✅              |
+| Instant<sup>1</sup>      |✅           |✅           |✅              |
+| LocalDate<sup>2</sup>    |✅           |✅           |✅              |
+| DayOfWeek<sup>2</sup>    |✅           |✅           |✅              |
+| LocalDateTime<sup>2</sup>|✅           |✅           |✅              |
+| LocalTime                |❌           |❌           |❌              |
+| Month                    |❌           |❌           |❌              |
+| MonthDay                 |❌           |❌           |❌              |
+| OffsetDateTime           |✅           |✅           |✅              |
+| OffsetTime               |❌           |❌           |❌              |
+| Year                     |❌           |❌           |❌              |
+| YearMonth                |❌           |❌           |❌              |
+| ZonedDateTime            |✅           |✅           |✅              |
+
+<sup>1</sup>: because the type has no time zone information, the `zoneId` may not be defined as `provided`.\
+<sup>2</sup>: because no time zone is applicanle for the type, the `zoneId` must be defined as `system`. Since this is the default, the `zoneId` parameter can simply be omitted.
 
 ### day-of-month-validation
 
