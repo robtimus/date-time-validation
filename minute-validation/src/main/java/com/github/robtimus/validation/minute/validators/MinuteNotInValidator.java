@@ -167,9 +167,9 @@ public final class MinuteNotInValidator {
 
     private static Function<MinuteNotIn, BiPredicate<Integer, ClockProvider>> predicate() {
         return annotation -> {
-            int[] allowedValues = annotation.value();
-            Arrays.sort(allowedValues);
-            return (value, context) -> Arrays.binarySearch(allowedValues, value) < 0;
+            int[] disallowedValues = annotation.value();
+            Arrays.sort(disallowedValues);
+            return (value, context) -> Arrays.binarySearch(disallowedValues, value) < 0;
         };
     }
 }

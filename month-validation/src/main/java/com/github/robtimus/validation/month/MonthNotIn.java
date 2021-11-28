@@ -1,5 +1,5 @@
 /*
- * DayOfWeekNotBefore.java
+ * MonthNotIn.java
  * Copyright 2021 Rob Spoor
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package com.github.robtimus.validation.dayofweek;
+package com.github.robtimus.validation.month;
 
 import static java.lang.annotation.ElementType.ANNOTATION_TYPE;
 import static java.lang.annotation.ElementType.CONSTRUCTOR;
@@ -28,26 +28,28 @@ import java.lang.annotation.Documented;
 import java.lang.annotation.Repeatable;
 import java.lang.annotation.Retention;
 import java.lang.annotation.Target;
-import java.time.DayOfWeek;
+import java.time.Month;
 import java.time.ZoneId;
 import javax.validation.Constraint;
 import javax.validation.Payload;
-import com.github.robtimus.validation.dayofweek.DayOfWeekNotBefore.List;
-import com.github.robtimus.validation.dayofweek.validators.DayOfWeekNotBeforeValidator;
+import com.github.robtimus.validation.month.MonthNotIn.List;
+import com.github.robtimus.validation.month.validators.MonthNotInValidator;
 
 /**
- * Validates that the day of the week of a date/time object is not before a specific day of the week.
- * More specifically, for a date/time object {@code object}, validates that {@code object.dayofweek >= value}.
+ * Validates that the month of a date/time object is one of a given list of months.
+ * More specifically, for a date/time object {@code object}, validates that {@code !value.contains(object.month)}.
  * <p>
  * Supported types are:
  * <ul>
  * <li>{@link java.util.Date}</li>
  * <li>{@link java.util.Calendar}</li>
- * <li>{@link java.time.DayOfWeek}</li>
  * <li>{@link java.time.Instant}</li>
  * <li>{@link java.time.LocalDate}</li>
  * <li>{@link java.time.LocalDateTime}</li>
+ * <li>{@link java.time.Month}</li>
+ * <li>{@link java.time.MonthDay}</li>
  * <li>{@link java.time.OffsetDateTime}</li>
+ * <li>{@link java.time.YearMonth}</li>
  * <li>{@link java.time.ZonedDateTime}</li>
  * </ul>
  * <p>
@@ -56,24 +58,26 @@ import com.github.robtimus.validation.dayofweek.validators.DayOfWeekNotBeforeVal
  * @author Rob Spoor
  */
 @Documented
-@Constraint(validatedBy = { DayOfWeekNotBeforeValidator.ForDate.class,
-        DayOfWeekNotBeforeValidator.ForCalendar.class,
-        DayOfWeekNotBeforeValidator.ForDayOfWeek.class,
-        DayOfWeekNotBeforeValidator.ForInstant.class,
-        DayOfWeekNotBeforeValidator.ForLocalDate.class,
-        DayOfWeekNotBeforeValidator.ForLocalDateTime.class,
-        DayOfWeekNotBeforeValidator.ForOffsetDateTime.class,
-        DayOfWeekNotBeforeValidator.ForZonedDateTime.class
+@Constraint(validatedBy = { MonthNotInValidator.ForDate.class,
+        MonthNotInValidator.ForCalendar.class,
+        MonthNotInValidator.ForInstant.class,
+        MonthNotInValidator.ForLocalDate.class,
+        MonthNotInValidator.ForLocalDateTime.class,
+        MonthNotInValidator.ForMonth.class,
+        MonthNotInValidator.ForMonthDay.class,
+        MonthNotInValidator.ForOffsetDateTime.class,
+        MonthNotInValidator.ForYearMonth.class,
+        MonthNotInValidator.ForZonedDateTime.class
 })
 @Target({ METHOD, FIELD, ANNOTATION_TYPE, CONSTRUCTOR, PARAMETER, TYPE_USE })
 @Retention(RUNTIME)
 @Repeatable(List.class)
-public @interface DayOfWeekNotBefore {
+public @interface MonthNotIn {
 
     /**
      * The error message.
      */
-    String message() default "{com.github.robtimus.validation.dayofweek.DayOfWeekNotBefore.message}";
+    String message() default "{com.github.robtimus.validation.month.MonthNotIn.message}";
 
     /**
      * The validation groups.
@@ -86,25 +90,25 @@ public @interface DayOfWeekNotBefore {
     Class<? extends Payload>[] payload() default { };
 
     /**
-     * The minimum allowed day of the week.
+     * The disallowed months.
      */
-    DayOfWeek value();
+    Month[] value();
 
     /**
      * The zone id to use. This should be {@code system} for the value returned by {@link ZoneId#systemDefault()}, {@code provided} for the zone id
      * from the actual value, or otherwise a value that is accepted by {@link java.time.ZoneId#of(String)} for a specific zone id.
      * <ul>
      * <li>For {@link java.util.Calendar}, {@link java.time.OffsetDateTime} and {@link java.time.ZonedDateTime}, if the zone id is not
-     *     {@code provided}, the value is converted to the given zone id before extracting the day of the week.</li>
+     *     {@code provided}, the value is converted to the given zone id before extracting the month.</li>
      * <li>For {@link java.util.Date} and {@link java.time.Instant}, no zone id is available, so {@code provided} is not allowed.</li>
-     * <li>For {@link java.time.DayOfWeek}, {@link java.time.LocalDate} and {@link java.time.LocalDateTime}, no zone id is applicable, so only the
-     *     default value ({@code system}) is allowed.</li>
+     * <li>For {@link java.time.LocalDate}, {@link java.time.LocalDateTime}, {@link java.time.Month}, {@link java.time.MonthDay} and
+     *     {@link java.time.YearMonth}, no zone id is applicable, so only the default value ({@code system}) is allowed.</li>
      * </ul>
      */
     String zoneId() default "system";
 
     /**
-     * Defines several {@link DayOfWeekNotBefore} annotations on the same element.
+     * Defines several {@link MonthNotIn} annotations on the same element.
      */
     @Target({ METHOD, FIELD, ANNOTATION_TYPE, CONSTRUCTOR, PARAMETER, TYPE_USE })
     @Retention(RUNTIME)
@@ -112,8 +116,8 @@ public @interface DayOfWeekNotBefore {
     public @interface List {
 
         /**
-         * The {@link DayOfWeekNotBefore} annotations.
+         * The {@link MonthNotIn} annotations.
          */
-        DayOfWeekNotBefore[] value();
+        MonthNotIn[] value();
     }
 }
