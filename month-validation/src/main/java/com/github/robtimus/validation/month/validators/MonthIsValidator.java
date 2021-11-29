@@ -44,7 +44,7 @@ public final class MonthIsValidator {
 
     private static final Function<MonthIs, BiPredicate<Month, ClockProvider>> PREDICATE_EXTRACTOR = annotation -> {
         Month allowedValue = annotation.value();
-        return (value, context) -> value == allowedValue;
+        return (value, provider) -> value == allowedValue;
     };
 
     private MonthIsValidator() {

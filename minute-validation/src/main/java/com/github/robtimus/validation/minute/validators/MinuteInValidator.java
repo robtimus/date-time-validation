@@ -45,7 +45,7 @@ public final class MinuteInValidator {
     private static final Function<MinuteIn, BiPredicate<Integer, ClockProvider>> PREDICATE_EXTRACTOR = annotation -> {
         int[] allowedValues = annotation.value();
         Arrays.sort(allowedValues);
-        return (value, context) -> Arrays.binarySearch(allowedValues, value) >= 0;
+        return (value, provider) -> Arrays.binarySearch(allowedValues, value) >= 0;
     };
 
     private MinuteInValidator() {

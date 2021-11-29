@@ -40,7 +40,7 @@ import com.github.robtimus.validation.dayofmonth.LastDayOfMonth;
  */
 public final class LastDayOfMonthValidator {
 
-    private static final BiPredicate<LocalDate, ClockProvider> PREDICATE = (value, context) -> {
+    private static final BiPredicate<LocalDate, ClockProvider> PREDICATE = (value, provider) -> {
         boolean leapYear = Year.isLeap(value.getYear());
         int lastDayOfMonth = value.getMonth().length(leapYear);
         return value.getDayOfMonth() == lastDayOfMonth;

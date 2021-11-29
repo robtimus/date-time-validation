@@ -47,7 +47,7 @@ public final class MonthNotInValidator {
 
     private static final Function<MonthNotIn, BiPredicate<Month, ClockProvider>> PREDICATE_EXTRACTOR = annotation -> {
         Set<Month> disallowedValues = asSet(annotation.value());
-        return (value, context) -> !disallowedValues.contains(value);
+        return (value, provider) -> !disallowedValues.contains(value);
     };
 
     private MonthNotInValidator() {

@@ -45,7 +45,7 @@ public final class DayOfWeekInValidator {
 
     private static final Function<DayOfWeekIn, BiPredicate<DayOfWeek, ClockProvider>> PREDICATE_EXTRACTOR = annotation -> {
         Set<DayOfWeek> allowedValues = asSet(annotation.value());
-        return (value, context) -> allowedValues.contains(value);
+        return (value, provider) -> allowedValues.contains(value);
     };
 
     private DayOfWeekInValidator() {

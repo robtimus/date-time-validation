@@ -43,7 +43,7 @@ public final class HourIsValidator {
 
     private static final Function<HourIs, BiPredicate<Integer, ClockProvider>> PREDICATE_EXTRACTOR = annotation -> {
         int allowedValue = annotation.value();
-        return (value, context) -> value == allowedValue;
+        return (value, provider) -> value == allowedValue;
     };
 
     private HourIsValidator() {

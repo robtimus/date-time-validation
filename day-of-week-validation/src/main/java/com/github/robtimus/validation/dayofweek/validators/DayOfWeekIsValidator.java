@@ -42,7 +42,7 @@ public final class DayOfWeekIsValidator {
 
     private static final Function<DayOfWeekIs, BiPredicate<DayOfWeek, ClockProvider>> PREDICATE_EXTRACTOR = annotation -> {
         DayOfWeek allowedValue = annotation.value();
-        return (value, context) -> value == allowedValue;
+        return (value, provider) -> value == allowedValue;
     };
 
     private DayOfWeekIsValidator() {

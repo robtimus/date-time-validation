@@ -43,7 +43,7 @@ public final class DayOfMonthIsValidator {
 
     private static final Function<DayOfMonthIs, BiPredicate<Integer, ClockProvider>> PREDICATE_EXTRACTOR = annotation -> {
         int allowedValue = annotation.value();
-        return (value, context) -> value == allowedValue;
+        return (value, provider) -> value == allowedValue;
     };
 
     private DayOfMonthIsValidator() {

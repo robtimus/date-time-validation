@@ -45,7 +45,7 @@ public final class DayOfMonthNotInValidator {
     private static final Function<DayOfMonthNotIn, BiPredicate<Integer, ClockProvider>> PREDICATE_EXTRACTOR = annotation -> {
         int[] disallowedValues = annotation.value();
         Arrays.sort(disallowedValues);
-        return (value, context) -> Arrays.binarySearch(disallowedValues, value) < 0;
+        return (value, provider) -> Arrays.binarySearch(disallowedValues, value) < 0;
     };
 
     private DayOfMonthNotInValidator() {
