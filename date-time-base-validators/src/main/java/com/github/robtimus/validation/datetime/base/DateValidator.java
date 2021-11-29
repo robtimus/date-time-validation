@@ -32,14 +32,14 @@ import javax.validation.ConstraintValidatorContext;
  */
 public abstract class DateValidator<A extends Annotation> implements ConstraintValidator<A, Date> {
 
-    private final ConstraintValidator<A, Instant> validator;
+    private final ConstraintValidator<A, ? super Instant> validator;
 
     /**
      * Creates a new validator.
      *
      * @param validator The backing validator.
      */
-    protected DateValidator(ConstraintValidator<A, Instant> validator) {
+    protected DateValidator(ConstraintValidator<A, ? super Instant> validator) {
         this.validator = Objects.requireNonNull(validator);
     }
 

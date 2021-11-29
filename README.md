@@ -333,20 +333,44 @@ These annotations apply to the following types:
 <sup>1</sup>: because the type has no time zone information, the `zoneId` may not be defined as `provided`.\
 <sup>2</sup>: because no time zone is applicanle for the type, the `zoneId` must be defined as `system`. Since this is the default, the `zoneId` parameter can simply be omitted.
 
+### time-precision-validation
+
+Validation constraints for date/time objects that validate only the precision of the time part. These validate the following, where `object` is the object to be validated, and `value` is the value specified in the constraint:
+
+| Constraint           | Meaning                                      |
+|----------------------|----------------------------------------------|
+| MinutePrecision      | object.second == 0 && object.nanosecond == 0 |
+| SecondPrecision      | object.nanosecond == 0                       |
+| MillisecondPrecision | object.nanosecond % 1000_000 == 0            |
+| MicrosecondPrecision | object.nanosecond % 1000 == 0                |
+
+These annotations apply to the following types:
+
+| Type                | MinutePrecision | SecondPrecision | MillisecondPrecision | MicrosecondPrecision |
+|---------------------|:---------------:|:---------------:|:--------------------:|:--------------------:|
+| Date<sup>1</sup>    |✅               |✅               |❌                    |❌                    |
+| Calendar            |✅               |✅               |❌                    |❌                    |
+| DayOfWeek           |❌               |❌               |❌                    |❌                    |
+| Instant<sup>1</sup> |✅               |✅               |✅                    |✅                    |
+| LocalDate           |❌               |❌               |❌                    |❌                    |
+| LocalDateTime       |✅               |✅               |✅                    |✅                    |
+| LocalTime           |✅               |✅               |✅                    |✅                    |
+| Month               |❌               |❌               |❌                    |❌                    |
+| MonthDay            |❌               |❌               |❌                    |❌                    |
+| OffsetDateTime      |✅               |✅               |✅                    |✅                    |
+| OffsetTime          |✅               |✅               |✅                    |✅                    |
+| Year                |❌               |❌               |❌                    |❌                    |
+| YearMonth           |❌               |❌               |❌                    |❌                    |
+| ZonedDateTime       |✅               |✅               |✅                    |✅                    |
+
+<sup>1</sup>: to be able to determine the second, the UTC zone is applied.
+
 ## Examples
 
 To specify that a date of birth must be at least 18 years in the past:
 ```
 @MinBefore(moment = "now", duration = "P18Y")
 LocalDate dateOfBirth;
-```
-
-To specify that a date/time object like `ZonedDateTime` must be on a weekday between 9:00 and 18:00:
-```
-@DayOfWeekIn({ MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY })
-@TimeNotBefore(moment = "09:00:00")
-@TimeNotAfter(moment = "18:00:00")
-ZonedDateTime appointmentDateTime;
 ```
 
 To specify that a credit card must not have expired:
@@ -370,5 +394,25 @@ LocalDate date;
 To specify that a date must be next year or later, where the actual date is irrelevant:
 ```
 @YearMinAfter(years = 1, moment = "now")
+// or @YearAfter(moment = "now")
 LocalDate date;
+```
+
+To specify that a date/time object like `ZonedDateTime` must be on a weekday between 9:00 and 18:00 (exclusive), at 15 minute intervals, and not between 12:00 and 13:00 (exclusive):
+```
+@DayOfWeekIn({ MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY })
+@TimeNotBefore(moment = "09:00:00")
+@TimeBefore(moment = "18:00:00")
+@MinuteIn({ 0, 15, 30, 45 })
+@HourNotIn(12)
+@MinutePrecision
+ZonedDateTime appointmentDateTime;
+```
+or alternatively:
+```
+@DayOfWeekIn({ MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY })
+@HourIn({ 9, 10, 11, 13, 14, 15, 16, 17 })
+@MinuteIn({ 0, 15, 30, 45 })
+@MinutePrecision
+ZonedDateTime appointmentDateTime;
 ```

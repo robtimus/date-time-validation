@@ -61,6 +61,7 @@
     <module>day-of-month-validation</module>
     <module>hour-validation</module>
     <module>minute-validation</module>
+    <module>time-precision-validation</module>
   </modules>
 
   <scm>
@@ -257,6 +258,10 @@
             <group>
               <title>minute-validation</title>
               <packages>com.github.robtimus.validation.minute:com.github.robtimus.validation.minute.*</packages>
+            </group>
+            <group>
+              <title>time-precision-validation</title>
+              <packages>com.github.robtimus.validation.time.precision:com.github.robtimus.validation.time.precision.*</packages>
             </group>
           </groups>
         </configuration>

@@ -33,14 +33,14 @@ import javax.validation.ConstraintValidatorContext;
  */
 public abstract class CalendarValidator<A extends Annotation> implements ConstraintValidator<A, Calendar> {
 
-    private final ConstraintValidator<A, ZonedDateTime> validator;
+    private final ConstraintValidator<A, ? super ZonedDateTime> validator;
 
     /**
      * Creates a new validator.
      *
      * @param validator The backing validator.
      */
-    protected CalendarValidator(ConstraintValidator<A, ZonedDateTime> validator) {
+    protected CalendarValidator(ConstraintValidator<A, ? super ZonedDateTime> validator) {
         this.validator = Objects.requireNonNull(validator);
     }
 
