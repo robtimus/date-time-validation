@@ -416,3 +416,35 @@ or alternatively:
 @MinutePrecision
 ZonedDateTime appointmentDateTime;
 ```
+
+## Custom constraint annotations
+
+### Combining provided constraint annotations
+
+The provided constraint annotations provide enough functionality for most cases. However, when several constraints are combined, like the last example, that may become unreadable. In cases like that it's easy to create a new constraint annotation and annotate that with the provided constraint annotations:
+```
+@Documented
+// annotations required for constraint annotations; the target can be simplified
+@Constraint(validatedBy = {})
+@Target({ METHOD, FIELD, ANNOTATION_TYPE, CONSTRUCTOR, PARAMETER, TYPE_USE })
+@Retention(RUNTIME)
+// date/time annotations
+@DayOfWeekIn({ MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY })
+@HourIn({ 9, 10, 11, 13, 14, 15, 16, 17 })
+@MinuteIn({ 0, 15, 30, 45 })
+@MinutePrecision
+// don't report violations for the above annotations separately
+@ReportAsSingleViolation
+public @interface AppointmentSlot {
+
+    String message() default "must be a valid appointment slot";
+
+    Class<?>[] groups() default { };
+
+    Class<? extends Payload>[] payload() default { };
+}
+```
+
+### Custom validators
+
+In case the provided constraint annotations cannot be combined to achieve the desired result, module `date-time-base-validators` provides some base classes that can be used to write custom constraint validators. These all use functional interfaces to define custom behaviour; most of them can be supplied using method references. See package [com.github.robtimus.validation.datetime.base](https://robtimus.github.io/date-time-validation/apidocs/com/github/robtimus/validation/datetime/base/package-summary.html) for an overview.

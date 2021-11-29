@@ -163,7 +163,7 @@ public abstract class MomentPartValidator<A extends Annotation, T extends Tempor
     }
 
     /**
-     * The base for all {@link TemporalAccessor} validators that validate only a specific part of the value.
+     * The base for all {@link TemporalAccessor} validators that validate only a specific part of the value against a specific moment in time.
      * This sub type of {@link PartValidator} can be used for types that don't use zones like {@link LocalDate}.
      *
      * @author Rob Spoor
@@ -225,7 +225,7 @@ public abstract class MomentPartValidator<A extends Annotation, T extends Tempor
     }
 
     /**
-     * The base for all {@link Instant} validators that validate only a specific part of the value.
+     * The base for all {@link Instant} validators that validate only a specific part of the value against a specific moment in time.
      *
      * @author Rob Spoor
      * @param <A> The constraint annotation type.
@@ -283,7 +283,7 @@ public abstract class MomentPartValidator<A extends Annotation, T extends Tempor
     }
 
     /**
-     * The base for all {@link ZonedDateTime} validators that validate only a specific part of the value.
+     * The base for all {@link ZonedDateTime} validators that validate only a specific part of the value against a specific moment in time.
      *
      * @author Rob Spoor
      * @param <A> The constraint annotation type.
