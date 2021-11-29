@@ -344,9 +344,6 @@ LocalDate dateOfBirth;
 To specify that a date/time object like `ZonedDateTime` must be on a weekday between 9:00 and 18:00:
 ```
 @DayOfWeekIn({ MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY })
-// alternatively:
-//@DayOfWeekNotAfter(FRIDAY)
-//@DayOfWeekBefore(SATURDAY)
 @TimeNotBefore(moment = "09:00:00")
 @TimeNotAfter(moment = "18:00:00")
 ZonedDateTime appointmentDateTime;
