@@ -67,6 +67,7 @@ import com.github.robtimus.validation.datetime.validators.NotBeforeValidator;
  * @author Rob Spoor
  */
 @Documented
+// Cannot delegate to MinAfter because that's not supported for MonthDay
 @Constraint(validatedBy = { NotBeforeValidator.ForDate.class,
         NotBeforeValidator.ForCalendar.class,
         NotBeforeValidator.ForInstant.class,

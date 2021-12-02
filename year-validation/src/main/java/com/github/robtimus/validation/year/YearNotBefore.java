@@ -32,11 +32,12 @@ import java.time.Year;
 import java.time.ZoneId;
 import javax.validation.ClockProvider;
 import javax.validation.Constraint;
+import javax.validation.OverridesAttribute;
 import javax.validation.Payload;
+import javax.validation.ReportAsSingleViolation;
 import javax.validation.Validator;
 import javax.validation.ValidatorFactory;
 import com.github.robtimus.validation.year.YearNotBefore.List;
-import com.github.robtimus.validation.year.validators.YearNotBeforeValidator;
 
 /**
  * Validates that the year part of a date/time object is not before a specific moment in time.
@@ -59,15 +60,9 @@ import com.github.robtimus.validation.year.validators.YearNotBeforeValidator;
  * @author Rob Spoor
  */
 @Documented
-@Constraint(validatedBy = { YearNotBeforeValidator.ForDate.class,
-        YearNotBeforeValidator.ForCalendar.class,
-        YearNotBeforeValidator.ForInstant.class,
-        YearNotBeforeValidator.ForLocalDate.class,
-        YearNotBeforeValidator.ForLocalDateTime.class,
-        YearNotBeforeValidator.ForOffsetDateTime.class,
-        YearNotBeforeValidator.ForYearMonth.class,
-        YearNotBeforeValidator.ForZonedDateTime.class
-})
+@Constraint(validatedBy = {})
+@YearMinAfter(moment = "", years = 0)
+@ReportAsSingleViolation
 @Target({ METHOD, FIELD, ANNOTATION_TYPE, CONSTRUCTOR, PARAMETER, TYPE_USE })
 @Retention(RUNTIME)
 @Repeatable(List.class)
@@ -94,6 +89,7 @@ public @interface YearNotBefore {
      * {@link ClockProvider} attached to the {@link Validator} or {@link ValidatorFactory}. The default {@link ClockProvider} defines the current time
      * according to the virtual machine, applying the current default time zone if needed.
      */
+    @OverridesAttribute(constraint = YearMinAfter.class)
     String moment();
 
     /**
@@ -107,6 +103,7 @@ public @interface YearNotBefore {
      *     is allowed.</li>
      * </ul>
      */
+    @OverridesAttribute(constraint = YearMinAfter.class)
     String zoneId() default "system";
 
     /**

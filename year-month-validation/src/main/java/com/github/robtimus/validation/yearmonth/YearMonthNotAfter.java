@@ -32,11 +32,12 @@ import java.time.YearMonth;
 import java.time.ZoneId;
 import javax.validation.ClockProvider;
 import javax.validation.Constraint;
+import javax.validation.OverridesAttribute;
 import javax.validation.Payload;
+import javax.validation.ReportAsSingleViolation;
 import javax.validation.Validator;
 import javax.validation.ValidatorFactory;
 import com.github.robtimus.validation.yearmonth.YearMonthNotAfter.List;
-import com.github.robtimus.validation.yearmonth.validators.YearMonthNotAfterValidator;
 
 /**
  * Validates that the year-month part of a date/time object is not after a specific moment in time.
@@ -58,14 +59,9 @@ import com.github.robtimus.validation.yearmonth.validators.YearMonthNotAfterVali
  * @author Rob Spoor
  */
 @Documented
-@Constraint(validatedBy = { YearMonthNotAfterValidator.ForDate.class,
-        YearMonthNotAfterValidator.ForCalendar.class,
-        YearMonthNotAfterValidator.ForInstant.class,
-        YearMonthNotAfterValidator.ForLocalDate.class,
-        YearMonthNotAfterValidator.ForLocalDateTime.class,
-        YearMonthNotAfterValidator.ForOffsetDateTime.class,
-        YearMonthNotAfterValidator.ForZonedDateTime.class
-})
+@Constraint(validatedBy = {})
+@YearMonthMinBefore(moment = "", duration = "P0D")
+@ReportAsSingleViolation
 @Target({ METHOD, FIELD, ANNOTATION_TYPE, CONSTRUCTOR, PARAMETER, TYPE_USE })
 @Retention(RUNTIME)
 @Repeatable(List.class)
@@ -92,6 +88,7 @@ public @interface YearMonthNotAfter {
      * {@link ClockProvider} attached to the {@link Validator} or {@link ValidatorFactory}. The default {@link ClockProvider} defines the current time
      * according to the virtual machine, applying the current default time zone if needed.
      */
+    @OverridesAttribute(constraint = YearMonthMinBefore.class)
     String moment();
 
     /**
@@ -105,6 +102,7 @@ public @interface YearMonthNotAfter {
      *     is allowed.</li>
      * </ul>
      */
+    @OverridesAttribute(constraint = YearMonthMinBefore.class)
     String zoneId() default "system";
 
     /**

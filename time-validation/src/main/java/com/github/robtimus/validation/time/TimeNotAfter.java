@@ -32,11 +32,12 @@ import java.time.LocalTime;
 import java.time.ZoneId;
 import javax.validation.ClockProvider;
 import javax.validation.Constraint;
+import javax.validation.OverridesAttribute;
 import javax.validation.Payload;
+import javax.validation.ReportAsSingleViolation;
 import javax.validation.Validator;
 import javax.validation.ValidatorFactory;
 import com.github.robtimus.validation.time.TimeNotAfter.List;
-import com.github.robtimus.validation.time.validators.TimeNotAfterValidator;
 
 /**
  * Validates that the time part of a date/time object is not after a specific moment in time.
@@ -57,13 +58,9 @@ import com.github.robtimus.validation.time.validators.TimeNotAfterValidator;
  * @author Rob Spoor
  */
 @Documented
-@Constraint(validatedBy = { TimeNotAfterValidator.ForDate.class,
-        TimeNotAfterValidator.ForCalendar.class,
-        TimeNotAfterValidator.ForInstant.class,
-        TimeNotAfterValidator.ForLocalDateTime.class,
-        TimeNotAfterValidator.ForOffsetDateTime.class,
-        TimeNotAfterValidator.ForZonedDateTime.class
-})
+@Constraint(validatedBy = {})
+@TimeMinBefore(moment = "", duration = "P0D")
+@ReportAsSingleViolation
 @Target({ METHOD, FIELD, ANNOTATION_TYPE, CONSTRUCTOR, PARAMETER, TYPE_USE })
 @Retention(RUNTIME)
 @Repeatable(List.class)
@@ -90,6 +87,7 @@ public @interface TimeNotAfter {
      * {@link ClockProvider} attached to the {@link Validator} or {@link ValidatorFactory}. The default {@link ClockProvider} defines the current time
      * according to the virtual machine, applying the current default time zone if needed.
      */
+    @OverridesAttribute(constraint = TimeMinBefore.class)
     String moment();
 
     /**
@@ -102,6 +100,7 @@ public @interface TimeNotAfter {
      * <li>For {@link java.time.LocalDateTime}, no zone id is applicable, so only the default value ({@code system}) is allowed.</li>
      * </ul>
      */
+    @OverridesAttribute(constraint = TimeMinBefore.class)
     String zoneId() default "system";
 
     /**
