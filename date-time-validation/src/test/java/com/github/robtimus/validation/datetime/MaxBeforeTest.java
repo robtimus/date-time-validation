@@ -156,9 +156,9 @@ class MaxBeforeTest extends AbstractConstraintTest {
 
             WithDifferentTimeZone() {
                 super(TestClassWithMoment.class, "calendar",
-                        GregorianCalendar.from(ZonedDateTime.parse("2006-11-02T08:14:29+01:00[UTC]")),
-                        GregorianCalendar.from(ZonedDateTime.parse("2006-11-02T08:14:29+01:00[UTC]").minus(1, ChronoUnit.MILLIS)),
-                        GregorianCalendar.from(ZonedDateTime.parse("2006-11-02T08:14:29+01:00[UTC]").plus(1, ChronoUnit.MILLIS)),
+                        GregorianCalendar.from(ZonedDateTime.parse("2006-11-02T08:14:29+00:00[UTC]")),
+                        GregorianCalendar.from(ZonedDateTime.parse("2006-11-02T08:14:29+00:00[UTC]").minus(1, ChronoUnit.MILLIS)),
+                        GregorianCalendar.from(ZonedDateTime.parse("2006-11-02T08:14:29+00:00[UTC]").plus(1, ChronoUnit.MILLIS)),
                         () -> null);
             }
         }
@@ -570,9 +570,9 @@ class MaxBeforeTest extends AbstractConstraintTest {
 
             WithDifferentTimeZone() {
                 super(TestClassWithMoment.class, "zonedDateTime",
-                        ZonedDateTime.parse("2006-11-02T08:14:29+01:00[UTC]"),
-                        ZonedDateTime.parse("2006-11-02T08:14:29+01:00[UTC]").minusNanos(1),
-                        ZonedDateTime.parse("2006-11-02T08:14:29+01:00[UTC]").plusNanos(1),
+                        ZonedDateTime.parse("2006-11-02T08:14:29+00:00[UTC]"),
+                        ZonedDateTime.parse("2006-11-02T08:14:29+00:00[UTC]").minusNanos(1),
+                        ZonedDateTime.parse("2006-11-02T08:14:29+00:00[UTC]").plusNanos(1),
                         () -> null);
             }
         }

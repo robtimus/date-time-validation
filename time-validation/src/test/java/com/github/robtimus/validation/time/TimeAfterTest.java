@@ -102,7 +102,7 @@ class TimeAfterTest extends AbstractConstraintTest {
                         GregorianCalendar.from(ZonedDateTime.parse("2021-10-24T10:15:30+02:00[Europe/Paris]")),
                         GregorianCalendar.from(ZonedDateTime.parse("2021-10-24T10:15:30+02:00[Europe/Paris]").minus(1, ChronoUnit.MILLIS)),
                         GregorianCalendar.from(ZonedDateTime.parse("2021-10-24T10:15:30+02:00[Europe/Paris]").plus(1, ChronoUnit.MILLIS)),
-                        () -> Clock.fixed(ZonedDateTime.parse("2007-12-03T10:15:30+02:00[Europe/Paris]").toInstant(), ZoneId.of("Europe/Paris")));
+                        () -> Clock.fixed(ZonedDateTime.parse("2007-12-03T10:15:30+01:00[Europe/Paris]").toInstant(), ZoneId.of("Europe/Paris")));
             }
         }
 
@@ -301,7 +301,7 @@ class TimeAfterTest extends AbstractConstraintTest {
                         ZonedDateTime.parse("2021-10-24T11:15:30+02:00[Europe/Paris]"),
                         ZonedDateTime.parse("2021-10-24T11:15:30+02:00[Europe/Paris]").minusNanos(1),
                         ZonedDateTime.parse("2021-10-24T11:15:30+02:00[Europe/Paris]").plusNanos(1),
-                        () -> Clock.fixed(ZonedDateTime.parse("2007-12-03T11:15:30+02:00[Europe/Paris]").toInstant(), ZoneId.of("Europe/Paris")));
+                        () -> Clock.fixed(ZonedDateTime.parse("2007-12-03T11:15:30+01:00[Europe/Paris]").toInstant(), ZoneId.of("Europe/Paris")));
             }
         }
 

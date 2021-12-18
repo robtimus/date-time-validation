@@ -156,9 +156,9 @@ class MinAfterTest extends AbstractConstraintTest {
 
             WithDifferentTimeZone() {
                 super(TestClassWithMoment.class, "calendar",
-                        GregorianCalendar.from(ZonedDateTime.parse("2009-01-04T10:16:31+01:00[UTC]")),
-                        GregorianCalendar.from(ZonedDateTime.parse("2009-01-04T10:16:31+01:00[UTC]").minus(1, ChronoUnit.MILLIS)),
-                        GregorianCalendar.from(ZonedDateTime.parse("2009-01-04T10:16:31+01:00[UTC]").plus(1, ChronoUnit.MILLIS)),
+                        GregorianCalendar.from(ZonedDateTime.parse("2009-01-04T10:16:31+00:00[UTC]")),
+                        GregorianCalendar.from(ZonedDateTime.parse("2009-01-04T10:16:31+00:00[UTC]").minus(1, ChronoUnit.MILLIS)),
+                        GregorianCalendar.from(ZonedDateTime.parse("2009-01-04T10:16:31+00:00[UTC]").plus(1, ChronoUnit.MILLIS)),
                         () -> null);
             }
         }
@@ -570,9 +570,9 @@ class MinAfterTest extends AbstractConstraintTest {
 
             WithDifferentTimeZone() {
                 super(TestClassWithMoment.class, "zonedDateTime",
-                        ZonedDateTime.parse("2009-01-04T10:16:31+01:00[UTC]"),
-                        ZonedDateTime.parse("2009-01-04T10:16:31+01:00[UTC]").minusNanos(1),
-                        ZonedDateTime.parse("2009-01-04T10:16:31+01:00[UTC]").plusNanos(1),
+                        ZonedDateTime.parse("2009-01-04T10:16:31+00:00[UTC]"),
+                        ZonedDateTime.parse("2009-01-04T10:16:31+00:00[UTC]").minusNanos(1),
+                        ZonedDateTime.parse("2009-01-04T10:16:31+00:00[UTC]").plusNanos(1),
                         () -> null);
             }
         }

@@ -114,9 +114,9 @@ class NotBeforeTest extends AbstractConstraintTest {
 
             WithDifferentTimeZone() {
                 super(TestClassWithMoment.class, "calendar",
-                        GregorianCalendar.from(ZonedDateTime.parse("2007-12-03T09:15:30+01:00[UTC]")),
-                        GregorianCalendar.from(ZonedDateTime.parse("2007-12-03T09:15:30+01:00[UTC]").minus(1, ChronoUnit.MILLIS)),
-                        GregorianCalendar.from(ZonedDateTime.parse("2007-12-03T09:15:30+01:00[UTC]").plus(1, ChronoUnit.MILLIS)),
+                        GregorianCalendar.from(ZonedDateTime.parse("2007-12-03T09:15:30+00:00[UTC]")),
+                        GregorianCalendar.from(ZonedDateTime.parse("2007-12-03T09:15:30+00:00[UTC]").minus(1, ChronoUnit.MILLIS)),
+                        GregorianCalendar.from(ZonedDateTime.parse("2007-12-03T09:15:30+00:00[UTC]").plus(1, ChronoUnit.MILLIS)),
                         () -> null);
             }
         }
@@ -463,9 +463,9 @@ class NotBeforeTest extends AbstractConstraintTest {
 
             WithDifferentTimeZone() {
                 super(TestClassWithMoment.class, "zonedDateTime",
-                        ZonedDateTime.parse("2007-12-03T09:15:30+01:00[UTC]"),
-                        ZonedDateTime.parse("2007-12-03T09:15:30+01:00[UTC]").minusNanos(1),
-                        ZonedDateTime.parse("2007-12-03T09:15:30+01:00[UTC]").plusNanos(1),
+                        ZonedDateTime.parse("2007-12-03T09:15:30+00:00[UTC]"),
+                        ZonedDateTime.parse("2007-12-03T09:15:30+00:00[UTC]").minusNanos(1),
+                        ZonedDateTime.parse("2007-12-03T09:15:30+00:00[UTC]").plusNanos(1),
                         () -> null);
             }
         }
