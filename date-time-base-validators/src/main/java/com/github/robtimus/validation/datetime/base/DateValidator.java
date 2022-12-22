@@ -21,8 +21,8 @@ import java.lang.annotation.Annotation;
 import java.time.Instant;
 import java.util.Date;
 import java.util.Objects;
-import javax.validation.ConstraintValidator;
-import javax.validation.ConstraintValidatorContext;
+import jakarta.validation.ConstraintValidator;
+import jakarta.validation.ConstraintValidatorContext;
 
 /**
  * The base for all {@link Date} validators. These delegate to {@link Instant} validators.

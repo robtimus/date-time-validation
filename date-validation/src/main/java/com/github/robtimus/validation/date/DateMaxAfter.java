@@ -30,11 +30,11 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.Target;
 import java.time.LocalDate;
 import java.time.ZoneId;
-import javax.validation.ClockProvider;
-import javax.validation.Constraint;
-import javax.validation.Payload;
-import javax.validation.Validator;
-import javax.validation.ValidatorFactory;
+import jakarta.validation.ClockProvider;
+import jakarta.validation.Constraint;
+import jakarta.validation.Payload;
+import jakarta.validation.Validator;
+import jakarta.validation.ValidatorFactory;
 import com.github.robtimus.validation.date.DateMaxAfter.List;
 import com.github.robtimus.validation.date.validators.DateMaxAfterValidator;
 

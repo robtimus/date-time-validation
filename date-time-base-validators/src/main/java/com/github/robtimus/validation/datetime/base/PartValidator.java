@@ -31,8 +31,8 @@ import java.util.Objects;
 import java.util.function.BiFunction;
 import java.util.function.BiPredicate;
 import java.util.function.Function;
-import javax.validation.ClockProvider;
-import javax.validation.ConstraintValidatorContext;
+import jakarta.validation.ClockProvider;
+import jakarta.validation.ConstraintValidatorContext;
 
 /**
  * The base for all {@link TemporalAccessor} validators that validate only a specific part of the value.

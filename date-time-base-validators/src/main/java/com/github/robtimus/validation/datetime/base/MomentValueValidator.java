@@ -25,7 +25,7 @@ import java.util.Objects;
 import java.util.function.BiFunction;
 import java.util.function.BiPredicate;
 import java.util.function.Function;
-import javax.validation.ClockProvider;
+import jakarta.validation.ClockProvider;
 
 /**
  * The base for all {@link TemporalAccessor} validators that validate the entire value against a specific moment in time.

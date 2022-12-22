@@ -33,11 +33,11 @@ import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import java.util.Date;
-import javax.validation.ClockProvider;
-import javax.validation.Constraint;
-import javax.validation.Payload;
-import javax.validation.Validator;
-import javax.validation.ValidatorFactory;
+import jakarta.validation.ClockProvider;
+import jakarta.validation.Constraint;
+import jakarta.validation.Payload;
+import jakarta.validation.Validator;
+import jakarta.validation.ValidatorFactory;
 import com.github.robtimus.validation.datetime.MaxAfter.List;
 import com.github.robtimus.validation.datetime.validators.MaxAfterValidator;
 

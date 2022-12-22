@@ -21,7 +21,7 @@ import java.time.temporal.ChronoField;
 import java.time.temporal.TemporalAccessor;
 import java.util.function.BiPredicate;
 import java.util.function.Function;
-import javax.validation.ClockProvider;
+import jakarta.validation.ClockProvider;
 import com.github.robtimus.validation.datetime.base.ValueValidator;
 import com.github.robtimus.validation.time.precision.MillisecondPrecision;
 

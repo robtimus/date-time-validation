@@ -77,11 +77,10 @@
   </issueManagement>
 
   <properties>
-    <!-- The following versions are the last to support javax as package prefix -->
-    <version.hibernate-validator>6.2.1.Final</version.hibernate-validator>
-    <version.jakarta.el-api>3.0.3</version.jakarta.el-api>
-    <version.jakarta.el.impl>3.0.4</version.jakarta.el.impl>
-    <version.jakarta.validation-api>2.0.2</version.jakarta.validation-api>
+    <version.hibernate-validator>7.0.5.Final</version.hibernate-validator>
+    <version.jakarta.el-api>4.0.0</version.jakarta.el-api>
+    <version.jakarta.el.impl>4.0.2</version.jakarta.el.impl>
+    <version.jakarta.validation-api>3.0.2</version.jakarta.validation-api>
   </properties>
 
   <dependencyManagement>

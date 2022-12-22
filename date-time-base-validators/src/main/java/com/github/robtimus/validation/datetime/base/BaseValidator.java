@@ -28,9 +28,9 @@ import java.util.Objects;
 import java.util.function.BiPredicate;
 import java.util.function.Function;
 import java.util.function.Predicate;
-import javax.validation.ClockProvider;
-import javax.validation.ConstraintValidator;
-import javax.validation.ConstraintValidatorContext;
+import jakarta.validation.ClockProvider;
+import jakarta.validation.ConstraintValidator;
+import jakarta.validation.ConstraintValidatorContext;
 
 /**
  * The base for all date/time object validators.

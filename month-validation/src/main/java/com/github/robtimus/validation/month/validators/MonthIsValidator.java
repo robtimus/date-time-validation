@@ -29,7 +29,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.function.BiPredicate;
 import java.util.function.Function;
-import javax.validation.ClockProvider;
+import jakarta.validation.ClockProvider;
 import com.github.robtimus.validation.datetime.base.CalendarValidator;
 import com.github.robtimus.validation.datetime.base.DateValidator;
 import com.github.robtimus.validation.datetime.base.PartValidator;

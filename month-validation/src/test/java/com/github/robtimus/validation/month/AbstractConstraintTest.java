@@ -29,11 +29,11 @@ import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
 import java.util.Comparator;
 import java.util.List;
-import javax.validation.ClockProvider;
-import javax.validation.ConstraintViolation;
-import javax.validation.Validation;
-import javax.validation.Validator;
-import javax.validation.ValidatorFactory;
+import jakarta.validation.ClockProvider;
+import jakarta.validation.ConstraintViolation;
+import jakarta.validation.Validation;
+import jakarta.validation.Validator;
+import jakarta.validation.ValidatorFactory;
 
 abstract class AbstractConstraintTest {
 

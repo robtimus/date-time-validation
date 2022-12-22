@@ -30,8 +30,8 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.Target;
 import java.time.DayOfWeek;
 import java.time.ZoneId;
-import javax.validation.Constraint;
-import javax.validation.Payload;
+import jakarta.validation.Constraint;
+import jakarta.validation.Payload;
 import com.github.robtimus.validation.dayofweek.DayOfWeekIn.List;
 import com.github.robtimus.validation.dayofweek.validators.DayOfWeekInValidator;
 

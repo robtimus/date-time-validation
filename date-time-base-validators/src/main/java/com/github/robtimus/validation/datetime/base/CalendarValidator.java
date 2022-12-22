@@ -22,8 +22,8 @@ import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.Calendar;
 import java.util.Objects;
-import javax.validation.ConstraintValidator;
-import javax.validation.ConstraintValidatorContext;
+import jakarta.validation.ConstraintValidator;
+import jakarta.validation.ConstraintValidatorContext;
 
 /**
  * The base for all {@link Calendar} validators. These delegate to {@link ZonedDateTime} validators.

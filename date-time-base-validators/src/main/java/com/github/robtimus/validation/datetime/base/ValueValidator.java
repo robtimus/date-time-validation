@@ -21,8 +21,8 @@ import java.lang.annotation.Annotation;
 import java.time.temporal.TemporalAccessor;
 import java.util.function.BiPredicate;
 import java.util.function.Function;
-import javax.validation.ClockProvider;
-import javax.validation.ConstraintValidatorContext;
+import jakarta.validation.ClockProvider;
+import jakarta.validation.ConstraintValidatorContext;
 
 /**
  * The base for all {@link TemporalAccessor} validators that validate the entire value.
