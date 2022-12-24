@@ -448,3 +448,9 @@ public @interface AppointmentSlot {
 ### Custom validators
 
 In case the provided constraint annotations cannot be combined to achieve the desired result, module `date-time-base-validators` provides some base classes that can be used to write custom constraint validators. These all use functional interfaces to define custom behaviour; most of them can be supplied using method references. See package [com.github.robtimus.validation.datetime.base](https://robtimus.github.io/date-time-validation/apidocs/com/github/robtimus/validation/datetime/base/package-summary.html) for an overview.
+
+## Bean Validation API support
+
+Version 2.x of this library has been written for [Jakarta Bean Validation 3.0](https://beanvalidation.org/3.0/), as part of Jakarta EE 9.
+
+Version 1.x of this library has been written for [Jakarta Bean Validation 2.0](https://beanvalidation.org/2.0/), as part of Jakarta EE 8. However, it should also work with Bean Valdation 2.0 (non-Jakarta) and [Bean Validation 1.1](https://beanvalidation.org/1.1/).
