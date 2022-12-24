@@ -125,7 +125,7 @@
           <artifactId>maven-javadoc-plugin</artifactId>
           <configuration>
             <links>
-              <link>https://jakarta.ee/specifications/platform/8/apidocs/</link>
+              <link>https://jakarta.ee/specifications/platform/9/apidocs/</link>
             </links>
           </configuration>
         </plugin>
