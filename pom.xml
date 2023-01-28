@@ -22,7 +22,7 @@
   <parent>
     <groupId>com.github.robtimus</groupId>
     <artifactId>robtimus-parent</artifactId>
-    <version>1.6</version>
+    <version>1.8</version>
     <relativePath />
   </parent>
 
@@ -131,26 +131,11 @@
         </plugin>
 
         <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-antrun-plugin</artifactId>
-          <executions>
-            <execution>
-              <id>copy-license</id>
-              <phase>generate-sources</phase>
-              <goals>
-                <goal>run</goal>
-              </goals>
-              <configuration>
-                <target>
-                  <copy todir="${project.build.directory}/apidocs/META-INF">
-                    <fileset dir="${project.basedir}/..">
-                      <include name="LICENSE.txt" />
-                    </fileset>
-                  </copy>
-                </target>
-              </configuration>
-            </execution>
-          </executions>
+          <groupId>com.github.robtimus</groupId>
+          <artifactId>build-helper-maven-plugin</artifactId>
+          <configuration>
+            <maxParentCount>1</maxParentCount>
+          </configuration>
         </plugin>
       </plugins>
     </pluginManagement>
@@ -163,15 +148,12 @@
       </plugin>
 
       <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-antrun-plugin</artifactId>
+        <groupId>com.github.robtimus</groupId>
+        <artifactId>build-helper-maven-plugin</artifactId>
+        <configuration>
+          <skipLicense>true</skipLicense>
+        </configuration>
         <inherited>false</inherited>
-        <executions>
-          <execution>
-            <id>copy-license</id>
-            <phase>none</phase>
-          </execution>
-        </executions>
       </plugin>
 
       <plugin>

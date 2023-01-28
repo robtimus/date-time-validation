@@ -1,4 +1,8 @@
 # date-time-validation
+[![Maven Central](https://img.shields.io/maven-central/v/com.github.robtimus/date-time-validation-parent)](https://search.maven.org/artifact/com.github.robtimus/date-time-validation-parent)
+[![Build Status](https://github.com/robtimus/date-time-validation/actions/workflows/build.yml/badge.svg)](https://github.com/robtimus/date-time-validation/actions/workflows/build.yml)
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=com.github.robtimus%3Adate-time-validation-parent&metric=alert_status)](https://sonarcloud.io/summary/overall?id=com.github.robtimus%3Adate-time-validation-parent)
+[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=com.github.robtimus%3Adate-time-validation-parent&metric=coverage)](https://sonarcloud.io/summary/overall?id=com.github.robtimus%3Adate-time-validation-parent)
 
 Validation constraints for date/time objects.
 
@@ -13,6 +17,8 @@ The following sections each describe a module. Most of these modules validate on
 * A value that is valid according to `ZoneId.of` for an explicit time zone.
 
 ### date-time-validation
+[![Maven Central](https://img.shields.io/maven-central/v/com.github.robtimus/date-time-validation)](https://search.maven.org/artifact/com.github.robtimus/date-time-validation)
+[![Known Vulnerabilities](https://snyk.io/test/github/robtimus/date-time-validation/badge.svg?targetFile=date-time-validation/pom.xml)](https://snyk.io/test/github/robtimus/date-time-validation?targetFile=date-time-validation/pom.xml)
 
 Validation constraints for date/time objects that validate entire values. These validate the following, where `object` is the object to be validated, `moment` is the value specified in the constraint, and `duration` is a [ISO 8601 duration](https://en.wikipedia.org/wiki/ISO_8601):
 
@@ -58,6 +64,8 @@ These annotations apply to the following types:
 <sup>1</sup>: `MinAfter`, `MaxAfter`, `MinBefore` and `MaxBefore` cannot be applied to [MonthDay](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/MonthDay.html) because "it is not possible to define whether February 29th is valid or not without external information". This makes it impossible to apply durations to `MonthDay` moments.
 
 ### date-validation
+[![Maven Central](https://img.shields.io/maven-central/v/com.github.robtimus/date-validation)](https://search.maven.org/artifact/com.github.robtimus/date-validation)
+[![Known Vulnerabilities](https://snyk.io/test/github/robtimus/date-time-validation/badge.svg?targetFile=date-validation/pom.xml)](https://snyk.io/test/github/robtimus/date-time-validation?targetFile=date-validation/pom.xml)
 
 Validation constraints for date/time objects that validate only the date part. These work just like the constraints of the `date-time-validation` module, except they ignore any time part. The `moment` must be `now` or valid according to `LocalDate.parse`, and the `duration` may not contain any time elements.
 
@@ -85,6 +93,8 @@ These annotations apply to the following types:
 <sup>3</sup>: because no time zone is applicanle for the type, the `zoneId` must be defined as `system`. Since this is the default, the `zoneId` parameter can simply be omitted.
 
 ### time-validation
+[![Maven Central](https://img.shields.io/maven-central/v/com.github.robtimus/time-validation)](https://search.maven.org/artifact/com.github.robtimus/time-validation)
+[![Known Vulnerabilities](https://snyk.io/test/github/robtimus/date-time-validation/badge.svg?targetFile=time-validation/pom.xml)](https://snyk.io/test/github/robtimus/date-time-validation?targetFile=time-validation/pom.xml)
 
 Validation constraints for date/time objects that validate only the time part. These work just like the constraints of `date-time-validation` module, except they ignore any date part. The `moment` must be `now` or valid according to `LocalTime.parse`, and the `duration` may not contain any date elements.
 
@@ -112,6 +122,8 @@ These annotations apply to the following types:
 <sup>3</sup>: can be validated with annotations from `date-time-validation`.
 
 ### year-month-validation
+[![Maven Central](https://img.shields.io/maven-central/v/com.github.robtimus/year-month-validation)](https://search.maven.org/artifact/com.github.robtimus/year-month-validation)
+[![Known Vulnerabilities](https://snyk.io/test/github/robtimus/date-time-validation/badge.svg?targetFile=year-month-validation/pom.xml)](https://snyk.io/test/github/robtimus/date-time-validation?targetFile=year-month-validation/pom.xml)
 
 Validation constraints for date/time objects that validate only the year and month. These work just like the constraints of the `date-time-validation` module, except they ignore the day of the month and any time part. The `moment` must be `now` or valid according to `YearMonth.parse`, and the `duration` may only contain year and month elements.
 
@@ -139,6 +151,8 @@ These annotations apply to the following types:
 <sup>3</sup>: can be validated with annotations from `date-time-validation`.
 
 ### year-validation
+[![Maven Central](https://img.shields.io/maven-central/v/com.github.robtimus/year-validation)](https://search.maven.org/artifact/com.github.robtimus/year-validation)
+[![Known Vulnerabilities](https://snyk.io/test/github/robtimus/date-time-validation/badge.svg?targetFile=year-validation/pom.xml)](https://snyk.io/test/github/robtimus/date-time-validation?targetFile=year-validation/pom.xml)
 
 Validation constraints for date/time objects that validate only the year. These work just like the constraints of the `date-time-validation` module, except they ignore the month, the day of the month and any time part. The `moment` must be `now` or valid according to `Year.parse`, and the `duration` (renamed to `years`) must be specified as a number of years only. The latter prevents having to write `"P1Y"` instead of just `1`.
 
@@ -166,6 +180,8 @@ These annotations apply to the following types:
 <sup>3</sup>: can be validated with annotations from `date-time-validation`.
 
 ### month-validation
+[![Maven Central](https://img.shields.io/maven-central/v/com.github.robtimus/month-validation)](https://search.maven.org/artifact/com.github.robtimus/month-validation)
+[![Known Vulnerabilities](https://snyk.io/test/github/robtimus/date-time-validation/badge.svg?targetFile=month-validation/pom.xml)](https://snyk.io/test/github/robtimus/date-time-validation?targetFile=month-validation/pom.xml)
 
 Validation constraints for date/time objects that validate only the month. These validate the following, where `object` is the object to be validated, and `value` is the value specified in the constraint:
 
@@ -202,6 +218,8 @@ These annotations apply to the following types:
 `year-month-validation` validates the combination of the year and the month. This allows it to be used for cases like credit card validation. `month-validation` on the other hand ignores the year.
 
 ### day-of-week-validation
+[![Maven Central](https://img.shields.io/maven-central/v/com.github.robtimus/day-of-week-validation)](https://search.maven.org/artifact/com.github.robtimus/day-of-week-validation)
+[![Known Vulnerabilities](https://snyk.io/test/github/robtimus/date-time-validation/badge.svg?targetFile=day-of-week-validation/pom.xml)](https://snyk.io/test/github/robtimus/date-time-validation?targetFile=day-of-week-validation/pom.xml)
 
 Validation constraints for date/time objects that validate only the day of the week. These validate the following, where `object` is the object to be validated, and `value` is the value specified in the constraint:
 
@@ -236,6 +254,8 @@ These annotations apply to the following types:
 <sup>2</sup>: because no time zone is applicanle for the type, the `zoneId` must be defined as `system`. Since this is the default, the `zoneId` parameter can simply be omitted.
 
 ### day-of-month-validation
+[![Maven Central](https://img.shields.io/maven-central/v/com.github.robtimus/day-of-month-validation)](https://search.maven.org/artifact/com.github.robtimus/day-of-month-validation)
+[![Known Vulnerabilities](https://snyk.io/test/github/robtimus/date-time-validation/badge.svg?targetFile=day-of-month-validation/pom.xml)](https://snyk.io/test/github/robtimus/date-time-validation?targetFile=day-of-month-validation/pom.xml)
 
 Validation constraints for date/time objects that validate only the day of the month. These validate the following, where `object` is the object to be validated, and `value` is the value specified in the constraint:
 
@@ -270,6 +290,8 @@ These annotations apply to the following types:
 <sup>3</sup>: `LastDayOfMonth` cannot be applied to [MonthDay](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/MonthDay.html) because "it is not possible to define whether February 29th is valid or not without external information". This makes it impossible to determine whether or not February 28th is the last day of the month or not.
 
 ### hour-validation
+[![Maven Central](https://img.shields.io/maven-central/v/com.github.robtimus/hour-validation)](https://search.maven.org/artifact/com.github.robtimus/hour-validation)
+[![Known Vulnerabilities](https://snyk.io/test/github/robtimus/date-time-validation/badge.svg?targetFile=hour-validation/pom.xml)](https://snyk.io/test/github/robtimus/date-time-validation?targetFile=hour-validation/pom.xml)
 
 Validation constraints for date/time objects that validate only the hour. These validate the following, where `object` is the object to be validated, and `value` is the value specified in the constraint:
 
@@ -302,6 +324,8 @@ These annotations apply to the following types:
 <sup>2</sup>: because no time zone is applicanle for the type, the `zoneId` must be defined as `system`. Since this is the default, the `zoneId` parameter can simply be omitted.
 
 ### minute-validation
+[![Maven Central](https://img.shields.io/maven-central/v/com.github.robtimus/minute-validation)](https://search.maven.org/artifact/com.github.robtimus/minute-validation)
+[![Known Vulnerabilities](https://snyk.io/test/github/robtimus/date-time-validation/badge.svg?targetFile=minute-validation/pom.xml)](https://snyk.io/test/github/robtimus/date-time-validation?targetFile=minute-validation/pom.xml)
 
 Validation constraints for date/time objects that validate only the minute. These validate the following, where `object` is the object to be validated, and `value` is the value specified in the constraint:
 
@@ -334,6 +358,8 @@ These annotations apply to the following types:
 <sup>2</sup>: because no time zone is applicanle for the type, the `zoneId` must be defined as `system`. Since this is the default, the `zoneId` parameter can simply be omitted.
 
 ### time-precision-validation
+[![Maven Central](https://img.shields.io/maven-central/v/com.github.robtimus/time-precision-validation)](https://search.maven.org/artifact/com.github.robtimus/time-precision-validation)
+[![Known Vulnerabilities](https://snyk.io/test/github/robtimus/date-time-validation/badge.svg?targetFile=time-precision-validation/pom.xml)](https://snyk.io/test/github/robtimus/date-time-validation?targetFile=time-precision-validation/pom.xml)
 
 Validation constraints for date/time objects that validate only the precision of the time part. These validate the following, where `object` is the object to be validated, and `value` is the value specified in the constraint:
 
