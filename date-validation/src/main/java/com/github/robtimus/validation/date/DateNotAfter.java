@@ -109,7 +109,7 @@ public @interface DateNotAfter {
     @Target({ METHOD, FIELD, ANNOTATION_TYPE, CONSTRUCTOR, PARAMETER, TYPE_USE })
     @Retention(RUNTIME)
     @Documented
-    public @interface List {
+    @interface List {
 
         /**
          * The {@link DateNotAfter} annotations.
