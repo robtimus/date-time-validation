@@ -452,7 +452,7 @@
 </table>
 <p><sup>1</sup>: because the type has no time zone information, the <code>zoneId</code> may not be defined as <code>provided</code>.<br />
 <sup>2</sup>: can be validated with annotations from <code>date-time-validation</code>.<br />
-<sup>3</sup>: because no time zone is applicanle for the type, the <code>zoneId</code> must be defined as <code>system</code>. Since this is the default, the <code>zoneId</code> parameter can simply be omitted.</p></section><section>
+<sup>3</sup>: because no time zone is applicable for the type, the <code>zoneId</code> must be defined as <code>system</code>. Since this is the default, the <code>zoneId</code> parameter can simply be omitted.</p></section><section>
 <h3><a name="time-validation"></a>time-validation</h3>
 <p>Validation constraints for date/time objects that validate only the time part. These work just like the constraints of <code>date-time-validation</code> module, except they ignore any date part. The <code>moment</code> must be <code>now</code> or valid according to <code>LocalTime.parse</code>, and the <code>duration</code> may not contain any date elements.</p>
 <p>These annotations apply to the following types:</p>
@@ -614,7 +614,7 @@
 </tbody>
 </table>
 <p><sup>1</sup>: because the type has no time zone information, the <code>zoneId</code> may not be defined as <code>provided</code>.<br />
-<sup>2</sup>: because no time zone is applicanle for the type, the <code>zoneId</code> must be defined as <code>system</code>. Since this is the default, the <code>zoneId</code> parameter can simply be omitted.<br />
+<sup>2</sup>: because no time zone is applicable for the type, the <code>zoneId</code> must be defined as <code>system</code>. Since this is the default, the <code>zoneId</code> parameter can simply be omitted.<br />
 <sup>3</sup>: can be validated with annotations from <code>date-time-validation</code>.</p></section><section>
 <h3><a name="year-month-validation"></a>year-month-validation</h3>
 <p>Validation constraints for date/time objects that validate only the year and month. These work just like the constraints of the <code>date-time-validation</code> module, except they ignore the day of the month and any time part. The <code>moment</code> must be <code>now</code> or valid according to <code>YearMonth.parse</code>, and the <code>duration</code> may only contain year and month elements.</p>
@@ -777,7 +777,7 @@
 </tbody>
 </table>
 <p><sup>1</sup>: because the type has no time zone information, the <code>zoneId</code> may not be defined as <code>provided</code>.<br />
-<sup>2</sup>: because no time zone is applicanle for the type, the <code>zoneId</code> must be defined as <code>system</code>. Since this is the default, the <code>zoneId</code> parameter can simply be omitted.<br />
+<sup>2</sup>: because no time zone is applicable for the type, the <code>zoneId</code> must be defined as <code>system</code>. Since this is the default, the <code>zoneId</code> parameter can simply be omitted.<br />
 <sup>3</sup>: can be validated with annotations from <code>date-time-validation</code>.</p></section><section>
 <h3><a name="year-validation"></a>year-validation</h3>
 <p>Validation constraints for date/time objects that validate only the year. These work just like the constraints of the <code>date-time-validation</code> module, except they ignore the month, the day of the month and any time part. The <code>moment</code> must be <code>now</code> or valid according to <code>Year.parse</code>, and the <code>duration</code> (renamed to <code>years</code>) must be specified as a number of years only. The latter prevents having to write <code>&quot;P1Y&quot;</code> instead of just <code>1</code>.</p>
@@ -940,7 +940,7 @@
 </tbody>
 </table>
 <p><sup>1</sup>: because the type has no time zone information, the <code>zoneId</code> may not be defined as <code>provided</code>.<br />
-<sup>2</sup>: because no time zone is applicanle for the type, the <code>zoneId</code> must be defined as <code>system</code>. Since this is the default, the <code>zoneId</code> parameter can simply be omitted.<br />
+<sup>2</sup>: because no time zone is applicable for the type, the <code>zoneId</code> must be defined as <code>system</code>. Since this is the default, the <code>zoneId</code> parameter can simply be omitted.<br />
 <sup>3</sup>: can be validated with annotations from <code>date-time-validation</code>.</p></section><section>
 <h3><a name="month-validation"></a>month-validation</h3>
 <p>Validation constraints for date/time objects that validate only the month. These validate the following, where <code>object</code> is the object to be validated, and <code>value</code> is the value specified in the constraint:</p>
@@ -1047,7 +1047,7 @@
 </tbody>
 </table>
 <p><sup>1</sup>: because the type has no time zone information, the <code>zoneId</code> may not be defined as <code>provided</code>.<br />
-<sup>2</sup>: because no time zone is applicanle for the type, the <code>zoneId</code> must be defined as <code>system</code>. Since this is the default, the <code>zoneId</code> parameter can simply be omitted.</p><section>
+<sup>2</sup>: because no time zone is applicable for the type, the <code>zoneId</code> must be defined as <code>system</code>. Since this is the default, the <code>zoneId</code> parameter can simply be omitted.</p><section>
 <h4><a name="year-month-validation_vs_month-validation"></a>year-month-validation vs month-validation</h4>
 <p><code>year-month-validation</code> validates the combination of the year and the month. This allows it to be used for cases like credit card validation. <code>month-validation</code> on the other hand ignores the year.</p></section></section><section>
 <h3><a name="day-of-week-validation"></a>day-of-week-validation</h3>
@@ -1156,7 +1156,7 @@
 </tbody>
 </table>
 <p><sup>1</sup>: because the type has no time zone information, the <code>zoneId</code> may not be defined as <code>provided</code>.<br />
-<sup>2</sup>: because no time zone is applicanle for the type, the <code>zoneId</code> must be defined as <code>system</code>. Since this is the default, the <code>zoneId</code> parameter can simply be omitted.</p></section><section>
+<sup>2</sup>: because no time zone is applicable for the type, the <code>zoneId</code> must be defined as <code>system</code>. Since this is the default, the <code>zoneId</code> parameter can simply be omitted.</p></section><section>
 <h3><a name="day-of-month-validation"></a>day-of-month-validation</h3>
 <p>Validation constraints for date/time objects that validate only the day of the month. These validate the following, where <code>object</code> is the object to be validated, and <code>value</code> is the value specified in the constraint:</p>
 <table border="0" class="table table-striped">
@@ -1280,7 +1280,7 @@
 </tbody>
 </table>
 <p><sup>1</sup>: because the type has no time zone information, the <code>zoneId</code> may not be defined as <code>provided</code>.<br />
-<sup>2</sup>: because no time zone is applicanle for the type, the <code>zoneId</code> must be defined as <code>system</code>. Since this is the default, the <code>zoneId</code> parameter can simply be omitted.<br />
+<sup>2</sup>: because no time zone is applicable for the type, the <code>zoneId</code> must be defined as <code>system</code>. Since this is the default, the <code>zoneId</code> parameter can simply be omitted.<br />
 <sup>3</sup>: <code>LastDayOfMonth</code> cannot be applied to <a class="externalLink" href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/MonthDay.html">MonthDay</a> because &#x201c;it is not possible to define whether February 29th is valid or not without external information&#x201d;. This makes it impossible to determine whether or not February 28th is the last day of the month or not.</p></section><section>
 <h3><a name="hour-validation"></a>hour-validation</h3>
 <p>Validation constraints for date/time objects that validate only the hour. These validate the following, where <code>object</code> is the object to be validated, and <code>value</code> is the value specified in the constraint:</p>
@@ -1387,7 +1387,7 @@
 </tbody>
 </table>
 <p><sup>1</sup>: because the type has no time zone information, the <code>zoneId</code> may not be defined as <code>provided</code>.<br />
-<sup>2</sup>: because no time zone is applicanle for the type, the <code>zoneId</code> must be defined as <code>system</code>. Since this is the default, the <code>zoneId</code> parameter can simply be omitted.</p></section><section>
+<sup>2</sup>: because no time zone is applicable for the type, the <code>zoneId</code> must be defined as <code>system</code>. Since this is the default, the <code>zoneId</code> parameter can simply be omitted.</p></section><section>
 <h3><a name="minute-validation"></a>minute-validation</h3>
 <p>Validation constraints for date/time objects that validate only the minute. These validate the following, where <code>object</code> is the object to be validated, and <code>value</code> is the value specified in the constraint:</p>
 <table border="0" class="table table-striped">
@@ -1493,7 +1493,7 @@
 </tbody>
 </table>
 <p><sup>1</sup>: because the type has no time zone information, the <code>zoneId</code> may not be defined as <code>provided</code>.<br />
-<sup>2</sup>: because no time zone is applicanle for the type, the <code>zoneId</code> must be defined as <code>system</code>. Since this is the default, the <code>zoneId</code> parameter can simply be omitted.</p></section><section>
+<sup>2</sup>: because no time zone is applicable for the type, the <code>zoneId</code> must be defined as <code>system</code>. Since this is the default, the <code>zoneId</code> parameter can simply be omitted.</p></section><section>
 <h3><a name="time-precision-validation"></a>time-precision-validation</h3>
 <p>Validation constraints for date/time objects that validate only the precision of the time part. These validate the following, where <code>object</code> is the object to be validated, and <code>value</code> is the value specified in the constraint:</p>
 <table border="0" class="table table-striped">
