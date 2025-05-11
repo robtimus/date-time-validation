@@ -394,38 +394,38 @@ These annotations apply to the following types:
 ## Examples
 
 To specify that a date of birth must be at least 18 years in the past:
-```
+```java
 @MinBefore(moment = "now", duration = "P18Y")
 LocalDate dateOfBirth;
 ```
 
 To specify that a credit card must not have expired:
-```
+```java
 @NotBefore(moment = "now")
 YearMonth expiryDate;
 ```
 
 To specify that a credit card must not expire within the next 6 months:
-```
+```java
 @MinAfter(duration = "P6M", moment = "now")
 YearMonth expiryDate;
 ```
 
 To specify that a date must be next month or later, where the day of the month is irrelevant:
-```
+```java
 @YearMonthMinAfter(duration = "P1M", moment = "now")
 LocalDate date;
 ```
 
 To specify that a date must be next year or later, where the actual date is irrelevant:
-```
+```java
 @YearMinAfter(years = 1, moment = "now")
 // or @YearAfter(moment = "now")
 LocalDate date;
 ```
 
 To specify that a date/time object like `ZonedDateTime` must be on a weekday between 9:00 and 18:00 (exclusive), at 15 minute intervals, and not between 12:00 and 13:00 (exclusive):
-```
+```java
 @DayOfWeekIn({ MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY })
 @TimeNotBefore(moment = "09:00:00")
 @TimeBefore(moment = "18:00:00")
@@ -435,7 +435,7 @@ To specify that a date/time object like `ZonedDateTime` must be on a weekday bet
 ZonedDateTime appointmentDateTime;
 ```
 or alternatively:
-```
+```java
 @DayOfWeekIn({ MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY })
 @HourIn({ 9, 10, 11, 13, 14, 15, 16, 17 })
 @MinuteIn({ 0, 15, 30, 45 })
@@ -448,7 +448,7 @@ ZonedDateTime appointmentDateTime;
 ### Combining provided constraint annotations
 
 The provided constraint annotations provide enough functionality for most cases. However, when several constraints are combined, like the last example, that may become unreadable. In cases like that it's easy to create a new constraint annotation and annotate that with the provided constraint annotations:
-```
+```java
 @Documented
 // annotations required for constraint annotations; the target can be simplified
 @Constraint(validatedBy = {})
