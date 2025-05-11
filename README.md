@@ -90,7 +90,7 @@ These annotations apply to the following types:
 
 <sup>1</sup>: because the type has no time zone information, the `zoneId` may not be defined as `provided`.\
 <sup>2</sup>: can be validated with annotations from `date-time-validation`.\
-<sup>3</sup>: because no time zone is applicanle for the type, the `zoneId` must be defined as `system`. Since this is the default, the `zoneId` parameter can simply be omitted.
+<sup>3</sup>: because no time zone is applicable for the type, the `zoneId` must be defined as `system`. Since this is the default, the `zoneId` parameter can simply be omitted.
 
 ### time-validation
 [![Maven Central](https://img.shields.io/maven-central/v/com.github.robtimus/time-validation?versionPrefix=1)](https://search.maven.org/artifact/com.github.robtimus/time-validation)
@@ -118,7 +118,7 @@ These annotations apply to the following types:
 | ZonedDateTime            |✅         |✅            |✅            |✅            |✅          |✅             |✅             |✅             |
 
 <sup>1</sup>: because the type has no time zone information, the `zoneId` may not be defined as `provided`.\
-<sup>2</sup>: because no time zone is applicanle for the type, the `zoneId` must be defined as `system`. Since this is the default, the `zoneId` parameter can simply be omitted.\
+<sup>2</sup>: because no time zone is applicable for the type, the `zoneId` must be defined as `system`. Since this is the default, the `zoneId` parameter can simply be omitted.\
 <sup>3</sup>: can be validated with annotations from `date-time-validation`.
 
 ### year-month-validation
@@ -147,7 +147,7 @@ These annotations apply to the following types:
 | ZonedDateTime            |✅              |✅                 |✅                 |✅                 |✅               |✅                  |✅                  |✅                  |
 
 <sup>1</sup>: because the type has no time zone information, the `zoneId` may not be defined as `provided`.\
-<sup>2</sup>: because no time zone is applicanle for the type, the `zoneId` must be defined as `system`. Since this is the default, the `zoneId` parameter can simply be omitted.\
+<sup>2</sup>: because no time zone is applicable for the type, the `zoneId` must be defined as `system`. Since this is the default, the `zoneId` parameter can simply be omitted.\
 <sup>3</sup>: can be validated with annotations from `date-time-validation`.
 
 ### year-validation
@@ -176,7 +176,7 @@ These annotations apply to the following types:
 | ZonedDateTime            |✅         |✅            |✅            |✅            |✅          |✅             |✅             |✅             |
 
 <sup>1</sup>: because the type has no time zone information, the `zoneId` may not be defined as `provided`.\
-<sup>2</sup>: because no time zone is applicanle for the type, the `zoneId` must be defined as `system`. Since this is the default, the `zoneId` parameter can simply be omitted.\
+<sup>2</sup>: because no time zone is applicable for the type, the `zoneId` must be defined as `system`. Since this is the default, the `zoneId` parameter can simply be omitted.\
 <sup>3</sup>: can be validated with annotations from `date-time-validation`.
 
 ### month-validation
@@ -211,7 +211,7 @@ These annotations apply to the following types:
 | ZonedDateTime            |✅       |✅       |✅          |
 
 <sup>1</sup>: because the type has no time zone information, the `zoneId` may not be defined as `provided`.\
-<sup>2</sup>: because no time zone is applicanle for the type, the `zoneId` must be defined as `system`. Since this is the default, the `zoneId` parameter can simply be omitted.
+<sup>2</sup>: because no time zone is applicable for the type, the `zoneId` must be defined as `system`. Since this is the default, the `zoneId` parameter can simply be omitted.
 
 #### year-month-validation vs month-validation
 
@@ -251,7 +251,7 @@ These annotations apply to the following types:
 | ZonedDateTime            |✅           |✅           |✅              |
 
 <sup>1</sup>: because the type has no time zone information, the `zoneId` may not be defined as `provided`.\
-<sup>2</sup>: because no time zone is applicanle for the type, the `zoneId` must be defined as `system`. Since this is the default, the `zoneId` parameter can simply be omitted.
+<sup>2</sup>: because no time zone is applicable for the type, the `zoneId` must be defined as `system`. Since this is the default, the `zoneId` parameter can simply be omitted.
 
 ### day-of-month-validation
 [![Maven Central](https://img.shields.io/maven-central/v/com.github.robtimus/day-of-month-validation?versionPrefix=1)](https://search.maven.org/artifact/com.github.robtimus/day-of-month-validation)
@@ -286,7 +286,7 @@ These annotations apply to the following types:
 | ZonedDateTime             |✅            |✅            |✅               |✅              |
 
 <sup>1</sup>: because the type has no time zone information, the `zoneId` may not be defined as `provided`.\
-<sup>2</sup>: because no time zone is applicanle for the type, the `zoneId` must be defined as `system`. Since this is the default, the `zoneId` parameter can simply be omitted.\
+<sup>2</sup>: because no time zone is applicable for the type, the `zoneId` must be defined as `system`. Since this is the default, the `zoneId` parameter can simply be omitted.\
 <sup>3</sup>: `LastDayOfMonth` cannot be applied to [MonthDay](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/MonthDay.html) because "it is not possible to define whether February 29th is valid or not without external information". This makes it impossible to determine whether or not February 28th is the last day of the month or not.
 
 ### hour-validation
@@ -321,7 +321,7 @@ These annotations apply to the following types:
 | ZonedDateTime             |✅      |✅      |✅         |
 
 <sup>1</sup>: because the type has no time zone information, the `zoneId` may not be defined as `provided`.\
-<sup>2</sup>: because no time zone is applicanle for the type, the `zoneId` must be defined as `system`. Since this is the default, the `zoneId` parameter can simply be omitted.
+<sup>2</sup>: because no time zone is applicable for the type, the `zoneId` must be defined as `system`. Since this is the default, the `zoneId` parameter can simply be omitted.
 
 ### minute-validation
 [![Maven Central](https://img.shields.io/maven-central/v/com.github.robtimus/minute-validation?versionPrefix=1)](https://search.maven.org/artifact/com.github.robtimus/minute-validation)
@@ -355,7 +355,7 @@ These annotations apply to the following types:
 | ZonedDateTime             |✅        |✅        |✅           |
 
 <sup>1</sup>: because the type has no time zone information, the `zoneId` may not be defined as `provided`.\
-<sup>2</sup>: because no time zone is applicanle for the type, the `zoneId` must be defined as `system`. Since this is the default, the `zoneId` parameter can simply be omitted.
+<sup>2</sup>: because no time zone is applicable for the type, the `zoneId` must be defined as `system`. Since this is the default, the `zoneId` parameter can simply be omitted.
 
 ### time-precision-validation
 [![Maven Central](https://img.shields.io/maven-central/v/com.github.robtimus/time-precision-validation?versionPrefix=1)](https://search.maven.org/artifact/com.github.robtimus/time-precision-validation)
