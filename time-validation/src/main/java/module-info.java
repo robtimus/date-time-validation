@@ -15,10 +15,13 @@
  * limitations under the License.
  */
 
-module com.github.robtimus.validation.time.precision {
+/**
+ * Contains validation constraints for times.
+ */
+module com.github.robtimus.validation.time {
     requires com.github.robtimus.validation.datetime.base;
     requires transitive jakarta.validation;
 
-    exports com.github.robtimus.validation.time.precision;
-    exports com.github.robtimus.validation.time.precision.validators;
+    exports com.github.robtimus.validation.time;
+    exports com.github.robtimus.validation.time.validators;
 }

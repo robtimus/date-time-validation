@@ -15,10 +15,13 @@
  * limitations under the License.
  */
 
-module com.github.robtimus.validation.date {
+/**
+ * Contains validation constraints for minutes.
+ */
+module com.github.robtimus.validation.minute {
     requires com.github.robtimus.validation.datetime.base;
     requires transitive jakarta.validation;
 
-    exports com.github.robtimus.validation.date;
-    exports com.github.robtimus.validation.date.validators;
+    exports com.github.robtimus.validation.minute;
+    exports com.github.robtimus.validation.minute.validators;
 }

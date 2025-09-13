@@ -15,10 +15,13 @@
  * limitations under the License.
  */
 
-module com.github.robtimus.validation.dayofweek {
+/**
+ * Contains validation constraints for date/time objects
+ */
+module com.github.robtimus.validation.datetime {
     requires com.github.robtimus.validation.datetime.base;
     requires transitive jakarta.validation;
 
-    exports com.github.robtimus.validation.dayofweek;
-    exports com.github.robtimus.validation.dayofweek.validators;
+    exports com.github.robtimus.validation.datetime;
+    exports com.github.robtimus.validation.datetime.validators;
 }

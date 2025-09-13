@@ -15,10 +15,13 @@
  * limitations under the License.
  */
 
-module com.github.robtimus.validation.dayofmonth {
+/**
+ * Contains validation constraints for months.
+ */
+module com.github.robtimus.validation.month {
     requires com.github.robtimus.validation.datetime.base;
     requires transitive jakarta.validation;
 
-    exports com.github.robtimus.validation.dayofmonth;
-    exports com.github.robtimus.validation.dayofmonth.validators;
+    exports com.github.robtimus.validation.month;
+    exports com.github.robtimus.validation.month.validators;
 }
