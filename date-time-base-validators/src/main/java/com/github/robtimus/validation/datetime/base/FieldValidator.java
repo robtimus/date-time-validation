@@ -267,6 +267,7 @@ public abstract class FieldValidator<A extends Annotation, T extends TemporalAcc
             this(fieldExtractor(field), zoneIdExtractor, fieldPredicateExtractor);
         }
 
+        @SuppressWarnings("squid:S8688")
         private static OffsetTime applyZoneId(OffsetTime offsetTime, ZoneId zoneId) {
             return offsetTime.atDate(LocalDate.now())
                     .atZoneSameInstant(zoneId)

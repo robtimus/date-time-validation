@@ -49,7 +49,7 @@ import org.junit.jupiter.params.converter.ArgumentConverter;
 import org.junit.jupiter.params.converter.ConvertWith;
 import org.junit.jupiter.params.provider.CsvSource;
 
-@SuppressWarnings({ "javadoc", "nls" })
+@SuppressWarnings({ "javadoc", "nls", "squid:S8694" })
 // public because of the constraint and validators
 public class BaseValidatorTest extends AbstractValidatorTest {
 

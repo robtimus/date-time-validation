@@ -79,6 +79,7 @@ public abstract class MomentPartValidator<A extends Annotation, T extends Tempor
      * @param validPredicate A predicate that determines whether or not a value (the first argument) is valid compared to a specific moment
      *                           (the second argument).
      */
+    @SuppressWarnings("squid:S107")
     protected MomentPartValidator(Function<A, String> momentExtractor, Function<String, P> momentParser, Function<Clock, P> momentCreator,
             Function<A, String> durationExtractor, BiFunction<P, TemporalAmount, P> durationApplier,
             Function<A, String> zoneIdExtractor,
@@ -114,6 +115,7 @@ public abstract class MomentPartValidator<A extends Annotation, T extends Tempor
      * @param validPredicate A predicate that determines whether or not a value (the first argument) is valid compared to a specific moment
      *                           (the second argument).
      */
+    @SuppressWarnings("squid:S107")
     protected MomentPartValidator(Function<A, String> momentExtractor, Function<String, P> momentParser, Function<Clock, P> momentCreator,
             Function<A, String> zoneIdExtractor,
             Function<T, P> partExtractor, BiFunction<T, ZoneId, ZonedDateTime> zoneIdApplier, Function<ZonedDateTime, P> zonedDateTimePartExtractor,
@@ -152,6 +154,7 @@ public abstract class MomentPartValidator<A extends Annotation, T extends Tempor
      * @param validPredicate A predicate that determines whether or not a value (the first argument) is valid compared to a specific moment
      *                           (the second argument).
      */
+    @SuppressWarnings("squid:S107")
     protected MomentPartValidator(Function<A, String> momentExtractor, Function<String, P> momentParser, Function<Clock, P> momentCreator,
             Function<A, String> durationExtractor, BiFunction<P, TemporalAmount, P> durationApplier,
             Function<A, String> zoneIdExtractor,
@@ -207,6 +210,7 @@ public abstract class MomentPartValidator<A extends Annotation, T extends Tempor
          * @param validPredicate A predicate that determines whether or not a value (the first argument) is valid compared to a specific moment
          *                           (the second argument).
          */
+        @SuppressWarnings("squid:S107")
         protected WithoutZoneId(Function<A, String> momentExtractor, Function<String, P> momentParser, Function<Clock, P> momentCreator,
                 Function<A, String> durationExtractor, BiFunction<P, TemporalAmount, P> durationApplier,
                 Function<A, String> zoneIdExtractor,
@@ -265,6 +269,7 @@ public abstract class MomentPartValidator<A extends Annotation, T extends Tempor
          * @param validPredicate A predicate that determines whether or not a value (the first argument) is valid compared to a specific moment
          *                           (the second argument).
          */
+        @SuppressWarnings("squid:S107")
         protected ForInstant(Function<A, String> momentExtractor, Function<String, P> momentParser, Function<Clock, P> momentCreator,
                 Function<A, String> durationExtractor, BiFunction<P, TemporalAmount, P> durationApplier,
                 Function<A, String> zoneIdExtractor,
@@ -325,6 +330,7 @@ public abstract class MomentPartValidator<A extends Annotation, T extends Tempor
          * @param validPredicate A predicate that determines whether or not a value (the first argument) is valid compared to a specific moment
          *                           (the second argument).
          */
+        @SuppressWarnings("squid:S107")
         protected ForZonedDateTime(Function<A, String> momentExtractor, Function<String, P> momentParser, Function<Clock, P> momentCreator,
                 Function<A, String> durationExtractor, BiFunction<P, TemporalAmount, P> durationApplier,
                 Function<A, String> zoneIdExtractor,

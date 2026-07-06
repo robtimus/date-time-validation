@@ -45,7 +45,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
-@SuppressWarnings({ "javadoc", "nls" })
+@SuppressWarnings({ "javadoc", "nls", "squid:S8694" })
 //public because of the constraint and validators
 public class FieldValidatorTest extends AbstractValidatorTest {
 
